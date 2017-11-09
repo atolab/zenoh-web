@@ -1,0 +1,3 @@
+[submodule "mweb/themes/minimal"]
+	path = mweb/themes/minimal
+	url = https://github.com/calintat/minimal.git
