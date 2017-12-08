@@ -7,6 +7,16 @@
   </url>
   
   <url>
+    <loc>http://zenoh.io/post/the-proposal/</loc>
+    <lastmod>2017-12-08T13:21:08+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://zenoh.io/post/zenoh-spec/</loc>
+    <lastmod>2017-12-08T12:21:08+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://zenoh.io/post/xrce/</loc>
     <lastmod>2017-11-09T19:40:21+01:00</lastmod>
   </url>
@@ -28,7 +38,7 @@
   
   <url>
     <loc>http://zenoh.io/post/</loc>
-    <lastmod>2017-11-09T19:40:21+01:00</lastmod>
+    <lastmod>2017-12-08T13:21:08+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -44,7 +54,7 @@
   
   <url>
     <loc>http://zenoh.io/</loc>
-    <lastmod>2017-11-09T19:40:21+01:00</lastmod>
+    <lastmod>2017-12-08T13:21:08+01:00</lastmod>
     <priority>0</priority>
   </url>
   

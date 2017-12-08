@@ -4,7 +4,7 @@
          
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>zeno-he</title>
+        <title>The Proposal</title>
         <style>
 
     html body {
@@ -72,7 +72,7 @@
 
                 <div class="navbar-header">
 
-                    <a class="navbar-brand visible-xs" href="#">zeno-he</a>
+                    <a class="navbar-brand visible-xs" href="#">The Proposal</a>
 
                     <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
                         <span class="icon-bar"></span>
@@ -128,22 +128,96 @@
     
 
     
-      
+    
 
-    <h4><a href="/project/zeno-he/">zeno-he</a></h4>
-    <h5>Lighter-than-air, peer-to-peer, bounded, non-blocking, non-threaded, etc., implementation of zenoh</h5>
-     <kbd class="item-tag">c</kbd> 
+    <h4><a href="/post/the-proposal/">The Proposal</a></h4>
+    <h5>December 8, 2017</h5>
+    
 
 </div>
 
 
-    <br> <div class="text-justify"><p>zeno-he (zhe for short) is a compact implementation of the <strong>zenoh</strong> protocol that does not depend on dynamic allocation or threading. Instead, it is a non-blocking implementation that assumes single threaded use with polling, and a system that can be sized at compile time. Zhe can be configured to operate in peer-to-peer mode or to operate as a client that relies on a broker.</p>
+    <br> <div class="text-justify"><p>Dear all,</p>
 
-<p>Zhe does not call any operating system functions directly (its use of the standard library functions is currently limited to string.h, stddef.h, limits.h, stdint.h and inttypes.h). It does rely on a small abstraction layer to be provided by the user implementing functions to send a packet without blocking (it may of course be dropped), test addresses for equality and to convert an address to text. What constitutes sending data on a network or what an address looks like is deliberately left undefined. The interface of the abstraction layer is described below.</p>
+<p>I wanted to share with the ROS community the proposal we made
+yesterday afternoon to other DDS vendors, the OMG MARS Taskforce and
+the XRCE evaluation team on a possible way forward.</p>
 
-<p>Please note that it is currently a research project under active development. Only the basic functionality supported by the zenoh protocol has so far been implemented, and still missing are several features we consider important, such as selections and transient data support. These will be implemented in the near future. Furthermore, none of the settings are final, and everything can (and probably will) still change.</p>
+<p>Before articulating the proposal let me give some context.</p>
 
-<p>You can checkout the code on <a href="https://github.com/atolab/zeno-he">GitHub</a>.</p>
+<p>As a result of the XRCE standardisation process we need to select one
+of the proposals (our proposal is available <a href="http://zenoh.io/public/resources/pdf/zenoh.pdf">here</a>). On the ROS mailing list we have discussed few
+aspects of the protocol and <a href="[@gbiggs](https://discourse.ros.org/u/gbiggs/summary)">@gbiggs</a> provides
+<a href="https://discourse.ros.org/t/ipc-in-ros2/2619/23">here</a> above a good
+and independent analysis on the two proposals with Erik and myself
+clarifying a few points
+<a href="https://discourse.ros.org/t/ipc-in-ros2/2619/24">here</a> and  <a href="https://discourse.ros.org/t/ipc-in-ros2/2619/25">here</a>
+respectively. Thus if you have not read those I suggest you do before
+continuing reading things.</p>
+
+<p>With reference to
+<a href="https://discourse.ros.org/u/gbiggs/summary">@gbiggs</a> analysis, we
+have one proposal (ours) that is perceived as being slightly more
+complex but that supports peer-to-peer as well as client-to-broker and
+is more suited for constrained environments. The other (RTIandCo)
+which appears to be simpler but only supports client-to-broker and
+carries more overhead.</p>
+
+<p>If along with this information, we take into account that  we (ADLINK):</p>
+
+<ol>
+<li><p>have made available our XRCE implementation as Open Source under
+Apache 2 as part of the project <a href="http://zenoh.io">zenoh.io</a>, and</p></li>
+
+<li><p>are going to release a C++ broker by the end of the year (we
+already have a Swift and a Scala broker implemented &ndash; some folks have
+seen these in actions at various demonstrations), and</p></li>
+
+<li><p>are committed to make <a href="http://zenoh.io">zenoh.io</a> the XRCE
+reference implementation, both in terms of standards as well as
+quality</p></li>
+</ol>
+
+<p>Now that the context is given I can enunciate the proposal I made to
+other vendors, task force &amp; co:</p>
+
+<p><strong><em>Adopt our proposal and join forces, around the newly established
+  open source project (zenoh), to accelerate the establishment of the
+  XRCE standard in constrained environments.</em></strong></p>
+
+<p>The advantages of my proposal are several:</p>
+
+<ol>
+<li><p>End-users such as the ROS community would get access to an
+implementation of the standard much more quickly &ndash; essentially now.</p></li>
+
+<li><p>Other DDS vendors could have immediately constrained connectivity
+by simply integrating their DDS implementation on the
+<a href="http://zenoh.io">zenoh.io</a> broker.</p></li>
+
+<li><p>We would have an open source implementation of XRCE supported by
+all DDS vendors, which means no interoperability issues, faster
+evolution, and faster adoption.</p></li>
+
+<li><p>We would have a protocol that can do peer-to-peer as well as
+brokered communication, which is good for some use cases &ndash; most
+notably in robotics.</p></li>
+
+<li><p>We would have a protocol that could be deployed down to the
+sensors. Imagine for a moment having ROS-enabled sensors talking XRCE
+via low-power protocols or anything else that suits them.</p></li>
+
+<li><p>As the one protocol everyone uses and supports is open-source we
+would facilitate adoption immensely.</p></li>
+</ol>
+
+<p>Collaboration can bring us much more further away than
+competition. What has made humans excel is our ability to collaborate
+not so much that to compete&hellip; Thus, why not in this case?</p>
+
+<p>I am looking forward to hear comments  from the ROS community. Please speak-up.</p>
+
+<p>&ndash; Angelo Corsaro</p>
 </div>
 
     

@@ -6,10 +6,33 @@
     <description>Recent content in Posts on zenoh</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Nov 2017 19:40:21 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 08 Dec 2017 13:21:08 +0100</lastBuildDate>
     
 	<atom:link href="http://zenoh.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The Proposal</title>
+      <link>http://zenoh.io/post/the-proposal/</link>
+      <pubDate>Fri, 08 Dec 2017 13:21:08 +0100</pubDate>
+      
+      <guid>http://zenoh.io/post/the-proposal/</guid>
+      <description>Dear all,
+I wanted to share with the ROS community the proposal we made yesterday afternoon to other DDS vendors, the OMG MARS Taskforce and the XRCE evaluation team on a possible way forward.
+Before articulating the proposal let me give some context.
+As a result of the XRCE standardisation process we need to select one of the proposals (our proposal is available here). On the ROS mailing list we have discussed few aspects of the protocol and @gbiggs provides here above a good and independent analysis on the two proposals with Erik and myself clarifying a few points here and here respectively.</description>
+    </item>
+    
+    <item>
+      <title>Zenoh Spec</title>
+      <link>http://zenoh.io/post/zenoh-spec/</link>
+      <pubDate>Fri, 08 Dec 2017 12:21:08 +0100</pubDate>
+      
+      <guid>http://zenoh.io/post/zenoh-spec/</guid>
+      <description>The the zenoh protocol specification available for download.
+Good reading!
+The ATOLab Team!</description>
+    </item>
     
     <item>
       <title>XRCE vs zenoh</title>
