@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>zenoh</title>
+    <link>http://zenoh.io/</link>
+    <description>Recent content on zenoh</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Dec 2017 13:21:08 +0100</lastBuildDate>
+    
+	<atom:link href="http://zenoh.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>zeno-he</title>
+      <link>http://zenoh.io/project/zeno-he/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://zenoh.io/project/zeno-he/</guid>
+      <description>zeno-he (zhe for short) is a compact implementation of the zenoh protocol that does not depend on dynamic allocation or threading. Instead, it is a non-blocking implementation that assumes single threaded use with polling, and a system that can be sized at compile time. Zhe can be configured to operate in peer-to-peer mode or to operate as a client that relies on a broker.
+Zhe does not call any operating system functions directly (its use of the standard library functions is currently limited to string.</description>
+    </item>
+    
+    <item>
+      <title>The Proposal</title>
+      <link>http://zenoh.io/post/the-proposal/</link>
+      <pubDate>Fri, 08 Dec 2017 13:21:08 +0100</pubDate>
+      
+      <guid>http://zenoh.io/post/the-proposal/</guid>
+      <description>Dear all,
+I wanted to share with the ROS community the proposal we made yesterday afternoon to other DDS vendors, the OMG MARS Taskforce and the XRCE evaluation team on a possible way forward.
+Before articulating the proposal let me give some context.
+As a result of the XRCE standardisation process we need to select one of the proposals (our proposal is available here). On the ROS mailing list we have discussed few aspects of the protocol and @gbiggs provides here above a good and independent analysis on the two proposals with Erik and myself clarifying a few points here and here respectively.</description>
+    </item>
+    
+    <item>
+      <title>Zenoh Spec</title>
+      <link>http://zenoh.io/post/zenoh-spec/</link>
+      <pubDate>Fri, 08 Dec 2017 12:21:08 +0100</pubDate>
+      
+      <guid>http://zenoh.io/post/zenoh-spec/</guid>
+      <description>The the zenoh protocol specification available for download.
+Good reading!
+The ATOLab Team!</description>
+    </item>
+    
+    <item>
+      <title>XRCE vs zenoh</title>
+      <link>http://zenoh.io/post/xrce/</link>
+      <pubDate>Thu, 09 Nov 2017 19:40:21 +0100</pubDate>
+      
+      <guid>http://zenoh.io/post/xrce/</guid>
+      <description>At the present time there is an undergoing standardisation effort to standardise a protocol for eXtremely Resource Constrained Environments (XRCE). Beside staring the standardisation process we have submitted a proposal that is quite different from competings into two respects. First it supports peer-to-peer as well as brokered communication. Second it is a few times more efficient in time and space than competing submissions.
+While technically zenoh implements our XRCE proposal, considered that the standard has not been adopted yet we prefer to refer to the protocol using its code name &amp;ndash; zenoh.</description>
+    </item>
+    
+    <item>
+      <title>Welcome</title>
+      <link>http://zenoh.io/post/welcome/</link>
+      <pubDate>Thu, 09 Nov 2017 19:29:03 +0100</pubDate>
+      
+      <guid>http://zenoh.io/post/welcome/</guid>
+      <description>Today we are releasing zenoh (zero network overhead) data-sharing protocol as Open Source under an Apache 2 license. This release features a peer-to-peer implementaion that can run in 1Kbyte of RAM and has a wire overhead of 4-bytes!
+You can check out the code from github and follow the build instructions to get started. We will provide installable packages in due time.
+Finally, it is worth mentioning that we release the a brokering system by the end of the year &amp;ndash; stay tuned!</description>
+    </item>
+    
+  </channel>
+</rss>

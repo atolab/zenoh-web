@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on zenoh</title>
+    <link>http://zenoh.io/post/</link>
+    <description>Recent content in Posts on zenoh</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 09 Nov 2017 19:29:03 +0100</lastBuildDate>
+    
+	<atom:link href="http://zenoh.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Welcome</title>
+      <link>http://zenoh.io/post/welcome/</link>
+      <pubDate>Thu, 09 Nov 2017 19:29:03 +0100</pubDate>
+      
+      <guid>http://zenoh.io/post/welcome/</guid>
+      <description>Today we are releasing zenoh (zero network overhead) data-sharing protocol as Open Source under an Apache 2 license. This release features a peer-to-peer implementaion that can run in 1Kbyte of RAM and has a wire overhead of 4-bytes!
+You can check out the code from github and follow the build instructions to get started. We will provide installable packages in due time.
+Finally, it is worth mentioning that we release the a brokering system by the end of the year &amp;ndash; stay tuned!</description>
+    </item>
+    
+  </channel>
+</rss>
