@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+         
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>XRCE is dead. Long live zenoh</title>
+        <style>
+
+    html body {
+        font-family: 'Raleway', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: red;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/c.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/c&#43;&#43;.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script> 
+
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.37.1" />
+        
+        
+        
+    </head>
+
+    <body>
+         
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">XRCE is dead. Long live zenoh</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/project/">Projects</a></li>
+                            
+                                <li><a href="http://zenoh.io/download/pdf/2018.04.23-zenoh.pdf">Spec</a></li>
+                            
+                        </ul>
+                    
+
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="mailto:angelo.corsaro@adlinktech.com"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/atolab/Zeno-HE"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://twitter.com/atolab_/"><i class="fa fa-twitter"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://www.linkedin.com/company/79111/"><i class="fa fa-linkedin"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://www.stackoverflow.com/"><i class="fa fa-stack-overflow"></i></a></li>
+                            
+                        </ul>
+                    
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+<main>
+
+    <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/llz/">XRCE is dead. Long live zenoh</a></h4>
+    <h5>March 23, 2018</h5>
+    
+
+</div>
+
+
+    <br> <div class="text-justify"><p>Yesterday was an incredibly sad day. I witnessed the <strong>OMG MARS</strong> task-force
+<em>murder</em> XRCE. It was murdered by a blend of superficiality, incompetence,
+self-interest, and political games. It really was horrible! It was
+disappointing!</p>
+
+<p>But wait&hellip; Actually something even worse happened. The essence of <strong>XRCE</strong>
+was corrupted and violated by accepting a proposal that is inefficient, clumsy,
+baroque, anti-innovative, and extremely boring&hellip; But, hey, it uses UML and has
+a PIM! Isn&rsquo;t that great?</p>
+
+<p>The alternative proposal was recommended by the evaluation team setup
+by the task-force in November 2017. Voters followed diligently the infamous recommendation.
+A recommendation, which as I will explain below was based on lack of understanding
+and for some of the member connivence with vendors that did not want a protocol
+that compete with DDSI-RTPS.</p>
+
+<p>One of the evaluation team claims was about our proposal being <em>less complete</em>.
+This was an unqualified claim, thus I asked to provide some examples. The answer
+was that the our proposal did not address how to run on TCP/IP and that we did not
+specify resources.</p>
+
+<p>Both of these statements are false as you can find out for yourself by looking
+up section 2.1.1 and section 2.2.1 in the <a href="http://zenoh.io/download/pdf/2018.04.23-zenoh.pdf">zenoh</a>
+protocol specification. Specifically Section 2.2.1 explains how to do <strong>zenoh</strong>
+framing on non-boundary preserving transports &ndash; such as TCP/IP. Section 2.1.1 defines
+resources.</p>
+
+<p>Thus at this point the question is: did the evaluation team ever read our
+proposal. I think the skimmed through it, but fast enough to miss even the vary
+basics. Beside, they never asked a single technical clarification on any of the
+protocol mechanisms, and I can assure that that is not because they understood
+it all!</p>
+
+<p>The other argument was complexity&hellip; Which is fallacious argument as <strong>zenoh</strong>
+did far more than the competing submission more efficiently and I&rsquo;d argue elegantly.
+But again some people prefer Lipton tea to Li Shan High Mountain Oolong, as they
+cannot appreciate the fine and subtle.</p>
+
+<p>But wait, there is more, one of my favourite arguments raised by the  evaluation
+team is the use of VLE. The evaluation team finds it complicated and favour
+CDR&hellip; (used by the other proposal) Yes, CDR!!! You know the Common Data
+Representation used by CORBA and inherited by DDS. The alignement requirements,
+the re-ordering required by to deal with endianess, etc., did not bother them at
+all.</p>
+
+<p><strong>zenoh</strong> uses VLE to ensure that space is not wasted when sending small
+integers and at the same time to have the ability to represent large integers when
+required. Thus you pay for what you use. No fixed size and  bigger upper bound.</p>
+
+<p>Now let&rsquo;s get to the politics. The submitters of the alternative proposal did
+not really wanted a protocol that is way more efficient than DDSI-RTPS, in time
+and space &ndash; and supports peer-to-peer, client-to-broker and broker-to-broker
+communication. This was clear since the very beginning, again those of you
+that followed the creation of the RTP will recall that they opposed to calling
+the RFP DDSI-XRCE. Which technically was the correct name and correct scope.
+A new protocol for addressing constrained environments, that can also be used
+as a replacement for RTPS.</p>
+
+<p>Thus this is the epilogue of XRCE. XRCE has been deprived of its dignity, it has
+been corrupted, violated. In short XRCE is dead!</p>
+
+<p>At this point I feel like saying  <strong>Long Live zenoh</strong>, <strong>Long Live zenoh</strong>,
+<strong>Long Live zenoh</strong>!</p>
+
+<p>We will continue to work to make <strong>zenoh</strong> the most efficient protocol available
+around. The community  will eventually decide which one was the right protocol.</p>
+
+<p>&ndash; Angelo</p>
+</div>
+
+    
+    
+
+    
+
+    
+
+        <h4 class="page-header">Comments</h4>
+
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zenoh" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+
+</main>
+
+        <footer>
+
+            <p class="copyright text-muted">&copy; All rights reserved.</p>
+
+        </footer>
+       
+    </body>
+
+</html>
+
