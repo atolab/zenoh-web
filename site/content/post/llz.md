@@ -49,9 +49,9 @@ Representation used by CORBA and inherited by DDS. The alignment requirements,
 the re-ordering caused by endianess mismatch, etc., did not bother them at
 all.
 
-**zenoh** uses VLE to ensure that space is not wasted when sending small
-integers and at the same time to have the ability to represent large integers when
-required. Thus you pay for what you use. No fixed size and  bigger upper bound.
+**zenoh** uses VLE to (1) ensure that space is not wasted when sending small
+integers and (2) to have the ability to represent large integers when required.
+Thus you pay for what you use. No fixed size and bigger upper bound.
 
 Now let's get to the politics. The submitters of the alternative proposal did
 not really wanted a protocol that is way more efficient than DDSI-RTPS, in time
@@ -62,7 +62,7 @@ the RFP DDSI-XRCE. Which technically was the correct name and correct scope.
 A new protocol for addressing constrained environments, that can also be used
 as a replacement for RTPS.
 
-These folks are completely missing the point. The power of DDS is in its abstractions, 
+These folks are completely missing the point. The power of DDS is in its abstractions,
 in its support for data-centricity, temporal and spatial decoupling.
 Equipping DDS with a better wire-protocol would have been beneficial to the users
 and it would have helped the technology adoption.
