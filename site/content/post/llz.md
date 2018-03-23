@@ -26,7 +26,7 @@ was that the our proposal did not address how to run on TCP/IP and that we did n
 specify resources.
 
 Both of these statements are false as you can find out for yourself by looking
-up section 2.1.1 and section 2.2.1 in the [zenoh](http://zeno.io/download/pdf/2018.04.23-zenoh.pdf)
+up section 2.1.1 and section 2.2.1 in the [zenoh](http://zenoh.io/download/pdf/2018.04.23-zenoh.pdf)
 protocol specification. Specifically Section 2.2.1 explains how to do **zenoh**
 framing on non-boundary preserving transports -- such as TCP/IP. Section 2.1.1 defines
 resources.
