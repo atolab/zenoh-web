@@ -27,8 +27,9 @@ Zhe does not call any operating system functions directly (its use of the standa
       <pubDate>Fri, 23 Mar 2018 09:14:43 +0100</pubDate>
       
       <guid>http://zenoh.io/post/llz/</guid>
-      <description>Yesterday was an incredibly sad day. I witnessed the OMG MARS task-force murder XRCE. It was murdered by a blend of superficiality, incompetence, self-interest, and political games. It really was horrible! It was disappointing!
-But wait&amp;hellip; Actually something even worse happened. The essence of XRCE was corrupted and violated by accepting a proposal that is inefficient, clumsy, baroque, anti-innovative, and extremely boring&amp;hellip; But, hey, it uses UML and has a PIM!</description>
+      <description>Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better.
+― Edsger W. Dijkstra
+Yesterday was an incredibly sad day. Of the two proposals that had been submitted in response to the DDS-XRCE RFP &amp;ndash; one of those being zenoh &amp;ndash; the alternative proposal was recommended by the evaluation team setup by the task-force in November 2017.</description>
     </item>
     
     <item>
