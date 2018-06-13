@@ -34,7 +34,7 @@ googleAnalytics = ""
     weight = 3
 
 [[menu.main]]
-  url = "http://zenoh.io/download/pdf/enoh.pdf"
+  url = "http://zenoh.io/download/pdf/zenoh.pdf"
   name = "Spec"
   weight = 4
 
