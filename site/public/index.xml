@@ -6,7 +6,7 @@
     <description>Recent content on zenoh</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 Dec 2017 13:21:08 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 23 Mar 2018 09:14:43 +0100</lastBuildDate>
     
 	<atom:link href="http://zenoh.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -19,6 +19,17 @@
       <guid>http://zenoh.io/project/zeno-he/</guid>
       <description>zeno-he (zhe for short) is a compact implementation of the zenoh protocol that does not depend on dynamic allocation or threading. Instead, it is a non-blocking implementation that assumes single threaded use with polling, and a system that can be sized at compile time. Zhe can be configured to operate in peer-to-peer mode or to operate as a client that relies on a broker.
 Zhe does not call any operating system functions directly (its use of the standard library functions is currently limited to string.</description>
+    </item>
+    
+    <item>
+      <title>XRCE is dead. Long live zenoh</title>
+      <link>http://zenoh.io/post/llz/</link>
+      <pubDate>Fri, 23 Mar 2018 09:14:43 +0100</pubDate>
+      
+      <guid>http://zenoh.io/post/llz/</guid>
+      <description>Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better.
+― Edsger W. Dijkstra
+Yesterday was an incredibly sad day. Of the two proposals that had been submitted in response to the DDS-XRCE RFP &amp;ndash; one of those being zenoh &amp;ndash; the alternative proposal was recommended by the evaluation team setup by the task-force in November 2017.</description>
     </item>
     
     <item>
