@@ -1,0 +1,18 @@
+---
+baseurl: "https://zenoh.io"
+title: "zenoh -  Zero Overhead Publish, Query and Compute Protocol"
+languageCode: "en-us"
+canonifyURLs: "true"
+
+menu:
+  docs:
+    - identifier: "getting_started"
+      name: "Getting started"
+      weight: 1000
+    - identifier: "tutorial"
+      name: "Tutorial"
+      weight: 2000
+    - identifier: "roadmap"
+      name: "Roadmap"
+      weight: 3000
+

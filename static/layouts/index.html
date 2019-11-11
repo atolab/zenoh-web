@@ -1,0 +1,144 @@
+{{ partial "header" . }}
+
+<main class="ato-masthead">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-5 mx-auto col-md-5 order-md-2">
+        <img class="img-fluid mb-3 mb-md-0 zenoh-logo" src="/img/zenoh-logo.png" alt="">
+      </div>
+      <div class="col-md-7 order-md-1 text-center text-md-left pr-md-5">
+        <h1 class="mb-3 ato-text-big">Eclipse fog05</h1>
+        <p class="lead">
+          The End-to-End Compute, Storage and Networking Virtualisation solution.
+        </p>
+        <p class="lead mb-4">
+          Eclipse fog05 is an open source project that aims at providing a decentralised infrastructure for provisioning and managing compute, storage, communication and I/O resources available anywhere across the network.
+          Eclipse fog05 addresses highly heterogeneous systems even those with extremely resource-constrained nodes.
+        </p>
+        <div class="d-flex flex-column flex-md-row lead mb-3">
+          <a href="{{ ref . "/docs/overview.md" }}" class="btn btn-lg btn-ato-primary mb-3 mb-md-0 mr-md-3">Get started</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="masthead-followup row m-0 border border-white">
+  <div class="col-12 col-md-4 p-3 p-md-5 bg-light border border-white">
+    <h3>
+      <i class="fa fa-cloud" aria-hidden="true"></i>
+      Unified abstractions
+    </h3>
+
+    <p>
+      Common API and information model for management.
+      Eclipse fog05 provides an unified API for the management of the virtualisation infrastructure.
+    </p>
+
+
+    <p>
+      <b>Operating System Plugins</b><br>
+      Eclipse fog05 can run on different operating systems, it just need the
+      right OS Plugin.
+    </p>
+
+
+    <p>
+        <b>Networking Plugins</b><br>
+        Eclipse fog05 can manage networking fabrics for which a Netwoking plugin is
+        present.
+      </p>
+
+
+    <hr class="half-rule">
+    <a class="btn btn-outline-primary" href="/docs/overview/#unified-abstractions">Learn more</a>
+  </div>
+
+  <!--  style="text-decoration: line-through" -->
+  <div class="col-12 col-md-4 p-3 p-md-5 bg-light border border-white">
+    <h3>
+      <i class="fa fa-cogs" aria-hidden="true"></i>
+      Heterogenous applications
+    </h3>
+
+    <p>
+      Support of heterogenous runtimes, hypervisors and networking.
+      Deploy heterogenous applications composed by VMs, containers, ROS2, native applications.
+    </p>
+
+    <p>
+        <b>Runtime Plugins</b><br>
+        Eclipse fog05 can manage and open-ended set of hypervisors and container
+        technologies for which a Runtime Plugin was implemented.
+      </p>
+
+      <p>
+          <b>Single Descriptor</b><br>
+          Eclipse fog05 allows you to define your application in a single descriptor.
+          No matters if it is composed by heterogeneous components.
+        </p>
+
+    <hr class="half-rule">
+    <a class="btn btn-outline-primary" href="/docs/overview/#heterogenous-applications">Learn more</a>
+  </div>
+
+  <div class="col-12 col-md-4 p-3 p-md-5 bg-light border border-white">
+    <h3>
+      <i class="fa fa-dashboard" aria-hidden="true"></i>
+      Lightweight
+    </h3>
+
+    <p>
+      Eclipse fog05 is designed to be deployed from big servers to micro-controllers.
+    </p>
+
+    <p>
+      <b>Decentralised state</b><br>
+      Because Eclipse fog05 uses YAKS for location-transparency state access and management.
+      It can be deployed on resource constrained devices and leverage other nodes for state management.
+    <p>
+
+    <p>
+      <b>Modular</b><br>
+      Eclipse fog05 is built with a plugin architecture and his components can be deployed separately.
+    </p>
+
+    <hr class="half-rule">
+    <a class="btn btn-outline-primary" href="/docs/overview/#lightweight">Learn more</a>
+  </div>
+</div>
+
+<footer class="ato-footer text-muted">
+  <div class="container-fluid p-6 p-md-5">
+    <div class="row">
+      <div class="col-md-3">
+
+            <p>Build with <a href="https://gohugo.io/">HUGO</a></p>
+            <p>Theme: <a href="https://tokio.rs/">Tokio website theme</a></p>
+
+      </div>
+      <div class="col-md-3">
+          <p>Sponsored by:</p>
+          <p><img src="img/eclipse.svg" style="width:100px;"></p>
+          <p><img src="https://cdn.adlinktech.com/webupd/en/Upload/logo.png" style="width:100px;"></p>
+
+        </div>
+        <div class="col-md-3">
+
+            <ul class="ato-footer-links">
+                <li><a href="https://github.com/eclipse/fog05"> <i class="fa fa-github" aria-hidden="true"></i> GitHub</a></li>
+                <li><a href="/docs/overview/"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></li>
+              </ul>
+        </div>
+        <div class="col-md-3">
+            <p>Copyright &copy 2019 Eclipse Foundation</p>
+        </div>
+    </div>
+
+
+  </div>
+
+
+</footer>
+
+{{ partial "footer" . }}

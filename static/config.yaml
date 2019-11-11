@@ -1,0 +1,18 @@
+---
+baseurl: "https://fog05.io"
+title: "Eclipse fog05 - The End-to-End Compute, Storage and Networking Virtualisation solution."
+languageCode: "en-us"
+canonifyURLs: "true"
+
+menu:
+  docs:
+    - identifier: "getting_started"
+      name: "Getting started"
+      weight: 1000
+    - identifier: "going_deeper"
+      name: "Going deeper"
+      weight: 7000
+    - identifier: "internals"
+      name: "Eclipse fog05 internals"
+      weight: 8000
+
