@@ -1,17 +1,29 @@
 +++
-title = "zenoh's Community "
+title = "The zenoh Community"
 description = "Get help, discuss problems, and join the fun"
 +++
 
-# Ask Questions
+# Communication
 
-The favourite place for asking questions concerning zenoh is the [gitter channel](https://gitter.im/atolab/zenoh). 
+The Tokio community is most readily found on
+[its gitter channel](https://gitter.im/zenoh-rs/zenoh), where you're welcome to
+ask questions, report problems, or pitch ideas.
 
 # Issues
 
 Github is used for tracking issues. The primary location for these is the main
-[zenoh repository](https://github.com/eclipse/zenoh/issues).
+[Tokio repository](https://github.com/zenoh-rs/zenoh/issues).
+
+If you're a Tokio user, you're highly encouraged to keep an eye on these issues
+and jump in on the discussions, to help us understand how design tradeoffs might
+affect you.
+
+These repositories also contain milestones for upcoming *major* releases, which
+are currently used to track breaking changes that might be considered for the
+next major release.
 
 # Get Involved
 
-Are you interested in getting involved with the code? Please refer to [Contributing guidelines](https://github.com/atolab/zenoh/blob/master/CONTRIBUTING.md).
+Are you interested in getting involved with the code and participating in
+Google's Summer of Code? Check out our [ideas list](/gsoc/) and submit an
+application!

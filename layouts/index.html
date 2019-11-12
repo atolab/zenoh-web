@@ -4,27 +4,27 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-5 mx-auto col-md-5 order-md-2">
-        <img class="img-fluid mb-3 mb-md-0 zenoh-logo" src="/img/zenoh-logo.png" alt="">
+        <img class="img-fluid mb-3 mb-md-0 ato-logo" src="/img/zenoh_mark_large.png" alt="">
       </div>
       <div class="col-md-7 order-md-1 text-center text-md-left pr-md-5">
-        <h1 style="font-family:teacher" class="mb-3  ato-text-logo">zenoh</h1>
+        <h1 class="mb-3 ato-text-big  ato-text-logo">zenoh</h1>
         <p style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" class="lead">
-          <b>Zero Overhead. Publish. Query.  Compute. Protocol</b>
-        </p>
+          <b>The Zero Overhead, Pub/sub, Query, and Compute Protocol.</b>
+        </p>        
         <p class="lead mb-4">
           zenoh is a protocol that efficiently unifies data in movement, data a rest 
           and computations. It carefully blends traditional pub/sub with
           distributed query protocols while retaining a level of time and space efficiency
-          that is well beyond any of the mainstream protocols.        
+          that is well beyond any of the mainstream protocols. 
         </p>
         <div class="d-flex flex-column flex-md-row lead mb-3">
           <a href="{{ ref . "/docs/overview.md" }}" class="btn btn-lg btn-ato-primary mb-3 mb-md-0 mr-md-3">Get started</a>
-          <a href="{{ ref . "/docs/overview.md" }}" class="btn btn-lg btn-ato-primary mb-3 mb-md-0 mr-md-3">Install</a>
         </div>
       </div>
     </div>
   </div>
 </main>
+
 
 <div class="masthead-followup row m-0 border border-white">
   <div class="col-12 col-md-4 p-3 p-md-5 bg-light border border-white">
@@ -133,36 +133,15 @@
 </div>
 
 <footer class="ato-footer text-muted">
-  <div class="container-fluid p-6 p-md-5">
-    <div class="row">
-      <div class="col-md-3">
-
-            <p>Build with <a href="https://gohugo.io/">HUGO</a></p>
-            <!-- <p>Theme: <a href="https://tokio.rs/">Tokio website theme</a></p> -->
-
-      </div>
-      <div class="col-md-3">
-          <p>Sponsored by:</p>
-          <!-- <p><img src="img/eclipse.svg" style="width:100px;"></p> -->
-          <p><img src="https://cdn.adlinktech.com/webupd/en/Upload/logo.png" style="width:100px;"></p>
-
-        </div>
-        <div class="col-md-3">
-
-            <ul class="ato-footer-links">
-                <li><a href="https://github.com/atolab/zenoh"> <i class="fa fa-github" aria-hidden="true"></i> GitHub</a></li>
-                <li><a href="/docs/overview/"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></li>
-              </ul>
-        </div>
-        <div class="col-md-3">
-            <p>Copyright &copy 2019 ADLINK Inc.</p>
-        </div>
-    </div>
-
-
+  <div class="container-fluid p-3 p-md-5">
+    <ul class="ato-footer-links">
+      <li><a href="https://github.com/atolab/zenoh">GitHub</a></li>
+      <li><a href="https://twitter.com/atolab_">Twitter</a></li>
+      <li><a href="https://github.com/atolab/zenoh-python/">Examples</a></li>
+      <li><a href="/docs/overview/">About</a></li>
+      <!-- <li><a href="/gsoc/">GSoC</a></li> -->
+    </ul>    
   </div>
-
-
 </footer>
 
 {{ partial "footer" . }}

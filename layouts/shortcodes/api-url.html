@@ -1,15 +1,15 @@
-{{- if eq (.Get 0) "ato" -}}
-{{- .Site.Params.atoDocsURL -}}
-{{- else if eq (.Get 0) "ato-executor" -}}
-{{- .Site.Params.atoExecutorDocsURL -}}
-{{- else if eq (.Get 0) "ato-io" -}}
-{{- .Site.Params.atoIoDocsURL -}}
-{{- else if eq (.Get 0) "ato-codec" -}}
-{{- .Site.Params.atoCodecDocsURL -}}
-{{- else if eq (.Get 0) "ato-reactor" -}}
-{{- .Site.Params.atoReactorDocsURL -}}
-{{- else if eq (.Get 0) "ato-timer" -}}
-{{- .Site.Params.atoTimerDocsURL -}}
+{{- if eq (.Get 0) "zenoh" -}}
+{{- .Site.Params.zenohDocsURL -}}
+{{- else if eq (.Get 0) "zenoh-executor" -}}
+{{- .Site.Params.zenohExecutorDocsURL -}}
+{{- else if eq (.Get 0) "zenoh-io" -}}
+{{- .Site.Params.zenohIoDocsURL -}}
+{{- else if eq (.Get 0) "zenoh-codec" -}}
+{{- .Site.Params.zenohCodecDocsURL -}}
+{{- else if eq (.Get 0) "zenoh-reactor" -}}
+{{- .Site.Params.zenohReactorDocsURL -}}
+{{- else if eq (.Get 0) "zenoh-timer" -}}
+{{- .Site.Params.zenohTimerDocsURL -}}
 {{- else if eq (.Get 0) "bytes" -}}
 {{- .Site.Params.bytesDocsURL -}}
 {{- else if eq (.Get 0) "core" -}}

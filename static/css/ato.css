@@ -1,8 +1,3 @@
-@font-face {
-  font-family: teacher;
-  src: url(/fonts/teacher.ttf);
-  }
-
 a {
   color: #438686;
 }
@@ -28,15 +23,15 @@ img {
 }
 
 .btn-outline-primary {
-  color: #09569e;
+  color: #336699;
   background-color: transparent;
   background-image: none;
-  border-color: #09569e;
+  border-color: #336699;
 }
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #09569e;
-  border-color: #09569e;
+  background-color: #3399CC;
+  border-color: #336699;
 }
 
 /*
@@ -51,8 +46,7 @@ img {
 }
 
 .ato-navbar {
-  /* background-color: #09569e; */
-  background-color: #374554;
+  background-color: #336699;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.05),inset 0 -1px 0 rgba(0,0,0,.1);
   position: -webkit-sticky;
   position: sticky;
@@ -441,17 +435,8 @@ img {
   max-width: 1000px;
 }
 
-.ato-text-logo {
-  font-family: teacher;
-  color: #3399CC;
-  font-size: 6rem;
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: 0.1rem;
-}
-
 .ato-masthead .ato-text-big {
-  font-size: 4rem;
+  font-size: 6rem;
   line-height: 1;
   font-weight: 700;
   letter-spacing: 0.1rem;
@@ -478,14 +463,14 @@ img {
 
 .btn-ato-primary {
   font-weight: 500;
-  color: #09569e;
-  border-color: #09569e;
+  color: #336699;
+  border-color: #336699;
 }
 
 .btn-ato-primary:active, .btn-ato-primary:hover {
-  color: #fff;
-  background-color: #09569e;
-  border-color: #09569e;
+  color: #fff;  
+  background-color: #336699;
+  border-color: #336699;
 }
 
 .masthead-followup .fa {
@@ -827,3 +812,18 @@ h5:hover a {
   background-color: rgba(208, 189, 236, .15) !important;
   */
 }
+
+@font-face {
+  font-family: teacher;
+  src: url(/fonts/teacher.ttf);
+  }
+
+.ato-text-logo {
+  font-family: teacher;
+  color: #3399CC;
+  font-size: 6rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+}
+  
