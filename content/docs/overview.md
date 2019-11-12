@@ -1,112 +1,34 @@
 ---
-title: "zenoh"
+title: "What is zenoh?"
 weight: 1
 menu: "docs"
 ---
 
+As a consequence of the widespread adoption of Cyber Physical Systems (CPS), the number of network connected devices is steadily increasingly as is (1) their heterogeneity with respect to computing, storage and communication capabilities and (2) the scale at which they produce and consume data. 
 
-Eclipse fog05 allows the end-to-end management of compute, storage,
-networking and I/O fabric in the Edge and Fog Environment.
-Instead of relying on a centralised architecture (like cloud-management-systems)
-it is based on a decentralised architecture.
+Thus, data exchange protocols face new needs with respect to vertical and horizontal scalability, support for constrained networks and devices with low duty cycle – in other terms devices that are disconnected/sleeping most of the time. 
 
-Eclipse fog05 allows users to manage and deploy different types of applications,
-packaged as containers, VMs, binaries and so on. This possibility is achieved
-thanks to Eclipse fog05 plugin architecture.
+Protocols used today to build these systems, such as MQTT, DDS, CoAP and HTTP were not designed with these needs in mind. As a result, architects and developers are forced into patchwork design in which multiple protocols are stitched together to provide some meaningful end-to-end semantics. 
 
+Over the past decades, out team  co-invented and built some of the communication infrastructures deployed today as part of telecommunication, aerospace and early Industrial Internet applications. It is with this baggage of experience that we came to the realization that a new protocol was needed – a protocol designed ground-up to address the needs of large scale CPS end-to-end. 
 
-More specifically, Eclipse fog05 is a Fog Infrastrucure-as-a-Service solution
-composed by two major components:
+<b>zenoh</b>  is the results of this reflections and it is today the only protocol we know of that provides unified abstractions for dealing with data in motion as well as data at rest with zero overhead. 
 
-* The Fog Orchestration Engine (FOrcE)
-* The Fog Infrastructure Manager (FIM)
-
-These components provides the abstractions to deploy your applications in the
-Fog and Edge environment.
-
-# Unified abstractions
-
-Common API and information model for management.
-Eclipse fog05 provides an unified API for the management of the virtualisation infrastructure.
-
-### Operating System Plugins
-Eclipse fog05 can run on different operating systems, it just need the
-right OS Plugin.
-
-
-### Networking Plugins
-Eclipse fog05 can manage networking fabrics for which a Netwoking plugin is
-present.
-
-# Heterogenous applications
-
-Support of heterogenous runtimes, hypervisors and networking.
-Deploy heterogenous applications composed by VMs, containers, ROS2, native applications.
-
-
-### Runtime Plugins
-Eclipse fog05 can manage and open-ended set of hypervisors and container
-technologies for which a Runtime Plugin was implemented.
-
-### Single Descriptor
-Eclipse fog05 allows you to define your application in a single descriptor.
-No matters if it is composed by heterogeneous components.
-
-
-# Lightweight
-
-Eclipse fog05 is designed to be deployed from big servers to micro-controllers.
-
-### Decentralised state
-
-Because Eclipse fog05 uses [YAKS](http://www.yaks.is/) for location-transparency state access and management.
-It can be deployed on resource constrained devices and leverage other nodes for state management.
-
-### Modular
-
-Eclipse fog05 is built with a plugin architecture and his components can be deployed separately.
-
-# Example
-
-A basic example of an LXD container descriptor that can be deployed by Eclipse fog05
-
-```json
-{
-    "id": "lxd_example_fdu",
-    "name": "test_1",
-    "computation_requirements": {
-        "cpu_arch": "x86_64",
-        "cpu_min_freq": 0,
-        "cpu_min_count": 1,
-        "ram_size_mb": 128.0,
-        "storage_size_gb": 5.0
-    },
-    "image": {
-        "uri": "lxd://alpine/edge",
-        "checksum": "",
-        "format": ""
-    },
-    "storage": [],
-    "hypervisor": "LXD",
-    "migration_kind": "COLD",
-    "interfaces": [
-        {
-            "name": "eth0",
-            "is_mgmt": false,
-            "if_type": "INTERNAL",
-            "mac_address": "be:ef:be:ef:00:01",
-            "virtual_interface": {
-                "intf_type": "BRIDGED",
-                "vpci": "lxdbr0",
-                "bandwidth": 10
-            }
-        }
-    ],
-    "io_ports": [],
-    "connection_points": [],
-    "depends_on": []
-}
-}
-```
-
-More examples can be found [here](https://github.com/atolab/fog05_demo).
+<b>zenoh</b> has been designed to:
+<ul> 
+    <li>
+        Minimize network overhead – the minimal wire overhead of a data message a data message is 4 bytes.
+    </li>
+    <li>
+        Support extremely constrained devices – its footprint on Arduino Uno is of 300 bytes.
+    </li>
+    <li>
+        Supports devices with low duty-cycle by allowing the negotiation of data exchange modes and schedules.
+    </li>
+    <li>
+        Provides a rich set of abstraction for distributing, querying and storing data along the entire system. 
+    </li>
+    <li> 
+        Provide extremely low latency and high throughput. We also provide analytical and empirical comparison of zenoh ’s efficiency against mainstream protocols such as DDS and MQTT.
+    </li>
+<ul>
