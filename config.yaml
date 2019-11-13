@@ -10,14 +10,14 @@ menu:
     - identifier: "getting_started"
       name: "Getting started"
       weight: 1000
+    - identifier: "tutorial"
+      name: "Tutorial"
+      weight: 2000  
     - identifier: "reference"
       name: "API documentation"
       url: "https://readthedocs.org/search/?q=zenoh"
       weight: 9000
 
-    # - identifier: "futures"
-    #   name: "Working with futures"
-    #   weight: 2000
     # - identifier: "io"
     #   name: "I/O with Tokio"
     #   weight: 3000
