@@ -183,7 +183,7 @@ concurrently!
 The full code can be found [here][full-code].
 
 [full-code]: https://github.com/zenoh-rs/zenoh/tree/v0.1.x/zenoh/examples/echo.rs
-[hello world]: {{< ref "/docs/getting-started/hello-world.md" >}}
+[your first app]: {{< ref "/docs/getting-started/first-app.md" >}}
 [`io::copy`]: {{< api-url "zenoh" >}}/io/fn.copy.html
 [`split`]: {{< api-url "zenoh" >}}/io/trait.AsyncRead.html#method.split
 [`zenoh::spawn`]: {{< api-url "zenoh-executor" >}}/fn.spawn.html

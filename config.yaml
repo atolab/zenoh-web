@@ -4,6 +4,8 @@ title: "zenoh - The Zero Overhead, Pub/sub, Query, and Compute Protocol."
 languageCode: "en-us"
 canonifyURLs: "true"
 # googleAnalytics: "UA-90234741-1"
+pygmentsCodefences: true
+pygmentsStyle: "manni"
 
 menu:
   docs:
