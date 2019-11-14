@@ -21,7 +21,7 @@ $ brew tap atolab/homebrew-atobin
 Then simply install zenoh as follows:
 
 ```bash
-$ brew install zenohd
+$ brew install zenoh
 ```
 
 ## Linux
