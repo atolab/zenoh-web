@@ -1,8 +1,6 @@
-# Tokio's Website
+# Zenoh's Website
 
-The website for the Tokio project. Lives at [https://zenoh.rs](https://zenoh.rs).
-
-[![Build Status](https://travis-ci.org/zenoh-rs/website.svg?branch=master)](https://travis-ci.org/zenoh-rs/website)
+The website for the zenoh project. Lives at [https://zenoh.io](https://zenoh.io).
 
 ## Getting Started
 
@@ -16,8 +14,8 @@ brew update && brew install hugo
 Then, get the website running locally:
 
 ```sh
-git clone https://github.com/zenoh-rs/website
-cd website
+git clone https://github.com/atolab/zenoh-web
+cd zenoh-web
 hugo server
 ```
 
@@ -25,10 +23,9 @@ Then visit [http://localhost:1313](http://localhost:1313).
 
 ## License
 
-This project is licensed under the [MIT license](LICENSE).
+This project is licensed under the [Apache License 2.0](LICENSE).
 
-### Contribution
+## Credits
 
-Unless you explicitly state otherwise, any contribution intentionally submitted
-for inclusion in Tokio by you, shall be licensed as MIT, without any additional
-terms or conditions.
+This website design is inspired from the [tokio-rs website](https://github.com/tokio-rs/website)
+which is licensed under [MIT License](LICENSE-tokio-rs).

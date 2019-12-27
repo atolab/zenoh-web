@@ -46,7 +46,7 @@ img {
 }
 
 .ato-navbar {
-  background-color: #336699;
+  background-color: #7da7d8;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.05),inset 0 -1px 0 rgba(0,0,0,.1);
   position: -webkit-sticky;
   position: sticky;
@@ -303,7 +303,8 @@ img {
 
 .ato-content h1 {
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: bold;
+  text-decoration-line: underline;
   margin-bottom: 0.75rem;
 }
 .ato-content h2 {
@@ -820,7 +821,7 @@ h5:hover a {
 
 .ato-text-logo {
   font-family: teacher;
-  color: #3399CC;
+  color: #3e73a6;
   font-size: 6rem;
   line-height: 1;
   font-weight: 700;

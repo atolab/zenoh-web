@@ -79,7 +79,7 @@ $ zenohd --help
 ```
 You should see the following output on your console:
 
-```
+```text
 zenohd(1)                        Zenohd Manual                       zenohd(1)
 
 
@@ -90,18 +90,21 @@ SYNOPSIS
        zenohd [OPTION]...
 
 OPTIONS
+       --<plugin_name>.<plugin_option>=<option_value>
+           Pass to the plugin with name '<plugin_name>' the option
+           --<plugin_option>=<option_value>. Example of usage:
+           --zenoh-storages.storage=/demo/example/**
+           --zenoh-http.httpport=8080
+
        --color=WHEN (absent=auto)
            Colorize the output. WHEN must be one of `auto', `always' or
            `never'.
 
        --help[=FMT] (default=auto)
-           Show this help in format FMT. The value FMT must be one of `auto',
-           `pager', `groff' or `plain'. With `auto', the format is `pager` or
-           `plain' whenever the TERM env var is `dumb' or undefined.
 [...]           
 ```
 # Pick Your Programming Language
-When you install the zeno infrastructure you will get installed the developer SDK for  [C](https://en.wikipedia.org/wiki/The_C_Programming_Language). Yet, zenoh already supports quite a few programming languages, below is the list of supported programming languages as well as links to the installation instruction:
+When you install the zenoh infrastructure you will get installed the developer SDK for  [C](https://en.wikipedia.org/wiki/The_C_Programming_Language). Yet, zenoh already supports quite a few programming languages, below is the list of supported programming languages as well as links to the installation instruction:
 
 - [Python SDK](https://github.com/atolab/zenoh-python)
 - [Java SDK](https://github.com/atolab/zenoh-java)

@@ -3,7 +3,6 @@ baseurl: "https://zenoh.io"
 title: "zenoh - The Zero Overhead, Pub/sub, Query, and Compute Protocol."
 languageCode: "en-us"
 canonifyURLs: "true"
-# googleAnalytics: "UA-90234741-1"
 pygmentsCodefences: true
 pygmentsStyle: "manni"
 
@@ -12,35 +11,7 @@ menu:
     - identifier: "getting_started"
       name: "Getting started"
       weight: 1000
-    - identifier: "tutorial"
-      name: "Tutorial"
+    - identifier: "manual"
+      name: "Reference manual"
       weight: 2000  
-    - identifier: "reference"
-      name: "API documentation"
-      url: "https://readthedocs.org/search/?q=zenoh"
-      weight: 9000
 
-    # - identifier: "io"
-    #   name: "I/O with Tokio"
-    #   weight: 3000
-    # - identifier: "going_deeper"
-    #   name: "Going deeper"
-    #   weight: 7000
-    # - identifier: "internals"
-    #   name: "Tokio internals"
-    #   weight: 8000
-
-
-# params:
-#   zenohDocsURL: "https://docs.rs/zenoh/0.1/zenoh"
-#   zenohExecutorDocsURL: "https://docs.rs/zenoh-executor/0.1/zenoh_executor"
-#   zenohIoDocsURL: "https://docs.rs/zenoh-io/0.1/zenoh_io"
-#   zenohCodecDocsURL: "https://docs.rs/zenoh-codec/0.1/zenoh_codec"
-#   zenohReactorDocsURL: "https://zenoh-rs.github.io/zenoh/zenoh_reactor/"
-#   zenohTimerDocsURL: "https://docs.rs/zenoh-timer/0.2"
-#   futuresDocsURL: "https://docs.rs/futures/0.1/futures"
-#   mioDocsURL: "https://docs.rs/mio/*/mio"
-#   coreDocsURL: "https://docs.rs/zenoh-core/0.1/zenoh_core"
-#   protoDocsURL: "https://zenoh-rs.github.io/zenoh-proto/zenoh_proto"
-#   serviceDocsURL: "https://zenoh-rs.github.io/zenoh-service/zenoh_service"
-#   bytesDocsURL: "https://docs.rs/bytes/0.4/bytes"
