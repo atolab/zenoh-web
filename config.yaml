@@ -1,6 +1,6 @@
 ---
 baseurl: "https://zenoh.io"
-title: "zenoh - The Zero Overhead, Pub/sub, Query, and Compute Protocol."
+title: "zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol."
 languageCode: "en-us"
 canonifyURLs: "true"
 pygmentsCodefences: true
