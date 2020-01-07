@@ -1,0 +1,17 @@
+---
+baseurl: "https://zenoh.io"
+title: "zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol."
+languageCode: "en-us"
+canonifyURLs: "true"
+pygmentsCodefences: true
+pygmentsStyle: "manni"
+
+menu:
+  docs:
+    - identifier: "getting_started"
+      name: "Getting started"
+      weight: 1000
+    - identifier: "manual"
+      name: "Reference manual"
+      weight: 2000  
+

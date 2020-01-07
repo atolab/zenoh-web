@@ -1,0 +1,51 @@
+{{ partial "header" . }}
+{{ $currentURL := .URL }}
+
+<div class="container-fluid ato-blog">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 ato-sidebar">
+      <!-- TODO: Remove with search bar -->
+      <div class="ato-docs-toggle d-md-none p-0 d-flex ml-3 collapsed align-item-center">
+        <h1 class="ato-title">{{ .Title }}</h1>
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#ato-docs-nav" aria-controls="ato-docs-nav" aria-expanded="false" aria-label="Toggle docs navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" focusable="false"><title>Menu</title><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"></path></svg>
+        </button>
+      </div>
+      <nav class="ato-links collapse" id="ato-docs-nav">
+          <div class="ato-toc-item active">
+            <p class="ato-toc-link">
+              Blog Posts
+            </p>
+            <ul class="nav ato-sidenav">
+              {{ $currentPage := . }}
+              {{ range .Site.Menus.blog }}
+                  <li><a href="{{ .URL }}" class="{{ if $currentPage.IsMenuCurrent "blog" . }}active{{ end }}">{{ .Name }}</a></li>
+              {{ end }}
+            </ul>
+          </div>
+      </nav>
+    </div>
+    <div class="d-none d-xl-block col-xl-2 ato-toc">
+      <div class="section-nav">
+        {{ .TableOfContents }}
+      </div>
+
+    </div>
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 ato-content ato-docs">
+      <h1 class="ato-title">{{ .Title }}</h1>
+      <p class="ato-date">{{ .Description }}</p>
+      <!-- <h1 class="ato-title" id="content">Navbar</h1> -->
+      {{ .Content }}
+      <!-- Yes, we have to use *Prev* to get the next content, because the
+      weights are sorted inversely to how they are actually displayed... -->
+
+      {{ with .Next }}
+        <div class="ato-next">
+          <b>Next up</b>: <a href ="{{ .URL }}">{{ .Title }}</a>
+        </div>
+      {{ end }}
+    </main>
+  </div>
+</div>
+
+{{ partial "footer" . }}
