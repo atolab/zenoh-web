@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on zenoh</title>
-    <link>http://zenoh.io/categories/</link>
-    <description>Recent content in Categories on zenoh</description>
+    <title>Categories on zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</title>
+    <link>https://zenoh.io/categories/</link>
+    <description>Recent content in Categories on zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="http://zenoh.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://zenoh.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>

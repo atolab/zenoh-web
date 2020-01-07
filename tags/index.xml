@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on zenoh</title>
-    <link>http://zenoh.io/tags/</link>
-    <description>Recent content in Tags on zenoh</description>
+    <title>Tags on zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</title>
+    <link>https://zenoh.io/tags/</link>
+    <description>Recent content in Tags on zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="http://zenoh.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://zenoh.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>C</title>
-      <link>http://zenoh.io/tags/c/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://zenoh.io/tags/c/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>

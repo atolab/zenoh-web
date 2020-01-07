@@ -3,64 +3,66 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://zenoh.io/project/zeno-he/</loc>
+    <loc>https://zenoh.io/docs/overview/</loc>
   </url>
   
   <url>
-    <loc>http://zenoh.io/post/llz/</loc>
-    <lastmod>2018-03-23T09:14:43+01:00</lastmod>
+    <loc>https://zenoh.io/blog/2020-01-01-zenohtude/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zenoh.io/post/the-proposal/</loc>
-    <lastmod>2017-12-08T13:21:08+01:00</lastmod>
+    <loc>https://zenoh.io/docs/getting-started/installation/</loc>
   </url>
   
   <url>
-    <loc>http://zenoh.io/post/zenoh-spec/</loc>
-    <lastmod>2017-12-08T12:21:08+01:00</lastmod>
+    <loc>https://zenoh.io/docs/getting-started/first-app/</loc>
   </url>
   
   <url>
-    <loc>http://zenoh.io/post/xrce/</loc>
-    <lastmod>2017-11-09T19:40:21+01:00</lastmod>
+    <loc>https://zenoh.io/docs/manual/abstractions/</loc>
   </url>
   
   <url>
-    <loc>http://zenoh.io/post/welcome/</loc>
-    <lastmod>2017-11-09T19:29:03+01:00</lastmod>
+    <loc>https://zenoh.io/docs/manual/backends/</loc>
   </url>
   
   <url>
-    <loc>http://zenoh.io/tags/c/</loc>
-    <priority>0</priority>
+    <loc>https://zenoh.io/docs/apis/apis/</loc>
   </url>
   
   <url>
-    <loc>http://zenoh.io/categories/</loc>
-    <priority>0</priority>
+    <loc>https://zenoh.io/blog/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zenoh.io/post/</loc>
-    <lastmod>2018-03-23T09:14:43+01:00</lastmod>
-    <priority>0</priority>
+    <loc>https://zenoh.io/</loc>
+    <lastmod>2020-01-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://zenoh.io/project/</loc>
-    <priority>0</priority>
+    <loc>https://zenoh.io/categories/</loc>
   </url>
   
   <url>
-    <loc>http://zenoh.io/tags/</loc>
-    <priority>0</priority>
+    <loc>https://zenoh.io/community/</loc>
   </url>
   
   <url>
-    <loc>http://zenoh.io/</loc>
-    <lastmod>2018-03-23T09:14:43+01:00</lastmod>
-    <priority>0</priority>
+    <loc>https://zenoh.io/docs/</loc>
+  </url>
+  
+  <url>
+    <loc>https://zenoh.io/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>https://zenoh.io/community/</loc>
+  </url>
+  
+  <url>
+    <loc>https://zenoh.io/community/third-party/</loc>
   </url>
   
 </urlset>

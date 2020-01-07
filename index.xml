@@ -1,79 +1,116 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>zenoh</title>
-    <link>http://zenoh.io/</link>
-    <description>Recent content on zenoh</description>
+    <title>zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</title>
+    <link>https://zenoh.io/</link>
+    <description>Recent content on zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Mar 2018 09:14:43 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://zenoh.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://zenoh.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>zeno-he</title>
-      <link>http://zenoh.io/project/zeno-he/</link>
+      <title>What is zenoh?</title>
+      <link>https://zenoh.io/docs/overview/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://zenoh.io/project/zeno-he/</guid>
-      <description>zeno-he (zhe for short) is a compact implementation of the zenoh protocol that does not depend on dynamic allocation or threading. Instead, it is a non-blocking implementation that assumes single threaded use with polling, and a system that can be sized at compile time. Zhe can be configured to operate in peer-to-peer mode or to operate as a client that relies on a broker.
-Zhe does not call any operating system functions directly (its use of the standard library functions is currently limited to string.</description>
+      <guid>https://zenoh.io/docs/overview/</guid>
+      <description>With the steady increase in the number of network connected devices we are experiencing a new level of heterogeneity with respect to computing, storage and communication capabilities, as well as new challenges with respect to the scale at which data is produced and needs to be consumed.
+Additionally, for performance, efficiency and privacy reasons, there is an increasing desire to keep the data processing as close as possible to the source, while at the same time not hindering access to geographically remote applications.</description>
     </item>
     
     <item>
-      <title>XRCE is dead. Long live zenoh</title>
-      <link>http://zenoh.io/post/llz/</link>
-      <pubDate>Fri, 23 Mar 2018 09:14:43 +0100</pubDate>
+      <title>A Year Full of Zenoh</title>
+      <link>https://zenoh.io/blog/2020-01-01-zenohtude/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://zenoh.io/post/llz/</guid>
-      <description>Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better.
-― Edsger W. Dijkstra
-Yesterday was an incredibly sad day. Of the two proposals that had been submitted in response to the DDS-XRCE RFP &amp;ndash; one of those being zenoh &amp;ndash; the alternative proposal was recommended by the evaluation team setup by the task-force in November 2017.</description>
+      <guid>https://zenoh.io/blog/2020-01-01-zenohtude/</guid>
+      <description>First of all we would like to take a moment to wish all of you a 2020 filled with joy, health, peace and success.
+This year marks a very important landmark for us. After having kicked-off the Eclipse Edge Native working group, last December, we are bringing zenoh to Eclipse and are starting to work a Rust rewrite of the zenoh router. As part for the rewrite we have just about to complete a review of the zenoh protocol and will be updating the specification accordingly in the weeks to come.</description>
     </item>
     
     <item>
-      <title>The Proposal</title>
-      <link>http://zenoh.io/post/the-proposal/</link>
-      <pubDate>Fri, 08 Dec 2017 13:21:08 +0100</pubDate>
+      <title>Installation</title>
+      <link>https://zenoh.io/docs/getting-started/installation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://zenoh.io/post/the-proposal/</guid>
-      <description>Dear all,
-I wanted to share with the ROS community the proposal we made yesterday afternoon to other DDS vendors, the OMG MARS Taskforce and the XRCE evaluation team on a possible way forward.
-Before articulating the proposal let me give some context.
-As a result of the XRCE standardisation process we need to select one of the proposals (our proposal is available here). On the ROS mailing list we have discussed few aspects of the protocol and @gbiggs provides here above a good and independent analysis on the two proposals with Erik and myself clarifying a few points here and here respectively.</description>
+      <guid>https://zenoh.io/docs/getting-started/installation/</guid>
+      <description>To get up and running with zenoh you will have to install the infrastructure and then get hold of the API you would like to use to write your applications.
+Installing zenoh&amp;rsquo;s Infrastructure At the present stage zenoh&amp;rsquo;s infrastructure is supported only on Linux and MacOS. Below are the detailed information on how to install on supported platforms.
+MacOS The first step is to tap our brew package repository:</description>
     </item>
     
     <item>
-      <title>Zenoh Spec</title>
-      <link>http://zenoh.io/post/zenoh-spec/</link>
-      <pubDate>Fri, 08 Dec 2017 12:21:08 +0100</pubDate>
+      <title>Your First zenoh app</title>
+      <link>https://zenoh.io/docs/getting-started/first-app/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://zenoh.io/post/zenoh-spec/</guid>
-      <description>The the zenoh protocol specification available for download.
-Good reading!
-The ATOLab Team!</description>
+      <guid>https://zenoh.io/docs/getting-started/first-app/</guid>
+      <description>Getting started with zenoh is quite straightforward. Below we will show you how to create a simple telemetry application. Let&amp;rsquo;s assume that we have some sensor, say a temperature sensor, and we want to store this temperature into a zenoh storage. Later on, we want to retrieve this temperature from the zenoh storage.
+Before cranking some code, let&amp;rsquo;s define some terminology.
+zenoh deals with keys/values where each key is a path and is associated to a value.</description>
     </item>
     
     <item>
-      <title>XRCE vs zenoh</title>
-      <link>http://zenoh.io/post/xrce/</link>
-      <pubDate>Thu, 09 Nov 2017 19:40:21 +0100</pubDate>
+      <title>Abstractions</title>
+      <link>https://zenoh.io/docs/manual/abstractions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://zenoh.io/post/xrce/</guid>
-      <description>At the present time there is an undergoing standardisation effort to standardise a protocol for eXtremely Resource Constrained Environments (XRCE). Beside staring the standardisation process we have submitted a proposal that is quite different from competings into two respects. First it supports peer-to-peer as well as brokered communication. Second it is a few times more efficient in time and space than competing submissions.
-While technically zenoh implements our XRCE proposal, considered that the standard has not been adopted yet we prefer to refer to the protocol using its code name &amp;ndash; zenoh.</description>
+      <guid>https://zenoh.io/docs/manual/abstractions/</guid>
+      <description>Zenoh is a distributed service to define, manage and operate on key/value spaces.
+The key abstractions at the core of zenoh are the following:
+Key Zenoh uses paths as keys. In all zenoh documentations, &amp;ldquo;key&amp;rdquo; and &amp;ldquo;path&amp;rdquo; are synonym.
+Path A set of strings separated by &#39;/&#39; , as in a filesystem path. A Path cannot contain any &#39;*&#39; character.
+Examples of paths: /demo/example/test , /com/adlink/building/fr/floor/1/office/2 &amp;hellip;
+A path can be absolute (i.</description>
     </item>
     
     <item>
-      <title>Welcome</title>
-      <link>http://zenoh.io/post/welcome/</link>
-      <pubDate>Thu, 09 Nov 2017 19:29:03 +0100</pubDate>
+      <title>Zenoh backends</title>
+      <link>https://zenoh.io/docs/manual/backends/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://zenoh.io/post/welcome/</guid>
-      <description>Today we are releasing zenoh (zero network overhead) data-sharing protocol as Open Source under an Apache 2 license. This release features a peer-to-peer implementaion that can run in 1Kbyte of RAM and has a wire overhead of 4-bytes!
-You can check out the code from github and follow the build instructions to get started. We will provide installable packages in due time.
-Finally, it is worth mentioning that we release the a brokering system by the end of the year &amp;ndash; stay tuned!</description>
+      <guid>https://zenoh.io/docs/manual/backends/</guid>
+      <description>Here is the list of the supported backends and their expected properties:
+ at initialization. I.e. the properties to give to the Admin space when adding the backend. at storage creation. I.e. the properties to give to the Admin space when adding the storage.  Memory A backend using zenoh main memory. It&amp;rsquo;s not persistent: as soon as the zenoh router stops, all the keys/values stored in this backend are lost.</description>
+    </item>
+    
+    <item>
+      <title>API documentations</title>
+      <link>https://zenoh.io/docs/apis/apis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://zenoh.io/docs/apis/apis/</guid>
+      <description>All the client APIs documentations are avaliable on Read the Docs:
+Python https://readthedocs.org/projects/zenoh-python/
+Java https://readthedocs.org/projects/zenoh-java/
+Go https://readthedocs.org/projects/zenoh-go/
+REST API Zenoh also offers a REST API via the zenoh-http plugin. When starting zenoh with default options, this HTTP plugin is automatically started on port 8000 and ready to answer HTTP requests.
+The full zenoh key/value space is accessible via this REST API, including the Admin space.
+GET Binds to the get(selector) operation on zenoh.</description>
+    </item>
+    
+    <item>
+      <title>The zenoh Community</title>
+      <link>https://zenoh.io/community/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://zenoh.io/community/</guid>
+      <description>Communication The zenoh community is most readily found on its gitter channel, where you&amp;rsquo;re welcome to ask questions, report problems, or pitch ideas.
+Issues Github is used for tracking issues. The primary location for these is the main zenoh repository.
+If you&amp;rsquo;re a zenoh user, you&amp;rsquo;re highly encouraged to keep an eye on these issues and jump in on the discussions, to help us understand how design tradeoffs might affect you.</description>
+    </item>
+    
+    <item>
+      <title>Third-party crates</title>
+      <link>https://zenoh.io/community/third-party/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://zenoh.io/community/third-party/</guid>
+      <description>Currently the futures, zenoh-core, zenoh-service, and zenoh-proto crates provide the foundation for the Tokio ecosystem. There&amp;rsquo;s a growing set of crates outside of Tokio itself, however, filling in more functionality!
+ zenoh-curl is an HTTP client library backed by the libcurl C library. zenoh-timer is a timer library providing finer-grained control over timers and helpful timeout facilities over the types in zenoh-core. zenoh-tls is a library for TLS streams backed by native-tls.</description>
     </item>
     
   </channel>
