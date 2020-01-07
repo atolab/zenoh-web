@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Docs on zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</title>
-    <link>https://zenoh.io/docs/</link>
+    <link>/docs/</link>
     <description>Recent content in Docs on zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="https://zenoh.io/docs/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/docs/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>What is zenoh?</title>
-      <link>https://zenoh.io/docs/overview/</link>
+      <link>/docs/overview/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://zenoh.io/docs/overview/</guid>
+      <guid>/docs/overview/</guid>
       <description>With the steady increase in the number of network connected devices we are experiencing a new level of heterogeneity with respect to computing, storage and communication capabilities, as well as new challenges with respect to the scale at which data is produced and needs to be consumed.
 Additionally, for performance, efficiency and privacy reasons, there is an increasing desire to keep the data processing as close as possible to the source, while at the same time not hindering access to geographically remote applications.</description>
     </item>
     
     <item>
       <title>Installation</title>
-      <link>https://zenoh.io/docs/getting-started/installation/</link>
+      <link>/docs/getting-started/installation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://zenoh.io/docs/getting-started/installation/</guid>
+      <guid>/docs/getting-started/installation/</guid>
       <description>To get up and running with zenoh you will have to install the infrastructure and then get hold of the API you would like to use to write your applications.
 Installing zenoh&amp;rsquo;s Infrastructure At the present stage zenoh&amp;rsquo;s infrastructure is supported only on Linux and MacOS. Below are the detailed information on how to install on supported platforms.
 MacOS The first step is to tap our brew package repository:</description>
@@ -33,10 +33,10 @@ MacOS The first step is to tap our brew package repository:</description>
     
     <item>
       <title>Your First zenoh app</title>
-      <link>https://zenoh.io/docs/getting-started/first-app/</link>
+      <link>/docs/getting-started/first-app/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://zenoh.io/docs/getting-started/first-app/</guid>
+      <guid>/docs/getting-started/first-app/</guid>
       <description>Getting started with zenoh is quite straightforward. Below we will show you how to create a simple telemetry application. Let&amp;rsquo;s assume that we have some sensor, say a temperature sensor, and we want to store this temperature into a zenoh storage. Later on, we want to retrieve this temperature from the zenoh storage.
 Before cranking some code, let&amp;rsquo;s define some terminology.
 zenoh deals with keys/values where each key is a path and is associated to a value.</description>
@@ -44,10 +44,10 @@ zenoh deals with keys/values where each key is a path and is associated to a val
     
     <item>
       <title>Abstractions</title>
-      <link>https://zenoh.io/docs/manual/abstractions/</link>
+      <link>/docs/manual/abstractions/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://zenoh.io/docs/manual/abstractions/</guid>
+      <guid>/docs/manual/abstractions/</guid>
       <description>Zenoh is a distributed service to define, manage and operate on key/value spaces.
 The key abstractions at the core of zenoh are the following:
 Key Zenoh uses paths as keys. In all zenoh documentations, &amp;ldquo;key&amp;rdquo; and &amp;ldquo;path&amp;rdquo; are synonym.
@@ -58,20 +58,20 @@ A path can be absolute (i.</description>
     
     <item>
       <title>Zenoh backends</title>
-      <link>https://zenoh.io/docs/manual/backends/</link>
+      <link>/docs/manual/backends/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://zenoh.io/docs/manual/backends/</guid>
+      <guid>/docs/manual/backends/</guid>
       <description>Here is the list of the supported backends and their expected properties:
  at initialization. I.e. the properties to give to the Admin space when adding the backend. at storage creation. I.e. the properties to give to the Admin space when adding the storage.  Memory A backend using zenoh main memory. It&amp;rsquo;s not persistent: as soon as the zenoh router stops, all the keys/values stored in this backend are lost.</description>
     </item>
     
     <item>
       <title>API documentations</title>
-      <link>https://zenoh.io/docs/apis/apis/</link>
+      <link>/docs/apis/apis/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://zenoh.io/docs/apis/apis/</guid>
+      <guid>/docs/apis/apis/</guid>
       <description>All the client APIs documentations are avaliable on Read the Docs:
 Python https://readthedocs.org/projects/zenoh-python/
 Java https://readthedocs.org/projects/zenoh-java/

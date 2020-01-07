@@ -3,66 +3,66 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://zenoh.io/docs/overview/</loc>
+    <loc>/docs/overview/</loc>
   </url>
   
   <url>
-    <loc>https://zenoh.io/blog/2020-01-01-zenohtude/</loc>
+    <loc>/blog/2020-01-01-zenohtude/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://zenoh.io/docs/getting-started/installation/</loc>
+    <loc>/docs/getting-started/installation/</loc>
   </url>
   
   <url>
-    <loc>https://zenoh.io/docs/getting-started/first-app/</loc>
+    <loc>/docs/getting-started/first-app/</loc>
   </url>
   
   <url>
-    <loc>https://zenoh.io/docs/manual/abstractions/</loc>
+    <loc>/docs/manual/abstractions/</loc>
   </url>
   
   <url>
-    <loc>https://zenoh.io/docs/manual/backends/</loc>
+    <loc>/docs/manual/backends/</loc>
   </url>
   
   <url>
-    <loc>https://zenoh.io/docs/apis/apis/</loc>
+    <loc>/docs/apis/apis/</loc>
   </url>
   
   <url>
-    <loc>https://zenoh.io/blog/</loc>
+    <loc>/blog/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://zenoh.io/</loc>
+    <loc>/</loc>
     <lastmod>2020-01-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://zenoh.io/categories/</loc>
+    <loc>/categories/</loc>
   </url>
   
   <url>
-    <loc>https://zenoh.io/community/</loc>
+    <loc>/community/</loc>
   </url>
   
   <url>
-    <loc>https://zenoh.io/docs/</loc>
+    <loc>/docs/</loc>
   </url>
   
   <url>
-    <loc>https://zenoh.io/tags/</loc>
+    <loc>/tags/</loc>
   </url>
   
   <url>
-    <loc>https://zenoh.io/community/</loc>
+    <loc>/community/</loc>
   </url>
   
   <url>
-    <loc>https://zenoh.io/community/third-party/</loc>
+    <loc>/community/third-party/</loc>
   </url>
   
 </urlset>
