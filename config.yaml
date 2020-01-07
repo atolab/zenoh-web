@@ -1,5 +1,5 @@
 ---
-baseurl: "https://zenoh.io"
+# baseurl: ""
 title: "zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol."
 languageCode: "en-us"
 canonifyURLs: "true"
