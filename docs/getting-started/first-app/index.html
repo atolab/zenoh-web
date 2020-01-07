@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="apple-touch-icon" sizes="180x180" href="https://zenoh.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://zenoh.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://zenoh.io/favicon-16x16.png">
+    <link rel="manifest" href="https://zenoh.io/site.webmanifest">
+    <link rel="mask-icon" href="https://zenoh.io/safari-pinned-tab.png" color="#7da7d8">
+    <meta name="msapplication-TileColor" content="#7da7d8">
+    <meta name="theme-color" content="#7da7d8">
+
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    
+    <link rel="stylesheet" href="https://zenoh.io/css/bootstrap-reboot.css">
+    <link rel="stylesheet" href="https://zenoh.io/css/bootstrap.css">
+    <link rel="stylesheet" href="https://zenoh.io/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://zenoh.io/css/ato.css">
+    <link rel="stylesheet" href="https://zenoh.io/css/syntax.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
+
+    
+    <link rel="alternate" type="application/rss+xml" href="https://zenoh.io/blog/index.xml" />
+
+    <title>
+      
+        Your First zenoh app · zenoh
+      
+    </title>
+  </head>
+  <body>
+    <header class="navbar navbar-expand navbar-dark flex-column flex-md-row ato-navbar">
+      <a class="navbar-brand" href="https://zenoh.io/">
+        <img src="https://zenoh.io/img/zenoh-dragon-bg.png" class="align-middle" alt="">
+      </a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link " href="https://zenoh.io/">Home</a>
+          </li>
+          <li class="nav-item">
+            
+            
+            
+            <a class="nav-link  active " href="https://zenoh.io/docs/getting-started/installation/">Documentation</a>
+          </li>
+          <li class="nav-item">
+            
+            <a class="nav-link " href="https://zenoh.io/community/">Community</a>
+          </li>
+          <li class="nav-item">
+            
+            
+            <a class="nav-link " href="https://zenoh.io/blog/2020-01-01-zenohtude/">Blog</a>
+          </li>
+        </ul>
+      </div>
+
+      <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+        <li class="nav-item">
+          <a class="nav-link p-2" href="https://github.com/atolab/zenoh" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg class="navbar-nav-svg" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 499.36" focusable="false"><title>GitHub</title><path d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z" fill="currentColor" fill-rule="evenodd"/></svg>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link p-2" href="https://twitter.com/atolab_" target="_blank" rel="noopener" aria-label="Twitter">
+            <svg class="navbar-nav-svg" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 416.32" focusable="false"><title>Twitter</title><path d="M160.83 416.32c193.2 0 298.92-160.22 298.92-298.92 0-4.51 0-9-.2-13.52A214 214 0 0 0 512 49.38a212.93 212.93 0 0 1-60.44 16.6 105.7 105.7 0 0 0 46.3-58.19 209 209 0 0 1-66.79 25.37 105.09 105.09 0 0 0-181.73 71.91 116.12 116.12 0 0 0 2.66 24c-87.28-4.3-164.73-46.3-216.56-109.82A105.48 105.48 0 0 0 68 159.6a106.27 106.27 0 0 1-47.53-13.11v1.43a105.28 105.28 0 0 0 84.21 103.06 105.67 105.67 0 0 1-47.33 1.84 105.06 105.06 0 0 0 98.14 72.94A210.72 210.72 0 0 1 25 370.84a202.17 202.17 0 0 1-25-1.43 298.85 298.85 0 0 0 160.83 46.92" fill="currentColor"/></svg>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link p-2" href="https://gitter.im/atolab/zenoh" target="_blank" rel="noopener" aria-label="Gitter">
+            <svg class="navbar-nav-svg" xmlns="http://www.w3.org/2000/svg" focusable="false"><title>Gitter</title><path fill="currentColor" d="M8.501 4.001H10.5V24H8.501V4.001zm6.999 0V24h-2V4.001h2zM3.5 0h2.001v15H3.5V0zm15 4.001h2V15h-2V4.001z"/></svg>
+          </a>
+        </li>
+      </ul>
+    </header>
+
+
+
+<div class="container-fluid ato-docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 ato-sidebar">
+      <form class="ato-search d-flex align-items-center">
+        <span class="algolia-autocomplete algolia-autocomplete-left" style="position: relative; display: inline-block; direction: ltr;">
+          <input class="form-control ds-input" id="search-input" placeholder="Search..." autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-owns="algolia-autocomplete-listbox-0" style="position: relative; vertical-align: top;" dir="auto" type="search">
+          <pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: normal; text-indent: 0px; text-rendering: optimizelegibility; text-transform: none;">w</pre>
+          <span class="ds-dropdown-menu ds-with-1" style="position: absolute; top: 100%; left: 0px; z-index: 100; right: auto; display: none;" role="listbox" id="algolia-autocomplete-listbox-0">
+            <div class="ds-dataset-1"></div>
+          </span>
+        </span>
+        <button class="btn btn-link ato-search-docs-toggle d-md-none p-0 ml-3" type="button" data-toggle="collapse" data-target="#ato-docs-nav" aria-controls="ato-docs-nav" aria-expanded="false" aria-label="Toggle docs navigation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" focusable="false">
+            <title>Menu</title><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"></path></svg>
+        </button>
+      </form>
+
+      <nav class="ato-links collapse" id="ato-docs-nav">
+          
+          
+            
+              <div class="ato-toc-item">
+                <a class="ato-toc-link" href="https://zenoh.io/docs/overview/">
+                  What is zenoh?
+                </a>
+              </div>
+            
+          
+            
+              
+              <div class="ato-toc-item active">
+                <a class="ato-toc-link" href="https://zenoh.io/docs/getting-started/installation/">
+                  Getting started
+                </a>
+                <ul class="nav ato-sidenav">
+                
+                  <li><a href="https://zenoh.io/docs/getting-started/installation/" class="">Installation</a></li>
+                
+                  <li><a href="https://zenoh.io/docs/getting-started/first-app/" class="active">Your First zenoh app</a></li>
+                
+                </ul>
+              </div>
+            
+          
+            
+              
+              <div class="ato-toc-item ">
+                <a class="ato-toc-link" href="https://zenoh.io/docs/manual/abstractions/">
+                  Reference manual
+                </a>
+                <ul class="nav ato-sidenav">
+                
+                  <li><a href="https://zenoh.io/docs/manual/abstractions/" class="">Abstractions</a></li>
+                
+                  <li><a href="https://zenoh.io/docs/manual/backends/" class="">Zenoh backends</a></li>
+                
+                </ul>
+              </div>
+            
+          
+            
+              <div class="ato-toc-item">
+                <a class="ato-toc-link" href="https://zenoh.io/docs/apis/apis/">
+                  API documentations
+                </a>
+              </div>
+            
+          
+      </nav>
+    </div>
+    <div class="d-none d-xl-block col-xl-2 ato-toc">
+      <div class="section-nav">
+        <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#zenoh-programming-in-python">zenoh Programming in Python</a></li>
+<li><a href="#other-code-examples">Other code examples</a></li>
+</ul></li>
+</ul>
+</nav>
+      </div>
+    </div>
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 ato-content ato-docs">
+      <h1 class="ato-title">Your First zenoh app</h1>
+      <div class="github-edit">
+        <a class="fa fa-github" href="https://github.com/atolab/zenoh-web/tree/master/content/docs/getting-started/first-app.md"> Edit on GitHub</a>
+      </div>
+      
+
+<p>Getting started with zenoh is quite straightforward. Below we will show you how to create a simple telemetry application. Let&rsquo;s assume that we have some sensor, say a temperature sensor, and we want to store this temperature into a zenoh storage. Later on, we want to retrieve this temperature from the zenoh storage.</p>
+
+<p>Before cranking some code, let&rsquo;s define some terminology.</p>
+
+<p><b>zenoh</b> deals with <i>keys/values</i> where each key is a <i>path</i> and is associated to a <i>value</i>. A path looks like just a Unix file system path, such as <code>/myhome/kitchen/temp</code>. The value can be defined with different
+encodings (string, JSON, raw bytes buffer&hellip;).</p>
+
+<p>To query the values stored by zenoh, we use <i>selectors</i>. As the name suggest, a <i>selector</i> can uses wildcards, such as <b>*</b> and <b>**</b> to represent a set of paths, such as, <code>/myhome/*/temp</code>.</p>
+
+<p>Let&rsquo;s get started!</p>
+
+<h2 id="zenoh-programming-in-python">zenoh Programming in Python</h2>
+
+<p>By default, a zenoh router starts without any storage. In order to store the temperature, we need to add one.
+The code below create a storage in zenoh memory that will store any key starting with <code>/myhome/</code>:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#069;font-weight:bold">from</span> <span style="color:#0cf;font-weight:bold">zenoh</span> <span style="color:#069;font-weight:bold">import</span> Zenoh
+
+<span style="color:#069;font-weight:bold">if</span> __name__ <span style="color:#555">==</span> <span style="color:#c30">&#34;__main__&#34;</span>:        
+    z <span style="color:#555">=</span> Zenoh<span style="color:#555">.</span>login(None)
+    z<span style="color:#555">.</span>admin()<span style="color:#555">.</span>add_storage(<span style="color:#c30">&#39;mystorage&#39;</span>, {<span style="color:#c30">&#39;selector&#39;</span>: <span style="color:#c30">&#39;/myhome/**&#39;</span>})</code></pre></div>
+<p>Now let&rsquo;s write an application that will produce temperature measurements at each second:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#069;font-weight:bold">from</span> <span style="color:#0cf;font-weight:bold">zenoh</span> <span style="color:#069;font-weight:bold">import</span> Zenoh, Encoding, Value
+<span style="color:#069;font-weight:bold">import</span> <span style="color:#0cf;font-weight:bold">random</span>
+<span style="color:#069;font-weight:bold">import</span> <span style="color:#0cf;font-weight:bold">time</span>
+
+random<span style="color:#555">.</span>seed()
+
+<span style="color:#069;font-weight:bold">def</span> <span style="color:#c0f">read_temp</span>():
+    <span style="color:#069;font-weight:bold">return</span> random<span style="color:#555">.</span>randint(<span style="color:#f60">15</span>, <span style="color:#f60">30</span>)    
+
+<span style="color:#069;font-weight:bold">def</span> <span style="color:#c0f">run_sensor_loop</span>(w):
+    <span style="color:#09f;font-style:italic"># read and produce e temperature every second</span>
+    <span style="color:#069;font-weight:bold">while</span> True:
+        t <span style="color:#555">=</span> read_temp()
+        w<span style="color:#555">.</span>put(<span style="color:#c30">&#39;/myhome/kitcken/temp&#39;</span>, Value(<span style="color:#366">str</span>(t), encoding<span style="color:#555">=</span>Encoding<span style="color:#555">.</span>STRING))
+        time<span style="color:#555">.</span>sleep(<span style="color:#f60">1</span>)
+
+<span style="color:#069;font-weight:bold">if</span> __name__ <span style="color:#555">==</span> <span style="color:#c30">&#34;__main__&#34;</span>:        
+    z <span style="color:#555">=</span> Zenoh<span style="color:#555">.</span>login(None)
+    w <span style="color:#555">=</span> z<span style="color:#555">.</span>workspace(<span style="color:#c30">&#39;/&#39;</span>)
+    run_sensor_loop(w)</code></pre></div>
+<p>Below is the application that will retrieve the latest temperature value stored in zenoh:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#069;font-weight:bold">from</span> <span style="color:#0cf;font-weight:bold">zenoh</span> <span style="color:#069;font-weight:bold">import</span> Zenoh
+
+<span style="color:#069;font-weight:bold">if</span> __name__ <span style="color:#555">==</span> <span style="color:#c30">&#34;__main__&#34;</span>:        
+    z <span style="color:#555">=</span> Zenoh<span style="color:#555">.</span>login(None)
+    w <span style="color:#555">=</span> z<span style="color:#555">.</span>workspace(<span style="color:#c30">&#39;/&#39;</span>)
+    results <span style="color:#555">=</span> w<span style="color:#555">.</span>get(<span style="color:#c30">&#39;/myhome/kitcken/temp&#39;</span>)
+    key, value <span style="color:#555">=</span> results[<span style="color:#f60">0</span>]<span style="color:#555">.</span>path, results[<span style="color:#f60">0</span>]<span style="color:#555">.</span>value
+    <span style="color:#069;font-weight:bold">print</span>(<span style="color:#c30">&#39;  {} : {}&#39;</span><span style="color:#555">.</span>format(key, value))</code></pre></div>
+<p>Finally, if ever we want to receive the temperatures in direct from the publisher,
+without querying the zenoh storage, we can use a subscriber:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#069;font-weight:bold">from</span> <span style="color:#0cf;font-weight:bold">zenoh</span> <span style="color:#069;font-weight:bold">import</span> Zenoh, ChangeKind
+<span style="color:#069;font-weight:bold">import</span> <span style="color:#0cf;font-weight:bold">time</span>
+
+<span style="color:#069;font-weight:bold">def</span> <span style="color:#c0f">listener</span>(changes):
+    <span style="color:#069;font-weight:bold">for</span> change <span style="color:#000;font-weight:bold">in</span> changes:
+        <span style="color:#069;font-weight:bold">if</span> change<span style="color:#555">.</span>get_kind() <span style="color:#555">==</span> ChangeKind<span style="color:#555">.</span>PUT:
+            <span style="color:#069;font-weight:bold">print</span>(<span style="color:#c30">&#39;Publication received: &#34;{}&#34; = &#34;{}&#34;&#39;</span>
+                  <span style="color:#555">.</span>format(change<span style="color:#555">.</span>get_path(), change<span style="color:#555">.</span>get_value()))
+
+<span style="color:#069;font-weight:bold">if</span> __name__ <span style="color:#555">==</span> <span style="color:#c30">&#34;__main__&#34;</span>:        
+    z <span style="color:#555">=</span> Zenoh<span style="color:#555">.</span>login(None)
+    w <span style="color:#555">=</span> z<span style="color:#555">.</span>workspace(<span style="color:#c30">&#39;/&#39;</span>)
+    results <span style="color:#555">=</span> w<span style="color:#555">.</span>subscribe(<span style="color:#c30">&#39;/myhome/kitcken/temp&#39;</span>, listener)
+    time<span style="color:#555">.</span>sleep(<span style="color:#f60">60</span>)</code></pre></div>
+<h2 id="other-code-examples">Other code examples</h2>
+
+<p>Now you can also have a look to the examples provided with each client API:</p>
+
+<ul>
+<li><strong>Python</strong>: <a href="https://github.com/atolab/zenoh-python/tree/master/examples/zenoh">https://github.com/atolab/zenoh-python/tree/master/examples/zenoh</a></li>
+<li><strong>Java</strong>:   <a href="https://github.com/atolab/zenoh-java/tree/master/examples/zenoh">https://github.com/atolab/zenoh-java/tree/master/examples/zenoh</a></li>
+<li><strong>Go</strong>:     <a href="https://github.com/atolab/zenoh-go/tree/master/examples/zenoh">https://github.com/atolab/zenoh-go/tree/master/examples/zenoh</a></li>
+</ul>
+
+      
+      
+        <div class="ato-next">
+          <b>Next up</b>: <a href ="/docs/manual/abstractions/">Abstractions</a>
+        </div>
+      
+    </main>
+  </div>
+</div>
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+    <script src="https://zenoh.io/js/bootstrap.min.js"></script>
+    <script src="https://zenoh.io/js/highlight.js"></script>
+    <script>
+      $(function () {
+        $("pre code").each(function(i, block) {
+          
+          if (block.className.indexOf('language-rust') >= 0) {
+            var new_content = '';
+            var lines = block.textContent.split('\n');
+            for (var i = 0; i < lines.length; i++) {
+              if (lines[i].indexOf('# ') == 0 || lines[i] == '#') {
+                continue
+              }
+              new_content += lines[i].trimRight() + '\n';
+            }
+            block.textContent = new_content.replace(/\n\n\n/g, "\n\n").trimRight();
+          }
+          hljs.highlightBlock(block);
+        });
+      });
+    </script>
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+    <script type="text/javascript"> docsearch({
+    apiKey: 'd7b5b785798fe748621bcaa8301a2201',
+    indexName: 'zenoh',
+    inputSelector: '#search-input',
+    debug: false 
+    });
+    </script>
+    
+  </body>
+</html>
+
