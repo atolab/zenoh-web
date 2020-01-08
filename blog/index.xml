@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blogs on zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</title>
-    <link>/blog/</link>
+    <link>http://zenoh.io/blog/</link>
     <description>Recent content in Blogs on zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://zenoh.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>A Year Full of Zenoh</title>
-      <link>/blog/2020-01-01-zenohtude/</link>
+      <link>http://zenoh.io/blog/2020-01-01-zenohtude/</link>
       <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2020-01-01-zenohtude/</guid>
+      <guid>http://zenoh.io/blog/2020-01-01-zenohtude/</guid>
       <description>First of all we would like to take a moment to wish all of you a 2020 filled with joy, health, peace and success.
 This year marks a very important landmark for us. After having kicked-off the Eclipse Edge Native working group, last December, we are bringing zenoh to Eclipse and are starting to work a Rust rewrite of the zenoh router. As part for the rewrite we have just about to complete a review of the zenoh protocol and will be updating the specification accordingly in the weeks to come.</description>
     </item>
