@@ -154,20 +154,18 @@
     <div class="d-none d-xl-block col-xl-2 ato-toc">
       <div class="section-nav">
         <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#python">Python</a></li>
-<li><a href="#java">Java</a></li>
-<li><a href="#go">Go</a></li>
-<li><a href="#rest-api">REST API</a>
-<ul>
-<li><a href="#get">GET</a></li>
-<li><a href="#put">PUT</a></li>
-<li><a href="#delete">DELETE</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#python">Python</a></li>
+    <li><a href="#java">Java</a></li>
+    <li><a href="#go">Go</a></li>
+    <li><a href="#rest-api">REST API</a>
+      <ul>
+        <li><a href="#get">GET</a></li>
+        <li><a href="#put">PUT</a></li>
+        <li><a href="#delete">DELETE</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
       </div>
     </div>
@@ -176,42 +174,26 @@
       <div class="github-edit">
         <a class="fa fa-github" href="https://github.com/atolab/zenoh-web/tree/master/content/docs/APIs/APIs.md"> Edit on GitHub</a>
       </div>
-      
-
-<p>All the client APIs documentations are avaliable on <a href="https://readthedocs.org/search/?q=zenoh">Read the Docs</a>:</p>
-
+      <p>All the client APIs documentations are avaliable on <a href="https://readthedocs.org/search/?q=zenoh">Read the Docs</a>:</p>
 <h2 id="python">Python</h2>
-
 <p><a href="https://readthedocs.org/projects/zenoh-python/">https://readthedocs.org/projects/zenoh-python/</a></p>
-
 <h2 id="java">Java</h2>
-
 <p><a href="https://readthedocs.org/projects/zenoh-java/">https://readthedocs.org/projects/zenoh-java/</a></p>
-
 <h2 id="go">Go</h2>
-
 <p><a href="https://readthedocs.org/projects/zenoh-go/">https://readthedocs.org/projects/zenoh-go/</a></p>
-
-<hr />
-
+<hr>
 <h2 id="rest-api">REST API</h2>
-
 <p>Zenoh also offers a REST API via the zenoh-http plugin. When starting zenoh with default options,
-this HTTP plugin is automatically started on port 8000 and ready to answer HTTP requests.<br />
+this HTTP plugin is automatically started on port 8000 and ready to answer HTTP requests.<br>
 The full zenoh key/value space is accessible via this REST API, including the <a href="../../manual/abstractions#admin-space">Admin space</a>.</p>
-
 <h3 id="get">GET</h3>
-
 <p>Binds to the <strong>get(selector)</strong> operation on zenoh.</p>
-
 <ul>
 <li><strong>URL</strong>:     <code>http://host:8000/selector</code></li>
 <li><strong>body</strong>:    none</li>
 <li><strong>headers</strong>: none</li>
 </ul>
-
 <p>The results are returned as a JSON array of objects containing <code>&quot;key&quot;</code>, <code>&quot;value&quot;</code>and <code>&quot;time&quot;</code>.</p>
-
 <p>Examples using curl:</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#09f;font-style:italic"># Get the keys/values matching /demo/**</span>
 curl http://localhost:8000/demo/**
@@ -248,23 +230,19 @@ curl -g http://localhost:8000/@/**/storage/**
 <span style="color:#555">{</span> <span style="color:#c30">&#34;key&#34;</span>: <span style="color:#c30">&#34;/@/router/cd5723ef1abe4a8f9984d003283c7e28/plugin/storages/backend/memory/storage/Demo&#34;</span>,
   <span style="color:#c30">&#34;value&#34;</span>: <span style="color:#c30">&#34;selector=/demo/example/**&#34;</span>,
   <span style="color:#c30">&#34;time&#34;</span>: <span style="color:#c30">&#34;2019-11-26T11:22:08.759634017Z&#34;</span> <span style="color:#555">}</span>
-<span style="color:#555">]</span></code></pre></div>
-<h3 id="put">PUT</h3>
-
+<span style="color:#555">]</span>
+</code></pre></div><h3 id="put">PUT</h3>
 <p>Binds to the <strong>put(path,value)</strong> operation on zenoh.</p>
-
 <ul>
 <li><strong>URL</strong>:     <code>http://host:8000/path</code></li>
 <li><strong>body</strong>:    the value to put</li>
 <li><strong>headers</strong>:
-
 <ul>
 <li><strong>content-type</strong>: the value encoding (optional; unspecified implies RAW encoding)</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>The supported content-types and their mapping to zenoh encoding are:</p>
-
 <table>
 <thead>
 <tr>
@@ -272,75 +250,112 @@ curl -g http://localhost:8000/@/**/storage/**
 <th>zenoh encoding</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>text</td>
 <td>string</td>
 </tr>
-
 <tr>
 <td>application/x-www-form-urlencoded</td>
 <td>string</td>
 </tr>
-
 <tr>
 <td>application/xml</td>
 <td>string</td>
 </tr>
-
 <tr>
 <td>application/xhtml+xml</td>
 <td>string</td>
 </tr>
-
 <tr>
 <td>application/json</td>
 <td>JSON</td>
 </tr>
-
 <tr>
 <td><em>any other value</em></td>
 <td>RAW</td>
 </tr>
-
 <tr>
 <td><em>unspecified</em></td>
 <td>RAW</td>
 </tr>
 </tbody>
 </table>
-
 <p>Examples using curl:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">  <span style="color:#09f;font-style:italic"># Put a string value in /demo/example/test</span>
-  curl -X PUT -d <span style="color:#c30">&#39;Hello World!&#39;</span> http://localhost:8000/demo/example/test
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#09f;font-style:italic"># Put a string value in /demo/example/test</span>
+curl -X PUT -d <span style="color:#c30">&#39;Hello World!&#39;</span> http://localhost:8000/demo/example/test
 
-  <span style="color:#09f;font-style:italic"># Put a JSON value in /demo/example/json</span>
-  curl -X PUT -H <span style="color:#c30">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#c30">&#39;{&#34;value&#34;: &#34;Hello World!&#34;}&#39;</span> http://localhost:8000/demo/example/test
+<span style="color:#09f;font-style:italic"># Put a JSON value in /demo/example/json</span>
+curl -X PUT -H <span style="color:#c30">&#34;Content-Type: application/json&#34;</span> -d <span style="color:#c30">&#39;{&#34;value&#34;: &#34;Hello World!&#34;}&#39;</span> http://localhost:8000/demo/example/test
 
-  <span style="color:#09f;font-style:italic"># Create a Memory storage on /demo/test/** via a Put on admin space (/@/...)</span>
-  curl -X PUT -d <span style="color:#c30">&#39;{&#34;selector&#34;:&#34;/demo/test/**&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-test</code></pre></div>
-<h3 id="delete">DELETE</h3>
-
+<span style="color:#09f;font-style:italic"># Create a Memory storage on /demo/test/** via a Put on admin space (/@/...)</span>
+curl -X PUT -d <span style="color:#c30">&#39;{&#34;selector&#34;:&#34;/demo/test/**&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-test
+</code></pre></div><h3 id="delete">DELETE</h3>
 <p>Binds to the <strong>remove(path)</strong> operation on zenoh.</p>
-
 <ul>
 <li><strong>URL</strong>:     <code>http://host:8000/path</code></li>
 <li><strong>body</strong>:    none</li>
 <li><strong>headers</strong>: none</li>
 </ul>
-
 <p>Examples using curl:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">  <span style="color:#09f;font-style:italic"># Remove the value with key /demo/example/test</span>
-  curl -X DELETE http://localhost:8000/demo/example/test
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#09f;font-style:italic"># Remove the value with key /demo/example/test</span>
+curl -X DELETE http://localhost:8000/demo/example/test
 
-  <span style="color:#09f;font-style:italic"># Remove a storage via a Remove on admin space (/@/...)</span>
-  curl -X DELETE http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-test</code></pre></div>
+<span style="color:#09f;font-style:italic"># Remove a storage via a Remove on admin space (/@/...)</span>
+curl -X DELETE http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-test
+</code></pre></div>
       
       
     </main>
   </div>
 </div>
+
+    <footer class="ato-footer text-muted">
+      <div class="container-fluid p-6 p-md-5">
+        <div class="row">
+          <div class="col-md-2">
+            <h5>Eclipse Incubation</h5>
+            <p><img src="http://zenoh.io/img/eclipse-incubation.png" style="width:100px;"></p>
+            <p>Eclipse zenoh &trade; is an incubating project under the Eclipse Foundation.</p>
+
+          </div>
+          <div class="col-md-2">
+            <h5>More Information</h5>
+            <p><a href="https://www.eclipse.org/legal"  target="_blank">Legal</a></p>
+            <p><a href="https://www.eclipse.org/legal/privacy.php"  target="_blank">Privacy policy</a></p>
+            <p><a href="https://www.eclipse.org/legal/termsofuse.php"  target="_blank">Terms of use</a></p>
+            <p><a href="https://www.eclipse.org/legal/copyright.php"  target="_blank">Copyright</a></p>
+            <p><a href="https://www.eclipse.org/security/" target="_blank">Report a security issue</a></p>
+            <p><a href="https://www.eclipse.org/legal/epl-2.0/" target="_blank">Eclipse Public License 2.0</a></p>
+            <p><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a></p>
+            <p><a href="https://www.eclipse.org/" target="_blank">Eclipse Foundation</a></p>
+        </div>
+          <div class="col-md-2">
+              <h5>Sponsored by:</h5>
+              <p><a href="https://www.eclipse.org"  target="_blank"><img src="http://zenoh.io/img/eclipse-foundation.svg" style="width:100px;"></a></p>
+              <p><a href="https://www.adlinktech.com"  target="_blank"><img src="https://cdn.adlinktech.com/webupd/en/Upload/logo.png" style="width:100px;"></a></p>
+
+            </div>
+            <div class="col-md-2">
+                <h5>Follow us</h5>
+                <p><a href="https://github.com/atolab/zenoh"> <i class="fa fa-github" aria-hidden="true"></i> GitHub</a></p>
+                <p><a href="https://gitter.im/atolab/zenoh"> <i class="fa fa fa-comments-o" aria-hidden="true"></i> Gitter</a></p>
+                <p><a href="http://zenoh.io/docs/overview/"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></p>
+            </div>
+            <div class="col-md-2">
+                <p><img src="http://zenoh.io/img/zenoh-dragon.png" style="width:45px;"></p>
+                <p>Eclipse zenoh &trade; is free, open source and always will be.</p>
+                <p>Copyright &copy 2020 Eclipse Foundation</p>
+                <p>Build with <a href="https://gohugo.io/" target="_blank">HUGO</a></p>
+                <p>Theme inspired from: <a href="https://tokio.rs/" target="_blank">Tokio website theme</a></p>
+            </div>
+        </div>
+
+
+      </div>
+
+
+    </footer>
 
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>

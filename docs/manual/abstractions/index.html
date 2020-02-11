@@ -154,23 +154,20 @@
     <div class="d-none d-xl-block col-xl-2 ato-toc">
       <div class="section-nav">
         <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#key">Key</a></li>
-<li><a href="#path">Path</a></li>
-<li><a href="#selector">Selector</a></li>
-<li><a href="#value">Value</a></li>
-<li><a href="#encoding">Encoding</a></li>
-<li><a href="#timestamp">Timestamp</a></li>
-<li><a href="#backend">Backend</a></li>
-<li><a href="#storage">Storage</a></li>
-<li><a href="#subscriber">Subscriber</a></li>
-<li><a href="#eval">Eval</a></li>
-<li><a href="#workspace">Workspace</a></li>
-<li><a href="#admin-space">Admin space</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#key">Key</a></li>
+    <li><a href="#path">Path</a></li>
+    <li><a href="#selector">Selector</a></li>
+    <li><a href="#value">Value</a></li>
+    <li><a href="#encoding">Encoding</a></li>
+    <li><a href="#timestamp">Timestamp</a></li>
+    <li><a href="#backend">Backend</a></li>
+    <li><a href="#storage">Storage</a></li>
+    <li><a href="#subscriber">Subscriber</a></li>
+    <li><a href="#eval">Eval</a></li>
+    <li><a href="#workspace">Workspace</a></li>
+    <li><a href="#admin-space">Admin space</a></li>
+  </ul>
 </nav>
       </div>
     </div>
@@ -179,171 +176,128 @@
       <div class="github-edit">
         <a class="fa fa-github" href="https://github.com/atolab/zenoh-web/tree/master/content/docs/manual/abstractions.md"> Edit on GitHub</a>
       </div>
-      
-
-<p>Zenoh is a <strong>distributed service</strong> to define, manage and operate on <strong>key/value</strong> spaces.</p>
-
+      <p>Zenoh is a <strong>distributed service</strong> to define, manage and operate on <strong>key/value</strong> spaces.</p>
 <p>The key abstractions at the core of zenoh are the following:</p>
-
 <h2 id="key">Key</h2>
-
 <p>Zenoh uses <strong><a href="#path">paths</a></strong> as keys. In all zenoh documentations, &ldquo;key&rdquo; and &ldquo;path&rdquo; are synonym.</p>
-
-<hr />
-
+<hr>
 <h2 id="path">Path</h2>
-
-<p>A set of strings separated by <code>'/'</code> , as in a filesystem path. A Path cannot contain any <code>'*'</code> character.<br />
+<p>A set of strings separated by <code>'/'</code> , as in a filesystem path. A Path cannot contain any <code>'*'</code> character.<br>
 Examples of paths:  <code>/demo/example/test</code> , <code>/com/adlink/building/fr/floor/1/office/2</code> &hellip;</p>
-
 <p>A path can be absolute (i.e. starting with a <code>'/'</code>) or relative to a <a href="#workspace">workspace</a>.</p>
-
-<hr />
-
+<hr>
 <h2 id="selector">Selector</h2>
-
 <p>A string which is the conjunction of an path expression identifying a set of keys and some optional parts allowing
-to refine the set of <strong><a href="#path">paths</a></strong> and associated <strong><a href="#value">values</a></strong>.<br />
+to refine the set of <strong><a href="#path">paths</a></strong> and associated <strong><a href="#value">values</a></strong>.<br>
 Structure of a selector:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-none" data-lang="none">/s1/s2/.../sn?x&gt;1&amp;y&lt;2&amp;...&amp;z=4(p1=v1;p2=v2;...;pn=vn)#a;b;x;y;...;z
+<pre><code class="language-none" data-lang="none">/s1/s2/.../sn?x&gt;1&amp;y&lt;2&amp;...&amp;z=4(p1=v1;p2=v2;...;pn=vn)#a;b;x;y;...;z
 |           | |             | |                   |  |           |
-|-- expr ---| |--- filter --| |---- properties ---|  |--fragment-|</code></pre></div>
-<p>where:</p>
-
+|-- expr ---| |--- filter --| |---- properties ---|  |--fragment-|
+</code></pre><p>where:</p>
 <ul>
-<li><p><strong>expr</strong>: is a path expression. I.e. a string similar to a <strong><a href="#path">path</a></strong> but with character <code>'*'</code>  allowed.<br />
-A single <code>'*'</code> matches any set of characters in a path, except <code>'/'</code>.<br />
-While <code>&quot;**&quot;</code> matches any set of characters in a path, including <code>'/'</code>.<br />
-A path expression can be absolute (i.e. starting with a <code>'/'</code>) or relative to a <a href="#workspace">workspace</a>.</p></li>
-
-<li><p><strong>filter</strong>: a list of predicates separated by <code>'&amp;'</code> allowing to perform filtering on the <a href="#value">values</a>
-associated with the matching keys.<br />
-Each predicate has the form <code>field</code><code>operator</code> <code>value</code> where:</p>
-
+<li>
+<p><strong>expr</strong>: is a path expression. I.e. a string similar to a <strong><a href="#path">path</a></strong> but with character <code>'*'</code>  allowed.<br>
+A single <code>'*'</code> matches any set of characters in a path, except <code>'/'</code>.<br>
+While <code>&quot;**&quot;</code> matches any set of characters in a path, including <code>'/'</code>.<br>
+A path expression can be absolute (i.e. starting with a <code>'/'</code>) or relative to a <a href="#workspace">workspace</a>.</p>
+</li>
+<li>
+<p><strong>filter</strong>: a list of predicates separated by <code>'&amp;'</code> allowing to perform filtering on the <a href="#value">values</a>
+associated with the matching keys.<br>
+Each predicate has the form <code>field``operator</code> <code>value</code> where:</p>
 <ul>
 <li><em>field</em> is the name of a field in the value (is applicable and is existing. otherwise the predicate is false)</li>
 <li><em>operator</em> is one of a comparison operators: <code>&lt;</code> , <code>&gt;</code> , <code>&lt;=</code>  , <code>&gt;=</code>  , <code>=</code>  , <code>!=</code></li>
-<li><em>value</em> is the the value to compare the field&rsquo;s value with</li>
-</ul></li>
-
-<li><p><strong>fragment</strong>: a list of fields names allowing to return a sub-part of each value.<br />
+<li><em>value</em> is the the value to compare the field's value with</li>
+</ul>
+</li>
+<li>
+<p><strong>fragment</strong>: a list of fields names allowing to return a sub-part of each value.<br>
 This feature only applies to structured values using a &ldquo;self-describing&rdquo; encoding, such as JSON or XML.
 It allows to select only some fields within the structure. A new structure with only the selected fields
-will be used in place of the original value.</p></li>
+will be used in place of the original value.</p>
+</li>
 </ul>
-
 <p><em><strong>NOTE</strong></em>: <em>the filters and fragments are not yet supported in current zenoh version.</em></p>
-
-<hr />
-
+<hr>
 <h2 id="value">Value</h2>
-
 <p>A user provided data item along with its <a href="#encoding">encoding</a>.</p>
-
-<hr />
-
+<hr>
 <h2 id="encoding">Encoding</h2>
-
 <p>A description of the <a href="#value">value</a> format, allowing zenoh to know how to encode/decode the value to/from a bytes buffer.</p>
-
 <p>The current version of zenoh supports the following encodings:</p>
-
 <ul>
 <li><strong>RAW</strong>: the value is a bytes buffer</li>
 <li><strong>string</strong>: the value is a string</li>
 <li><strong>JSON</strong>: the value is a JSON string</li>
 <li><strong>Properties</strong>: the value is a string representing a list of keys/values separated by <code>;</code>: <code>k1=v1;k2=v2...</code></li>
 </ul>
-
-<hr />
-
+<hr>
 <h2 id="timestamp">Timestamp</h2>
-
 <p>When a <a href="#value">value</a> is put into zenoh, the first zenoh router receiving this value automatically
-associates it with a timestamp.<br />
+associates it with a timestamp.<br>
 This timestamp is made of 2 items:</p>
-
 <ul>
-<li>A <strong>time</strong> generated by a <a href="https://cse.buffalo.edu/tech-reports/2014-04.pdf">Hybrid Logical Clock (HLC)</a>.
-This time is a 64-bits NTP time which is very close to the system time, but with the 8 last bits of the fraction
-part replaced by a counter. Such time gives a theoritical resolution of 2^-32 seconds (60 nanoseconds), and
-guarantees that the same time cannot be generated twice and that the <em>happened-before</em> relationship is preserved.</li>
-<li>The <strong>UUID</strong> of the zenoh router that generated the time.</li>
+<li>
+<p>A <strong>time</strong> generated by a <a href="https://cse.buffalo.edu/tech-reports/2014-04.pdf">Hybrid Logical Clock (HLC)</a>.
+This time is a 64-bit time with a similar structure than a NTP timestamp (but with a different epoch):</p>
+<ul>
+<li>the higher 32-bit part is the number of seconds since midnight, January 1, 1970 UTC
+(implying a roll over in 2106).</li>
+<li>the lower 32-bit part is a fraction of second, but with the 8 last bits replaced by a counter.</li>
 </ul>
-
-<p>Such a timestamp allows zenoh to guarantee that each value introduced into the system has a unique timestamp,
-and that those timestamps (and therefore the values) can be ordered in the same way at any point of the system,
-without the need of any consensus algorithm.</p>
-
-<hr />
-
+<p>This time gives a theoritical resolution of 2^-32 seconds (60 nanoseconds), and
+guarantees that the same time cannot be generated twice and that the <em>happened-before</em> relationship is preserved.</p>
+</li>
+<li>
+<p>The <strong>UUID</strong> of the zenoh router that generated the time.</p>
+</li>
+</ul>
+<p>Such a timestamp allows zenoh to guarantee that each value introduced into the system has a unique timestamp, and that those timestamps (and therefore the values) can be ordered in the same way at any point of the system, without the need of any consensus algorithm.</p>
+<hr>
 <h2 id="backend">Backend</h2>
-
 <p>A <a href="#storage">storage</a> technology, such as DBMS, Main Memory, time-series database, etc.</p>
-
 <p>See <a href="../backends">zenoh backends</a> for the list of supported backends in the current version.</p>
-
-<hr />
-
+<hr>
 <h2 id="storage">Storage</h2>
-
 <p>An entity storing tuples on a specific <a href="#backend">backend</a>.</p>
-
 <p>A storage is associated at its creation to a <a href="#selector">selector</a>. Storages can be created by applications
 and take responsibility for storing all keys/values whose path matches the storage selector.</p>
-
-<hr />
-
+<hr>
 <h2 id="subscriber">Subscriber</h2>
-
 <p>An entity registering interest for being notified whenever a key/value with a path matchings the subscriber
 <a href="#selector">selector</a> is put, updated or removed on zenoh.</p>
-
-<hr />
-
+<hr>
 <h2 id="eval">Eval</h2>
-
 <p>A computation registered at a specific <a href="#path">path</a>.</p>
-
 <p>This computation can be triggered by a <code>get</code> operation on a <a href="#selector">selector</a> matching this path.
-The computation function will receive the selector&rsquo;s properties as parameter.</p>
-
-<hr />
-
+The computation function will receive the selector's properties as parameter.</p>
+<hr>
 <h2 id="workspace">Workspace</h2>
-
 <p>The abstraction that give you access to zenoh primitives.</p>
-
 <p>A workspace is associated to a <a href="#path">path</a> at creation. This path will be used as a prefix for any relative
 <a href="#path">path</a> or <a href="#selector">selector</a> used with this workspace.</p>
-
-<hr />
-
+<hr>
 <h2 id="admin-space">Admin space</h2>
-
 <p>The administration space of zenoh.
 It is accessible via regular get/put on zenoh, under the <code>/@/router/&lt;zenoh-id&gt;</code> path prefix.
 The following paths can be used:</p>
-
 <ul>
-<li><code>/@/router/&lt;zenoh-id&gt;/plugin/storages</code> (read-only):<br />
+<li><code>/@/router/&lt;zenoh-id&gt;/plugin/storages</code> (read-only):<br>
 Returns a JSON with the overview of the full storages (and their parent backends) configuration.</li>
-<li><code>/@/router/&lt;zenoh-id&gt;/plugin/storages/backend/&lt;backend-id&gt;</code> (read/write):<br />
-On get, returns the properties of the backend with the specified ID.<br />
+<li><code>/@/router/&lt;zenoh-id&gt;/plugin/storages/backend/&lt;backend-id&gt;</code> (read/write):<br>
+On get, returns the properties of the backend with the specified ID.<br>
 On put, adds a backend with the properties specified as the value.</li>
-<li><code>/@/router/&lt;zenoh-id&gt;/plugin/storages/backend/&lt;backend-id&gt;/storage/&lt;storage-id&gt;</code> (read/write):<br />
-On get, returns the properties of the storage with the specified ID.<br />
-On put, adds a storage in the parent backend with the properties specified as the value.<br />
+<li><code>/@/router/&lt;zenoh-id&gt;/plugin/storages/backend/&lt;backend-id&gt;/storage/&lt;storage-id&gt;</code> (read/write):<br>
+On get, returns the properties of the storage with the specified ID.<br>
+On put, adds a storage in the parent backend with the properties specified as the value.<br>
 On remove, removes the storage.</li>
 </ul>
-
 <p>In all those paths, the <strong><code>&lt;zenoh-id&gt;</code></strong> is the UUID of a zenoh router.</p>
-
 <p>Note that the zenoh client APIs provide an Admin interface that facilitate the addition/removal of
 backends and storage. Underneath, this interface calls put/remove/get operations on those paths.
-By default, this interface knows the <code>&lt;zenoh-id&gt;</code> of the zenoh router it&rsquo;s connected to and automatically
+By default, this interface knows the <code>&lt;zenoh-id&gt;</code> of the zenoh router it's connected to and automatically
 use it in paths, if no alternative <code>&lt;zenoh-id&gt;</code> is provided.</p>
-
 <p>When using the REST API, the user can replace the <code>&lt;zenoh-id&gt;</code> with the <strong><code>local</code></strong> keyword,
 meaning the operation addresses the zenoh router the HTTP client is connected to.</p>
 
@@ -356,6 +310,53 @@ meaning the operation addresses the zenoh router the HTTP client is connected to
     </main>
   </div>
 </div>
+
+    <footer class="ato-footer text-muted">
+      <div class="container-fluid p-6 p-md-5">
+        <div class="row">
+          <div class="col-md-2">
+            <h5>Eclipse Incubation</h5>
+            <p><img src="http://zenoh.io/img/eclipse-incubation.png" style="width:100px;"></p>
+            <p>Eclipse zenoh &trade; is an incubating project under the Eclipse Foundation.</p>
+
+          </div>
+          <div class="col-md-2">
+            <h5>More Information</h5>
+            <p><a href="https://www.eclipse.org/legal"  target="_blank">Legal</a></p>
+            <p><a href="https://www.eclipse.org/legal/privacy.php"  target="_blank">Privacy policy</a></p>
+            <p><a href="https://www.eclipse.org/legal/termsofuse.php"  target="_blank">Terms of use</a></p>
+            <p><a href="https://www.eclipse.org/legal/copyright.php"  target="_blank">Copyright</a></p>
+            <p><a href="https://www.eclipse.org/security/" target="_blank">Report a security issue</a></p>
+            <p><a href="https://www.eclipse.org/legal/epl-2.0/" target="_blank">Eclipse Public License 2.0</a></p>
+            <p><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a></p>
+            <p><a href="https://www.eclipse.org/" target="_blank">Eclipse Foundation</a></p>
+        </div>
+          <div class="col-md-2">
+              <h5>Sponsored by:</h5>
+              <p><a href="https://www.eclipse.org"  target="_blank"><img src="http://zenoh.io/img/eclipse-foundation.svg" style="width:100px;"></a></p>
+              <p><a href="https://www.adlinktech.com"  target="_blank"><img src="https://cdn.adlinktech.com/webupd/en/Upload/logo.png" style="width:100px;"></a></p>
+
+            </div>
+            <div class="col-md-2">
+                <h5>Follow us</h5>
+                <p><a href="https://github.com/atolab/zenoh"> <i class="fa fa-github" aria-hidden="true"></i> GitHub</a></p>
+                <p><a href="https://gitter.im/atolab/zenoh"> <i class="fa fa fa-comments-o" aria-hidden="true"></i> Gitter</a></p>
+                <p><a href="http://zenoh.io/docs/overview/"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></p>
+            </div>
+            <div class="col-md-2">
+                <p><img src="http://zenoh.io/img/zenoh-dragon.png" style="width:45px;"></p>
+                <p>Eclipse zenoh &trade; is free, open source and always will be.</p>
+                <p>Copyright &copy 2020 Eclipse Foundation</p>
+                <p>Build with <a href="https://gohugo.io/" target="_blank">HUGO</a></p>
+                <p>Theme inspired from: <a href="https://tokio.rs/" target="_blank">Tokio website theme</a></p>
+            </div>
+        </div>
+
+
+      </div>
+
+
+    </footer>
 
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>

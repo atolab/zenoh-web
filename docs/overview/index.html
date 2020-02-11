@@ -153,7 +153,7 @@
     </div>
     <div class="d-none d-xl-block col-xl-2 ato-toc">
       <div class="section-nav">
-        
+        <nav id="TableOfContents"></nav>
       </div>
     </div>
     <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 ato-content ato-docs">
@@ -162,32 +162,36 @@
         <a class="fa fa-github" href="https://github.com/atolab/zenoh-web/tree/master/content/docs/overview.md"> Edit on GitHub</a>
       </div>
       <p>With the steady increase in the number of network connected devices we are experiencing a new level of heterogeneity with respect to computing, storage and communication capabilities, as well as new challenges with respect to the scale at which data is produced and needs to be consumed.</p>
-
 <p>Additionally, for performance, efficiency and privacy reasons, there is an increasing desire to keep the data processing as close as possible to the source, while at the same time not hindering access to geographically remote applications. In other terms, we are experiencing a mainstream <a href="https://perspectives.tech/2019/12/10/architectural-liberum-arbitrium/">architectural switch</a> from cloud-centric paradigms in which data is stored, processed and retrieved from the cloud to fog and <a href="https://edgenative.eclipse.org/">edge-centric</a> paradigms where data is stored and processed where it makes most sense for performance, energy efficiency and security matters.</p>
-
 <p><strong>zenoh</strong> has been designed to address the needs of those applications that need to deal with
 data in movement, data at rest and computation in a scalable, efficient and location transparent data manner.</p>
-
 <p><strong>zenoh</strong> unifies data in motion, data in-use, data at rest and computations.  It carefully blends traditional pub/sub with geo-distributed storages, queries and computations, while retaining a level of time and space efficiency that is well beyond any of the mainstream stacks.</p>
-
 <p><strong>zenoh</strong> has been designed to:</p>
-
 <ul>
-<li><p>Provide a small set of primitives to deal with data in motion, data at rest and computations.</p></li>
-
-<li><p>Give total control on storage location and back-end technology integration.</p></li>
-
-<li><p>Minimize network overhead – the minimal wire overhead of a data message a data message is 4 bytes.</p></li>
-
-<li><p>Support extremely constrained devices – its footprint on Arduino Uno is of 300 bytes.</p></li>
-
-<li><p>Supports devices with low duty-cycle by allowing the negotiation of data exchange modes and schedules.</p></li>
-
-<li><p>Provides a rich set of abstraction for distributing, querying and storing data along the entire system.</p></li>
-
-<li><p>Provide extremely low latency and high throughput. We also provide analytical and empirical comparison of zenoh ’s efficiency against mainstream protocols such as DDS and MQTT.</p></li>
-
-<li><p>Make available a lower-level API, namely <strong>zenoh-net</strong>, that gives you full control on zenoh primitives.</p></li>
+<li>
+<p>Provide a small set of primitives to deal with data in motion, data at rest and computations.</p>
+</li>
+<li>
+<p>Give total control on storage location and back-end technology integration.</p>
+</li>
+<li>
+<p>Minimize network overhead – the minimal wire overhead of a data message a data message is 4 bytes.</p>
+</li>
+<li>
+<p>Support extremely constrained devices – its footprint on Arduino Uno is of 300 bytes.</p>
+</li>
+<li>
+<p>Supports devices with low duty-cycle by allowing the negotiation of data exchange modes and schedules.</p>
+</li>
+<li>
+<p>Provides a rich set of abstraction for distributing, querying and storing data along the entire system.</p>
+</li>
+<li>
+<p>Provide extremely low latency and high throughput. We also provide analytical and empirical comparison of zenoh ’s efficiency against mainstream protocols such as DDS and MQTT.</p>
+</li>
+<li>
+<p>Make available a lower-level API, namely <strong>zenoh-net</strong>, that gives you full control on zenoh primitives.</p>
+</li>
 </ul>
 
       
@@ -199,6 +203,53 @@ data in movement, data at rest and computation in a scalable, efficient and loca
     </main>
   </div>
 </div>
+
+    <footer class="ato-footer text-muted">
+      <div class="container-fluid p-6 p-md-5">
+        <div class="row">
+          <div class="col-md-2">
+            <h5>Eclipse Incubation</h5>
+            <p><img src="http://zenoh.io/img/eclipse-incubation.png" style="width:100px;"></p>
+            <p>Eclipse zenoh &trade; is an incubating project under the Eclipse Foundation.</p>
+
+          </div>
+          <div class="col-md-2">
+            <h5>More Information</h5>
+            <p><a href="https://www.eclipse.org/legal"  target="_blank">Legal</a></p>
+            <p><a href="https://www.eclipse.org/legal/privacy.php"  target="_blank">Privacy policy</a></p>
+            <p><a href="https://www.eclipse.org/legal/termsofuse.php"  target="_blank">Terms of use</a></p>
+            <p><a href="https://www.eclipse.org/legal/copyright.php"  target="_blank">Copyright</a></p>
+            <p><a href="https://www.eclipse.org/security/" target="_blank">Report a security issue</a></p>
+            <p><a href="https://www.eclipse.org/legal/epl-2.0/" target="_blank">Eclipse Public License 2.0</a></p>
+            <p><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a></p>
+            <p><a href="https://www.eclipse.org/" target="_blank">Eclipse Foundation</a></p>
+        </div>
+          <div class="col-md-2">
+              <h5>Sponsored by:</h5>
+              <p><a href="https://www.eclipse.org"  target="_blank"><img src="http://zenoh.io/img/eclipse-foundation.svg" style="width:100px;"></a></p>
+              <p><a href="https://www.adlinktech.com"  target="_blank"><img src="https://cdn.adlinktech.com/webupd/en/Upload/logo.png" style="width:100px;"></a></p>
+
+            </div>
+            <div class="col-md-2">
+                <h5>Follow us</h5>
+                <p><a href="https://github.com/atolab/zenoh"> <i class="fa fa-github" aria-hidden="true"></i> GitHub</a></p>
+                <p><a href="https://gitter.im/atolab/zenoh"> <i class="fa fa fa-comments-o" aria-hidden="true"></i> Gitter</a></p>
+                <p><a href="http://zenoh.io/docs/overview/"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></p>
+            </div>
+            <div class="col-md-2">
+                <p><img src="http://zenoh.io/img/zenoh-dragon.png" style="width:45px;"></p>
+                <p>Eclipse zenoh &trade; is free, open source and always will be.</p>
+                <p>Copyright &copy 2020 Eclipse Foundation</p>
+                <p>Build with <a href="https://gohugo.io/" target="_blank">HUGO</a></p>
+                <p>Theme inspired from: <a href="https://tokio.rs/" target="_blank">Tokio website theme</a></p>
+            </div>
+        </div>
+
+
+      </div>
+
+
+    </footer>
 
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>

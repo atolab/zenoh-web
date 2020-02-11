@@ -26,9 +26,10 @@ Additionally, for performance, efficiency and privacy reasons, there is an incre
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://zenoh.io/docs/getting-started/installation/</guid>
-      <description>To get up and running with zenoh you will have to install the infrastructure and then get hold of the API you would like to use to write your applications.
-Installing zenoh&amp;rsquo;s Infrastructure At the present stage zenoh&amp;rsquo;s infrastructure is supported only on Linux and MacOS. Below are the detailed information on how to install on supported platforms.
-MacOS The first step is to tap our brew package repository:</description>
+      <description>To get up and running with zenohyou will have to install the infrastructure and then get hold of the API you would like to use to write your applications.
+Installing zenoh&#39;s Infrastructure At the present stage zenoh&#39;s infrastructure is supported only on Linux and MacOS. Below are the detailed information on how to install on supported platforms.
+MacOS The first step is to tap our brew package repository:
+$ brew tap atolab/homebrew-atobin Then simply install zenoh as follows:</description>
     </item>
     
     <item>
@@ -37,9 +38,9 @@ MacOS The first step is to tap our brew package repository:</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://zenoh.io/docs/getting-started/first-app/</guid>
-      <description>Getting started with zenoh is quite straightforward. Below we will show you how to create a simple telemetry application. Let&amp;rsquo;s assume that we have some sensor, say a temperature sensor, and we want to store this temperature into a zenoh storage. Later on, we want to retrieve this temperature from the zenoh storage.
-Before cranking some code, let&amp;rsquo;s define some terminology.
-zenoh deals with keys/values where each key is a path and is associated to a value.</description>
+      <description>Getting started with zenoh is quite straightforward. Below we will show you how to create a simple telemetry application. Let&#39;s assume that we have some sensor, say a temperature sensor, and we want to store this temperature into a zenoh storage. Later on, we want to retrieve this temperature from the zenoh storage.
+Before cranking some code, let&#39;s define some terminology.
+zenohdeals with keys/valueswhere each key is a pathand is associated to a value.</description>
     </item>
     
     <item>
@@ -51,7 +52,7 @@ zenoh deals with keys/values where each key is a path and is associated to a val
       <description>Zenoh is a distributed service to define, manage and operate on key/value spaces.
 The key abstractions at the core of zenoh are the following:
 Key Zenoh uses paths as keys. In all zenoh documentations, &amp;ldquo;key&amp;rdquo; and &amp;ldquo;path&amp;rdquo; are synonym.
-Path A set of strings separated by &#39;/&#39; , as in a filesystem path. A Path cannot contain any &#39;*&#39; character.
+ Path A set of strings separated by &#39;/&#39; , as in a filesystem path. A Path cannot contain any &#39;*&#39; character.
 Examples of paths: /demo/example/test , /com/adlink/building/fr/floor/1/office/2 &amp;hellip;
 A path can be absolute (i.</description>
     </item>
@@ -63,7 +64,7 @@ A path can be absolute (i.</description>
       
       <guid>http://zenoh.io/docs/manual/backends/</guid>
       <description>Here is the list of the supported backends and their expected properties:
- at initialization. I.e. the properties to give to the Admin space when adding the backend. at storage creation. I.e. the properties to give to the Admin space when adding the storage.  Memory A backend using zenoh main memory. It&amp;rsquo;s not persistent: as soon as the zenoh router stops, all the keys/values stored in this backend are lost.</description>
+ at initialization. I.e. the properties to give to the Admin space when adding the backend. at storage creation. I.e. the properties to give to the Admin space when adding the storage.  Memory A backend using zenoh main memory. It&#39;s not persistent: as soon as the zenoh router stops, all the keys/values stored in this backend are lost.</description>
     </item>
     
     <item>
@@ -76,7 +77,7 @@ A path can be absolute (i.</description>
 Python https://readthedocs.org/projects/zenoh-python/
 Java https://readthedocs.org/projects/zenoh-java/
 Go https://readthedocs.org/projects/zenoh-go/
-REST API Zenoh also offers a REST API via the zenoh-http plugin. When starting zenoh with default options, this HTTP plugin is automatically started on port 8000 and ready to answer HTTP requests.
+ REST API Zenoh also offers a REST API via the zenoh-http plugin. When starting zenoh with default options, this HTTP plugin is automatically started on port 8000 and ready to answer HTTP requests.
 The full zenoh key/value space is accessible via this REST API, including the Admin space.
 GET Binds to the get(selector) operation on zenoh.</description>
     </item>

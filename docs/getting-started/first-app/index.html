@@ -154,13 +154,10 @@
     <div class="d-none d-xl-block col-xl-2 ato-toc">
       <div class="section-nav">
         <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#zenoh-programming-in-python">zenoh Programming in Python</a></li>
-<li><a href="#other-code-examples">Other code examples</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#zenoh-programming-in-python">zenoh Programming in Python</a></li>
+    <li><a href="#other-code-examples">Other code examples</a></li>
+  </ul>
 </nav>
       </div>
     </div>
@@ -169,29 +166,21 @@
       <div class="github-edit">
         <a class="fa fa-github" href="https://github.com/atolab/zenoh-web/tree/master/content/docs/getting-started/first-app.md"> Edit on GitHub</a>
       </div>
-      
-
-<p>Getting started with zenoh is quite straightforward. Below we will show you how to create a simple telemetry application. Let&rsquo;s assume that we have some sensor, say a temperature sensor, and we want to store this temperature into a zenoh storage. Later on, we want to retrieve this temperature from the zenoh storage.</p>
-
-<p>Before cranking some code, let&rsquo;s define some terminology.</p>
-
-<p><b>zenoh</b> deals with <i>keys/values</i> where each key is a <i>path</i> and is associated to a <i>value</i>. A path looks like just a Unix file system path, such as <code>/myhome/kitchen/temp</code>. The value can be defined with different
+      <p>Getting started with zenoh is quite straightforward. Below we will show you how to create a simple telemetry application. Let's assume that we have some sensor, say a temperature sensor, and we want to store this temperature into a zenoh storage. Later on, we want to retrieve this temperature from the zenoh storage.</p>
+<p>Before cranking some code, let's define some terminology.</p>
+<p><!-- raw HTML omitted -->zenoh<!-- raw HTML omitted --> deals with <!-- raw HTML omitted -->keys/values<!-- raw HTML omitted --> where each key is a <!-- raw HTML omitted -->path<!-- raw HTML omitted --> and is associated to a <!-- raw HTML omitted -->value<!-- raw HTML omitted -->. A path looks like just a Unix file system path, such as <code>/myhome/kitchen/temp</code>. The value can be defined with different
 encodings (string, JSON, raw bytes buffer&hellip;).</p>
-
-<p>To query the values stored by zenoh, we use <i>selectors</i>. As the name suggest, a <i>selector</i> can uses wildcards, such as <b>*</b> and <b>**</b> to represent a set of paths, such as, <code>/myhome/*/temp</code>.</p>
-
-<p>Let&rsquo;s get started!</p>
-
+<p>To query the values stored by zenoh, we use <!-- raw HTML omitted -->selectors<!-- raw HTML omitted -->. As the name suggest, a <!-- raw HTML omitted -->selector<!-- raw HTML omitted --> can uses wildcards, such as <!-- raw HTML omitted -->*<!-- raw HTML omitted --> and <!-- raw HTML omitted -->**<!-- raw HTML omitted --> to represent a set of paths, such as, <code>/myhome/*/temp</code>.</p>
+<p>Let's get started!</p>
 <h2 id="zenoh-programming-in-python">zenoh Programming in Python</h2>
-
 <p>By default, a zenoh router starts without any storage. In order to store the temperature, we need to add one.
 The code below create a storage in zenoh memory that will store any key starting with <code>/myhome/</code>:</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#069;font-weight:bold">from</span> <span style="color:#0cf;font-weight:bold">zenoh</span> <span style="color:#069;font-weight:bold">import</span> Zenoh
 
-<span style="color:#069;font-weight:bold">if</span> __name__ <span style="color:#555">==</span> <span style="color:#c30">&#34;__main__&#34;</span>:        
+<span style="color:#069;font-weight:bold">if</span> __name__ <span style="color:#555">==</span> <span style="color:#c30"></span><span style="color:#c30">&#34;</span><span style="color:#c30">__main__</span><span style="color:#c30">&#34;</span>:        
     z <span style="color:#555">=</span> Zenoh<span style="color:#555">.</span>login(None)
-    z<span style="color:#555">.</span>admin()<span style="color:#555">.</span>add_storage(<span style="color:#c30">&#39;mystorage&#39;</span>, {<span style="color:#c30">&#39;selector&#39;</span>: <span style="color:#c30">&#39;/myhome/**&#39;</span>})</code></pre></div>
-<p>Now let&rsquo;s write an application that will produce temperature measurements at each second:</p>
+    z<span style="color:#555">.</span>admin()<span style="color:#555">.</span>add_storage(<span style="color:#c30"></span><span style="color:#c30">&#39;</span><span style="color:#c30">mystorage</span><span style="color:#c30">&#39;</span>, {<span style="color:#c30"></span><span style="color:#c30">&#39;</span><span style="color:#c30">selector</span><span style="color:#c30">&#39;</span>: <span style="color:#c30"></span><span style="color:#c30">&#39;</span><span style="color:#c30">/myhome/**</span><span style="color:#c30">&#39;</span>})
+</code></pre></div><p>Now let's write an application that will produce temperature measurements at each second:</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#069;font-weight:bold">from</span> <span style="color:#0cf;font-weight:bold">zenoh</span> <span style="color:#069;font-weight:bold">import</span> Zenoh, Encoding, Value
 <span style="color:#069;font-weight:bold">import</span> <span style="color:#0cf;font-weight:bold">random</span>
 <span style="color:#069;font-weight:bold">import</span> <span style="color:#0cf;font-weight:bold">time</span>
@@ -205,23 +194,23 @@ random<span style="color:#555">.</span>seed()
     <span style="color:#09f;font-style:italic"># read and produce e temperature every second</span>
     <span style="color:#069;font-weight:bold">while</span> True:
         t <span style="color:#555">=</span> read_temp()
-        w<span style="color:#555">.</span>put(<span style="color:#c30">&#39;/myhome/kitcken/temp&#39;</span>, Value(<span style="color:#366">str</span>(t), encoding<span style="color:#555">=</span>Encoding<span style="color:#555">.</span>STRING))
+        w<span style="color:#555">.</span>put(<span style="color:#c30"></span><span style="color:#c30">&#39;</span><span style="color:#c30">/myhome/kitcken/temp</span><span style="color:#c30">&#39;</span>, Value(<span style="color:#366">str</span>(t), encoding<span style="color:#555">=</span>Encoding<span style="color:#555">.</span>STRING))
         time<span style="color:#555">.</span>sleep(<span style="color:#f60">1</span>)
 
-<span style="color:#069;font-weight:bold">if</span> __name__ <span style="color:#555">==</span> <span style="color:#c30">&#34;__main__&#34;</span>:        
+<span style="color:#069;font-weight:bold">if</span> __name__ <span style="color:#555">==</span> <span style="color:#c30"></span><span style="color:#c30">&#34;</span><span style="color:#c30">__main__</span><span style="color:#c30">&#34;</span>:        
     z <span style="color:#555">=</span> Zenoh<span style="color:#555">.</span>login(None)
-    w <span style="color:#555">=</span> z<span style="color:#555">.</span>workspace(<span style="color:#c30">&#39;/&#39;</span>)
-    run_sensor_loop(w)</code></pre></div>
-<p>Below is the application that will retrieve the latest temperature value stored in zenoh:</p>
+    w <span style="color:#555">=</span> z<span style="color:#555">.</span>workspace(<span style="color:#c30"></span><span style="color:#c30">&#39;</span><span style="color:#c30">/</span><span style="color:#c30">&#39;</span>)
+    run_sensor_loop(w)
+</code></pre></div><p>Below is the application that will retrieve the latest temperature value stored in zenoh:</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#069;font-weight:bold">from</span> <span style="color:#0cf;font-weight:bold">zenoh</span> <span style="color:#069;font-weight:bold">import</span> Zenoh
 
-<span style="color:#069;font-weight:bold">if</span> __name__ <span style="color:#555">==</span> <span style="color:#c30">&#34;__main__&#34;</span>:        
+<span style="color:#069;font-weight:bold">if</span> __name__ <span style="color:#555">==</span> <span style="color:#c30"></span><span style="color:#c30">&#34;</span><span style="color:#c30">__main__</span><span style="color:#c30">&#34;</span>:        
     z <span style="color:#555">=</span> Zenoh<span style="color:#555">.</span>login(None)
-    w <span style="color:#555">=</span> z<span style="color:#555">.</span>workspace(<span style="color:#c30">&#39;/&#39;</span>)
-    results <span style="color:#555">=</span> w<span style="color:#555">.</span>get(<span style="color:#c30">&#39;/myhome/kitcken/temp&#39;</span>)
+    w <span style="color:#555">=</span> z<span style="color:#555">.</span>workspace(<span style="color:#c30"></span><span style="color:#c30">&#39;</span><span style="color:#c30">/</span><span style="color:#c30">&#39;</span>)
+    results <span style="color:#555">=</span> w<span style="color:#555">.</span>get(<span style="color:#c30"></span><span style="color:#c30">&#39;</span><span style="color:#c30">/myhome/kitcken/temp</span><span style="color:#c30">&#39;</span>)
     key, value <span style="color:#555">=</span> results[<span style="color:#f60">0</span>]<span style="color:#555">.</span>path, results[<span style="color:#f60">0</span>]<span style="color:#555">.</span>value
-    <span style="color:#069;font-weight:bold">print</span>(<span style="color:#c30">&#39;  {} : {}&#39;</span><span style="color:#555">.</span>format(key, value))</code></pre></div>
-<p>Finally, if ever we want to receive the temperatures in direct from the publisher,
+    <span style="color:#069;font-weight:bold">print</span>(<span style="color:#c30"></span><span style="color:#c30">&#39;</span><span style="color:#c30">  {} : {}</span><span style="color:#c30">&#39;</span><span style="color:#555">.</span>format(key, value))
+</code></pre></div><p>Finally, if ever we want to receive the temperatures in direct from the publisher,
 without querying the zenoh storage, we can use a subscriber:</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#069;font-weight:bold">from</span> <span style="color:#0cf;font-weight:bold">zenoh</span> <span style="color:#069;font-weight:bold">import</span> Zenoh, ChangeKind
 <span style="color:#069;font-weight:bold">import</span> <span style="color:#0cf;font-weight:bold">time</span>
@@ -229,18 +218,16 @@ without querying the zenoh storage, we can use a subscriber:</p>
 <span style="color:#069;font-weight:bold">def</span> <span style="color:#c0f">listener</span>(changes):
     <span style="color:#069;font-weight:bold">for</span> change <span style="color:#000;font-weight:bold">in</span> changes:
         <span style="color:#069;font-weight:bold">if</span> change<span style="color:#555">.</span>get_kind() <span style="color:#555">==</span> ChangeKind<span style="color:#555">.</span>PUT:
-            <span style="color:#069;font-weight:bold">print</span>(<span style="color:#c30">&#39;Publication received: &#34;{}&#34; = &#34;{}&#34;&#39;</span>
+            <span style="color:#069;font-weight:bold">print</span>(<span style="color:#c30"></span><span style="color:#c30">&#39;</span><span style="color:#c30">Publication received: </span><span style="color:#c30">&#34;</span><span style="color:#c30">{}</span><span style="color:#c30">&#34;</span><span style="color:#c30"> = </span><span style="color:#c30">&#34;</span><span style="color:#c30">{}</span><span style="color:#c30">&#34;</span><span style="color:#c30">&#39;</span>
                   <span style="color:#555">.</span>format(change<span style="color:#555">.</span>get_path(), change<span style="color:#555">.</span>get_value()))
 
-<span style="color:#069;font-weight:bold">if</span> __name__ <span style="color:#555">==</span> <span style="color:#c30">&#34;__main__&#34;</span>:        
+<span style="color:#069;font-weight:bold">if</span> __name__ <span style="color:#555">==</span> <span style="color:#c30"></span><span style="color:#c30">&#34;</span><span style="color:#c30">__main__</span><span style="color:#c30">&#34;</span>:        
     z <span style="color:#555">=</span> Zenoh<span style="color:#555">.</span>login(None)
-    w <span style="color:#555">=</span> z<span style="color:#555">.</span>workspace(<span style="color:#c30">&#39;/&#39;</span>)
-    results <span style="color:#555">=</span> w<span style="color:#555">.</span>subscribe(<span style="color:#c30">&#39;/myhome/kitcken/temp&#39;</span>, listener)
-    time<span style="color:#555">.</span>sleep(<span style="color:#f60">60</span>)</code></pre></div>
-<h2 id="other-code-examples">Other code examples</h2>
-
+    w <span style="color:#555">=</span> z<span style="color:#555">.</span>workspace(<span style="color:#c30"></span><span style="color:#c30">&#39;</span><span style="color:#c30">/</span><span style="color:#c30">&#39;</span>)
+    results <span style="color:#555">=</span> w<span style="color:#555">.</span>subscribe(<span style="color:#c30"></span><span style="color:#c30">&#39;</span><span style="color:#c30">/myhome/kitcken/temp</span><span style="color:#c30">&#39;</span>, listener)
+    time<span style="color:#555">.</span>sleep(<span style="color:#f60">60</span>)
+</code></pre></div><h2 id="other-code-examples">Other code examples</h2>
 <p>Now you can also have a look to the examples provided with each client API:</p>
-
 <ul>
 <li><strong>Python</strong>: <a href="https://github.com/atolab/zenoh-python/tree/master/examples/zenoh">https://github.com/atolab/zenoh-python/tree/master/examples/zenoh</a></li>
 <li><strong>Java</strong>:   <a href="https://github.com/atolab/zenoh-java/tree/master/examples/zenoh">https://github.com/atolab/zenoh-java/tree/master/examples/zenoh</a></li>
@@ -256,6 +243,53 @@ without querying the zenoh storage, we can use a subscriber:</p>
     </main>
   </div>
 </div>
+
+    <footer class="ato-footer text-muted">
+      <div class="container-fluid p-6 p-md-5">
+        <div class="row">
+          <div class="col-md-2">
+            <h5>Eclipse Incubation</h5>
+            <p><img src="http://zenoh.io/img/eclipse-incubation.png" style="width:100px;"></p>
+            <p>Eclipse zenoh &trade; is an incubating project under the Eclipse Foundation.</p>
+
+          </div>
+          <div class="col-md-2">
+            <h5>More Information</h5>
+            <p><a href="https://www.eclipse.org/legal"  target="_blank">Legal</a></p>
+            <p><a href="https://www.eclipse.org/legal/privacy.php"  target="_blank">Privacy policy</a></p>
+            <p><a href="https://www.eclipse.org/legal/termsofuse.php"  target="_blank">Terms of use</a></p>
+            <p><a href="https://www.eclipse.org/legal/copyright.php"  target="_blank">Copyright</a></p>
+            <p><a href="https://www.eclipse.org/security/" target="_blank">Report a security issue</a></p>
+            <p><a href="https://www.eclipse.org/legal/epl-2.0/" target="_blank">Eclipse Public License 2.0</a></p>
+            <p><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a></p>
+            <p><a href="https://www.eclipse.org/" target="_blank">Eclipse Foundation</a></p>
+        </div>
+          <div class="col-md-2">
+              <h5>Sponsored by:</h5>
+              <p><a href="https://www.eclipse.org"  target="_blank"><img src="http://zenoh.io/img/eclipse-foundation.svg" style="width:100px;"></a></p>
+              <p><a href="https://www.adlinktech.com"  target="_blank"><img src="https://cdn.adlinktech.com/webupd/en/Upload/logo.png" style="width:100px;"></a></p>
+
+            </div>
+            <div class="col-md-2">
+                <h5>Follow us</h5>
+                <p><a href="https://github.com/atolab/zenoh"> <i class="fa fa-github" aria-hidden="true"></i> GitHub</a></p>
+                <p><a href="https://gitter.im/atolab/zenoh"> <i class="fa fa fa-comments-o" aria-hidden="true"></i> Gitter</a></p>
+                <p><a href="http://zenoh.io/docs/overview/"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></p>
+            </div>
+            <div class="col-md-2">
+                <p><img src="http://zenoh.io/img/zenoh-dragon.png" style="width:45px;"></p>
+                <p>Eclipse zenoh &trade; is free, open source and always will be.</p>
+                <p>Copyright &copy 2020 Eclipse Foundation</p>
+                <p>Build with <a href="https://gohugo.io/" target="_blank">HUGO</a></p>
+                <p>Theme inspired from: <a href="https://tokio.rs/" target="_blank">Tokio website theme</a></p>
+            </div>
+        </div>
+
+
+      </div>
+
+
+    </footer>
 
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>

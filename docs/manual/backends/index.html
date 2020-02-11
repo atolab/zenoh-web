@@ -154,16 +154,13 @@
     <div class="d-none d-xl-block col-xl-2 ato-toc">
       <div class="section-nav">
         <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#memory">Memory</a></li>
-<li><a href="#sqlite-3">SQLite 3</a></li>
-<li><a href="#postgresql">PostgreSQL</a></li>
-<li><a href="#mariadb">MariaDB</a></li>
-<li><a href="#influxdb">InfluxDB</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#memory">Memory</a></li>
+    <li><a href="#sqlite-3">SQLite 3</a></li>
+    <li><a href="#postgresql">PostgreSQL</a></li>
+    <li><a href="#mariadb">MariaDB</a></li>
+    <li><a href="#influxdb">InfluxDB</a></li>
+  </ul>
 </nav>
       </div>
     </div>
@@ -172,198 +169,174 @@
       <div class="github-edit">
         <a class="fa fa-github" href="https://github.com/atolab/zenoh-web/tree/master/content/docs/manual/backends.md"> Edit on GitHub</a>
       </div>
-      
-
-<p>Here is the list of the supported backends and their expected properties:</p>
-
+      <p>Here is the list of the supported backends and their expected properties:</p>
 <ul>
 <li>at <strong>initialization</strong>. I.e. the properties to give to the <a href="../abstractions#admin-space">Admin space</a> when adding the backend.</li>
 <li>at <strong>storage creation</strong>. I.e. the properties to give to the <a href="../abstractions#admin-space">Admin space</a> when adding the storage.</li>
 </ul>
-
 <h2 id="memory">Memory</h2>
-
 <p>A backend using zenoh main memory.
-It&rsquo;s not persistent: as soon as the zenoh router stops, all the keys/values stored in this backend are lost.</p>
-
+It's not persistent: as soon as the zenoh router stops, all the keys/values stored in this backend are lost.</p>
 <ul>
 <li><strong>plugin file</strong>: <em>none - the memory backend is built-in with zenoh.</em></li>
 <li><strong>initialization properties</strong>: <em>none</em></li>
 <li><strong>storage creation properties</strong>:
-
 <ul>
-<li><strong>selector</strong> : the storage&rsquo;s <a href="../abstractions#selector">selector</a></li>
-</ul></li>
+<li><strong>selector</strong> : the storage's <a href="../abstractions#selector">selector</a></li>
 </ul>
-
+</li>
+</ul>
 <p>Example of a memory storage creation using the REST API:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;selector&#34;:&#34;/demo/test/**&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-test</code></pre></div>
-<hr />
-
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;selector&#34;:&#34;/demo/test/**&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-test
+</code></pre></div><hr>
 <h2 id="sqlite-3">SQLite 3</h2>
-
-<p>A backend using a <a href="https://www.sqlite.org">SQLite 3</a> database.<br />
+<p>A backend using a <a href="https://www.sqlite.org">SQLite 3</a> database.<br>
 Each storage will map to a SQL table.</p>
-
 <ul>
 <li><strong>plugin file</strong>: zenoh-storages-be-sqlite3.cmxs</li>
 <li><strong>initialization properties</strong>:
-
 <ul>
 <li><strong>lib</strong>=sqlite3</li>
 <li><strong>url</strong> : an URL pointing to a SQLite3 database file. Syntax: <strong><code>sqlite3://&lt;/path/to/file&gt;</code></strong></li>
-</ul></li>
+</ul>
+</li>
 <li><strong>storage creation properties</strong>:
-
 <ul>
-<li><strong>selector</strong> : the storage&rsquo;s <a href="../abstractions#selector">selector</a></li>
+<li><strong>selector</strong> : the storage's <a href="../abstractions#selector">selector</a></li>
 <li><strong>table</strong> : <em>optional</em> - the name of the SQL table to use for storage.
 If not specified, zenoh will create a new table.
-The schema of the table will be:<br />
-<code>(k VARCHAR(3072) NOT NULL PRIMARY KEY, v TEXT, e VARCHAR(10), t VARCHAR(60))</code><br />
+The schema of the table will be:<br>
+<code>(k VARCHAR(3072) NOT NULL PRIMARY KEY, v TEXT, e VARCHAR(10), t VARCHAR(60))</code><br>
 where <code>k</code> is the key (a path relative to the selector), <code>v</code> is the value as a string, <code>e</code> is the value encoding,
 and <code>t</code> is the timestamp.</li>
 <li><strong>key_size</strong> : <em>optional</em> - the size of the <code>k</code> VARCHAR that zenoh will use for table creation. Default value: 3072.</li>
 <li><strong>on_dispose</strong> : <em>optional</em> - the strategy to use when the storage is removed. There are 3 options:
-
 <ul>
 <li><strong>drop</strong> : the table is dropped (i.e. removed)</li>
 <li><strong>truncate</strong> : the table is truncated (i.e. data are deleted, but the table remains empty)</li>
 <li><em>unset</em> : the table remains untouched (this is the default behaviour)</li>
-</ul></li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
+</li>
+</ul>
 <p>Example of the SQLite3 backend creation using the REST API:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;lib&#34;:&#34;sqlite3&#34;,&#34;url&#34;:&#34;sqlite3:///tmp/sqlite3-zenoh.db&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/sqlite3</code></pre></div>
-<p>Example of a SQLite3 storage creation using the REST API:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;selector&#34;:&#34;/demo/example/sql/**&#34;,&#34;table&#34;:&#34;mytable&#34;,&#34;key_size&#34;:&#34;100&#34;,&#34;on_dispose&#34;:&#34;truncate&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/sqlite3/storage/mytable</code></pre></div>
-<hr />
-
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;lib&#34;:&#34;sqlite3&#34;,&#34;url&#34;:&#34;sqlite3:///tmp/sqlite3-zenoh.db&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/sqlite3
+</code></pre></div><p>Example of a SQLite3 storage creation using the REST API:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;selector&#34;:&#34;/demo/example/sql/**&#34;,&#34;table&#34;:&#34;mytable&#34;,&#34;key_size&#34;:&#34;100&#34;,&#34;on_dispose&#34;:&#34;truncate&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/sqlite3/storage/mytable
+</code></pre></div><hr>
 <h2 id="postgresql">PostgreSQL</h2>
-
-<p>A backend using a <a href="https://www.postgresql.org">PostgreSQL</a> database.<br />
+<p>A backend using a <a href="https://www.postgresql.org">PostgreSQL</a> database.<br>
 Each storage will map to a SQL table.</p>
-
 <ul>
 <li><strong>plugin file</strong>: zenoh-storages-be-postgresql.cmxs</li>
 <li><strong>initialization properties</strong>:
-
 <ul>
 <li><strong>lib</strong>=postgresql</li>
 <li><strong>url</strong> : a PostgreSQL connection URL. Syntax: <strong><code>postgresql://[user[:password]@][host][:port][/dbname][?param1=value1&amp;...]</code></strong></li>
-</ul></li>
+</ul>
+</li>
 <li><strong>storage creation properties</strong>:
-
 <ul>
-<li><strong>selector</strong> : the storage&rsquo;s <a href="../abstractions#selector">selector</a></li>
+<li><strong>selector</strong> : the storage's <a href="../abstractions#selector">selector</a></li>
 <li><strong>table</strong> : <em>optional</em> - the name of the SQL table to use for storage.
 If not specified, zenoh will create a new table.
-The schema of the table will be:<br />
-<code>(k VARCHAR(3072) NOT NULL PRIMARY KEY, v TEXT, e VARCHAR(10), t VARCHAR(60))</code><br />
+The schema of the table will be:<br>
+<code>(k VARCHAR(3072) NOT NULL PRIMARY KEY, v TEXT, e VARCHAR(10), t VARCHAR(60))</code><br>
 where <code>k</code> is the key (a path relative to the selector), <code>v</code> is the value as a string, <code>e</code> is the value encoding,
 and <code>t</code> is the timestamp.</li>
 <li><strong>key_size</strong> : <em>optional</em> - the size of the <code>k</code> VARCHAR that zenoh will use for table creation. Default value: 3072.</li>
 <li><strong>on_dispose</strong> : <em>optional</em> - the strategy to use when the storage is removed. There are 3 options:
-
 <ul>
 <li><strong>drop</strong> : the table is dropped (i.e. removed)</li>
 <li><strong>truncate</strong> : the table is truncated (i.e. data are deleted, but the table remains empty)</li>
 <li><em>unset</em> : the table remains untouched (this is the default behaviour)</li>
-</ul></li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
+</li>
+</ul>
 <p>Example of the PostgreSQL backend creation using the REST API:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;lib&#34;:&#34;postgresql&#34;,&#34;url&#34;:&#34;postgresql://localhost/mydb&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/psql</code></pre></div>
-<p>Example of a PostgreSQL storage creation using the REST API:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;selector&#34;:&#34;/demo/example/sql/**&#34;,&#34;table&#34;:&#34;mytable&#34;,&#34;key_size&#34;:&#34;100&#34;,&#34;on_dispose&#34;:&#34;truncate&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/psql/storage/mytable</code></pre></div>
-<hr />
-
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;lib&#34;:&#34;postgresql&#34;,&#34;url&#34;:&#34;postgresql://localhost/mydb&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/psql
+</code></pre></div><p>Example of a PostgreSQL storage creation using the REST API:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;selector&#34;:&#34;/demo/example/sql/**&#34;,&#34;table&#34;:&#34;mytable&#34;,&#34;key_size&#34;:&#34;100&#34;,&#34;on_dispose&#34;:&#34;truncate&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/psql/storage/mytable
+</code></pre></div><hr>
 <h2 id="mariadb">MariaDB</h2>
-
-<p>A backend using a <a href="https://mariadb.org/">MariaDB</a> (or MySQL) database.<br />
+<p>A backend using a <a href="https://mariadb.org/">MariaDB</a> (or MySQL) database.<br>
 Each storage will map to a SQL table.</p>
-
 <ul>
 <li><strong>plugin file</strong>: zenoh-storages-be-mariadb.cmxs</li>
 <li><strong>initialization properties</strong>:
-
 <ul>
 <li><strong>lib</strong>=mariadb</li>
 <li><strong>url</strong> : a MariaDB connection URL. Syntax: <strong><code>mariadb://[user[:password]@][host][:port][/dbname][?param1=value1&amp;...]</code></strong></li>
-</ul></li>
+</ul>
+</li>
 <li><strong>storage creation properties</strong>:
-
 <ul>
-<li><strong>selector</strong> : the storage&rsquo;s <a href="../abstractions#selector">selector</a></li>
+<li><strong>selector</strong> : the storage's <a href="../abstractions#selector">selector</a></li>
 <li><strong>table</strong> : <em>optional</em> - the name of the SQL table to use for storage.
 If not specified, zenoh will create a new table.
-The schema of the table will be:<br />
-<code>(k VARCHAR(3072) NOT NULL PRIMARY KEY, v TEXT, e VARCHAR(10), t VARCHAR(60))</code><br />
+The schema of the table will be:<br>
+<code>(k VARCHAR(3072) NOT NULL PRIMARY KEY, v TEXT, e VARCHAR(10), t VARCHAR(60))</code><br>
 where <code>k</code> is the key (a path relative to the selector), <code>v</code> is the value as a string, <code>e</code> is the value encoding,
 and <code>t</code> is the timestamp.</li>
 <li><strong>key_size</strong> : <em>optional</em> - the size of the <code>k</code> VARCHAR that zenoh will use for table creation. Default value: 3072.</li>
 <li><strong>on_dispose</strong> : <em>optional</em> - the strategy to use when the storage is removed. There are 3 options:
-
 <ul>
 <li><strong>drop</strong> : the table is dropped (i.e. removed)</li>
 <li><strong>truncate</strong> : the table is truncated (i.e. data are deleted, but the table remains empty)</li>
 <li><em>unset</em> : the table remains untouched (this is the default behaviour)</li>
-</ul></li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
+</li>
+</ul>
 <p>Example of the MariaDB backend creation using the REST API:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;lib&#34;:&#34;mariadb&#34;,&#34;url&#34;:&#34;mariadb://localhost/mydb&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/mariadb</code></pre></div>
-<p>Example of a MariaDB storage creation using the REST API:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;selector&#34;:&#34;/demo/example/sql/**&#34;,&#34;table&#34;:&#34;mytable&#34;,&#34;key_size&#34;:&#34;100&#34;,&#34;on_dispose&#34;:&#34;truncate&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/mariadb/storage/mytable</code></pre></div>
-<hr />
-
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;lib&#34;:&#34;mariadb&#34;,&#34;url&#34;:&#34;mariadb://localhost/mydb&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/mariadb
+</code></pre></div><p>Example of a MariaDB storage creation using the REST API:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;selector&#34;:&#34;/demo/example/sql/**&#34;,&#34;table&#34;:&#34;mytable&#34;,&#34;key_size&#34;:&#34;100&#34;,&#34;on_dispose&#34;:&#34;truncate&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/mariadb/storage/mytable
+</code></pre></div><hr>
 <h2 id="influxdb">InfluxDB</h2>
-
-<p>A backend using an <a href="https://docs.influxdata.com/influxdb">InfluxDB</a> service.<br />
+<p>A backend using an <a href="https://docs.influxdata.com/influxdb">InfluxDB</a> service.<br>
 Each storage will map to a database.
 Each zenoh path to store will map to a an InfluxDB
 <a href="https://docs.influxdata.com/influxdb/v1.7/concepts/key_concepts/#measurement">measurement</a>
-named with the relative path from the storage&rsquo;s selector.
+named with the relative path from the storage's selector.
 Each key/value put into the storage will map to InfluxDB
 <a href="https://docs.influxdata.com/influxdb/v1.7/concepts/key_concepts/#point">point</a> reusing the timestamp set by zenoh
 (but with a precision of nanoseconds). The encoding and the original zenoh timestamp are used as tags within the point.</p>
-
 <ul>
 <li><strong>plugin file</strong>: zenoh-storages-be-influxdb.cmxs</li>
 <li><strong>initialization properties</strong>:
-
 <ul>
 <li><strong>lib</strong>=influxdb</li>
 <li><strong>url</strong> : an InfluxDB HTTP URL. Syntax: <strong><code>http://&lt;host&gt;:&lt;port&gt;</code></strong></li>
-</ul></li>
+</ul>
+</li>
 <li><strong>storage creation properties</strong>:
-
 <ul>
-<li><strong>selector</strong> : the storage&rsquo;s <a href="../abstractions#selector">selector</a></li>
+<li><strong>selector</strong> : the storage's <a href="../abstractions#selector">selector</a></li>
 <li><strong>db</strong> : <em>optional</em> - the name of the database to use for this storage.
 If not specified, zenoh will create a new database.</li>
 <li><strong>on_dispose</strong> : <em>optional</em> - the strategy to use when the storage is removed. There are 4 options:
-
 <ul>
 <li><strong>drop</strong> or <strong>DropDB</strong> : the database is dropped (i.e. removed)</li>
 <li><strong>DropAllSeries</strong> : all the series (measurements) are dropped (i.e. data are deleted, but the database remains empty)</li>
 <li><em>unset</em> : the database remains untouched (this is the default behaviour)</li>
-</ul></li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
+</li>
+</ul>
 <p>Example of the InfluxDB backend creation using the REST API:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;lib&#34;:&#34;influxdb&#34;,&#34;url&#34;:&#34;http://localhost:8086&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/influxdb</code></pre></div>
-<p>Example of a InfluxDB storage creation using the REST API:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;selector&#34;:&#34;/demo/example/influxdb/**&#34;,&#34;db&#34;:&#34;mydb&#34;,&#34;on_dispose&#34;:&#34;DropAllSeries&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/influxdb/storage/mydb</code></pre></div>
-<p>By default a <code>get</code> matching an InfluxDB storage will return the last value of each measurement with a key
-that matches the <code>get</code>selector.<br />
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;lib&#34;:&#34;influxdb&#34;,&#34;url&#34;:&#34;http://localhost:8086&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/influxdb
+</code></pre></div><p>Example of a InfluxDB storage creation using the REST API:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -X PUT -d <span style="color:#c30">&#39;{&#34;selector&#34;:&#34;/demo/example/influxdb/**&#34;,&#34;db&#34;:&#34;mydb&#34;,&#34;on_dispose&#34;:&#34;DropAllSeries&#34;}&#39;</span> http://localhost:8000/@/router/local/plugin/storages/backend/influxdb/storage/mydb
+</code></pre></div><p>By default a <code>get</code> matching an InfluxDB storage will return the last value of each measurement with a key
+that matches the <code>get</code>selector.<br>
 But you can also get a serie of values for each matching key using the <code>starttime</code> and <code>stoptime</code> properties in the selector. Those properties support the InfluxDB <strong><a href="https://docs.influxdata.com/influxdb/v1.7/query_language/data_exploration/#time-syntax">time syntax</a></strong> (the part after the operator).
 For instance:</p>
-
 <ul>
 <li><code>/demo/example/influxdb/**?(starttime=2019-01-01)</code></li>
 <li><code>/demo/example/influxdb/**?(starttime=2019-11-01T09:30:00.000000000Z;stoptime=now())</code></li>
@@ -379,6 +352,53 @@ For instance:</p>
     </main>
   </div>
 </div>
+
+    <footer class="ato-footer text-muted">
+      <div class="container-fluid p-6 p-md-5">
+        <div class="row">
+          <div class="col-md-2">
+            <h5>Eclipse Incubation</h5>
+            <p><img src="http://zenoh.io/img/eclipse-incubation.png" style="width:100px;"></p>
+            <p>Eclipse zenoh &trade; is an incubating project under the Eclipse Foundation.</p>
+
+          </div>
+          <div class="col-md-2">
+            <h5>More Information</h5>
+            <p><a href="https://www.eclipse.org/legal"  target="_blank">Legal</a></p>
+            <p><a href="https://www.eclipse.org/legal/privacy.php"  target="_blank">Privacy policy</a></p>
+            <p><a href="https://www.eclipse.org/legal/termsofuse.php"  target="_blank">Terms of use</a></p>
+            <p><a href="https://www.eclipse.org/legal/copyright.php"  target="_blank">Copyright</a></p>
+            <p><a href="https://www.eclipse.org/security/" target="_blank">Report a security issue</a></p>
+            <p><a href="https://www.eclipse.org/legal/epl-2.0/" target="_blank">Eclipse Public License 2.0</a></p>
+            <p><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a></p>
+            <p><a href="https://www.eclipse.org/" target="_blank">Eclipse Foundation</a></p>
+        </div>
+          <div class="col-md-2">
+              <h5>Sponsored by:</h5>
+              <p><a href="https://www.eclipse.org"  target="_blank"><img src="http://zenoh.io/img/eclipse-foundation.svg" style="width:100px;"></a></p>
+              <p><a href="https://www.adlinktech.com"  target="_blank"><img src="https://cdn.adlinktech.com/webupd/en/Upload/logo.png" style="width:100px;"></a></p>
+
+            </div>
+            <div class="col-md-2">
+                <h5>Follow us</h5>
+                <p><a href="https://github.com/atolab/zenoh"> <i class="fa fa-github" aria-hidden="true"></i> GitHub</a></p>
+                <p><a href="https://gitter.im/atolab/zenoh"> <i class="fa fa fa-comments-o" aria-hidden="true"></i> Gitter</a></p>
+                <p><a href="http://zenoh.io/docs/overview/"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></p>
+            </div>
+            <div class="col-md-2">
+                <p><img src="http://zenoh.io/img/zenoh-dragon.png" style="width:45px;"></p>
+                <p>Eclipse zenoh &trade; is free, open source and always will be.</p>
+                <p>Copyright &copy 2020 Eclipse Foundation</p>
+                <p>Build with <a href="https://gohugo.io/" target="_blank">HUGO</a></p>
+                <p>Theme inspired from: <a href="https://tokio.rs/" target="_blank">Tokio website theme</a></p>
+            </div>
+        </div>
+
+
+      </div>
+
+
+    </footer>
 
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>

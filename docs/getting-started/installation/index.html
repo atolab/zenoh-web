@@ -154,19 +154,15 @@
     <div class="d-none d-xl-block col-xl-2 ato-toc">
       <div class="section-nav">
         <nav id="TableOfContents">
-<ul>
-<li><a href="#installing-zenoh-s-infrastructure">Installing zenoh&rsquo;s Infrastructure</a>
-<ul>
-<li><a href="#macos">MacOS</a></li>
-<li><a href="#linux">Linux</a>
-<ul>
-<li><a href="#debian-and-friends">Debian and Friends</a></li>
-<li><a href="#redhat-and-friends">RedHat and Friends</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#testing-your-installation">Testing Your Installation</a></li>
-<li><a href="#pick-your-programming-language">Pick Your Programming Language</a></li>
-</ul>
+  <ul>
+    <li><a href="#macos">MacOS</a></li>
+    <li><a href="#linux">Linux</a>
+      <ul>
+        <li><a href="#ubuntu-1604-and-1804">Ubuntu (16.04 and 18.04)</a></li>
+        <li><a href="#centos-7">CentOS 7</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
       </div>
     </div>
@@ -175,51 +171,43 @@
       <div class="github-edit">
         <a class="fa fa-github" href="https://github.com/atolab/zenoh-web/tree/master/content/docs/getting-started/installation.md"> Edit on GitHub</a>
       </div>
-      
-
-<p>To get up and running with <b>zenoh</b> you will have to install the infrastructure and then get hold of the API you would like to use to write your applications.</p>
-
-<h1 id="installing-zenoh-s-infrastructure">Installing zenoh&rsquo;s Infrastructure</h1>
-
-<p>At the present stage zenoh&rsquo;s infrastructure is supported only on Linux and MacOS. Below are the detailed information on how to install on supported platforms.</p>
-
+      <p>To get up and running with <!-- raw HTML omitted -->zenoh<!-- raw HTML omitted --> you will have to install the infrastructure and then get hold of the API you would like to use to write your applications.</p>
+<h1 id="installing-zenohs-infrastructure">Installing zenoh's Infrastructure</h1>
+<p>At the present stage zenoh's infrastructure is supported only on Linux and MacOS. Below are the detailed information on how to install on supported platforms.</p>
 <h2 id="macos">MacOS</h2>
-
 <p>The first step is to tap our brew package repository:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ brew tap atolab/homebrew-atobin</code></pre></div>
-<p>Then simply install zenoh as follows:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ brew install zenoh</code></pre></div>
-<h2 id="linux">Linux</h2>
-
-<p>The Linux installation procedure depends on the package manager supported by your distribution. Below are detailed information for <b>apt</b> and <b>yum</b> based distros.</p>
-
-<h3 id="debian-and-friends">Debian and Friends</h3>
-
-<p>As a first step add our package repository to your package manager configuration by running the following command:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#366">echo</span> <span style="color:#c30">&#34;deb [trusted=yes] http://pkgs.adlink-labs.tech/debian ./&#34;</span> | sudo tee -a /etc/apt/sources.list &gt; /dev/null</code></pre></div>
-<p>Then update the packages list by:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt update</code></pre></div>
-<p>Now you can install zenoh:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt install zenoh</code></pre></div>
-<h3 id="redhat-and-friends">RedHat and Friends</h3>
-
-<p>The first step is to add the ATOLab repository to <b>yum</b>, this can be done by editing the file:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo vi /etc/yum.repos.d/atolab.repo</code></pre></div>
-<p>and writing the following content:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml,ignore" data-lang="toml,ignore">[atolab-repo]
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ brew tap atolab/homebrew-atobin
+</code></pre></div><p>Then simply install zenoh as follows:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ brew install zenoh
+</code></pre></div><h2 id="linux">Linux</h2>
+<p>The Linux installation procedure depends on the package manager supported by your distribution. Below are detailed information for <!-- raw HTML omitted -->apt<!-- raw HTML omitted --> and <!-- raw HTML omitted -->yum<!-- raw HTML omitted --> based distros.</p>
+<h3 id="ubuntu-1604-and-1804">Ubuntu (16.04 and 18.04)</h3>
+<p>As a first step add our package repository to your package manager configuration by running one of the following command:</p>
+<p>On Ubuntu 16.04:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#366">echo</span> <span style="color:#c30">&#34;deb [trusted=yes] http://pkgs.adlink-labs.tech/debian/16.04 ./&#34;</span> | sudo tee -a /etc/apt/sources.list &gt; /dev/null
+</code></pre></div><p>On Ubuntu 18.04:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#366">echo</span> <span style="color:#c30">&#34;deb [trusted=yes] http://pkgs.adlink-labs.tech/debian/18.04 ./&#34;</span> | sudo tee -a /etc/apt/sources.list &gt; /dev/null
+</code></pre></div><p>Then update the packages list by:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt update
+</code></pre></div><p>Now you can install zenoh:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt install zenoh
+</code></pre></div><h3 id="centos-7">CentOS 7</h3>
+<p>The first step is to add the ATOLab repository to <!-- raw HTML omitted -->yum<!-- raw HTML omitted -->, this can be done by editing the file:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo vi /etc/yum.repos.d/atolab.repo
+</code></pre></div><p>and writing the following content:</p>
+<pre><code class="language-toml,ignore" data-lang="toml,ignore">[atolab-repo]
 name=Atolab RPM Package Repo
-baseurl=http://pkgs.adlink-labs.tech/centos/     # server-name or repo-server-ip
+baseurl=http://pkgs.adlink-labs.tech/centos/7     # server-name or repo-server-ip
 enabled=1
-gpgcheck=0</code></pre></div>
-<p>At this point update the packages and install as follows:</p>
+gpgcheck=0
+</code></pre><p>At this point update the packages and install as follows:</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ yum repolist
 $ yum update
-$ yum install zenoh</code></pre></div>
-<h1 id="testing-your-installation">Testing Your Installation</h1>
-
+$ yum install zenoh
+</code></pre></div><h1 id="testing-your-installation">Testing Your Installation</h1>
 <p>To test the installation, try to see the zenoh man page by executing the following command:</p>
-<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ zenohd --help</code></pre></div>
-<p>You should see the following output on your console:</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ zenohd --help
+</code></pre></div><p>You should see the following output on your console:</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">zenohd(1)                        Zenohd Manual                       zenohd(1)
 
 
@@ -241,11 +229,9 @@ OPTIONS
            `never&#39;.
 
        --help[=FMT] (default=auto)
-[...]           </code></pre></div>
-<h1 id="pick-your-programming-language">Pick Your Programming Language</h1>
-
+[...]           
+</code></pre></div><h1 id="pick-your-programming-language">Pick Your Programming Language</h1>
 <p>When you install the zenoh infrastructure you will get installed the developer SDK for  <a href="https://en.wikipedia.org/wiki/The_C_Programming_Language">C</a>. Yet, zenoh already supports quite a few programming languages, below is the list of supported programming languages as well as links to the installation instruction:</p>
-
 <ul>
 <li><a href="https://github.com/atolab/zenoh-python">Python SDK</a></li>
 <li><a href="https://github.com/atolab/zenoh-java">Java SDK</a></li>
@@ -262,6 +248,53 @@ OPTIONS
     </main>
   </div>
 </div>
+
+    <footer class="ato-footer text-muted">
+      <div class="container-fluid p-6 p-md-5">
+        <div class="row">
+          <div class="col-md-2">
+            <h5>Eclipse Incubation</h5>
+            <p><img src="http://zenoh.io/img/eclipse-incubation.png" style="width:100px;"></p>
+            <p>Eclipse zenoh &trade; is an incubating project under the Eclipse Foundation.</p>
+
+          </div>
+          <div class="col-md-2">
+            <h5>More Information</h5>
+            <p><a href="https://www.eclipse.org/legal"  target="_blank">Legal</a></p>
+            <p><a href="https://www.eclipse.org/legal/privacy.php"  target="_blank">Privacy policy</a></p>
+            <p><a href="https://www.eclipse.org/legal/termsofuse.php"  target="_blank">Terms of use</a></p>
+            <p><a href="https://www.eclipse.org/legal/copyright.php"  target="_blank">Copyright</a></p>
+            <p><a href="https://www.eclipse.org/security/" target="_blank">Report a security issue</a></p>
+            <p><a href="https://www.eclipse.org/legal/epl-2.0/" target="_blank">Eclipse Public License 2.0</a></p>
+            <p><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a></p>
+            <p><a href="https://www.eclipse.org/" target="_blank">Eclipse Foundation</a></p>
+        </div>
+          <div class="col-md-2">
+              <h5>Sponsored by:</h5>
+              <p><a href="https://www.eclipse.org"  target="_blank"><img src="http://zenoh.io/img/eclipse-foundation.svg" style="width:100px;"></a></p>
+              <p><a href="https://www.adlinktech.com"  target="_blank"><img src="https://cdn.adlinktech.com/webupd/en/Upload/logo.png" style="width:100px;"></a></p>
+
+            </div>
+            <div class="col-md-2">
+                <h5>Follow us</h5>
+                <p><a href="https://github.com/atolab/zenoh"> <i class="fa fa-github" aria-hidden="true"></i> GitHub</a></p>
+                <p><a href="https://gitter.im/atolab/zenoh"> <i class="fa fa fa-comments-o" aria-hidden="true"></i> Gitter</a></p>
+                <p><a href="http://zenoh.io/docs/overview/"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></p>
+            </div>
+            <div class="col-md-2">
+                <p><img src="http://zenoh.io/img/zenoh-dragon.png" style="width:45px;"></p>
+                <p>Eclipse zenoh &trade; is free, open source and always will be.</p>
+                <p>Copyright &copy 2020 Eclipse Foundation</p>
+                <p>Build with <a href="https://gohugo.io/" target="_blank">HUGO</a></p>
+                <p>Theme inspired from: <a href="https://tokio.rs/" target="_blank">Tokio website theme</a></p>
+            </div>
+        </div>
+
+
+      </div>
+
+
+    </footer>
 
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
