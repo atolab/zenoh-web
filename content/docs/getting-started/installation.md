@@ -27,11 +27,17 @@ $ brew install zenoh
 ## Linux
 The Linux installation procedure depends on the package manager supported by your distribution. Below are detailed information for <b>apt</b> and <b>yum</b> based distros.
 
-### Debian and Friends
-As a first step add our package repository to your package manager configuration by running the following command:
+### Ubuntu (16.04 and 18.04)
+As a first step add our package repository to your package manager configuration by running one of the following command:
 
+On Ubuntu 16.04:
 ```bash
-$ echo "deb [trusted=yes] http://pkgs.adlink-labs.tech/debian ./" | sudo tee -a /etc/apt/sources.list > /dev/null
+$ echo "deb [trusted=yes] http://pkgs.adlink-labs.tech/debian/16.04 ./" | sudo tee -a /etc/apt/sources.list > /dev/null
+```
+
+On Ubuntu 18.04:
+```bash
+$ echo "deb [trusted=yes] http://pkgs.adlink-labs.tech/debian/18.04 ./" | sudo tee -a /etc/apt/sources.list > /dev/null
 ```
 
 Then update the packages list by:
@@ -46,7 +52,7 @@ Now you can install zenoh:
 $ sudo apt install zenoh
 ```
 
-### RedHat and Friends
+### CentOS 7
 The first step is to add the ATOLab repository to <b>yum</b>, this can be done by editing the file:
 
 ```bash
@@ -58,7 +64,7 @@ and writing the following content:
 ```toml,ignore
 [atolab-repo]
 name=Atolab RPM Package Repo
-baseurl=http://pkgs.adlink-labs.tech/centos/     # server-name or repo-server-ip
+baseurl=http://pkgs.adlink-labs.tech/centos/7     # server-name or repo-server-ip
 enabled=1
 gpgcheck=0
 ```
