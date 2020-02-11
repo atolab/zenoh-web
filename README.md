@@ -1,21 +1,32 @@
-# Your Favicon Package
+# Eclipse zenoh's Website
 
-This package was generated with [RealFaviconGenerator](https://realfavicongenerator.net/) [v0.16](https://realfavicongenerator.net/change_log#v0.16)
+The website for the Eclipse zenoh project. Lives at [https://zenoh.io](https://zenoh.io).
 
-## Install instructions
+## Getting Started
 
-To install this package:
+Building the website depends on [Hugo](http://gohugo.io). So, first make sure
+that you have it installed. If on OS X and using Homebrew, run the following:
 
-Extract this package in the root of your web site. If your site is <code>http://www.example.com</code>, you should be able to access a file named <code>http://www.example.com/favicon.ico</code>.
+```sh
+brew update && brew install hugo
+```
 
-Insert the following code in the `head` section of your pages:
+Then, get the website running locally:
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#72a5c5">
-    <meta name="msapplication-TileColor" content="#2b5797">
-    <meta name="theme-color" content="#ffffff">
+```sh
+git clone https://github.com/atolab/zenoh-web
+cd zenoh-web
+hugo server
+```
 
-*Optional* - Check your favicon with the [favicon checker](https://realfavicongenerator.net/favicon_checker)
+Then visit [http://localhost:1313](http://localhost:1313).
+
+## License
+
+This project is licensed under the [Eclipse Public License 2.0](LICENSE)
+or the [Apache License 2.0](LICENSE).
+
+## Credits
+
+This website design is inspired from the [tokio-rs website](https://github.com/tokio-rs/website)
+which is licensed under [MIT License](LICENSE-tokio-rs).
