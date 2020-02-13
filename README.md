@@ -1,6 +1,6 @@
 # Eclipse zenoh's Website
 
-The website for the Eclipse zenoh project. Lives at [https://zenoh.io](https://zenoh.io).
+The website for the Eclipse zenoh project. Lives at [http://zenoh.io](https://zenoh.io).
 
 ## Getting Started
 
