@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
 Now you can also have a look to the examples provided with each client API:
 
- - **Python**: https://github.com/atolab/zenoh-python/tree/master/examples/zenoh
- - **Java**:   https://github.com/atolab/zenoh-java/tree/master/examples/zenoh
- - **Go**:     https://github.com/atolab/zenoh-go/tree/master/examples/zenoh
+ - **Python**: https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples/zenoh
+ - **Java**:   https://github.com/eclipse-zenoh/zenoh-java/tree/master/examples/zenoh
+ - **Go**:     https://github.com/eclipse-zenoh/zenoh-go/tree/master/examples/zenoh
  
