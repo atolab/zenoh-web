@@ -64,7 +64,7 @@ and writing the following content:
 ```toml,ignore
 [atolab-repo]
 name=Atolab RPM Package Repo
-baseurl=http://pkgs.adlink-labs.tech/centos/7     # server-name or repo-server-ip
+baseurl=http://pkgs.adlink-labs.tech/centos/7
 enabled=1
 gpgcheck=0
 ```
@@ -73,8 +73,7 @@ At this point update the packages and install as follows:
 
 ```bash
 $ yum repolist
-$ yum update
-$ yum install zenoh
+$ sudo yum install zenoh
 ```
 
 # Testing Your Installation

@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
 
     <!-- Blog feed link -->
-    <link rel="alternate" type="application/rss+xml" href="https://zenoh.io/blog/index.xml" />
+    <link rel="alternate" type="application/rss+xml" href="/blog/index.xml" />
 
     <title>
       {{ if .IsHome }}
@@ -48,16 +48,16 @@
           <li class="nav-item">
             {{ $docs := index (.Site.Menus.docs) 1 }}
             {{ $docHome := index ($docs.Children) 0 }}
-            {{ $isDocs := hasPrefix .URL "/docs" }}
+            {{ $isDocs := hasPrefix .Permalink "/docs" }}
             <a class="nav-link {{ if $isDocs }} active {{ end }}" href="{{ $docHome.URL }}">Documentation</a>
           </li>
           <li class="nav-item">
-            {{ $isCommunity := hasPrefix .URL "/community" }}
-            <a class="nav-link {{ if $isCommunity }} active {{ end }}" href="{{ ref . "/community.md" }}">Community</a>
+            {{ $isCommunity := hasPrefix .Permalink "/community" }}
+            <a class="nav-link {{ if $isCommunity }} active {{ end }}" href="{{ ref . "/community" }}">Community</a>
           </li>
           <li class="nav-item">
             {{ $blog := index (.Site.Menus.blog) 0 }}
-            {{ $isBlog := hasPrefix .URL "/blog" }}
+            {{ $isBlog := hasPrefix .Permalink "/blog" }}
             <a class="nav-link {{ if $isBlog }} active {{ end }}" href="{{ $blog.URL }}">Blog</a>
           </li>
         </ul>
