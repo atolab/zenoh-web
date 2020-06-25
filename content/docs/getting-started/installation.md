@@ -8,7 +8,7 @@ menu:
 
 To get up and running with <b>zenoh</b> you will have to install the router and then get hold of the API you would like to use to write your applications. 
 
-# Installing zenoh's router
+## Installing zenoh's router
 At the present stage zenoh's router is supported only on Linux and MacOS. 
 
 However, for quick tests, a Docker image is available:  
@@ -21,7 +21,7 @@ $ docker run --init -p 7447:7447/tcp -p 7447:7447/udp -p 8000:8000/tcp eclipse/z
 
 Below are the detailed information on how to install the binaries directly on supported platforms (i.e. without Docker).
 
-## MacOS
+### MacOS
 The first step is to tap our brew package repository:
 
 ```bash
@@ -39,7 +39,7 @@ Then you can start the zenoh router with this command:
 $ zenohd -v
 ```
 
-## Ubuntu (20.04)
+### Ubuntu (20.04)
 Download the pre-built binaries:  
 https://download.eclipse.org/zenoh/zenoh/0.4.2-M1/eclipse-zenoh-0.4.2-M1-Ubuntu-20.04-x64.tgz
 
@@ -51,7 +51,7 @@ $ eclipse-zenoh/bin/zenohd.exe -v
 The Linux installation procedure depends on the package manager supported by your distribution. Below are detailed information for <b>apt</b> and <b>yum</b> based distros.
 
 
-# Testing Your Installation
+## Testing Your Installation
 To test the installation, try to see the zenoh man page by executing the following command:
 
 ```bash
@@ -86,7 +86,7 @@ OPTIONS
 [...]           
 ```
 
-# Pick Your Programming Language
+## Pick Your Programming Language
 When you install the zenoh router you will get installed the developer SDK for  [C](https://en.wikipedia.org/wiki/The_C_Programming_Language). Yet, zenoh already supports quite a few programming languages, below is the list of supported programming languages as well as links to the installation instruction:
 
 - [Python SDK](https://github.com/eclipse-zenoh/zenoh-python)
