@@ -6,10 +6,20 @@ menu:
     parent: getting_started
 ---
 
-To get up and running with <b>zenoh</b> you will have to install the infrastructure and then get hold of the API you would like to use to write your applications. 
+To get up and running with <b>zenoh</b> you will have to install the router and then get hold of the API you would like to use to write your applications. 
 
-# Installing zenoh's Infrastructure
-At the present stage zenoh's infrastructure is supported only on Linux and MacOS. Below are the detailed information on how to install on supported platforms.
+# Installing zenoh's router
+At the present stage zenoh's router is supported only on Linux and MacOS. 
+
+However, for quick tests, a Docker image is available:  
+https://hub.docker.com/r/eclipse/zenoh  
+Install and run it with those commands:  
+```bash
+$ docker pull eclipse/zenoh:latest
+$ docker run --init -p 7447:7447/tcp -p 7447:7447/udp -p 8000:8000/tcp eclipse/zenoh:latest
+```
+
+Below are the detailed information on how to install the binaries directly on supported platforms (i.e. without Docker).
 
 ## MacOS
 The first step is to tap our brew package repository:
@@ -18,63 +28,28 @@ The first step is to tap our brew package repository:
 $ brew tap atolab/homebrew-atobin
 ```    
 
-Then simply install zenoh as follows:
+And simply install zenoh as follows:
 
 ```bash
 $ brew install zenoh
 ```
 
-## Linux
+Then you can start the zenoh router with this command:
+```bash
+$ zenohd -v
+```
+
+## Ubuntu (20.04)
+Download the pre-built binaries:  
+https://download.eclipse.org/zenoh/zenoh/0.4.2-M1/eclipse-zenoh-0.4.2-M1-Ubuntu-20.04-x64.tgz
+
+Extract it and start the zenoh router with this command:
+```bash
+$ eclipse-zenoh/bin/zenohd.exe -v
+```
+
 The Linux installation procedure depends on the package manager supported by your distribution. Below are detailed information for <b>apt</b> and <b>yum</b> based distros.
 
-### Ubuntu (16.04 and 18.04)
-As a first step add our package repository to your package manager configuration by running one of the following command:
-
-On Ubuntu 16.04:
-```bash
-$ echo "deb [trusted=yes] http://pkgs.adlink-labs.tech/debian/16.04 ./" | sudo tee -a /etc/apt/sources.list > /dev/null
-```
-
-On Ubuntu 18.04:
-```bash
-$ echo "deb [trusted=yes] http://pkgs.adlink-labs.tech/debian/18.04 ./" | sudo tee -a /etc/apt/sources.list > /dev/null
-```
-
-Then update the packages list by:
-
-```bash
-$ sudo apt update
-```
-
-Now you can install zenoh:
-
-```bash
-$ sudo apt install zenoh
-```
-
-### CentOS 7
-The first step is to add the ATOLab repository to <b>yum</b>, this can be done by editing the file:
-
-```bash
-$ sudo vi /etc/yum.repos.d/atolab.repo
-```
-
-and writing the following content:
-
-```toml,ignore
-[atolab-repo]
-name=Atolab RPM Package Repo
-baseurl=http://pkgs.adlink-labs.tech/centos/7
-enabled=1
-gpgcheck=0
-```
-
-At this point update the packages and install as follows:
-
-```bash
-$ yum repolist
-$ sudo yum install zenoh
-```
 
 # Testing Your Installation
 To test the installation, try to see the zenoh man page by executing the following command:
@@ -85,8 +60,7 @@ $ zenohd --help
 You should see the following output on your console:
 
 ```text
-zenohd(1)                        Zenohd Manual                       zenohd(1)
-
+ZENOHD(1)                        Zenohd Manual                       ZENOHD(1)
 
 NAME
        zenohd
@@ -105,11 +79,15 @@ OPTIONS
            Colorize the output. WHEN must be one of `auto', `always' or
            `never'.
 
+       -d <discovery>, --discovery=<discovery> (absent=auto)
+           The ip-address of the interface over which scouting should be ran.
+
        --help[=FMT] (default=auto)
 [...]           
 ```
+
 # Pick Your Programming Language
-When you install the zenoh infrastructure you will get installed the developer SDK for  [C](https://en.wikipedia.org/wiki/The_C_Programming_Language). Yet, zenoh already supports quite a few programming languages, below is the list of supported programming languages as well as links to the installation instruction:
+When you install the zenoh router you will get installed the developer SDK for  [C](https://en.wikipedia.org/wiki/The_C_Programming_Language). Yet, zenoh already supports quite a few programming languages, below is the list of supported programming languages as well as links to the installation instruction:
 
 - [Python SDK](https://github.com/eclipse-zenoh/zenoh-python)
 - [Java SDK](https://github.com/eclipse-zenoh/zenoh-java)
