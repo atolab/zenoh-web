@@ -86,10 +86,11 @@ OPTIONS
 [...]           
 ```
 
-## Pick Your Programming Language
-When you install the zenoh router you will get installed the developer SDK for  [C](https://en.wikipedia.org/wiki/The_C_Programming_Language). Yet, zenoh already supports quite a few programming languages, below is the list of supported programming languages as well as links to the installation instruction:
+## Installing client library
+To develop your application zenoh application, you need to install a zenoh client library.
+Depending your programmation language, choose one of the following API and refer to the installation and usage instructions in here:
 
-- [Python SDK](https://github.com/eclipse-zenoh/zenoh-python)
-- [Java SDK](https://github.com/eclipse-zenoh/zenoh-java)
-- [Go SDK](https://github.com/eclipse-zenoh/zenoh-go)
-
+- [Python API](https://github.com/eclipse-zenoh/zenoh-python)
+- [Java API](https://github.com/eclipse-zenoh/zenoh-java)
+- [Go API](https://github.com/eclipse-zenoh/zenoh-go)
+- [C API (only zenoh-net API)](https://github.com/eclipse-zenoh/zenoh-c)
