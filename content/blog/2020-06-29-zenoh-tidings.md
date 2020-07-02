@@ -54,12 +54,12 @@ $ cargo build --release --examples
 # then run the throughput benchmark
 
 # run the subscriber
-$ cargo run --release --example zn_sub_thr 
+$ ./target/release/examples/zn_sub_thr
 
 # run the publisher with <payload size> (1024 below) and locator 
 # the locator will become optional  once  the rust version will also support  zenoh scouting 
 
-$ cargo run --release --example zn_pub_thr  1024 tcp://127.0.0.1:7447
+$ ./target/release/examples/zn_pub_thr 1024
 ```
 
 When running these tests on a Linux Laptop with an Intel Core i7 we get the results displayed below. As you can read from the graph the 1Gbps mark is reached already for messages with a payload of just 128 bytes. 
