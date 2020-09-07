@@ -39,7 +39,7 @@ where:
 
   - **filter**: a list of predicates separated by `'&'` allowing to perform filtering on the [values](#value)
     associated with the matching keys.  
-    Each predicate has the form `field``operator` `value` where:
+    Each predicate has the form "`field`-`operator`-`value`" where:
 
      - *field* is the name of a field in the value (is applicable and is existing. otherwise the predicate is false)
      - *operator* is one of a comparison operators: `<` , `>` , `<=`  , `>=`  , `=`  , `!=`
