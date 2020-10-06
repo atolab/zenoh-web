@@ -18,51 +18,48 @@ Let's get started!
 
 ## zenoh Programming in Python 
 
-By default, a zenoh router starts without any storage. In order to store the temperature, we need to add one.
-The code below create a storage in zenoh memory that will store any key starting with `/myhome/`:
+By default, a zenoh router starts without any storage. In order to store the temperature, we need to add one,
+starting `zenohd` with the `--mem-storage`option.
+The following command starts the router with a storage in zenoh memory that will store any key starting with `/myhome/`:
 
-```python
-from zenoh import Zenoh
-
-if __name__ == "__main__":        
-    z = Zenoh.login(None)
-    z.admin().add_storage('mystorage', {'selector': '/myhome/**'})
+```bash
+zenohd --mem-storage='/myhome/**'
 ```
 
 
 Now let's write an application that will produce temperature measurements at each second:
 
 ```python
-from zenoh import Zenoh, Encoding, Value
+from zenoh import Zenoh
 import random
 import time
 
 random.seed()
 
 def read_temp():
-    return random.randint(15, 30)    
+    return random.randint(15, 30)
 
 def run_sensor_loop(w):
     # read and produce e temperature every second
     while True:
         t = read_temp()
-        w.put('/myhome/kitcken/temp', Value(str(t), encoding=Encoding.STRING))
+        w.put('/myhome/kitcken/temp', t)
         time.sleep(1)
 
-if __name__ == "__main__":        
-    z = Zenoh.login(None)
+if __name__ == "__main__":
+    z = Zenoh({})
     w = z.workspace('/')
     run_sensor_loop(w)
 ```
- 
+
 
 Below is the application that will retrieve the latest temperature value stored in zenoh:
 
 ```python
 from zenoh import Zenoh
 
-if __name__ == "__main__":        
-    z = Zenoh.login(None)
+if __name__ == "__main__":
+    z = Zenoh({})
     w = z.workspace('/')
     results = w.get('/myhome/kitcken/temp')
     key, value = results[0].path, results[0].value
@@ -77,14 +74,13 @@ without querying the zenoh storage, we can use a subscriber:
 from zenoh import Zenoh, ChangeKind
 import time
 
-def listener(changes):
-    for change in changes:
-        if change.get_kind() == ChangeKind.PUT:
-            print('Publication received: "{}" = "{}"'
-                  .format(change.get_path(), change.get_value()))
+def listener(change):
+    if change.kind == ChangeKind.PUT:
+        print('Publication received: "{}" = "{}"'
+                .format(change.path, change.value))
 
-if __name__ == "__main__":        
-    z = Zenoh.login(None)
+if __name__ == "__main__":
+    z = Zenoh({})
     w = z.workspace('/')
     results = w.subscribe('/myhome/kitcken/temp', listener)
     time.sleep(60)
@@ -95,6 +91,4 @@ if __name__ == "__main__":
 Now you can also have a look to the examples provided with each client API:
 
  - **Python**: https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples/zenoh
- - **Java**:   https://github.com/eclipse-zenoh/zenoh-java/tree/master/examples/zenoh
- - **Go**:     https://github.com/eclipse-zenoh/zenoh-go/tree/master/examples/zenoh
- 
+ - **C**:   https://github.com/eclipse-zenoh/zenoh-java/tree/master/examples/net
