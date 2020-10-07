@@ -40,9 +40,9 @@ The complete Eclipse zenoh's key/value space is accessible through the REST API,
    ```bash
    curl 'http://localhost:8000/@/router/local/**/storage/*'
    ```
- * Add a memory storage on `/zenoh/examples/**`:
+ * Add a memory storage on `/demo/example/**`:
    ```bash
-   curl -X PUT -H 'content-type:application/properties' -d 'path_expr=/zenoh/examples/**' http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-storage
+   curl -X PUT -H 'content-type:application/properties' -d 'path_expr=/demo/example/**' http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-storage
    ```
 
 ### Put/Get into zenoh
@@ -50,15 +50,15 @@ Assuming the memory storage has been added, as described above, you can now:
 
  * Put a key/value into zenoh:
   ```bash
-  curl -X PUT -d 'Hello World!' http://localhost:8000/zenoh/examples/test
+  curl -X PUT -d 'Hello World!' http://localhost:8000/demo/example/test
   ```
  * Retrieve the key/value:
   ```bash
-  curl http://localhost:8000/zenoh/examples/test
+  curl http://localhost:8000/demo/example/test
   ```
  * Remove the key value
   ```bash
-  curl -X DELETE http://localhost:8000/zenoh/examples/test
+  curl -X DELETE http://localhost:8000/demo/example/test
   ```
 
 ## Your first app in Python

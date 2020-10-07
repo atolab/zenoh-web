@@ -6,6 +6,37 @@ menu:
     parent: manual
 ---
 
+The current version of zenoh only supports a **memory backend** which store paths/values in an internal hashmap.
+By default this it is available at zenoh router startup.
+
+Note that it is not persistent: as soon as the zenoh router stops, all the paths/values stored in this backend are lost.
+
+You can create storages using this memory backend in two ways:
+
+  - At zenoh router startup, using the `'--mem-storage`' option (you can use it several times). For instance:
+    ```bash
+    zenohd --mem-storage=/demo/example/** --mem-storage=/org/eclipse/zenoh/**
+    ```
+  - Once the zenoh router is running, you can also create a storage via a PUT operation on the administration space using:
+      - **path**: `'/@/<router-id>/plugin/storages/backend/memory/storage/<storage-id>'`
+      - **value**: a Properties Value containing only the `'path_expr'`property
+
+    For instance using the REST API via curl:
+
+    ```bash
+    curl -X PUT -H 'content-type:application/properties' -d 'path_expr=/demo/example/**' http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-storage
+    ```
+    *Note in this case the usage of the `'local'` keyword in the path replacing the router id.
+     Zenoh will automatically replace it with the identifier of the router hosting the REST API.*
+
+     Or in Python:
+     ```python
+     workspace.put('/@/router/EC1D0610D3C0420C8FD74D92D6A616D9/plugin/storages/backend/memory/storage/my-storage',
+              {'path_expr': '/demo/example/**'})
+     ```
+
+
+<!--
 Here is the list of the supported backends and their expected properties:
 
  - at **initialization**. I.e. the properties to give to the [Admin space](../abstractions#admin-space) when adding the backend.
@@ -167,3 +198,4 @@ For instance:
    - `/demo/example/influxdb/**?(starttime=2019-01-01)`
    - `/demo/example/influxdb/**?(starttime=2019-11-01T09:30:00.000000000Z;stoptime=now())`
    - `/demo/example/influxdb/**?(starttime=now()-2d;stoptime=now()-1d)`
+-->
