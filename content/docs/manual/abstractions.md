@@ -21,8 +21,17 @@ Examples of paths:  `/demo/example/test` , `/com/adlink/building/fr/floor/1/offi
 A path can be absolute (i.e. starting with a `'/'`) or relative to a [workspace](#workspace).
 
 ---
+## Path Expression
+Similar to a [path](#path), but with character `'*'` allowed to express a set of paths.
+
+ - A single `'*'` matches any set of characters in a path, except `'/'`.
+ - While `"**"` matches any set of characters in a path, including `'/'`.
+
+A path expression can be absolute (i.e. starting with a `'/'`) or relative to a [workspace](#workspace).
+
+---
 ## Selector
-A string which is the conjunction of an path expression identifying a set of keys and some optional parts allowing
+A string which is the conjunction of an [path expression](#path-expression) identifying a set of paths and some optional parts allowing
 to refine the set of **[paths](#path)** and associated **[values](#value)**.  
 Structure of a selector:
 ```none
@@ -32,10 +41,7 @@ Structure of a selector:
 ```
 where:
 
-  - **expr**: is a path expression. I.e. a string similar to a **[path](#path)** but with character `'*'`  allowed.  
-    A single `'*'` matches any set of characters in a path, except `'/'`.  
-    While `"**"` matches any set of characters in a path, including `'/'`.  
-    A path expression can be absolute (i.e. starting with a `'/'`) or relative to a [workspace](#workspace).
+  - **expr**: is a [path expression](#path-expression).
 
   - **filter**: a list of predicates separated by `'&'` allowing to perform filtering on the [values](#value)
     associated with the matching keys.  
@@ -60,12 +66,19 @@ A user provided data item along with its [encoding](#encoding).
 ## Encoding
 A description of the [value](#value) format, allowing zenoh to know how to encode/decode the value to/from a bytes buffer.
 
-The current version of zenoh supports the following encodings:
+By default zenoh is able to transport and store any format of data as long as it's serializable as a bytes buffer.
+But for advanced features such as content filtering (using [selector](#selector)) or to automatically deserialize the data
+into a concrete type in the client APIs, zenoh require a description of the data encoding.
 
- - **RAW**: the value is a bytes buffer
- - **string**: the value is a string
- - **JSON**: the value is a JSON string
- - **Properties**: the value is a string representing a list of keys/values separated by `;`: `k1=v1;k2=v2...`
+
+The current version of zenoh supports the following encodings for filtering and automatic deserialization:
+ - **Raw**: the value is a bytes buffer
+ - **StringUTF8**: the value is an UTF-8 string
+ - **Json**: the value is a JSON string
+ - **Properties**: the value is a string representing a list of keys/values separated by `';'` (e.g. `"k1=v1;k2=v2..."`)
+ - **Integer**: the value is an integer
+ - **Float**: the value is a float
+ - **Custom**: the value is a bytes buffer with a free string allowing for instance to describe its encoding
 
 ---
 ## Timestamp
@@ -106,7 +119,7 @@ An entity registering interest for being notified whenever a key/value with a pa
 
 ---
 ## Eval
-A computation registered at a specific [path](#path). 
+A computation registered at a specific [path](#path).
 
 This computation can be triggered by a `get` operation on a [selector](#selector) matching this path.
 The computation function will receive the selector's properties as parameter.
@@ -118,6 +131,7 @@ The abstraction that give you access to zenoh primitives.
 A workspace is associated to a [path](#path) at creation. This path will be used as a prefix for any relative
 [path](#path) or [selector](#selector) used with this workspace.
 
+<!--
 ---
 ## Admin space
 The administration space of zenoh.
@@ -143,3 +157,4 @@ use it in paths, if no alternative `<zenoh-id>` is provided.
 
 When using the REST API, the user can replace the `<zenoh-id>` with the **`local`** keyword,
 meaning the operation addresses the zenoh router the HTTP client is connected to.
+-->
