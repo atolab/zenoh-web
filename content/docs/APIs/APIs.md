@@ -6,14 +6,12 @@ menu: "docs"
 
 All the client APIs documentations are avaliable on [Read the Docs](https://readthedocs.org/search/?q=zenoh):
 
+## Rust
+https://zenoh-rust.readthedocs.io/
+
 ## Python
-https://readthedocs.org/projects/zenoh-python/
+https://zenoh-python.readthedocs.io/
 
-## Java
-https://readthedocs.org/projects/zenoh-java/
-
-## Go
-https://readthedocs.org/projects/zenoh-go/
 
 --------------------
 
@@ -21,7 +19,7 @@ https://readthedocs.org/projects/zenoh-go/
 
 Zenoh also offers a REST API via the zenoh-http plugin. When starting zenoh with default options,
 this HTTP plugin is automatically started on port 8000 and ready to answer HTTP requests.  
-The full zenoh key/value space is accessible via this REST API, including the [Admin space](../../manual/abstractions#admin-space).
+The full zenoh key/value space is accessible via this REST API, including the Admin Space under the `'/@'`prefix.
 
 ### GET
 
@@ -41,13 +39,13 @@ curl http://localhost:8000/demo/**
 [
 { "key": "/demo/example/zenoh-python-put",
   "value": "Put from Zenoh Python!",
-  "time": "2019-11-26T10:04:06.369743108Z" },
+  "time": "2019-11-26T10:04:06.369743108Z/BEAFA6F367E24D27B2505DF2A971B21C" },
 { "key": "/demo/example/zenoh-java-put",
   "value": "Put from Zenoh Java!",
-  "time": "2019-11-26T10:04:15.031682968Z" },
+  "time": "2019-11-26T10:04:15.031682968Z/BEAFA6F367E24D27B2505DF2A971B21C" },
 { "key": "/demo/example/zenoh-go-put",
   "value": "Put from Zenoh Go!",
-  "time": "2019-11-26T10:04:09.879540920Z" }
+  "time": "2019-11-26T10:04:09.879540920Z/BEAFA6F367E24D27B2505DF2A971B21C" }
 ]
 
 # Get the keys/values matching /demo/example/*eval (i.e. the zenoh eval examples)
@@ -62,15 +60,9 @@ curl http://localhost:8000/demo/example/*eval?(name=Bob)
 # Get the list of storages via a Get on admin space (/@/...)
 curl -g http://localhost:8000/@/**/storage/**
 [
-{ "key": "/@/router/cd5723ef1abe4a8f9984d003283c7e28/plugin/storages/backend/sqlite3/storage/sto-65069",
-  "value": "on_dispose=Truncate;selector=/demo/example/sql/**;table=example",
-  "time": "2019-11-26T11:22:39.668893098Z" },
-{ "key": "/@/router/cd5723ef1abe4a8f9984d003283c7e28/plugin/storages/backend/influxdb/storage/sto-80720",
-  "value": "db=example;on_dispose=DropDB;selector=/demo/example/influx/**",
-  "time": "2019-11-26T11:22:39.572923898Z" },
-{ "key": "/@/router/cd5723ef1abe4a8f9984d003283c7e28/plugin/storages/backend/memory/storage/Demo",
-  "value": "selector=/demo/example/**",
-  "time": "2019-11-26T11:22:08.759634017Z" }
+{ "key": "/@/router/DA087EDE87EF442A953C31F64A195D7C/plugin/storages/backend/memory/storage/mem-storage-1",
+  "value": "{"path_expr":"/demo/demo/**"}",
+  "time": "None" }
 ]
 ```
 
@@ -83,19 +75,18 @@ Binds to the **put(path,value)** operation on zenoh.
 - **URL**:     `http://host:8000/path`
 - **body**:    the value to put
 - **headers**: 
-   - **content-type**: the value encoding (optional; unspecified implies RAW encoding)
+   - **content-type**: the value encoding (optional; unspecified implies "application/octet-stream" encoding. Note that curl by default uses "application/x-www-form-urlencoded")
 
-The supported content-types and their mapping to zenoh encoding are:
+The values with the following content-types will be automatically converted by zenoh into a typed Value:
 
-| content-type                      | zenoh encoding |
-| --------------------------------- | -------------- |
-| text                              | string         |
-| application/x-www-form-urlencoded | string         |
-| application/xml                   | string         |
-| application/xhtml+xml             | string         |
-| application/json                  | JSON           |
-| *any other value*                 | RAW            |
-| *unspecified*                     | RAW            |
+| content-type             | zenoh Value type |
+| ------------------------ | ---------------- |
+| text/plain               | StringUTF8       |
+| application/properties   | Properties       |
+| application/json         | Json             |
+| text/json                | Json             |
+| application/integer      | Integer          |
+| application/float        | Float            |
 
 Examples using curl:
 
@@ -107,7 +98,7 @@ Examples using curl:
   curl -X PUT -H "Content-Type: application/json" -d '{"value": "Hello World!"}' http://localhost:8000/demo/example/test
 
   # Create a Memory storage on /demo/test/** via a Put on admin space (/@/...)
-  curl -X PUT -d '{"selector":"/demo/test/**"}' http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-test
+  curl -X PUT -H 'content-type:application/properties' -d 'path_expr=/demo/test/**' http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-test
   ```
 
 ### DELETE
