@@ -91,4 +91,4 @@ if __name__ == "__main__":
 Now you can also have a look to the examples provided with each client API:
 
  - **Python**: https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples/zenoh
- - **C**:   https://github.com/eclipse-zenoh/zenoh-java/tree/master/examples/net
+ - **C**:   https://github.com/eclipse-zenoh/zenoh-c/tree/master/examples/net
