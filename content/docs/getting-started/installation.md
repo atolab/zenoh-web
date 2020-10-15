@@ -15,7 +15,7 @@ At the present stage zenoh's infrastructure is supported only on Linux and MacOS
 The first step is to tap our brew package repository:
 
 ```bash
-$ brew tap atolab/homebrew-atobin
+$ brew tap eclipse-zenoh/homebrew-zenoh
 ```    
 
 Then simply install zenoh as follows:
