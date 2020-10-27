@@ -18,7 +18,7 @@ Below are the detailed information on how to install the binaries directly on su
 The first step is to tap our brew package repository:
 
 ```bash
-$ brew tap atolab/homebrew-atobin
+$ brew tap eclipse-zenoh/homebrew-zenoh
 ```    
 
 And simply install zenoh as follows:
