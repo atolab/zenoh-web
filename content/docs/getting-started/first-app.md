@@ -90,5 +90,8 @@ if __name__ == "__main__":
 
 Now you can also have a look to the examples provided with each client API:
 
+ - **Rust**: https://github.com/eclipse-zenoh/zenoh/tree/master/zenoh/examples/zenoh
+ - **Rust (zenoh-net)**: https://github.com/eclipse-zenoh/zenoh/tree/master/zenoh/examples/zenoh-net
+ - **C (zenoh-net)**: https://github.com/eclipse-zenoh/zenoh-c/tree/master/examples/net
  - **Python**: https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples/zenoh
- - **C**:   https://github.com/eclipse-zenoh/zenoh-c/tree/master/examples/net
+ - **Python (zenoh-net)**: https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples/zenoh-net
