@@ -15,13 +15,13 @@ However, for other platforms, you can use the [Docker image](../quick-test#run-z
 Below are the detailed information on how to install the binaries directly on supported platforms (i.e. without Docker).
 
 ### MacOS
-The first step is to tap our brew package repository:
+Tap our brew package repository:
 
 ```bash
 $ brew tap eclipse-zenoh/homebrew-zenoh
 ```    
 
-And simply install zenoh as follows:
+Install zenoh:
 
 ```bash
 $ brew install zenoh
@@ -33,8 +33,25 @@ $ zenohd -v
 ```
 
 ### Ubuntu (20.04)
-**TODO**
 
+Add Eclipse Zenoh private repository to the sources list:
+
+```bash
+$ echo "deb [trusted=yes] https://download.eclipse.org/zenoh/zenoh/master/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
+$ sudo apt update
+```
+
+Install zenoh:
+
+```bash
+$ sudo apt install zenoh 
+```
+ 
+Then you can start the zenoh router with this command:
+
+```bash
+$ zenohd -v
+```
 
 ## Testing Your Installation
 To test the installation, try to see the zenoh man page by executing the following command:
