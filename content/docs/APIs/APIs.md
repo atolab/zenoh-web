@@ -9,6 +9,9 @@ All the client APIs documentations are avaliable on [Read the Docs](https://read
 ## Rust
 https://zenoh-rust.readthedocs.io/
 
+## C
+https://zenoh-c.readthedocs.io/
+
 ## Python
 https://zenoh-python.readthedocs.io/
 
