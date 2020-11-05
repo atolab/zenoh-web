@@ -29,7 +29,7 @@ $ brew install zenoh
 
 Then you can start the zenoh router with this command:
 ```bash
-$ zenohd -v
+$ zenohd -V
 ```
 
 ### Ubuntu (20.04)
@@ -50,7 +50,7 @@ $ sudo apt install zenoh
 Then you can start the zenoh router with this command:
 
 ```bash
-$ zenohd -v
+$ zenohd -V
 ```
 
 ## Testing Your Installation
