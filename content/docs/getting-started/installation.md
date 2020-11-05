@@ -9,8 +9,8 @@ menu:
 To get up and running with <b>zenoh</b> you will have to install the router and then get hold of the API you would like to use to write your applications. 
 
 ## Installing zenoh's router
-At the present stage zenoh's router is supported only on Linux and MacOS.
-However, for other platforms, you can use the [Docker image](../quick-test#run-zenoh-in-docker).
+Zenoh's router supports Linux, MacOS and Windows platforms.
+For other platforms, you can use the [Docker image](../quick-test#run-zenoh-in-docker).
 
 Below are the detailed information on how to install the binaries directly on supported platforms (i.e. without Docker).
 
@@ -51,6 +51,21 @@ Then you can start the zenoh router with this command:
 
 ```bash
 $ zenohd -V
+```
+
+### Windows
+
+Download the zenoh archive :
+- Windows 32 bits: https://download.eclipse.org/zenoh/zenoh/master/eclipse-zenoh-0.5.0-beta.5-i686-pc-windows-gnu.zip
+- Windows 64 bits: https://download.eclipse.org/zenoh/zenoh/master/eclipse-zenoh-0.5.0-beta.5-x86_64-pc-windows-gnu.zip
+
+Unzip the archive.
+
+Go to zenoh directory and start zenoh router:
+
+```cmd
+> cd C:\path\to\zenoh\dir
+> zenohd.exe -V
 ```
 
 ## Testing Your Installation
