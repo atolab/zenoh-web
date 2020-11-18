@@ -101,16 +101,17 @@ Such a timestamp allows zenoh to guarantee that each value introduced into the s
 
 ---
 ## Backend
-A [storage](#storage) technology, such as DBMS, Main Memory, time-series database, etc.
+A storage technology, such as DBMS, Main Memory, time-series database, etc.  
+It can be dynamically loaded via the [admin space](#admin-space) and acts as a factory of [Storages](#storage).
 
-See [zenoh backends](../backends) for the list of supported backends in the current version.
+See [Zenoh backends](../backends) chapter for details and for the list of supported backends in the current version.
 
 ---
 ## Storage
-An entity storing tuples on a specific [backend](#backend).
+An entity storing keys/values on a specific [backend](#backend).
 
-A storage is associated at its creation to a [selector](#selector). Storages can be created by applications
-and take responsibility for storing all keys/values whose path matches the storage selector.
+A storage is associated at its creation to a [Path Expression](#path-expression).
+Storages can be created via the [admin space](#admin-space) and take responsibility for storing all keys/values whose path matches the storage selector.
 
 ---
 ## Subscriber
@@ -131,30 +132,28 @@ The abstraction that give you access to zenoh primitives.
 A workspace is associated to a [path](#path) at creation. This path will be used as a prefix for any relative
 [path](#path) or [selector](#selector) used with this workspace.
 
-<!--
+
 ---
 ## Admin space
-The administration space of zenoh.
-It is accessible via regular get/put on zenoh, under the `/@/router/<zenoh-id>` path prefix.
-The following paths can be used:
+The administration space of zenoh allowing to administrate a zenoh router and its plugins.
+It is accessible via regular get/put on zenoh, under the `/@/router/<router-id>` path prefix, where
+**`<router-id>`** is is the UUID of a zenoh router.
+For instance, the following paths can be used:
 
- - `/@/router/<zenoh-id>/plugin/storages` (read-only):  
-   Returns a JSON with the overview of the full storages (and their parent backends) configuration.
- - `/@/router/<zenoh-id>/plugin/storages/backend/<backend-id>` (read/write):  
+ - `/@/router/<router-id>` (read-only):  
+   Returns a JSON with the status informations about the router.
+ - `/@/router/<router-id>/plugin/storages/backend/<backend-id>` (read/write):  
    On get, returns the properties of the backend with the specified ID.  
-   On put, adds a backend with the properties specified as the value.
- - `/@/router/<zenoh-id>/plugin/storages/backend/<backend-id>/storage/<storage-id>` (read/write):  
+   On put, make the router to dynamically load a backend library with the properties specified as the value.
+ - `/@/router/<router-id>/plugin/storages/backend/<backend-id>/storage/<storage-id>` (read/write):  
    On get, returns the properties of the storage with the specified ID.  
    On put, adds a storage in the parent backend with the properties specified as the value.  
    On remove, removes the storage.
 
-In all those paths, the **`<zenoh-id>`** is the UUID of a zenoh router.
-
-Note that the zenoh client APIs provide an Admin interface that facilitate the addition/removal of
+<!-- Note that the zenoh client APIs provide an Admin interface that facilitate the addition/removal of
 backends and storage. Underneath, this interface calls put/remove/get operations on those paths.
-By default, this interface knows the `<zenoh-id>` of the zenoh router it's connected to and automatically
-use it in paths, if no alternative `<zenoh-id>` is provided.
+By default, this interface knows the `<router-id>` of the zenoh router it's connected to and automatically
+use it in paths, if no alternative `<router-id>` is provided. -->
 
-When using the REST API, the user can replace the `<zenoh-id>` with the **`local`** keyword,
+When using the REST API, you can replace the `<router-id>` with the **`local`** keyword,
 meaning the operation addresses the zenoh router the HTTP client is connected to.
--->

@@ -1,39 +1,119 @@
 ---
-title: "Zenoh backends"
-weight : 2020
+title: "Zenoh backends and storages"
+weight : 2200
 menu:
   docs:
     parent: manual
 ---
 
-The current version of zenoh only supports a **memory backend** which store paths/values in an internal hashmap.
-By default this it is available at zenoh router startup.
+In zenoh a *backend* is a storage technology.  
+Concretely, it's a software library providing implementation of [Storages](../abstractions#storage). It usualy leverage a third-party technology (e.g. InfluxDB, SQLite, PostgreSQL...) to store the keys/values published in zenoh.
 
-Note that it is not persistent: as soon as the zenoh router stops, all the paths/values stored in this backend are lost.
+The backends and storages are managed in each zenoh router by its [Storages plugin](../plugin-storages).
 
-You can create storages using this memory backend in two ways:
+---------
+## Backends management
 
-  - At zenoh router startup, using the `'--mem-storage`' option (you can use it several times). For instance:
-    ```bash
-    zenohd --mem-storage=/demo/example/** --mem-storage=/org/eclipse/zenoh/**
-    ```
-  - Once the zenoh router is running, you can also create a storage via a PUT operation on the administration space using:
-      - **path**: `'/@/<router-id>/plugin/storages/backend/memory/storage/<storage-id>'`
-      - **value**: a Properties Value containing only the `'path_expr'`property
+The backends provided by a zenoh router can be managed via the [admin space](../abstractions#admin-space) using zenoh
+PUT/GET/DELETE operations on such Path:  
+**`/@/router/<router-id>/plugin/storages/backend/<backend-id>`**  
+where **`<backend-id>`** is a free identifier for the backend (must be unique per-router).
 
-    For instance using the REST API via curl:
+### Addition of a Backend
 
-    ```bash
-    curl -X PUT -H 'content-type:application/properties' -d 'path_expr=/demo/example/**' http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-storage
-    ```
-    *Note in this case the usage of the `'local'` keyword in the path replacing the router id.
-     Zenoh will automatically replace it with the identifier of the router hosting the REST API.*
+To add a Backend, put a Properties Value on the admin path for backend (assuming it doesn't exist yet).  
+The set of properties to be used depends on the backend implementation. But they all accept a `"lib"` property allowing
+to specify the backend library file to be loaded for the backend. If not specified, the [Storages plugin](../plugin-storages)
+will search for a library named `"zbackend_<backend-id>"`.
 
-     Or in Python:
-     ```python
-     workspace.put('/@/router/EC1D0610D3C0420C8FD74D92D6A616D9/plugin/storages/backend/memory/storage/my-storage',
-              {'path_expr': '/demo/example/**'})
-     ```
+Example with the REST API to add an InfluxDB backend (using the `zbackend_influxdb` library):  
+```bash
+curl -X PUT -H 'content-type:application/properties' -d "url=http://localhost:8086" http://localhost:8000/@/router/local/plugin/storages/backend/influxdb
+```
+
+Similar example with the Python API, specifying the location of the backend library:  
+```python
+from zenoh import Zenoh, Value
+
+z = Zenoh({"mode": "client"})
+workspace = z.workspace()
+workspace.put('/@/router/local/plugin/storages/backend/influxdb',
+    {'url': 'http://localhost:8086', 'lib': '/opt/zenoh/lib/libzbackend_influxdb.so'})
+```
+
+### Status of a Backend
+
+To see the status of the Backend, you can do a get on its admin path.  
+The resulting Value depends on the Backend implementation, but is usually in Json format.
+
+Example with the REST API:
+```bash
+curl http://localhost:8000/@/router/local/plugin/storages/backend/influxdb
+```
+
+### Removal of a Backend
+
+To remove a Backend (and all its Storages), just delete its admin space:
+
+Example with the REST API:
+```bash
+curl -X DELETE http://localhost:8000/@/router/local/plugin/storages/backend/influxdb
+```
+
+
+-----------
+## Storages management
+
+Each Storage belongs to a Backend. A Storage can be managed via the [admin space](../abstractions#admin-space) using zenoh
+PUT/GET/DELETE operations on such Path:  
+**`/@/router/<router-id>/plugin/storages/backend/<backend-id>/storage/<storage-id>`**  
+where **`<backend-id>`** is a the identifier of the Backend hosting the Storage, and **`<storage-id>`** is a free identifier for the storage (must be unique per-backend).
+
+### Addition of a Storage
+
+To add a Storage, put a Properties Value on its admin path (assuming it doesn't exist yet).  
+The set of properties to be used depends on the backend implementation. But they all require a `"path_expr"` property
+allowing to specify the [Path Expression](../abstractions#path-expression) the Storage will subscribe to (to store PUT keys/values) and will reply on (for GET operations).
+
+Examples with the REST API:  
+```bash
+# for a memory storage
+curl -X PUT -H 'content-type:application/properties' -d "path_expr=/demo/example/**" http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/example
+
+# for an InfluxDB storage
+curl -X PUT -H 'content-type:application/properties' -d "path_expr=/demo/example/**;path_prefix=/demo/example;on_closure=drop_series;db=example;create_db" http://localhost:8000/@/router/local/plugin/storages/backend/influxdb/storage/example
+```
+
+Similar examples with the Python API:  
+```python
+# for a memory storage
+workspace.put('/@/router/local/plugin/storages/backend/memory/storage/example',
+    {'path_expr': '/demo/example/**'})
+
+# for an InfluxDB storage
+workspace.put('/@/router/local/plugin/storages/backend/influxdb/storage/example',
+    {'path_expr': '/demo/example/**', 'path_prefix': '/demo/example', 'on_closure': 'drop_series', 'db': 'example', 'create_db': 'true'})
+```
+
+
+### Status of a Storage
+
+To see the status of the Storage, you can do a get on its admin path.  
+The resulting Value depends on the Backend implementation, but is usually in Json format.
+
+Example with the REST API:
+```bash
+curl http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/example
+```
+
+### Removal of a Storage
+
+To remove a Storage, just delete its admin space:
+
+Example with the REST API:
+```bash
+curl -X DELETE http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/example
+```
 
 
 <!--
