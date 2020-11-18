@@ -12,10 +12,24 @@ The key abstractions at the core of zenoh are the following:
 Key Zenoh uses paths as keys. In all zenoh documentations, &amp;ldquo;key&amp;rdquo; and &amp;ldquo;path&amp;rdquo; are synonym.
 Path A set of strings separated by '/' , as in a filesystem path. A Path cannot contain any '*' character.
 Examples of paths: /demo/example/test , /com/adlink/building/fr/floor/1/office/2 &amp;hellip;
-A path can be absolute (i.</description></item><item><title>Zenoh backends</title><link>/docs/manual/backends/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/backends/</guid><description>The current version of zenoh only supports a memory backend which store paths/values in an internal hashmap. By default this it is available at zenoh router startup.
-Note that it is not persistent: as soon as the zenoh router stops, all the paths/values stored in this backend are lost.
-You can create storages using this memory backend in two ways:
-At zenoh router startup, using the '--mem-storage&amp;rsquo; option (you can use it several times).</description></item><item><title>API documentations</title><link>/docs/apis/apis/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/apis/</guid><description>All the client APIs documentations are avaliable on Read the Docs:
+A path can be absolute (i.</description></item><item><title>Zenoh plugins</title><link>/docs/manual/plugins/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugins/</guid><description>The zenoh router (zenohd executable) supports the loading of plugins at start-up.
+A zenoh plugin is a library that can be loaded by the zenoh router at start-up. It shares a runtime with it, allowing the plugin to use the regular zenoh and/or zenoh-ne APIs with the same peer ID.
+By default the zenoh router will automatically search and load plugins library files with such names:
+on Unix/Linux: libzplugin_*.so on MacOS: libzplugin_*.</description></item><item><title>HTTP plugin</title><link>/docs/manual/plugin-http/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-http/</guid><description>The HTTP plugin provides access to the zenoh REST API.
+Library name: zplugin_http
+Startup arguments (added to zenoh router&amp;rsquo;s startup arguments):
+--http-port : The listening http port (default: 8000)</description></item><item><title>Storages plugin</title><link>/docs/manual/plugin-storages/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-storages/</guid><description>The Storages plugin provides the management of Backends and Storages.
+It allows you at runtime to dynamically add/remove backends and storages. More details in Zenoh backends chapter.
+When adding a backend, a short name of the backend library can be provided instead of the complete path to the library file. In such case the Storages plugin will search and load the library file with such name:
+on Unix/Linux: libzbackend_&amp;lt;name&amp;gt;.so on MacOS: libzbackend_&amp;lt;name&amp;gt;.</description></item><item><title>Zenoh backends and storages</title><link>/docs/manual/backends/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/backends/</guid><description>In zenoh a backend is a storage technology.
+Concretely, it&amp;rsquo;s a software library providing implementation of Storages. It usualy leverage a third-party technology (e.g. InfluxDB, SQLite, PostgreSQL&amp;hellip;) to store the keys/values published in zenoh.
+The backends and storages are managed in each zenoh router by its Storages plugin.
+Backends management The backends provided by a zenoh router can be managed via the admin space using zenoh PUT/GET/DELETE operations on such Path:</description></item><item><title>Memory backend</title><link>/docs/manual/backend-memory/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/backend-memory/</guid><description>A backend storing paths/values into an in-memory hashmap.
+Behaviour The memory backend implementation is not provided by a backend library but is embeded within the Storages plugin itself. It is automatically added at zenoh router startup (under &amp;quot;/@/router/&amp;lt;router-id&amp;gt;/plugin/storages/backend/memory&amp;quot; admin path) unless the --no-backend argument is used (see Storages plugin startup arguments).
+Only 1 value per path is stored (the latest one). If publications arrive un-ordered, the ones that are older than the stored one are ignored.</description></item><item><title>InfluxDB backend</title><link>/docs/manual/backend-influxdb/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/backend-influxdb/</guid><description>A backend using an InfluxDB service to store keys/values as time-series.
+Library name: zbackend_influxdb Behaviour Mapping to InfluxDB concepts Each storage will map to an InfluxDB database.
+Each path to store will map to a an InfluxDB measurement named with the path stripped from the &amp;quot;path_prefix&amp;quot; property (see below).
+Each key/value put into the storage will map to an InfluxDB point reusing the timestamp set by zenoh (but with a precision of nanoseconds).</description></item><item><title>API documentations</title><link>/docs/apis/apis/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/apis/</guid><description>All the client APIs documentations are avaliable on Read the Docs:
 Rust https://zenoh-rust.readthedocs.io/
 C https://zenoh-c.readthedocs.io/
 Python https://zenoh-python.readthedocs.io/
