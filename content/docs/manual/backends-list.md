@@ -9,11 +9,11 @@ menu:
 
 Here is the list of the available backends:
 
-| Backend technology | Backend ID | Description                                               | Github repo & doc                         |
-|--------------------|------------|-----------------------------------------------------------|-------------------------------------------|
-| Memory             | memory     | In-memory storages (simple hashmap)                       | [see below](#memory-backend)              |
-| InfluxDB           | influxdb   | Storages in InfluxDB databases.                           | [eclipse-zenoh/zenoh-backend-influxdb]    |
-| File System        | fs         | Storages on local files system, each key/value in a file. | [eclipse-zenoh/zenoh-backend-filesystem]  |
+| Backend     | Description                                               | Github repo & doc                         |
+|-------------|-----------------------------------------------------------|-------------------------------------------|
+| Memory      | In-memory storages (simple hashmap)                       | [see below](#memory-backend)              |
+| InfluxDB    | Storages in InfluxDB databases.                           | [eclipse-zenoh/zenoh-backend-influxdb]    |
+| File System | Storages on local files system, each key/value in a file. | [eclipse-zenoh/zenoh-backend-filesystem]  |
 
 [eclipse-zenoh/zenoh-backend-influxdb]: https://github.com/eclipse-zenoh/zenoh-backend-influxdb
 [eclipse-zenoh/zenoh-backend-filesystem]: https://github.com/eclipse-zenoh/zenoh-backend-filesystem
