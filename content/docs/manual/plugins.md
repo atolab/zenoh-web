@@ -21,5 +21,5 @@ This automatic search and load of plugins can be desactivated using the `--plugi
 And some plugins library files to load anyway can be specified using the `--plugin` option (repeatable). In such case, the complete path of the library file must be specified, and its filename is free.
 
 Zenoh already provides the following plugins:
- - the [HTTP plugin](../plugin-http): providing the zenoh REST API
+ - the [REST plugin](../plugin-rest): providing the zenoh REST API
  - the [Storages plugin](../plugin-storages): providing management of [storages](../abstractions#storage) and [backends](../abstractions#backend)

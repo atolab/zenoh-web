@@ -1,16 +1,16 @@
 ---
-title: "HTTP plugin"
+title: "REST plugin"
 weight : 2110
 menu:
   docs:
     parent: manual
 ---
 
-The HTTP plugin provides access to the zenoh [REST API](../../apis/apis/#rest-api).
+The REST plugin provides access to the zenoh [REST API](../../apis/apis/#rest-api).
 
 ------
-**Library name:** `zplugin_http`
+**Library name:** `zplugin_rest`
 
 ------
 **Startup arguments** (added to zenoh router's startup arguments):
- - `--http-port` : The listening http port (default: 8000)
+ - `--rest-http-port` : The REST plugin's http port (default: 8000)

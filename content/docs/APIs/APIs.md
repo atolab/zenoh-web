@@ -20,8 +20,8 @@ https://zenoh-python.readthedocs.io/
 
 ## REST API
 
-Zenoh also offers a REST API via the zenoh-http plugin. When starting zenoh with default options,
-this HTTP plugin is automatically started on port 8000 and ready to answer HTTP requests.  
+Zenoh also offers a REST API via the zenoh-rest plugin. When starting zenoh with default options,
+this REST plugin is automatically started on port 8000 and ready to answer HTTP requests.  
 The full zenoh key/value space is accessible via this REST API, including the Admin Space under the `'/@'`prefix.
 
 ### GET
