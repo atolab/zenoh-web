@@ -77,7 +77,7 @@ $ zenohd --help
 You should see the following output on your console:
 
 ```text
-The zenoh router 
+The zenoh router v0.5.0-beta.X
 
 USAGE:
     zenohd [FLAGS] [OPTIONS]
@@ -93,17 +93,24 @@ FLAGS:
     -V, --version            Prints version information
 
 OPTIONS:
-        --http-port <http-port>         The listening http port [default: 8000]
-    -i, --id <hex_string>...            The identifier (as an hexadecimal string - e.g.: 0A0B23...) that zenohd must
-                                        use. WARNING: this identifier must be unique in the system! If not set, a random
-                                        UUIDv4 will be used.
-    -l, --listener <LOCATOR>...         A locator on which this router will listen for incoming sessions. Repeat this
-                                        option to open several listeners. [default: tcp/0.0.0.0:7447]
-        --mem-storage <PATH_EXPR>...    A memory storage to be created at start-up. Repeat this option to created
-                                        several storages
-    -e, --peer <LOCATOR>...             A peer locator this router will try to connect to. Repeat this option to connect
-                                        to several peers.
-    -P, --plugin <PATH_TO_PLUGIN>...    A plugin that must be loaded. Repeat this option to load several plugins.
+        --backend-search-dir <DIRECTORY>...    A directory where to search for backends libraries to load. Repeat this
+                                               option to specify several search directories'. By default, the backends
+                                               libraries will be searched in: '/usr/local/lib:/usr/lib:~/.zenoh/lib:.'
+    -c, --config <FILE>                        The configuration file.
+    -i, --id <hex_string>                      The identifier (as an hexadecimal string - e.g.: 0A0B23...) that zenohd
+                                               must use. WARNING: this identifier must be unique in the system! If not
+                                               set, a random UUIDv4 will be used.
+    -l, --listener <LOCATOR>...                A locator on which this router will listen for incoming sessions. Repeat
+                                               this option to open several listeners. [default: tcp/0.0.0.0:7447]
+        --mem-storage <PATH_EXPR>...           A memory storage to be created at start-up. Repeat this option to created
+                                               several storages
+    -e, --peer <LOCATOR>...                    A peer locator this router will try to connect to. Repeat this option to
+                                               connect to several peers.
+    -P, --plugin <PATH_TO_PLUGIN_LIB>...       A plugin that must be loaded. Repeat this option to load several plugins.
+        --plugin-search-dir <DIRECTORY>...     A directory where to search for plugins libraries to load. Repeat this
+                                               option to specify several search directories'. By default, the plugins
+                                               libraries will be searched in: '/usr/local/lib:/usr/lib:~/.zenoh/lib:.'
+        --rest-http-port <rest-http-port>      The REST plugin's http port [default: 8000]
 [...]
 ```
 
