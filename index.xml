@@ -18,10 +18,10 @@ Examples of paths: /demo/example/test , /com/adlink/building/fr/floor/1/office/2
 A path can be absolute (i.</description></item><item><title>Zenoh plugins</title><link>/docs/manual/plugins/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugins/</guid><description>The zenoh router (zenohd executable) supports the loading of plugins at start-up.
 A zenoh plugin is a library that can be loaded by the zenoh router at start-up. It shares a runtime with it, allowing the plugin to use the regular zenoh and/or zenoh-ne APIs with the same peer ID.
 By default the zenoh router will automatically search and load plugins library files with such names:
-on Unix/Linux: libzplugin_*.so on MacOS: libzplugin_*.</description></item><item><title>HTTP plugin</title><link>/docs/manual/plugin-http/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-http/</guid><description>The HTTP plugin provides access to the zenoh REST API.
-Library name: zplugin_http
+on Unix/Linux: libzplugin_*.so on MacOS: libzplugin_*.</description></item><item><title>REST plugin</title><link>/docs/manual/plugin-http/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-http/</guid><description>The REST plugin provides access to the zenoh REST API.
+Library name: zplugin_rest
 Startup arguments (added to zenoh router&amp;rsquo;s startup arguments):
---http-port : The listening http port (default: 8000)</description></item><item><title>Storages plugin</title><link>/docs/manual/plugin-storages/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-storages/</guid><description>The Storages plugin provides the management of Backends and Storages.
+--rest-http-port : The REST plugin&amp;rsquo;s http port (default: 8000)</description></item><item><title>Storages plugin</title><link>/docs/manual/plugin-storages/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-storages/</guid><description>The Storages plugin provides the management of Backends and Storages.
 It allows you at runtime to dynamically add/remove backends and storages. More details in Zenoh backends chapter.
 When adding a backend, a short name of the backend library can be provided instead of the complete path to the library file. In such case the Storages plugin will search and load the library file with such name:
 on Unix/Linux: libzbackend_&amp;lt;name&amp;gt;.so on MacOS: libzbackend_&amp;lt;name&amp;gt;.</description></item><item><title>Zenoh backends and storages</title><link>/docs/manual/backends/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/backends/</guid><description>In zenoh a backend is a storage technology.
@@ -33,7 +33,7 @@ The memory backend implementation is not provided by a backend library but is em
 Rust https://zenoh-rust.readthedocs.io/
 C https://zenoh-c.readthedocs.io/
 Python https://zenoh-python.readthedocs.io/
-REST API Zenoh also offers a REST API via the zenoh-http plugin. When starting zenoh with default options, this HTTP plugin is automatically started on port 8000 and ready to answer HTTP requests.
+REST API Zenoh also offers a REST API via the zenoh-rest plugin. When starting zenoh with default options, this REST plugin is automatically started on port 8000 and ready to answer HTTP requests.
 The full zenoh key/value space is accessible via this REST API, including the Admin Space under the '/@'prefix.
 GET Binds to the get(selector) operation on zenoh.</description></item><item><title>The zenoh Community</title><link>/community/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/community/</guid><description>Communication The zenoh community is most readily found on its gitter channel, where you&amp;rsquo;re welcome to ask questions, report problems, or pitch ideas.
 Issues Github is used for tracking issues.
