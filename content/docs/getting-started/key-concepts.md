@@ -12,6 +12,7 @@ zenoh provides 3 kinds of deployment units: **peers**, **clients** and **routers
 
 ### peer
 A user application able to:
+{{< rawhtml >}}
 <div>
     <div style="float:left;width:33%;padding:20px;">
         <div style="height:50px;">Communicate with other peers in a peer-to-peer topology</div>
@@ -36,16 +37,19 @@ A user application able to:
     </div>
 </div>
 <br style="clear:both;"></br>
+{{< /rawhtml >}}
 
 ### client
 A user application that connects to a single <b>router</b> (or a single <b>peer</b>) to communicate with the rest of the system.
-  <div style="height:200px;display:flex;justify-content: center;align-items: center;">
+{{< rawhtml >}}
+    <div style="height:200px;display:flex;justify-content: center;align-items: center;">
         <img src="../../../img/routed_clients.png" alt="routed clients" width="200"></img>
     </div>
+{{< /rawhtml >}}
 
 ### router
 An infrastructure component able to:
-
+{{< rawhtml >}}
 <div>
     <div style="float:left;width:33%;padding:20px;">
         <div style="height:50px;">Route data between <b>clients</b> and <b>peers</b> groups</div>
@@ -70,6 +74,7 @@ An infrastructure component able to:
     </div>
 </div>
 <br style="clear:both;"></br>
+{{< /rawhtml >}}
 
 ## User APIs
 
