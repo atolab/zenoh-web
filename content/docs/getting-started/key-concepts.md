@@ -66,7 +66,7 @@ An infrastructure component able to:
         </div>
     </div>
     <div style="float:left;width:33%;padding:20px;">
-        <div style="height:50px;">Route data in a mesh topology</div>
+        <div style="height:50px;">Route data in a <i>mesh</i> topology</div>
         <div style="height:20px;text-align:center;""><b style="color:red;">Available soon !!!</b></div>
         <div style="height:200px;display:flex;justify-content:center;align-items:center;">
             <img src="../../../img/router_mesh.png" alt="router mesh" width="200"></img>
@@ -84,7 +84,7 @@ zenoh provides 2 levels of API:
 A network oriented API providing the key primitives to allow pub/sub (push) communications as well as query/reply (pull) communications. The zenoh-net layer only cares about data transportation and doesn't care about data content nor storing data.
 
 ### zenoh
-A higher level API providing the same abstractions as the zenoh-net API in a simpler manner as well as providing all the building blocks to create a distributed storage. The zenoh level is aware of the data content and can apply content-based filtering and transcoding. 
+A higher level API providing the same abstractions as the zenoh-net API in a simpler and more data-centric oriented manner as well as providing all the building blocks to create a distributed storage. The zenoh level is aware of the data content and can apply content-based filtering and transcoding. 
 
   ![key primitives](../../../img/key_primitives.png "key primitives")
 
