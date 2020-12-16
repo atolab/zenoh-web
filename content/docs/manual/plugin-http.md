@@ -13,4 +13,4 @@ The REST plugin provides access to the zenoh [REST API](../../apis/apis/#rest-ap
 
 ------
 **Startup arguments** (added to zenoh router's startup arguments):
- - `--rest-http-port` : The REST plugin's http port (default: 8000)
+ - `--rest-http-port=[PORT]` : The REST plugin's http port (default: 8000)

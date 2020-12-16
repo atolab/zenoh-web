@@ -37,7 +37,7 @@ $ zenohd -V
 Add Eclipse Zenoh private repository to the sources list:
 
 ```bash
-$ echo "deb [trusted=yes] https://download.eclipse.org/zenoh/zenoh/master/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
+$ echo "deb [trusted=yes] https://download.eclipse.org/zenoh/zenoh/latest/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
 $ sudo apt update
 ```
 
@@ -55,9 +55,9 @@ $ zenohd -V
 
 ### Windows
 
-Download the zenoh archive :
-- Windows 32 bits: https://download.eclipse.org/zenoh/zenoh/master/eclipse-zenoh-0.5.0-beta.5-i686-pc-windows-gnu.zip
-- Windows 64 bits: https://download.eclipse.org/zenoh/zenoh/master/eclipse-zenoh-0.5.0-beta.5-x86_64-pc-windows-gnu.zip
+Download the zenoh archive from https://download.eclipse.org/zenoh/zenoh/latest/:
+- For Windows 32 bits: get the `eclipse-zenoh-<version>-i686-pc-windows-gnu.zip` file
+- For Windows 64 bits: get the `eclipse-zenoh-<version>-x86_64-pc-windows-gnu.zip`file
 
 Unzip the archive.
 
