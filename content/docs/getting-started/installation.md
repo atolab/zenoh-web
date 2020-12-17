@@ -55,7 +55,7 @@ $ zenohd -V
 
 ### Windows
 
-Download the zenoh archive from https://download.eclipse.org/zenoh/zenoh/latest/:
+Download the zenoh archive from https://download.eclipse.org/zenoh/zenoh/latest/ :
 - For Windows 32 bits: get the `eclipse-zenoh-<version>-i686-pc-windows-gnu.zip` file
 - For Windows 64 bits: get the `eclipse-zenoh-<version>-x86_64-pc-windows-gnu.zip`file
 
