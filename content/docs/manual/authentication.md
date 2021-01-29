@@ -62,12 +62,12 @@ Make sure that the path indicated in the *user_password_dictionary* property poi
 
 Then, let's start the subscriber in client mode passing its configuration, i.e. *client.conf*:
 ```bash
-$ z_sub --mode='client' -c client.conf
+$ zn_sub --mode='client' -c client.conf
 ```
 
 Lastly, let's start the publisher in client mode passing its configuration, i.e. *client.conf*:
 ```bash
-$ z_put --mode='client' -c client.conf
+$ zn_pub --mode='client' -c client.conf
 ```
 
 As it can be noticed, the same *client.conf* is used for *z_sub* and *z_put*. 
