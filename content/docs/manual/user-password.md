@@ -22,7 +22,7 @@ password=clientpassword
 
 When using such configuration, the client will use the provided **user** and **password** to authenticate against any peer or router.
 
-Let's assume that the above configuration is then saved with the name *client.conf*.
+Let's assume the above configuration is then saved with the name *client.conf*.
 
 ## Router or peer configuration
 
@@ -70,7 +70,7 @@ Lastly, let's start the publisher in client mode passing its configuration, i.e.
 $ zn_pub --mode='client' -c client.conf
 ```
 
-As it can be noticed, the same *client.conf* is used for *z_sub* and *z_put*. 
+As it can be noticed, the same *client.conf* is used for *zn_sub* and *zn_put*. 
 Both are using the same credentials and are authenticated accordingly by the *router*. 
 Neverhteless, different configuration files and credentials could be used 
 
