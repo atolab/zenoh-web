@@ -100,7 +100,6 @@ The first thing to do is to run the router passing its configuration, i.e. *rout
 ```bash
 $ zenohd -c router.conf
 ```
-Make sure that the path indicated in the *user_password_dictionary* property points to a valid credentials file.
 
 Then, let's start the subscriber in client mode passing its configuration, i.e. *client.conf*:
 ```bash
