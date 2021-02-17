@@ -98,17 +98,17 @@ Let's assume a scenario with one zenoh router and two clients connected to it: o
 
 The first thing to do is to run the router passing its configuration, i.e. *router.conf*:
 ```bash
-$ zenohd -c router.conf
+$ zenohd -c router.conf -l tls/localhost:7447
 ```
 
 Then, let's start the subscriber in client mode passing its configuration, i.e. *client.conf*:
 ```bash
-$ zn_sub --mode='client' -c client.conf
+$ zn_sub --mode='client' -c client.conf -e tls/localhost:7447
 ```
 
 Lastly, let's start the publisher in client mode passing its configuration, i.e. *client.conf*:
 ```bash
-$ zn_pub --mode='client' -c client.conf
+$ zn_pub --mode='client' -c client.conf -e tls/localhost:7447
 ```
 
-As it can be noticed, the same *client.conf* is used for *zn_sub* and *zn_put*.
+As it can be noticed, the same *client.conf* is used for *zn_sub* and *zn_pub*.
