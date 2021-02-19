@@ -23,7 +23,6 @@ A user application able to:
     </div>
     <div style="float:left;width:33%;padding:20px;">
         <div style="height:50px;">Communicate with other <b>peers</b> in a <i>mesh</i> topology</div>
-        <div style="height:20px;text-align:center;"><b style="color:red;">Available soon !!!</b></div>
         <div style="height:250px;display:flex;justify-content:center;align-items:center;">
             <img src="../../../img/peers_mesh.png" alt="peers mesh" width="150"></img>
         </div>
@@ -67,7 +66,6 @@ An infrastructure component able to:
     </div>
     <div style="float:left;width:33%;padding:20px;">
         <div style="height:50px;">Route data in a <i>mesh</i> topology</div>
-        <div style="height:20px;text-align:center;""><b style="color:red;">Available soon !!!</b></div>
         <div style="height:200px;display:flex;justify-content:center;align-items:center;">
             <img src="../../../img/router_mesh.png" alt="router mesh" width="200"></img>
         </div>
