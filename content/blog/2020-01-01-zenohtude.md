@@ -3,7 +3,7 @@ date = "2020-01-01"
 title = "A Year Full of Zenoh"
 description = "1 January 2020"
 menu = "blog"
-weight = 300
+weight = 1000
 +++
 
 First of all we would like to take a moment to wish all of you a 2020 filled with joy, health, peace and success. 
