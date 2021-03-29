@@ -12,10 +12,10 @@ random<span style=color:#555>.</span>seed()
     <span style=color:#069;font-weight:700>return</span> random<span style=color:#555>.</span>randint(<span style=color:#f60>15</span>, <span style=color:#f60>30</span>)
 
 <span style=color:#069;font-weight:700>def</span> <span style=color:#c0f>run_sensor_loop</span>(w):
-    <span style=color:#09f;font-style:italic># read and produce e temperature every second</span>
+    <span style=color:#09f;font-style:italic># read and produce a temperature every second</span>
     <span style=color:#069;font-weight:700>while</span> True:
         t <span style=color:#555>=</span> read_temp()
-        w<span style=color:#555>.</span>put(<span style=color:#c30>&#39;/myhome/kitcken/temp&#39;</span>, t)
+        w<span style=color:#555>.</span>put(<span style=color:#c30>&#39;/myhome/kitchen/temp&#39;</span>, t)
         time<span style=color:#555>.</span>sleep(<span style=color:#f60>1</span>)
 
 <span style=color:#069;font-weight:700>if</span> __name__ <span style=color:#555>==</span> <span style=color:#c30>&#34;__main__&#34;</span>:
