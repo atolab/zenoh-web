@@ -6,6 +6,11 @@ canonifyURLs: "true"
 pygmentsCodefences: true
 pygmentsStyle: "manni"
 googleAnalytics: UA-41082619-2
+enableRobotsTXT: true
+sitemap:
+    changefreq: "weekly"
+    priority: 0.5
+
 menu:
   docs:
     - identifier: "getting_started"
