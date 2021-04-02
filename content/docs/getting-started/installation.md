@@ -32,7 +32,7 @@ Then you can start the zenoh router with this command:
 $ zenohd -V
 ```
 
-### Ubuntu (20.04)
+### Ubuntu or any Debian (x86-64)
 
 Add Eclipse Zenoh private repository to the sources list:
 
