@@ -47,31 +47,11 @@ A user application that connects to a single **router** (or a single **peer**) t
 {{< /rawhtml >}}
 
 ### router
-An infrastructure component able to:
+An infrastructure component able to route data between **clients** and **peers** in any given topology.
 {{< rawhtml >}}
-<div>
-    <div style="float:left;width:33%;padding:20px;">
-        <div style="height:50px;">Route data between <b>clients</b> and <b>peers</b> groups</div>
-        <div style="height:20px;text-align:center;""></div>
-        <div style="height:200px;padding:20px;display:flex;justify-content:center;align-items:center;">
-            <img src="../../../img/router_single.png" alt="router" width="200"></img>
-        </div>
+    <div style="display:flex;justify-content: center;align-items: center;">
+        <img src="../../../img/full_topology.png" alt="full topology" width="600"></img>
     </div>
-    <div style="float:left;width:33%;padding:20px;">
-        <div style="height:50px;">Route data in a <i>clique</i> topology</div>
-        <div style="height:20px;text-align:center;""></div>
-        <div style="height:200px;padding:20px;display:flex;justify-content:center;align-items:center;">
-            <img src="../../../img/router_clique.png" alt="router clique" width="200"></img>
-        </div>
-    </div>
-    <div style="float:left;width:33%;padding:20px;">
-        <div style="height:50px;">Route data in a <i>mesh</i> topology</div>
-        <div style="height:200px;display:flex;justify-content:center;align-items:center;">
-            <img src="../../../img/router_mesh.png" alt="router mesh" width="200"></img>
-        </div>
-    </div>
-</div>
-<br style="clear:both;"></br>
 {{< /rawhtml >}}
 
 ## User APIs
