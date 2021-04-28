@@ -177,7 +177,7 @@ If you can't open a public TCP port in your LAN, let's use a zenoh router in a p
 
 To deploy this:
 
- 1. Pick your favorite cloud provider and provision a Ubuntu 64-bits VM with a public IP.
+ 1. Pick your favorite cloud provider and provision a Ubuntu 64-bit VM with a public IP.
 
  2. Install the zenoh router in this VM following those instructions:
     http://zenoh.io/docs/getting-started/installation/#ubuntu-or-any-debian-x86-64
@@ -237,7 +237,7 @@ Now, both bridge and zenoh application will connect to the 1st configured locato
 
 Notice that in the previous use case, as the 2 zenoh routers are interconnected, the zenoh/DDS bridge and the zenoh application don't need to be connected to the same router to communicate with each other. If they are connected to distinct routers, those ones will route the zenoh traffic between them, and the bridge and the application will still communicate with each other.
 
-Actualy, you can deploy the zenoh/DDS bridge, your teleop application and one or more interconnected zenoh router in all the ways described in the [zenoh documentation](../../docs/getting-started/key-concepts/#deployment-units). Just use the `-m peer` or `-m client` argument for the `zenoh-bridge-dds` to configure it as a peer or a client. And similarly for your zenoh teleop application.
+Actually, you can deploy the zenoh/DDS bridge, your teleop application and one or more interconnected zenoh router in all the ways described in the [zenoh documentation](../../docs/getting-started/key-concepts/#deployment-units). Just use the `-m peer` or `-m client` argument for the `zenoh-bridge-dds` to configure it as a peer or a client. And similarly for your zenoh teleop application.
 
 -------
 ## One more thing...
