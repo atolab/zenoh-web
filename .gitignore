@@ -1,0 +1,6 @@
+# generated web site
+/public/
+
+# MacOS specific files
+.DS_Store
+
