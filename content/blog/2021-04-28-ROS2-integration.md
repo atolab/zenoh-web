@@ -41,7 +41,7 @@ All that you need is:
     - the [zenoh Python API](https://github.com/eclipse-zenoh/zenoh-python#how-to-install-it) and pycdr installed -  
       just do: `pip install eclipse-zenoh pycdr`
 
-_**Note**: currently you need to build the zenoh/DDS bridge yourself. But we will provide pre-buit binaries for main platforms soon. Once built, the `zenoh-bridge-dds` executable is generated in the `zenoh-plugin-dds/target/release` sub-directory._
+_**Note**: currently you need to build the zenoh/DDS bridge yourself. But we will provide pre-built binaries for main platforms soon. Once built, the `zenoh-bridge-dds` executable is generated in the `zenoh-plugin-dds/target/release` sub-directory._
 
 
 Now:
