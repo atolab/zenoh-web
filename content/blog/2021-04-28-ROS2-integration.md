@@ -14,7 +14,7 @@ The previous blog was focusing on demonstrating the advantages of using zenoh as
 -------
 ## What does the zenoh/DDS bridge do ?
 
-The zenoh/DDS bridge is leveraging [CycloneDDS](https://github.com/eclipse-cyclonedds/cyclonedds) to discover the DDS readers and writers declared by the ROS2 application.  For each discovered DDS entity the creates a mirror DDS-entity — in other terms it creates a reader when discovering a writer and vice-versa. Additionally the bridge maps the DDS topics read and written by the discovered DDS entities on zenoh resources and performs the proper declarations.
+The zenoh/DDS bridge is leveraging [CycloneDDS](https://github.com/eclipse-cyclonedds/cyclonedds) to discover the DDS readers and writers declared by the ROS2 application. For each discovered DDS entity the bridge creates a mirror DDS-entity — in other terms it creates a reader when discovering a writer and vice-versa. Additionally the bridge maps the DDS topics read and written by the discovered DDS entities on zenoh resources and performs the proper declarations.
 
 As example, let’s consider the [turtlesim](http://docs.ros.org/en/foxy/Tutorials/Turtlesim/Introducing-Turtlesim.html) package used in the ROS2 Tutorial:  
 - By default the turtlesim node has a ROS2 Publisher on topic `/rosout`. As per [ROS2 conventions](https://design.ros2.org/articles/topic_and_service_names.html#ros-specific-namespace-prefix) this maps to a DDS Writer on topic `rt/rosout`. Consequently the zenoh/DDS bridge declares a DDS Reader on the same topic with matching QoS. This DDS Reader will receive all publications from the turtlesim on this topic and re-publish those on a zenoh resource having `/rt/rosout` as a key.
@@ -242,7 +242,7 @@ Actually, you can deploy the zenoh/DDS bridge, your teleop application and one o
 -------
 ## One more thing...
 
-Did I mention that you can easily communicate with more than 1 robot using Eclipse zenoh? Let's make move several independent turtlesims in a synchronous way!
+Did I mention that you can easily communicate with more than 1 robot using Eclipse zenoh? Let's make several independent turtlesims move in a synchronous way!
 
 Start as many turtlesim you want, each using its own ROS domain:
 ```shell
