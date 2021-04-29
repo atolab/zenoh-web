@@ -9,7 +9,7 @@ draft: false
 
 In our [previous blog](../2021-03-23-discovery/) we demonstrated how the [zenoh bridge for DDS](https://github.com/eclipse-zenoh/zenoh-plugin-dds) allows to (1) bridge DDS communications through zenoh, and (2) reduce by up to 99.97% the discovery traffic between the nodes.
 
-The previous blog was focusing on demonstrating the advantages of using zenoh as the mean for ROS2-to-ROS2 communication over wireless technologies. In this blog, we’ll go one step further and will demonstrate how you can  easily write native zenoh applications —meaning that has no dependencies on ROS2 — and seamlessly interact with ROS2 applications. Finally, we will show how you can extend your communication to Internet scale, allowing to cover all the typical cases for Robot-to-anything (R2X) communication.
+The previous blog was focusing on demonstrating the advantages of using zenoh as the mean for ROS2-to-ROS2 communication over wireless technologies. In this blog, we’ll go one step further and will demonstrate how you can  easily write native zenoh applications —meaning that has no dependencies on ROS2 — and seamlessly interact with [ROS2](https://docs.ros.org/en/foxy/index.html) applications. Finally, we will show how you can extend your communication to Internet scale, allowing to cover all the typical cases for Robot-to-anything (R2X) communication.
 
 -------
 ## What does the zenoh/DDS bridge do ?
