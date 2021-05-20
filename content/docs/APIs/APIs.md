@@ -1,10 +1,10 @@
 ---
-title: "API documentations"
+title: "API documentation"
 weight : 9000
 menu: "docs"
 ---
 
-All the client APIs documentations are avaliable on [Read the Docs](https://readthedocs.org/search/?q=zenoh):
+All the client API documentation is available on [Read the Docs](https://readthedocs.org/search/?q=zenoh):
 
 ## Rust
 https://zenoh-rust.readthedocs.io/
@@ -20,16 +20,14 @@ https://zenoh-python.readthedocs.io/
 
 ## REST API
 
-Zenoh also offers a REST API via the zenoh-rest plugin. When starting zenoh with default options,
-this REST plugin is automatically started on port 8000 and ready to answer HTTP requests.  
-The full zenoh key/value space is accessible via this REST API, including the Admin Space under the `'/@'`prefix.
+Zenoh also offers a REST API via the zenoh-rest plugin. When starting zenoh with default options, this REST plugin is automatically started on port 8000 and ready to answer HTTP requests. The full zenoh key/value space is accessible via this REST API, including the Admin Space under the `'/@'`prefix.
 
 ### GET
 
 Binds to the **get(selector)** operation on zenoh.
 
-- **URL**:     `http://host:8000/selector`
-- **body**:    none
+- **URL**: http://host:8000/selector`
+- **body**: none
 - **headers**: none
 
 The results are returned as a JSON array of objects containing `"key"`, `"value"`and `"time"`.
@@ -75,12 +73,12 @@ curl -g http://localhost:8000/@/**/storage/**
 
 Binds to the **put(path,value)** operation on zenoh.
 
-- **URL**:     `http://host:8000/path`
-- **body**:    the value to put
+- **URL**: `http://host:8000/path`
+- **body**: the value to put
 - **headers**: 
-   - **content-type**: the value encoding (optional; unspecified implies "application/octet-stream" encoding. Note that curl by default uses "application/x-www-form-urlencoded")
+   - **content-type**: the value encoding (optional; unspecified implies "application/octet-stream" encoding. Note by default curl uses "application/x-www-form-urlencoded")
 
-The values with the following content-types will be automatically converted by zenoh into a typed Value:
+The values with the following content-types are automatically converted by zenoh into a typed Value:
 
 | content-type             | zenoh Value type |
 | ------------------------ | ---------------- |
@@ -108,8 +106,8 @@ Examples using curl:
 
 Binds to the **remove(path)** operation on zenoh.
 
-- **URL**:     `http://host:8000/path`
-- **body**:    none
+- **URL**: `http://host:8000/path`
+- **body**: none
 - **headers**: none
 
 Examples using curl:

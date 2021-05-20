@@ -6,20 +6,19 @@ menu:
     parent: getting_started
 ---
 
-To get up and running with <b>zenoh</b> you will have to install the router and then get hold of the API you would like to use to write your applications. 
+To run <b>zenoh</b> you must first install the zenoh router and then choose and install the API you would like to use to write your applications. 
 
-## Installing zenoh's router
-Zenoh's router supports Linux, MacOS and Windows platforms.
-For other platforms, you can use the [Docker image](../quick-test#run-zenoh-in-docker).
+## Install the zenoh router
+Zenoh's router supports Linux, MacOS and Windows platforms. For other platforms, you can use the [Docker image](../quick-test#run-zenoh-in-docker).
 
-Below are the detailed information on how to install the binaries directly on supported platforms (i.e. without Docker).
+The following information explains how to install the binaries directly on to the supported platforms (i.e. without Docker).
 
 ### MacOS
 Tap our brew package repository:
 
 ```bash
 $ brew tap eclipse-zenoh/homebrew-zenoh
-```    
+```
 
 Install zenoh:
 
@@ -27,14 +26,14 @@ Install zenoh:
 $ brew install zenoh
 ```
 
-Then you can start the zenoh router with this command:
+Start the zenoh router with the following command:
 ```bash
 $ zenohd -V
 ```
 
 ### Ubuntu or any Debian (x86-64)
 
-Add Eclipse Zenoh private repository to the sources list:
+Add the Eclipse zenoh private repository to the sources list:
 
 ```bash
 $ echo "deb [trusted=yes] https://download.eclipse.org/zenoh/zenoh/latest/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
@@ -46,8 +45,8 @@ Install zenoh:
 ```bash
 $ sudo apt install zenoh 
 ```
- 
-Then you can start the zenoh router with this command:
+
+Start the zenoh router with the following command:
 
 ```bash
 $ zenohd -V
@@ -55,26 +54,26 @@ $ zenohd -V
 
 ### Windows
 
-Download the zenoh archive from https://download.eclipse.org/zenoh/zenoh/latest/ :
-- For Windows 32 bits: get the `eclipse-zenoh-<version>-i686-pc-windows-gnu.zip` file
-- For Windows 64 bits: get the `eclipse-zenoh-<version>-x86_64-pc-windows-gnu.zip`file
+Download the zenoh archive from https://download.eclipse.org/zenoh/zenoh/latest/:
+- Windows 32-bit: use the `eclipse-zenoh-<version>-i686-pc-windows-gnu.zip` file
+- Windows 64-bit: use the `eclipse-zenoh-<version>-x86_64-pc-windows-gnu.zip`file
 
 Unzip the archive.
 
-Go to zenoh directory and start zenoh router:
+Go to the zenoh directory and start the zenoh router:
 
 ```cmd
 > cd C:\path\to\zenoh\dir
 > zenohd.exe -V
 ```
 
-## Testing Your Installation
-To test the installation, try to see the zenoh man page by executing the following command:
+## Test the installation
+To test the installation, open the zenoh man page with the following command:
 
 ```bash
 $ zenohd --help
 ```
-You should see the following output on your console:
+This should display the following output on your console:
 
 ```text
 The zenoh router v0.5.0-beta.X
@@ -114,9 +113,8 @@ OPTIONS:
 [...]
 ```
 
-## Installing client library
-To develop your application zenoh application, you need to install a zenoh client library.
-Depending your programmation language, choose one of the following API and refer to the installation and usage instructions in here:
+## Install the client library
+To develop your zenoh application, you need to install a zenoh client library. Depending on your preferred programming language, choose one of the following APIs and refer to the installation and usage instructions:
 
 - [Python API](https://github.com/eclipse-zenoh/zenoh-python)
 - [C API (only zenoh-net API)](https://github.com/eclipse-zenoh/zenoh-c)

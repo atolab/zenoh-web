@@ -1,33 +1,26 @@
 ---
-title: "Your First zenoh app"
+title: "Your first zenoh app"
 weight : 1020
 menu:
   docs:
     parent: getting_started
 ---
-Getting started with zenoh is quite straightforward. Below we will show you how to create a simple telemetry application. Let's assume that we have some sensor, say a temperature sensor, and we want to store this temperature into a zenoh storage. Later on, we want to retrieve this temperature from the zenoh storage. 
+Getting started with zenoh is quite straightforward. This page shows you how to create a simple telemetry application. In this example, we have a temperature sensor, we want to store this temperature into zenoh storage and retrieve it from the zenoh storage. 
 
-Before cranking some code, let's define some terminology. 
+<b>zenoh</b> deals with <i>keys/values</i> where each key is a <i>path</i> and is associated with a <i>value</i>. A path looks like a Unix file system path, such as ```/myhome/kitchen/temp```. The value can be defined with different encodings (string, JSON, raw bytes buffer...). 
 
-<b>zenoh</b> deals with <i>keys/values</i> where each key is a <i>path</i> and is associated to a <i>value</i>. A path looks like just a Unix file system path, such as ```/myhome/kitchen/temp```. The value can be defined with different
-encodings (string, JSON, raw bytes buffer...). 
+To query the values stored by zenoh, we use <i>selectors</i>. A <i>selector</i> can use wildcards, such as <b>*</b> and <b>**</b> to represent a set of paths, for example, ```/myhome/*/temp```.
 
-To query the values stored by zenoh, we use <i>selectors</i>. As the name suggest, a <i>selector</i> can uses wildcards, such as <b>*</b> and <b>**</b> to represent a set of paths, such as, ```/myhome/*/temp```.
+## zenoh programming in Python 
 
-Let's get started!
-
-## zenoh Programming in Python 
-
-By default, a zenoh router starts without any storage. In order to store the temperature, we need to add one,
-starting `zenohd` with the `--mem-storage`option.
-The following command starts the router with a storage in zenoh memory that will store any key starting with `/myhome/`:
+By default, a zenoh router starts without any storage. In order to store the temperature, we need to add one, we must start `zenohd` with the `--mem-storage` option. The following command starts the router with a storage in zenoh memory that stores any key starting with `/myhome/`:
 
 ```bash
 zenohd --mem-storage='/myhome/**'
 ```
 
 
-Now let's write an application that will produce temperature measurements at each second:
+The following writes an application that produces temperature measurements at each second:
 
 ```python
 from zenoh import Zenoh
@@ -53,7 +46,7 @@ if __name__ == "__main__":
 ```
 
 
-Below is the application that will retrieve the latest temperature value stored in zenoh:
+The following is an application to retrieve the latest temperature value stored in zenoh:
 
 ```python
 from zenoh import Zenoh
@@ -67,8 +60,7 @@ if __name__ == "__main__":
 ```
 
 
-Finally, if ever we want to receive the temperatures in direct from the publisher,
-without querying the zenoh storage, we can use a subscriber:
+To receive the temperatures direct from the publisher, without querying the zenoh storage, we can use a subscriber:
 
 ```python
 from zenoh import Zenoh, ChangeKind
@@ -88,7 +80,7 @@ if __name__ == "__main__":
 
 ## Other code examples
 
-Now you can also have a look to the examples provided with each client API:
+The following examples are provided for each client API:
 
  - **Rust**: https://github.com/eclipse-zenoh/zenoh/tree/master/zenoh/examples/zenoh
  - **Rust (zenoh-net)**: https://github.com/eclipse-zenoh/zenoh/tree/master/zenoh/examples/zenoh-net

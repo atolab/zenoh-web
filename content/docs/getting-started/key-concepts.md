@@ -56,25 +56,25 @@ An infrastructure component able to route data between **clients** and **peers**
 
 ## User APIs
 
-zenoh provides 2 levels of API:
+zenoh provides two levels of API:
 
 ### zenoh-net
 A network oriented API providing the key primitives to allow pub/sub (push) communications as well as query/reply (pull) communications. The zenoh-net layer only cares about data transportation and doesn't care about data content nor storing data.
 
 ### zenoh
-A higher level API providing the same abstractions as the zenoh-net API in a simpler and more data-centric oriented manner as well as providing all the building blocks to create a distributed storage. The zenoh layer is aware of the data content and can apply content-based filtering and transcoding. 
+A higher level API providing the same abstractions as the zenoh-net API in a simpler and more data-centric oriented manner, as well as providing all the building blocks to create a distributed storage. The zenoh layer is aware of the data content and can apply content-based filtering and transcoding. 
 
   ![key primitives](../../../img/key_primitives.png "key primitives")
 
 ### zenoh-net primitives
- - **write :** push live data to the matching subscribers.
- - **subscribe :** subscriber to live data. 
- - **query :** query data from the matching queryables.
- - **queryable :** an entity able to reply to queries.
+ - **write:** push live data to the matching subscribers
+ - **subscribe:** subscriber to live data 
+ - **query:** query data from the matching queryables
+ - **queryable:** an entity able to reply to queries
 
 ### zenoh primitives
- - **put :** push live data to the matching subscribers and storages. (equivalent of zenoh-net write)
- - **subscribe :** subscriber to live data.  (equivalent of zenoh-net subscribe)
- - **get :** get data from the matching storages and evals.  (equivalent of zenoh-net query)
- - **storage :** the combination of a zenoh-net subscriber to listen for live data to store and a zenoh-net queryable to reply to matching get requests.
- - **eval :** an entity able to reply to get requests. Typically used to provide data on demand or build a RPC system.  (equivalent of zenoh-net queryable)
+ - **put:** push live data to the matching subscribers and storages (equivalent of zenoh-net write)
+ - **subscribe:** subscriber to live data (equivalent of zenoh-net subscribe)
+ - **get:** get data from the matching storages and evals (equivalent of zenoh-net query)
+ - **storage:** the combination of a zenoh-net subscriber to listen for live data to store and a zenoh-net queryable to reply to matching get requests
+ - **eval:** an entity able to reply to get requests. Typically used to provide data on demand or build a RPC system (equivalent of zenoh-net queryable)
