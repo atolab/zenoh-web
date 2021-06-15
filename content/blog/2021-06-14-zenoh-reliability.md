@@ -1,5 +1,5 @@
 ---
-title: "Zenoh Reliability, scalability and congestion control"
+title: "Zenoh Reliability, Scalability and Congestion Control"
 date: 2021-06-14
 menu: "blog"
 weight: 290
