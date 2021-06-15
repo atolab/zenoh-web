@@ -27,19 +27,19 @@ As *zenoh* offers routed communication, a single data producer connected to a *z
 This strategy is highly scalable and offers a good level of reliability. No data samples are lost while the infrastructure is stable. If a *zenoh* router fails, the *zenoh* infrastructure will automatically adapt to the new topology (details will be provided in a future post). During the failover, data samples may be lost. As soon as the infrastructure re-stabilized, data is distributed reliably again.
 
 -------
-## A stronger reliability
+## A Stronger Reliability
 With the default hop to hop reliability strategy data samples can be lost during topology changes. This is the price to pay for a good scalability but can be problematic for some systems. *zenoh* is designed to offer two stronger reliability strategies which are very briefly described here.
 
-### End to end reliability
+### End to End Reliability
 A reliability channel is established between each data producer/data consumer pair. This avoids sample loss even during topology changes but is less scalable and induces higher resource consumption on producers and consumers.
 
-### First router to last router reliability
+### First Router to Last Router Reliability
 A reliability channel is established between the first *zenoh* router and the last *zenoh* router of each data route. This allows to relax pressure on producers and consumers by deporting this pressure to nearest infrastructure components.
 
 ![msg-sec](../../img/blog-zenoh-reliability/zenoh-strong-reliability.png)
 
 -------
-## Reliability and flow control
+## Reliability and Flow Control
 In a reliable system, there is a constant trade-off between reliability, progress and memory consumption. Indeed a slow or non-responsive data consumer will force matching data producers to either:
 - Store more and more messages thus consuming more and more memory.
 - Drop messages thus losing reliability.
@@ -57,11 +57,13 @@ Part of the issue is a confusion between *reliability* and *congestion control*.
 ![msg-sec](../../img/blog-zenoh-reliability/zenoh-reliability-and-flow-control.png)
 
 -------
-## Show me some code
+## Show me Some Code
 
 Here are examples of how reliability and congestion control can be configured using the *zenoh* Python API.
 
-### Configure reliability on subscriber side
+### Configuring Reliability
+zenoh reliability is configured on the subscriber side as shown below:
+
 ```python
 session = zenoh.net.open({})
 
@@ -73,7 +75,9 @@ sub = session.declare_subscriber(selector, sub_info, lambda sample:
 		print('received {}'.format(sample)))
 ```
 
-### Configure congestion control on writer side
+### Configuring Congestion Control
+zenoh  congestion control is configured per sample at the write time side as shown below:
+
 ```python
 session = zenoh.net.open({})
 
