@@ -12,7 +12,7 @@ Providing many to many reliable communications  over a wide area network is chal
 *zenoh* provides different mechanisms to deal with these challenges. It allows users to clearly define the reliability semantics they need without bringing extra complexity. 
 
 -------
-## Reliability and scalability
+## Reliability and Scalability
 ### Hop to hop reliability
 The *zenoh* protocol is composed of two layers: 
 - *The session protocol* establishes a bidirectional 1 to 1 session between two *zenoh* runtimes ([client](../../docs/getting-started/key-concepts/#client), [peer](../../docs/getting-started/key-concepts/#peer) or [router](../../docs/getting-started/key-concepts/#router)). Each session comes by default with a best-effort channel and a reliable channel. The session protocol among other things, takes care of performing automatic batching for maximising network usage and fragmentation to give the illusion of an unlimited MTU. 
