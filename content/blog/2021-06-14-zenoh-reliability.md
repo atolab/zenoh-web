@@ -76,7 +76,7 @@ sub = session.declare_subscriber(selector, sub_info, lambda sample:
 ```
 
 ### Configuring Congestion Control
-zenoh  congestion control is configured per sample at the write time side as shown below:
+zenoh  congestion control is configured per sample as shown below:
 
 ```python
 session = zenoh.net.open({})
