@@ -11,7 +11,7 @@ Zenoh is a **distributed service** to define, manage and operate on **key/value*
 The key abstractions at the core of zenoh are the following:
 
 ## Key
-Zenoh uses **[paths](#path)** as keys. In all zenoh documentations, "key" and "path" are synonym.
+Zenoh uses **[paths](#path)** as keys. In all zenoh documentation, "key" and "path" are synonymous.
 
 ---
 ## Path
@@ -21,7 +21,7 @@ Examples of paths:  `/demo/example/test` , `/com/adlink/building/fr/floor/1/offi
 A path can be absolute (i.e. starting with a `'/'`) or relative to a [workspace](#workspace).
 
 ---
-## Path Expression
+## Path expression
 Similar to a [path](#path), but with character `'*'` allowed to express a set of paths.
 
  - A single `'*'` matches any set of characters in a path, except `'/'`.
@@ -31,9 +31,9 @@ A path expression can be absolute (i.e. starting with a `'/'`) or relative to a 
 
 ---
 ## Selector
-A string which is the conjunction of an [path expression](#path-expression) identifying a set of paths and some optional parts allowing
-to refine the set of **[paths](#path)** and associated **[values](#value)**.  
+A string, which is the conjunction of a [path expression](#path-expression) to identify a set of paths and some optional parts to refine the set of **[paths](#path)** and associated **[values](#value)**.  
 Structure of a selector:
+
 ```none
 /s1/s2/.../sn?x>1&y<2&...&z=4(p1=v1;p2=v2;...;pn=vn)#a;b;x;y;...;z
 |           | |             | |                   |  |           |
@@ -43,20 +43,18 @@ where:
 
   - **expr**: is a [path expression](#path-expression).
 
-  - **filter**: a list of predicates separated by `'&'` allowing to perform filtering on the [values](#value)
-    associated with the matching keys.  
+  - **filter**: a list of predicates separated by `'&'` to filter on the [values](#value) associated with the matching keys.  
     Each predicate has the form "`field`-`operator`-`value`" where:
-
-     - *field* is the name of a field in the value (is applicable and is existing. otherwise the predicate is false)
+     - *field* is the name of a field in the value (is applicable and is existing otherwise the predicate is false)
      - *operator* is one of a comparison operators: `<` , `>` , `<=`  , `>=`  , `=`  , `!=`
-     - *value* is the the value to compare the field's value with
+     - *value* is the value to compare the field's value with
+    
+  - **fragment**: a list of field names to return a sub-part of each value.  
+    This feature only applies to structured values using "self-describing" encoding, such as JSON or XML.
+    It enables users to select only some fields within the structure. A new structure with only the selected fields
+    is used in place of the original value.
 
-  - **fragment**: a list of fields names allowing to return a sub-part of each value.  
-    This feature only applies to structured values using a "self-describing" encoding, such as JSON or XML.
-    It allows to select only some fields within the structure. A new structure with only the selected fields
-    will be used in place of the original value.
-  
-_**NOTE**_: _the filters and fragments are not yet supported in current zenoh version._
+_**NOTE**_: _The filters and fragments are not yet supported in the current zenoh version._
 
 ---
 ## Value
@@ -64,11 +62,10 @@ A user provided data item along with its [encoding](#encoding).
 
 ---
 ## Encoding
-A description of the [value](#value) format, allowing zenoh to know how to encode/decode the value to/from a bytes buffer.
+A description of the [value](#value) format, so that zenoh knows how to encode/decode the value to/from a bytes buffer.
 
-By default zenoh is able to transport and store any format of data as long as it's serializable as a bytes buffer.
-But for advanced features such as content filtering (using [selector](#selector)) or to automatically deserialize the data
-into a concrete type in the client APIs, zenoh require a description of the data encoding.
+By default, zenoh is able to transport and store any format of data as long as it's serializable as a bytes buffer.
+For advanced features such as content filtering (using [selector](#selector)) or to automatically deserialize the data into a concrete type in the client APIs, zenoh requires a description of the data encoding.
 
 
 The current version of zenoh supports the following encodings for filtering and automatic deserialization:
@@ -78,23 +75,20 @@ The current version of zenoh supports the following encodings for filtering and 
  - **Properties**: the value is a string representing a list of keys/values separated by `';'` (e.g. `"k1=v1;k2=v2..."`)
  - **Integer**: the value is an integer
  - **Float**: the value is a float
- - **Custom**: the value is a bytes buffer with a free string allowing for instance to describe its encoding
+ - **Custom**: the value is a bytes buffer with a free string where the instance describes its encoding
 
 ---
 ## Timestamp
-When a [value](#value) is put into zenoh, the first zenoh router receiving this value automatically
-associates it with a timestamp.  
+When a [value](#value) is put into zenoh, the first zenoh router which receives this value automatically associates it with a timestamp.  
 This timestamp is made of 2 items:
 
  - A **time** generated by a [Hybrid Logical Clock (HLC)](https://cse.buffalo.edu/tech-reports/2014-04.pdf).
    This time is a 64-bit time with a similar structure than a NTP timestamp (but with a different epoch):
-     - the higher 32-bit part is the number of seconds since midnight, January 1, 1970 UTC
-       (implying a roll over in 2106).
-     - the lower 32-bit part is a fraction of second, but with the 8 last bits replaced by a counter.
-
-     This time gives a theoritical resolution of 2^-32 seconds (60 nanoseconds), and
-     guarantees that the same time cannot be generated twice and that the *happened-before* relationship is preserved.
-
+     - the higher 32-bit part is the number of seconds since midnight, January 1, 1970 UTC (implying a roll over in 2106).
+     - the lower 32-bit part is a fraction of second, but with the last 8 bits replaced by a counter.
+   
+   This time gives a theoretical resolution of 2^-32 seconds (60 nanoseconds), it guarantees that the same time cannot be generated twice and that the *happened-before* relationship is preserved.
+   
  - The **UUID** of the zenoh router that generated the time.
 
 Such a timestamp allows zenoh to guarantee that each value introduced into the system has a unique timestamp, and that those timestamps (and therefore the values) can be ordered in the same way at any point of the system, without the need of any consensus algorithm.
@@ -104,56 +98,50 @@ Such a timestamp allows zenoh to guarantee that each value introduced into the s
 A storage technology, such as DBMS, Main Memory, time-series database, etc.  
 It can be dynamically loaded via the [admin space](#admin-space) and acts as a factory of [Storages](#storage).
 
-See [Zenoh backends](../backends) chapter for details and for the list of supported backends in the current version.
+See [Zenoh backends](../backends) for more information, including the list of supported backends in the current version.
 
 ---
 ## Storage
-An entity storing keys/values on a specific [backend](#backend).
+An entity which stores keys/values on a specific [backend](#backend).
 
-A storage is associated at its creation to a [Path Expression](#path-expression).
-Storages can be created via the [admin space](#admin-space) and take responsibility for storing all keys/values whose path matches the storage selector.
+When a storage is created it is associated with a [Path Expression](#path-expression).
+Storages can be created via the [admin space](#admin-space) and are responsible for storing all keys/values whose path matches the storage selector.
 
 ---
 ## Subscriber
-An entity registering interest for being notified whenever a key/value with a path matchings the subscriber
-[selector](#selector) is put, updated or removed on zenoh.
+An entity which registers interest for being notified whenever a key/value with a path matching the subscriber [selector](#selector) is put, updated or removed on zenoh.
 
 ---
 ## Eval
 A computation registered at a specific [path](#path).
 
-This computation can be triggered by a `get` operation on a [selector](#selector) matching this path.
-The computation function will receive the selector's properties as parameter.
+Trigger this computation with a `get` operation on a [selector](#selector) which matches this path.
+The computation function receives the selector's properties as parameter.
 
 ---
 ## Workspace
 The abstraction that give you access to zenoh primitives.
 
-A workspace is associated to a [path](#path) at creation. This path will be used as a prefix for any relative
-[path](#path) or [selector](#selector) used with this workspace.
+When a workspace is created it is associated with a [path](#path). This path is used as a prefix for any relative [path](#path) or [selector](#selector) used with this workspace.
 
 
 ---
 ## Admin space
-The administration space of zenoh allowing to administrate a zenoh router and its plugins.
-It is accessible via regular get/put on zenoh, under the `/@/router/<router-id>` path prefix, where
-**`<router-id>`** is is the UUID of a zenoh router.
+The administration space of zenoh to administrate a zenoh router and its plugins.
+It is accessible via regular get/put on zenoh, under the `/@/router/<router-id>` path prefix, where **`<router-id>`** is the UUID of a zenoh router.
 For instance, the following paths can be used:
 
  - `/@/router/<router-id>` (read-only):  
-   Returns a JSON with the status informations about the router.
+   Returns a JSON with the status information about the router.
  - `/@/router/<router-id>/plugin/storages/backend/<backend-id>` (read/write):  
    On get, returns the properties of the backend with the specified ID.  
-   On put, make the router to dynamically load a backend library with the properties specified as the value.
+   On put, the router dynamically loads a backend library with the properties specified as the value.
  - `/@/router/<router-id>/plugin/storages/backend/<backend-id>/storage/<storage-id>` (read/write):  
    On get, returns the properties of the storage with the specified ID.  
    On put, adds a storage in the parent backend with the properties specified as the value.  
    On remove, removes the storage.
 
-<!-- Note that the zenoh client APIs provide an Admin interface that facilitate the addition/removal of
-backends and storage. Underneath, this interface calls put/remove/get operations on those paths.
-By default, this interface knows the `<router-id>` of the zenoh router it's connected to and automatically
-use it in paths, if no alternative `<router-id>` is provided. -->
+<!-- Note that the zenoh client APIs provide an Admin interface that facilitate the addition/removal of backends and storage. Underneath, this interface calls put/remove/get operations on those paths.
+By default, this interface knows the `<router-id>` of the zenoh router it's connected to and automatically uses it in paths, if no alternative `<router-id>` is provided. -->
 
-When using the REST API, you can replace the `<router-id>` with the **`local`** keyword,
-meaning the operation addresses the zenoh router the HTTP client is connected to.
+When using REST API, you can replace the `<router-id>` with the **`local`** keyword, so the operation addresses the zenoh router the HTTP client is connected to.
