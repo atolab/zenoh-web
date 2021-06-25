@@ -266,3 +266,5 @@ The zenoh trick to rule them all is to just subscribe and publish via [path expr
  - publish Twist messages to `'/**/cmd_vel'` instead of `'/rt/turtle1/cmd_vel'`
 
 You can also test this with the "teleop" demos provided [here](https://github.com/atolab/zenoh-demo/tree/main/ROS2), using the `--rosout='/**/rosout' --cmd_vel='/**/cmd_vel'` program arguments.
+
+[**--JE**](https://github.com/JEnoch)
