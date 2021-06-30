@@ -53,7 +53,7 @@ A software process able to route the zenoh protocol between **clients** and **pe
         <img src="../../../img/full_topology.png" alt="full topology" width="600"></img>
     </div>
 {{< /rawhtml >}}  
-The router executable file is named `zenohd` and is available in [zenoh releases](../installation/#installing-zenohs-router) or as a [Docker image](../quick-test).
+The router executable file is named `zenohd` and is available in [zenoh releases](../installation/#installing-zenohs-router), as a [Docker image](../quick-test) or [building it by yourself](https://github.com/eclipse-zenoh/zenoh#how-to-build-it).
 
 ------
 ## User APIs

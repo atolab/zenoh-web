@@ -12,14 +12,18 @@ This page describe how to perform a quick test of zenoh, using a Docker image.
 
 The zenoh router is also available in a Docker image. You can deploy a single instance on your local host just running:
 ```bash
-docker run --init -p 7447:7447/tcp -p 7447:7447/udp -p 8000:8000/tcp eclipse/zenoh
+docker run --init -p 7447:7447/tcp -p 8000:8000/tcp eclipse/zenoh
 ```
 
 The ports used by zenoh are the following:
 
   - **7447/tcp** : the zenoh protocol via TCP
-  - **7447/udp** : the zenoh scouting protocol using UDP multicast (for clients to automatically discover the router)
   - **8000/tcp** : the zenoh REST API
+
+**:warning: WARNING :warning:**: _Docker doesn't support UDP multicast between a container and its host (see cases [moby/moby#23659](https://github.com/moby/moby/issues/23659), [moby/libnetwork#2397](https://github.com/moby/libnetwork/issues/2397) or [moby/libnetwork#552](https://github.com/moby/libnetwork/issues/552)). The only case where it works is on Linux using the `--net host` option to make the container to share the host's networking space (i.e. run: `docker run --init --net host eclipse/zenoh`)._  
+_The implication of not having UDP multicast working for the zenoh router is that you need to configure your zenoh applications (peer or client) with the router's locator as `peer`:_
+  - _running the [examples we provide](##pick-your-programming-language), just add the option: `-e tcp/localhost:7447`_
+  - _writing your own zenoh application, you need to add a `"peer=tcp/localhost:7447"` configuration when initiating the zenoh API_
 
 ### Adding plugins and backends to the container
 
@@ -28,15 +32,13 @@ See the relevant chapters for more details about plugins and backends:
  - [Zenoh plugins](../../manual/plugins)
  - [Zenoh backends and storages](../../manual/backends)
 
-**WARNING:** To be compatible with zenoh in Docker, the libraries must be compiled for **`x86_64-unknown-linux-musl`** target.
-Look for `.tgz` filenames with this extension when downloading plugins or backends from the
-[Eclipse zenoh download space](https://download.eclipse.org/zenoh).
+**:warning: WARNING :warning:**: _To be compatible with zenoh in Docker, the libraries must be compiled for **`x86_64-unknown-linux-musl`** target. Look for `.tgz` filenames with this extension when downloading plugins or backends from the [Eclipse zenoh download space](https://download.eclipse.org/zenoh)._
 
 By default the zenoh router will search for plugins and backends libraries to load in `~/.zenoh/lib`. Thus, to make it able to find the libraries, you can copy them into a `zenoh-docker/lib` directory on your local host and mount the `zenoh-docker` directory as a volume in your container targeting `/root/.zenoh`.
 
 Example:
 ```bash
-docker run --init -p 7447:7447/tcp -p 7447:7447/udp -p 8000:8000/tcp -v $(pwd)/zenoh-docker:/root/.zenoh eclipse/zenoh
+docker run --init -p 7447:7447/tcp -p 8000:8000/tcp -v $(pwd)/zenoh-docker:/root/.zenoh eclipse/zenoh
 ```
 
 Example of a Docker compose file (also configuring zenoh log level to "debug"):
@@ -48,7 +50,6 @@ services:
     restart: unless-stopped
     ports:
       - 7447:7447
-      - 7447:7447/udp
       - 8000:8000
     volumes:
       - ./zenoh_docker:/root/.zenoh
