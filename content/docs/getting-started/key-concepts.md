@@ -1,6 +1,6 @@
 ---
 title: "Key concepts"
-weight : 1010
+weight : 1000
 menu:
   docs:
     parent: getting_started
@@ -10,8 +10,8 @@ menu:
 
 zenoh provides 3 kinds of deployment units: **peers**, **clients** and **routers**.
 
-### peer
-A user application able to:
+### peer application
+A user application using a zenoh API and able to:
 {{< rawhtml >}}
 <div>
     <div style="float:left;width:33%;padding:20px;">
@@ -28,7 +28,7 @@ A user application able to:
         </div>
     </div>
     <div style="float:left;width:33%;padding:20px;">
-        <div style="height:50px;">Communicate with a wide system through <b>routers</b></div>
+        <div style="height:50px;">Communicate with a wide system through <b>zenoh routers</b></div>
         <div style="height:20px;text-align:center;""></div>
         <div style="height:250px;display:flex;justify-content:center;align-items:center;">
             <img src="../../../img/routed_peers.png" alt="routed peers" width="150"></img>
@@ -38,22 +38,24 @@ A user application able to:
 <br style="clear:both;"></br>
 {{< /rawhtml >}}
 
-### client
-A user application that connects to a single **router** (or a single **peer**) to communicate with the rest of the system.
+### client application
+A user application using a zenoh API and that connects to a single **zenoh router** (or a single **peer**) to communicate with the rest of the system.
 {{< rawhtml >}}
     <div style="height:200px;display:flex;justify-content: center;align-items: center;">
         <img src="../../../img/routed_clients.png" alt="routed clients" width="200"></img>
     </div>
 {{< /rawhtml >}}
 
-### router
-An infrastructure component able to route data between **clients** and **peers** in any given topology.
+### zenoh router
+A software process able to route the zenoh protocol between **clients** and **peers** in any given topology.
 {{< rawhtml >}}
     <div style="display:flex;justify-content: center;align-items: center;">
         <img src="../../../img/full_topology.png" alt="full topology" width="600"></img>
     </div>
-{{< /rawhtml >}}
+{{< /rawhtml >}}  
+The router executable file is named `zenohd` and is available in [zenoh releases](../installation/#installing-zenohs-router) or as a [Docker image](../quick-test).
 
+------
 ## User APIs
 
 zenoh provides 2 levels of API:
