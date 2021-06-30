@@ -244,7 +244,7 @@ Actually, you can deploy the zenoh/DDS bridge, your teleop application and one o
 
 Did I mention that you can easily communicate with more than 1 robot using Eclipse zenoh? Let's make several independent turtlesims move in a synchronous way!
 
-Start as many turtlesim you want, each using its own ROS domain:
+Start as many turtlesim you want, each using its own ROS domain[^1]:
 ```shell
 ROS_DOMAIN_ID=1 ros2 run turtlesim turtlesim_node
 ROS_DOMAIN_ID=2 ros2 run turtlesim turtlesim_node
@@ -268,3 +268,7 @@ The zenoh trick to rule them all is to just subscribe and publish via [path expr
 You can also test this with the "teleop" demos provided [here](https://github.com/atolab/zenoh-demo/tree/main/ROS2), using the `--rosout='/**/rosout' --cmd_vel='/**/cmd_vel'` program arguments.
 
 [**--JE**](https://github.com/JEnoch)
+
+[^1]: **Why 1 domain per robot ?**  
+In most of the cases, you don't need the robots to communicate with each other. But if you let them to use the same `ROS_DOMAIN_ID`, their DDS entities in the robots will anyway exchange discovery informations with each other leading to a lot of unecessary traffic that could be problematic over wireless communications (as seen in our previous blog). The simplest way to avoid such traffic is to use distinct domains. Other solutions could be specific network configuration, or specific DDS configuration.
+
