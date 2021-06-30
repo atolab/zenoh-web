@@ -9,10 +9,12 @@ menu:
 To get up and running with <b>zenoh</b> you will have to install the router and then get hold of the API you would like to use to write your applications. 
 
 ## Installing the zenoh router
-The zenoh router (a.k.a. `zenohd`) is currently available as pre-built binaries for Linux x86 64-bit, MacOS x86 64-bit and Windows x86 64-bit platforms.
-For other platforms, you can use the [Docker image](../quick-test#run-zenoh-in-docker) or [build zenoh](https://github.com/eclipse-zenoh/zenoh#how-to-build-it) directly on your platform.
+The zenoh router (a.k.a. `zenohd`) and its plugins are currently available as a pre-built binaries for Linux x86 64-bit, MacOS x86 64-bit and Windows x86 64-bit platforms. All release packages can be downloaded from:  
+  -  **https://download.eclipse.org/zenoh/zenoh/latest/**
 
-Below are the detailed information on how to install the pre-built binaries directly on the supported platforms.
+You can also install it via a package manager on MacOS (homebrew) or Linux Debian (apt). See instructions below.
+
+For other platforms, you can use the [Docker image](../quick-test#run-zenoh-in-docker) or [build it](https://github.com/eclipse-zenoh/zenoh#how-to-build-it) directly on your platform.
 
 ### MacOS
 Tap our brew package repository:
@@ -118,5 +120,7 @@ OPTIONS:
 To develop your application zenoh application, you need to install a zenoh client library.
 Depending your programmation language, choose one of the following API and refer to the installation and usage instructions in here:
 
+- [Rust API](https://crates.io/crates/zenoh)
 - [Python API](https://github.com/eclipse-zenoh/zenoh-python)
-- [C API (only zenoh-net API)](https://github.com/eclipse-zenoh/zenoh-c)
+- [C API](https://github.com/eclipse-zenoh/zenoh-c) (only zenoh-net API)
+- [Pico API ](https://github.com/eclipse-zenoh/zenoh-pico): C API for constrained devices (only zenoh-net API, no peer-to-peer mode)
