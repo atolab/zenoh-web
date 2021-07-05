@@ -1,5 +1,5 @@
 ---
-title: "Zenoh overhead - a story from our community"
+title: "Zenoh overhead: a story from our community"
 date: 2021-07-05
 menu: "blog"
 weight: 20210705
