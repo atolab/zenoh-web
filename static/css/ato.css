@@ -6,8 +6,12 @@ a:hover {
   color: #336699;
 }
 
-table, td {
+/* table, td {
     border: 1px solid black;
+} */
+
+table, td {
+  border: 0px solid white;
 }
 
 td {

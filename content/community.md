@@ -1,6 +1,7 @@
 +++
 title = "The zenoh Community"
 description = "Get help, discuss problems, and join the fun"
+menu = "community"
 +++
 
 # Communication
