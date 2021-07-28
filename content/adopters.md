@@ -10,7 +10,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
 
 {{< rawhtml >}}
 <div class="container">
-    <div class="row">
+    <div class="row align-items-center justify-content-center">
         <div class="col">
             <a href="https://www.adlinktech.com" target=="_blank">
                 <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-adlink.svg" alt="ADLINK"/>
@@ -32,7 +32,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
             </a>
         </div>
     </div>
-    <div class="row">
+    <div class="row align-items-center justify-content-center">
         <div class="col">
             <a href="https://f1tenth.org/" target=="_blank">
                 <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-f1tenth.png" alt="F1-Tenth"/>
@@ -54,7 +54,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
             </a>            
         </div>
     </div>
-    <div class="row">
+    <div class="row align-items-center justify-content-center">
         <div class="col">
             <a href="https://openadx.eclipse.org/" target=="_blank">
                 <img align="center" align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-openadx.png" alt="OpenADX"/>
@@ -62,7 +62,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
         </div>
         <div class="col">
             <a href="https://www.irt-systemx.fr" target=="_blank">
-                <img align="center" src="https://inno3.fr/sites/default/files/portfolio-images/system-x-logo.jpeg" alt="SystemX"/>
+                <img align="center" src="https://www.start-systemx.fr/wp-content/uploads/2016/06/systemx-logo.png" alt="SystemX"/>
             </a>            
         </div>
         <div class="col">
@@ -72,4 +72,6 @@ Below is a list of companies, research institutes and foundations that adopted, 
         </div>
     </div>
 </div>
+<p></p>
 {{< /rawhtml >}}
+
