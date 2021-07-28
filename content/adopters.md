@@ -12,6 +12,28 @@ Below is a list of companies, research institutes and foundations that adopted, 
 <div class="container">
     <div class="row align-items-center justify-content-center">
         <div class="col">
+            <a href="https://www.5gcity.eu/" target=="_blank">
+                <img align="center" src="https://5g-ppp.eu/wp-content/uploads/2017/05/5GCityLogo.png" alt="5GCity"/>
+            </a>
+        </div>
+        <div class="col">
+            <a href="http://5g-coral.eu/" target=="_blank">
+                <img align="center" src="http://5g-coral.eu/wp-content/uploads/2017/05/cropped-cropped-logo-coral-1-2.png" alt="5GCoral"/>
+            </a>
+        </div>
+        <div class="col">
+            <a href="https://mecwiki.etsi.org/index.php?title=MEC_Ecosystem" target=="_blank">
+                <img align="center" src="https://www.etsi.org/images/ETSILogoTwitter.png" alt="ETSI"/>
+            </a>
+        </div>
+        <div class="col>
+            <a href="https://h2020daemon.eu/" target="_blank">
+                <img align="center" src="https://h2020daemon.eu/wp-content/uploads/2021/01/daemonlogo-300x80-1.webp" alt="Daemon"/>
+            </a>
+        </div>
+    </div>
+    <div class="row align-items-center justify-content-center">
+        <div class="col">
             <a href="https://www.adlinktech.com" target=="_blank">
                 <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-adlink.svg" alt="ADLINK"/>
             </a>

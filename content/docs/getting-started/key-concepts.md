@@ -15,20 +15,26 @@ A user application using a zenoh API and able to:
 {{< rawhtml >}}
 <div>
     <div style="float:left;width:33%;padding:20px;">
-        <div style="height:50px;">Communicate with other <b>peers</b> in a <i>peer-to-peer</i> topology</div>
+        <div style="height:50px;">
+            Communicate with other <b>peers</b> over a 
+            <a href="https://en.wikipedia.org/wiki/Complete_graph">complete graph</a> topology.
+        </div>
         <div style="height:20px;text-align:center;""></div>
         <div style="height:250px;display:flex;justify-content:center;align-items:center;">
             <img src="../../../img/peer_to_peer.png" alt="peer to peer" width="150"></img>
         </div>
     </div>
     <div style="float:left;width:33%;padding:20px;">
-        <div style="height:50px;">Communicate with other <b>peers</b> in a <i>mesh</i> topology</div>
+        <div style="height:50px;">
+            Communicate with other <b>peers</b> over <a href="https://en.wikipedia.org/wiki/Connectivity_(graph_theory)#Connected_vertices_and_graphs">connected graph</a>  topology.</div>
         <div style="height:250px;display:flex;justify-content:center;align-items:center;">
             <img src="../../../img/peers_mesh.png" alt="peers mesh" width="150"></img>
         </div>
     </div>
     <div style="float:left;width:33%;padding:20px;">
-        <div style="height:50px;">Communicate with a wide system through <b>zenoh routers</b></div>
+        <div style="height:50px;">
+            Communicate across the Internet through <b>zenoh routers</b>.
+        </div>
         <div style="height:20px;text-align:center;""></div>
         <div style="height:250px;display:flex;justify-content:center;align-items:center;">
             <img src="../../../img/routed_peers.png" alt="routed peers" width="150"></img>

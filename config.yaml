@@ -8,6 +8,8 @@ pygmentsStyle: "manni"
 googleAnalytics: UA-41082619-2
 enableRobotsTXT: true
 enableEmoji: true
+singleViewStyle: "caspertwo"
+
 sitemap:
     changefreq: "weekly"
     priority: 0.5
@@ -20,4 +22,4 @@ menu:
     - identifier: "manual"
       name: "Reference manual"
       weight: 2000  
-
+ 

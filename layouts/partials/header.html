@@ -66,6 +66,11 @@
           <a class="nav-link {{ if $isAdopters }} active {{ end }}" href="{{ $adopters.URL }}">Adopters</a>
         </li>
         <li class="nav-item">
+          {{ $medias := index (.Site.Menus.medias) 0 }}
+          {{ $isMedias := hasPrefix .Permalink "/medias" }}
+          <a class="nav-link {{ if $isMedias }} active {{ end }}" href="{{ $medias.URL }}">Media</a>
+        </li>
+        <li class="nav-item">
           {{ $blog := index (.Site.Menus.blog) 0 }}
           {{ $isBlog := hasPrefix .Permalink "/blog" }}
           <a class="nav-link {{ if $isBlog }} active {{ end }}" href="{{ $blog.URL }}">Blog</a>
