@@ -26,7 +26,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
                 <img align="center" src="https://www.etsi.org/images/ETSILogoTwitter.png" alt="ETSI"/>
             </a>
         </div>
-        <div class="col>
+        <div class="col">
             <a href="https://h2020daemon.eu/" target="_blank">
                 <img align="center" src="https://h2020daemon.eu/wp-content/uploads/2021/01/daemonlogo-300x80-1.webp" alt="Daemon"/>
             </a>
@@ -48,7 +48,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
                 <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-bosch.svg" alt="BOSCH"/>
             </a>
         </div>
-        <div class="col>
+        <div class="col">
             <a href="https://www.l2s.centralesupelec.fr/en/" target="_blank">
                 <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-centralesupelec.png" alt="CentraleSupelec"/>
             </a>
