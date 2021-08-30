@@ -7,7 +7,7 @@ description: "14 June 2021 -- Paris."
 draft: false
 ---
 
-Providing many to many reliable communications  over a wide area network is challenging. This may even be an understatement, as theoretically,  even simple point to point reliable communication over asynchronous channels requires either infinite amount of memory or giving up progress… but guess what, many real systems can’t afford neither of those restrictions. Thus, trade-offs need to be made regarding reliability for the system to work, scale smoothly and have sufficiently strong guarantees. System's heterogeneity, with respect to network capabilities and nodes resources,  has important consequences and requires proper strategies to avoid the a slow node to impact the entire system.
+Providing many to many reliable communications  over a wide area network is challenging. This may even be an understatement, as theoretically,  even simple point to point reliable communication over asynchronous channels requires either infinite amount of memory or giving up progress… but guess what, many real systems can’t afford neither of those restrictions. Thus, trade-offs need to be made regarding reliability for the system to work, scale smoothly and have sufficiently strong guarantees. System's heterogeneity, with respect to network capabilities and nodes resources,  has important consequences and requires proper strategies to avoid a slow node to impact the entire system.
 
 *zenoh* provides different mechanisms to deal with these challenges. It allows users to clearly define the reliability semantics they need without bringing extra complexity. 
 
