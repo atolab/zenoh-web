@@ -2,7 +2,7 @@
 title: "Zenoh Reliability, Scalability and Congestion Control"
 date: 2021-06-14
 menu: "blog"
-weight: 999994
+weight: 20210614
 description: "14 June 2021 -- Paris."
 draft: false
 ---

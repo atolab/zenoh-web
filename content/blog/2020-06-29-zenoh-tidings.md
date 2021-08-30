@@ -2,7 +2,7 @@
 title: "Zenoh Tidings"
 date: 2020-06-30
 menu: "blog"
-weight: 999998
+weight: 20200630
 description: "30 June 2020 -- Paris."
 draft: false
 ---
