@@ -17,7 +17,7 @@ In such case the Storages plugin will search and load the library file with such
 
 The list of paths in which the Storages plugin will search for backends can be configured via the `--backend-search-dir` option (that can be repeated to specify several directories). The default list can be seen in using the `--help` option of the zenoh router.
 
-Note that by default the Storages plugin already embeds and provides at startup the [Memory backend](../backend-memory).
+Note that by default the Storages plugin already embeds and provides at startup the [Memory backend](../backends-list#memory-backend).
 
 ------
 **Library name:** `zplugin_storages`
