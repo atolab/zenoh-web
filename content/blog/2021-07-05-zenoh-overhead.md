@@ -13,7 +13,7 @@ If you are intrigued about this and want to know more, rest assured that you are
 
 Given the amount of messages and information exchanged, we thought it would be  a good idea to write a blog post to explain how zenoh achieves this wire efficiency. It's easier to read a blog post than scrolling backwards many messages on Gitter, isn't it?
 
-# Minimal overhead: what is it?
+## Minimal overhead: what is it?
 Let's start from the beginning. We said that 5 bytes are the minimal overhead in zenoh. What does that mean? It means that zenoh adds at least 5 bytes to user payload but, as you might have guessed, it may also add more if necessary. You might be wondering now in which cases zenoh offers the minimal overhead. To answer these questions we should first have a look at how zenoh serializes data on the wire. 
 
 As shown below, user payload is always carried in a zenoh data message. In turn, one or more zenoh data messages are carried within a zenoh frame message. The inner details of these messages and their corresponding weight in the 5 bytes overhead are presented in the following.
@@ -25,7 +25,7 @@ As shown below, user payload is always carried in a zenoh data message. In turn,
 ```
 
 -------
-# Zenoh data messages: carrying your data
+## Zenoh data messages: carrying your data
 In zenoh, users deal with keys/values where each key is a path and is associated with a value. A key looks like just a Unix file system path, such as `/myhome/kitchen/temp`, and it represents a resource. For what concerns the value, it can be defined with different encodings (string, JSON, raw bytes buffer, etc.). 
 
 As a result, the data, i.e. the value, is always published to a given resource. Zenoh takes this information from the user and it includes it in a zenoh data message as shown below. 
@@ -49,7 +49,7 @@ As you can see, the minimum overhead added by the zenoh data message is **3 byte
 +---------------+          --+      
 ```
 
-## Variable Length Encoding: a compact integer representation
+### Variable Length Encoding: a compact integer representation
 
 But how can we get exactly 3 bytes of overhead? Let's start by looking at the user data length, which takes 1+ bytes. 
 This field contains the number of bytes of user payload and represents a *64-bit integer*. 
@@ -61,7 +61,7 @@ According to VLE encoding, with the first byte you can encode up to the value `2
 This means that when the user payload is shorter than 128 bytes, the space taken to encode its length is only **1 byte**. 
 
 
-### Smart mapping of resource keys: using IDs
+#### Smart mapping of resource keys: using IDs
 
 Next, let's have a look at the resource field that encodes the resource key, which is represented by an arbitrary long key. This is very handy for the user who is completely free to define his own key structure, as complex and nested as he wants to be. However, transmitting the whole key without any transformation is not wire efficient at all. 
 
@@ -80,7 +80,7 @@ session.write(rid, "This is my payload")
 Summarizing, the minimal overhead in data messages is as little as **3 bytes** when the `declare_resource()` primitive is used and small payloads are sent. 
 
 -------
-# Zenoh frame messages: batching your data
+## Zenoh frame messages: batching your data
 So far we have discovered where 3 bytes out 5 of zenoh overhead come from. Where are the other 2? Those come from the frame message which always encapsulates one or more data messages as shown below.  Particularly, the frame overhead is computed as follows:
 - **1 byte** for the **frame header**
 - **1+ byte** for the **sequence number (SN)**
@@ -98,7 +98,7 @@ So far we have discovered where 3 bytes out 5 of zenoh overhead come from. Where
 +---------------+          --+
 ```
 
-## Configurable Sequence Number resolution: just the right size
+### Configurable Sequence Number resolution: just the right size
 By default, zenoh uses 4 bytes resolution for the SN giving an upper bound to the SN to `2^28-1`. 
 As you might have imagined by now, the SN is encoded as VLE resulting in an actual wire overhead of 1, 2, 3 or 4 bytes depending on the SN value. 
 
@@ -142,7 +142,7 @@ You should be able to a log similar to the following:
 
 If you see `sn resolution 128`, it means that the desired SN resolution has been configured.
 
-## Automatic batching: everybody on-board!
+### Automatic batching: everybody on-board!
 There is another nice feature that zenoh offers in terms of optimizing overhead. 
 And probably the most important one: automatic batching. 
 
@@ -157,7 +157,7 @@ This is a not-negligible savings especially for small user payload: up to thousa
 
 
 -------
-# Conclusions
+## Conclusions
 
 Summarizing, the minimal overhead in frame messages is as little as 2 bytes when the SN resolution is bounded to 128. 
 Moreover, the overhead of the SN (even the larger ones) are then equally shared across all the data messages in a single frame, leading to considerable bandwidth savings also in high throughput scenarios when batching comes really into play. This leaves us with a minimal overhead of just **5 bytes** when a single message is sent.

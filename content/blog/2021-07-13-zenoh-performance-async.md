@@ -19,7 +19,7 @@ The reminder of this post will take you through the  journey of zenoh profiling 
 If you are unfamiliar with Rust and you are just interested in the results, you can jump directly **[here](#looking-at-the-results)**.
 
 ----
-# Getting ready
+## Getting ready
 
 As we previously wrote in this **[blog post](https://zenoh.io/blog/2020-06-29-zenoh-tidings/)**, zenoh is purely written in **[Rust](https://www.rust-lang.org/)** and leverages the **[async](https://async.rs/)** features to achieve high performance and scalability. 
 
@@ -31,7 +31,7 @@ The second thing was to have a thorough read of **[The Rust Performance Book](ht
 Another nice reference on how to write performant code in Rust can be found **[here](http://likebike.com/posts/How_To_Write_Fast_Rust_Code.html)**.
 
 
-# Finding the hotspots
+## Finding the hotspots
 
 We started with identifying the hotspots in zenoh by generating flame-graphs with this **[tool](https://github.com/flamegraph-rs/flamegraph)**. We were confident that flame-graphs were a good way to visualize which part of the code takes most of the time in zenoh. We were wrong. 
 
@@ -40,7 +40,7 @@ We couldn’t see any function taking a substantial amount of time to justify th
 We improved our serializer and deserializer implementation and the synthetic benchmarks immediately improved by roughly 100%. However, that improvement didn’t reflect in the throughput tests. Nothing had changed. We were more puzzled than before.
 
 
-# Heap or not to heap? Stack is the problem
+## Heap or not to heap? Stack is the problem
 
 Then we started looking into memory allocations. Since the beginning of zenoh, we have been very careful to avoid heap allocations in the critical path. We used **[Valgrind](https://www.valgrind.org/)** to double check if that was still the case and yes, it was: we didn’t observe unnecessary allocations nor suspicious high cache miss rates. 
 
@@ -65,7 +65,7 @@ Async libraries and runtime were doing their job correctly, they were putting on
 So, we started a deep dive into zenoh internals and did some introspection on how to tackle the problem. We like async, it provides great flexibility and scalability properties to zenoh and we didn’t want to let it go. The final solution was to isolate the async code in specific parts of the code, especially the one interacting with the network, and to move some other parts to the standard sync library. As a result, zenoh has now a very balanced mix of sync and async code that takes the best of both worlds. This allowed us to drastically reduce the stack size of some critical async futures which immediately reflected in a massive performance boost as described below.
 
 ----
-# Looking at the results
+## Looking at the results
 
 Throughput and latency tests are provided as examples in the main zenoh distribution. So, you can check what we actually used to get our throughput and latency results and replicate it yourself! 
 
@@ -74,12 +74,12 @@ In the following we are going to show the throughput and latency results for bot
 All the tests below are run on three of our workstations equipped with an AMD Ryzen 5800x, 32 GB of RAM, connected through a 100Gb Ethernet connection, and configured according to this **[guide](https://easyperf.net/blog/2019/08/02/Perf-measurement-environment-on-Linux)**.
 
 
-## Peer-to-peer communication
+### Peer-to-peer communication
 
 In the peer-to-peer communication test, we consider two peers that directly communicate with each other, that is without passing through an intermediate node.
 
 
-### Throughput
+#### Throughput
 
 To build and run the p2p throughput tests just follow the instruction below:
 
@@ -121,7 +121,7 @@ A **1 Gb/s** connection is then saturated with a payload of **32** and **64 byte
 A payload of **512** and **1024 bytes** is then sufficient for zenoh-net and zenoh to saturate a **10 Gb/s** connection. 
 Finally, payloads larger than **128 KB** suffice to saturate a **40 Gb/s** connection.
 
-### Latency
+#### Latency
 
 Throughput figures are very nice, but about latency? To run the p2p latency tests just follow the instructions below:
 
@@ -150,12 +150,12 @@ In such a backlogged scenario, we can see that zenoh latency is as little as **3
 ![msg-sec](../../img/blog-zenoh-performance-async-sync/p2p_latency_api.png)
 
 
-## Routed communication
+### Routed communication
 
 In the router communication test, we consider two clients that communicate with each other through an intermediate node: the zenoh router.
 
 
-### Throughput
+#### Throughput
 
 To run the routed throughput tests just follow the instruction below:
 
@@ -197,7 +197,7 @@ A payload of **1024 bytes** is then sufficient for both zenoh-net and zenoh to s
 Finally, larger payloads are forwarded at **20-30 Gb/s**.
 
 
-### Latency
+#### Latency
 
 To run the routed latency tests just follow the instructions below:
 
@@ -231,7 +231,7 @@ The payload size is still **64 bytes**.
 ![msg-sec](../../img/blog-zenoh-performance-async-sync/rtr_latency_api.png)
 
 ----
-# Conclusions
+## Conclusions
 
 Summarizing, recent work makes zenoh capable to deliver over **3.5M msg/s** for small messages, over **45 Gb/s** for large messages, and a latency as little as **35 &#181;sec**. 
 
