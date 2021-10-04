@@ -11,7 +11,7 @@ In this post, we will introduce [zenoh-pico](https://github.com/eclipse-zenoh/ze
 As a result of this work, we are happy to announce that we successfully deployed and tested Zenoh in [Zephyr](https://www.zephyrproject.org) (reel_board and nucleo-f767zi) and [Arduino](https://www.arduino.cc) (ESP32) compatible boards, with initial results showcasing a quite remarkable performance within the microcontrollers landscape:
  - Memory footprint of only ~2.8% (nucleo-f767zi), ~9.2% (reel_board), and ~0.9% (ESP32).
  - Deliver more than 5.2k msg/s with a 8 bytes payload in ESP32.
- - Application-level throughput of ~9.2Mbps (in an 10 Mbps Ethernet link) with nucleo-f767zi.
+ - Application-level throughput of ~9.2 Mbps (thus, saturating a 10 Mbps Ethernet link) with nucleo-f767zi.
 
 The reminder of this post will get you started with the environment setup, library installation, and project creation for your microcontrollers.
 
@@ -227,7 +227,7 @@ The scarce memory and flash resources in microcontrollers stresses out the impor
 | **Empty Binary (Zephyr-only)** |   |   |       68166 bytes       |   |   |        127344 bytes        |   |   |        385859 bytes        |
 |          **Zenoh Publisher**   |   |   |       164654 bytes      |   |   |        186942 bytes        |   |   |        423161 bytes        |
 
-In terms of application-level throughput (i.e., goodput), ESP32 board was able to deliver more than 5.2k msg/s with a 8 bytes payload, while for a payload of 4096 bytes nucleo-f767zi board the link gets 9.2Mbps which is very close to its saturation point of the in an 10/100 Mbps Ethernet link.
+In terms of application-level throughput (i.e., goodput), ESP32 board was able to deliver more than 5.2k msg/s with a 8 bytes payload, while for a payload of 4096 bytes nucleo-f767zi board the link gets up to 9.2 Mbps (thus, saturating the 10 Mbps Ethernet link).
 
 ![msg-sec](../../img/blog-zenoh-pico-guide/preliminary-benchmark.png)
 
@@ -243,7 +243,7 @@ Summarizing:
  - Initial performance tests hints for a quite remarkable performance within the microcontrollers landscape.
  -- Memory footprint of only ~2.8% (nucleo-f767zi), ~9.2% (reel_board), and ~0.9% (ESP32).
  -- Deliver more than 5.2k msg/s with a 8 bytes payload in ESP32.
- --Application-level throughput of ~9.2Mbps (in an 10 Mbps Ethernet link) with nucleo-f767zi.
+ --Application-level throughput of ~9.2 Mbps (in an 10 Mbps Ethernet link) with nucleo-f767zi.
 
 Help us increase the number of supported platforms, frameworks, and boards. We will provide all the support you need either in [GitHub](https://github.com/eclipse-zenoh) or [Gitter](https://gitter.im/atolab/zenoh).
 
