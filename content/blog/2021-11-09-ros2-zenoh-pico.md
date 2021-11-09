@@ -1,14 +1,14 @@
 ---
-title: "ROS2 and microcontrollers integration via Zenoh-pico"
+title: "ROS 2 and microcontrollers integration via Zenoh-pico"
 date: 2021-11-09
 menu: "blog"
 weight: 20211109
 description: "09 November 2021 -- Paris."
 draft: false
 ---
-In a [previous blog](https://zenoh.io/blog/2021-04-28-ros2-integration/), we showed how you can easily write native Zenoh applications and seamlessly interact with ROS2 applications. This was exemplified by developing a native Zenoh teleoperation application to control a ROS2-powered robot, namely a [turtlebot](https://www.robot-advance.com/EN/actualite-turtlebot3-burger-by-robotis-149.htm) or its simulation counterpart [turtlesim](http://wiki.ros.org/turtlesim), from anywhere in the world. In this blog, we will go one step further by trying to make it cool and fun -- together with a bit of nostalgia.
+In a [previous blog](https://zenoh.io/blog/2021-04-28-ros2-integration/), we showed how you can easily write native Zenoh applications and seamlessly interact with ROS 2 applications. This was exemplified by developing a native Zenoh teleoperation application to control a ROS 2 powered robot, namely a [turtlebot](https://www.robot-advance.com/EN/actualite-turtlebot3-burger-by-robotis-149.htm) or its simulation counterpart [turtlesim](http://wiki.ros.org/turtlesim), from anywhere in the world. In this blog, we will go one step further by trying to make it cool and fun -- together with a bit of nostalgia.
 
-As a result of this work, we are unveiling the capabilities of Zenoh to bridge the gap between ROS2 and microcontroller environments by providing a lightweight and unified data-centric protocol coupled with its own implementation Zenoh middleware solution and DDS bridge. In other words, ROS2 users can extend their application towards microcontrollers via Zenoh.
+As a result of this work, we are unveiling the capabilities of Zenoh to bridge the gap between ROS 2 and microcontroller environments by providing a lightweight and unified data-centric protocol coupled with its own implementation Zenoh middleware solution and DDS bridge. In other words, ROS 2 users can extend their application towards microcontrollers via Zenoh.
 
 The reminder of this blog will recap the main concepts of our previous blog and guide you towards its extension to use [Zenoh-pico](https://github.com/eclipse-zenoh/zenoh-pico) and microcontrollers.
 
@@ -201,7 +201,7 @@ Really cool, isn’t it?!
 
 Although it seems a very simple demonstration, it is supported by several state-of-the-art technologies and protocols that are running under the hood. For you as a developer, being abstracted from all of them means that you can focus on the core business of your application.
 
-Moreover, Zenoh and Zenoh-pico are bridging the gap between ROS2 and microcontroller environments, allowing ROS2 users to make use of all its capabilities within their applications. Summarizing some key points:
+Moreover, Zenoh and Zenoh-pico are bridging the gap between ROS 2 and microcontroller environments, allowing ROS 2 users to make use of all its capabilities within their applications. Summarizing some key points:
  - [Zenoh](https://github.com/eclipse-zenoh/zenoh) is hatching as a powerful and yet low overhead data-centric solution, extremely flexible to accommodate a wide range of distinct applications and use cases.
  - [Zenoh-pico](https://github.com/eclipse-zenoh/zenoh-pico) allows you to integrate Zenoh functionalities in your embedded systems and microcontrollers natively in C.
  - [Zenoh bridge for DDS](https://github.com/eclipse-zenoh/zenoh-plugin-dds) allows to (1) bridge DDS communications through Zenoh, and (2) reduce by up to 99.97% the discovery traffic between the nodes.
