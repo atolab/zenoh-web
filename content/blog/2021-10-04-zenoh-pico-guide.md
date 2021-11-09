@@ -241,9 +241,9 @@ Summarizing:
  - zenoh-pico provides a lightweight implementation of Zenoh, allowing you to integrate Zenoh client functionalities in your embedded systems natively in C.
  - We have successfully tested it in [Zephyr](https://www.zephyrproject.org) (reel_board and nucleo-f767zi) and [Arduino](https://www.arduino.cc) (ESP32) compatible boards
  - Initial performance tests hints for a quite remarkable performance within the microcontrollers landscape.
- -- Memory footprint of only ~2.8% (nucleo-f767zi), ~9.2% (reel_board), and ~0.9% (ESP32).
- -- Deliver more than 5.2k msg/s with a 8 bytes payload in ESP32.
- --Application-level throughput of ~9.2 Mbps (in an 10 Mbps Ethernet link) with nucleo-f767zi.
+   - Memory footprint of only ~2.8% (nucleo-f767zi), ~9.2% (reel_board), and ~0.9% (ESP32).
+   - Deliver more than 5.2k msg/s with a 8 bytes payload in ESP32.
+   - Application-level throughput of ~9.2 Mbps (in an 10 Mbps Ethernet link) with nucleo-f767zi.
 
 Help us increase the number of supported platforms, frameworks, and boards. We will provide all the support you need either in [GitHub](https://github.com/eclipse-zenoh) or [Gitter](https://gitter.im/atolab/zenoh).
 
