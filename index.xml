@@ -14,9 +14,9 @@ Key Zenoh uses paths as keys. In all zenoh documentations, &amp;ldquo;key&amp;rd
 Path A set of strings separated by '/' , as in a filesystem path. A Path cannot contain any '*' character.
 Examples of paths: /demo/example/test , /com/adlink/building/fr/floor/1/office/2 &amp;hellip;
 A path can be absolute (i.</description></item><item><title>Zenoh plugins</title><link>/docs/manual/plugins/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugins/</guid><description>The zenoh router (zenohd executable) supports the loading of plugins at start-up.
-A zenoh plugin is a library that can be loaded by the zenoh router at start-up. It shares a runtime with it, allowing the plugin to use the regular zenoh and/or zenoh-ne APIs with the same peer ID.
-By default the zenoh router will automatically search and load plugins library files with such names:
-on Unix/Linux: libzplugin_*.so on MacOS: libzplugin_*.</description></item><item><title>REST plugin</title><link>/docs/manual/plugin-http/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-http/</guid><description>The REST plugin provides access to the zenoh REST API.
+A zenoh plugin is a library that can be loaded by the zenoh router at start-up. It shares a runtime with it, allowing the plugin to use the regular zenoh and/or zenoh-net APIs with the same peer ID.
+By default the zenoh router will automatically search for and load plugins library files with these names:
+on Unix/Linux: libzplugin_*.</description></item><item><title>REST plugin</title><link>/docs/manual/plugin-http/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-http/</guid><description>The REST plugin provides access to the zenoh REST API.
 Library name: zplugin_rest
 Startup arguments (added to zenoh router&amp;rsquo;s startup arguments):
 --rest-http-port=[PORT] : The REST plugin&amp;rsquo;s http port (default: 8000)</description></item><item><title>Storages plugin</title><link>/docs/manual/plugin-storages/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-storages/</guid><description>The Storages plugin provides the management of Backends and Storages.
