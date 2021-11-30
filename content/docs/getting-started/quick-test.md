@@ -87,7 +87,7 @@ Assuming the memory storage has been added, as described above, you can now:
 
  * Put a key/value into zenoh:
   ```bash
-  curl -X PUT -d 'Hello World!' http://localhost:8000/demo/example/test
+  curl -X PUT -H 'content-type:text/plain' -d 'Hello World!' http://localhost:8000/demo/example/test
   ```
  * Retrieve the key/value:
   ```bash

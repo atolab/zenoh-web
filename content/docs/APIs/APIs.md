@@ -95,10 +95,10 @@ Examples using curl:
 
   ```bash
   # Put a string value in /demo/example/test
-  curl -X PUT -d 'Hello World!' http://localhost:8000/demo/example/test
+  curl -X PUT -H "content-type:text/plain" -d 'Hello World!' http://localhost:8000/demo/example/test
 
   # Put a JSON value in /demo/example/json
-  curl -X PUT -H "Content-Type: application/json" -d '{"value": "Hello World!"}' http://localhost:8000/demo/example/test
+  curl -X PUT -H "content-type:application/json" -d '{"value": "Hello World!"}' http://localhost:8000/demo/example/test
 
   # Create a Memory storage on /demo/test/** via a Put on admin space (/@/...)
   curl -X PUT -H 'content-type:application/properties' -d 'path_expr=/demo/test/**' http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-test

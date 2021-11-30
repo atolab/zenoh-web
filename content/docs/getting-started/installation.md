@@ -9,8 +9,10 @@ menu:
 To get up and running with <b>zenoh</b> you will have to install the router and then get hold of the API you would like to use to write your applications. 
 
 ## Installing the zenoh router
-The zenoh router (a.k.a. `zenohd`) and its plugins are currently available as a pre-built binaries for Linux x86 64-bit, MacOS x86 64-bit and Windows x86 64-bit platforms. All release packages can be downloaded from:  
+The zenoh router (a.k.a. `zenohd`) and its plugins are currently available as a pre-built binaries for various platforms. All release packages can be downloaded from:  
   -  **https://download.eclipse.org/zenoh/zenoh/latest/**
+
+Each sub-directory has the name of the Rust target. See the platforms each target corresponds to on https://doc.rust-lang.org/stable/rustc/platform-support.html
 
 You can also install it via a package manager on MacOS (homebrew) or Linux Debian (apt). See instructions below.
 
@@ -21,7 +23,7 @@ Tap our brew package repository:
 
 ```bash
 $ brew tap eclipse-zenoh/homebrew-zenoh
-```    
+```
 
 Install zenoh:
 
@@ -34,12 +36,12 @@ Then you can start the zenoh router with this command:
 $ zenohd -V
 ```
 
-### Ubuntu or any Debian (x86-64)
+### Ubuntu or any Debian
 
 Add Eclipse Zenoh private repository to the sources list:
 
 ```bash
-$ echo "deb [trusted=yes] https://download.eclipse.org/zenoh/zenoh/latest/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
+$ echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
 $ sudo apt update
 ```
 
@@ -58,8 +60,7 @@ $ zenohd -V
 ### Windows
 
 Download the zenoh archive from https://download.eclipse.org/zenoh/zenoh/latest/ :
-- For Windows 32 bits: get the `eclipse-zenoh-<version>-i686-pc-windows-gnu.zip` file
-- For Windows 64 bits: get the `eclipse-zenoh-<version>-x86_64-pc-windows-gnu.zip`file
+- For Windows 64 bits: get the `x86_64-pc-windows-msvc/zenoh-<version>-x86_64-pc-windows-msvc.zip`file
 
 Unzip the archive.
 
