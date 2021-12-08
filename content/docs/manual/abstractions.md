@@ -36,8 +36,8 @@ to refine the set of **[paths](#path)** and associated **[values](#value)**.
 Structure of a selector:
 ```none
 /s1/s2/.../sn?x>1&y<2&...&z=4(p1=v1;p2=v2;...;pn=vn)#a;b;x;y;...;z
-|           | |             | |                   |  |           |
-|-- expr ---| |--- filter --| |---- properties ---|  |--fragment-|
+|  |  |  |  |  |  |  |
+|--|--|--|--|--|--|--|
 ```
 where:
 
@@ -137,23 +137,23 @@ A workspace is associated to a [path](#path) at creation. This path will be used
 ## Admin space
 The administration space of zenoh allowing to administrate a zenoh router and its plugins.
 It is accessible via regular get/put on zenoh, under the `/@/router/<router-id>` path prefix, where
-**`<router-id>`** is is the UUID of a zenoh router.
-For instance, the following paths can be used:
+**`<router-id>`** is the UUID of a zenoh router.
+When using the REST API, you can replace the `<router-id>` with the **`local`** keyword,
+meaning the operation addresses the zenoh router the HTTP client is connected to.
 
- - `/@/router/<router-id>` (read-only):  
-   Returns a JSON with the status informations about the router.
- - `/@/router/<router-id>/plugin/storages/backend/<backend-id>` (read/write):  
-   On get, returns the properties of the backend with the specified ID.  
-   On put, make the router to dynamically load a backend library with the properties specified as the value.
- - `/@/router/<router-id>/plugin/storages/backend/<backend-id>/storage/<storage-id>` (read/write):  
-   On get, returns the properties of the storage with the specified ID.  
-   On put, adds a storage in the parent backend with the properties specified as the value.  
-   On remove, removes the storage.
+For instance, the following keys can be used:
+* `/@/router/<router-id>` (read-only):  
+  Returns a JSON with the status information about the router.
+* `/@/router/<router-id>/config/**` (write-only):  
+  Allows you to edit the configuration of the router at runtime.
 
 <!-- Note that the zenoh client APIs provide an Admin interface that facilitate the addition/removal of
 backends and storage. Underneath, this interface calls put/remove/get operations on those paths.
 By default, this interface knows the `<router-id>` of the zenoh router it's connected to and automatically
 use it in paths, if no alternative `<router-id>` is provided. -->
 
-When using the REST API, you can replace the `<router-id>` with the **`local`** keyword,
-meaning the operation addresses the zenoh router the HTTP client is connected to.
+Some plugins may extend the admin space, such as [Storages](../plugin-storages), which will add the folling keys:
+* `/@/router/<router-id>/status/plugins/storages/backends/<backend-name>` (read-only):  
+  Returning information about the selected backend in JSON format
+* `/@/router/<router-id>/status/plugins/storages/backends/<backend-name>/storages/<storage-name>` (read-only):  
+  Returning information about the selected storage in JSON format

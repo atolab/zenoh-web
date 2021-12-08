@@ -4,3 +4,6 @@
 # MacOS specific files
 .DS_Store
 
+.hugo_build.lock
+
+.vscode
