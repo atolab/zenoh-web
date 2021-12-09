@@ -8,7 +8,7 @@ menu:
 
 The zenoh router (`zenohd` executable) supports the loading of plugins at start-up.
 
-A zenoh plugin is a library that can be loaded by the zenoh router at start-up. It shares a runtime with it, allowing the plugin to use the regular zenoh APIs with the same peer ID.
+A zenoh plugin is a library that can be loaded by the zenoh router at start-up. It shares a runtime with it, allowing the plugin to use the regular zenoh rust APIs with the same peer ID.
 
 Zenoh already provides the following plugins in its default repository:
  - the [REST plugin](../plugin-http): providing the zenoh REST API

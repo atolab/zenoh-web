@@ -61,6 +61,7 @@ The main schema is as follows:
   }
 }
 ```
+The example configuration provided [here](https://github.com/eclipse-zenoh/zenoh/blob/master/EXAMPLE_CONFIG.json5) has concrete examples of backend and storage configuration.
 
 Note that backends will automatically be created if necessary when you configure a new storage. You may however configure a backend without its children storages first in order to set up its eventual specifics.
 
