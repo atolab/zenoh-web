@@ -27,7 +27,7 @@ The exact schema for the configuration is the `Config` structure, which can be f
 
 Don't be alarmed, all of these fields are optional. Only configure the parts that are of interest to you.
 
-We'd like to bring your attention to the `plugin` part of the configuration, as plugin management has also changed a lot with version 0.6.
+We'd like to bring your attention to the `plugins` part of the configuration, as plugin management has also changed a lot with version 0.6.
 More on this in the page on [plugins](../plugins).
 
 ## Command line arguments
