@@ -219,7 +219,7 @@ platformio run -t upload
 ```
 
 # First look on memory footprint and performance results
-The scarce memory and flash resources in microcontrollers stresses out the importance of the memory footprint of zenoh-pico. In the following table, you will find that zenoh-pico is introducing a memory footprint of only ~2.8% (nucleo-f767zi), ~9.2% (reel_board), and ~0.9% (ESP32).
+The scarce memory and flash resources in microcontrollers stresses out the importance of the memory footprint of zenoh-pico. In the following table, you will find that zenoh-pico is introducing a memory footprint of only ~37KB (ESP32), ~60KB (nucleo-f767zi), and ~96KB (reel_board).
 
 |                                |   |   | **reel_board (Zephyr)** |   |   | **nucleo-f767zi (Zephyr)** |   |   | **ESP32-D0WDQ6 (Arduino)** |
 |--------------------------------|---|---|:-----------------------:|---|---|:--------------------------:|---|---|:--------------------------:|
