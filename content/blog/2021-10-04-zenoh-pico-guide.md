@@ -9,7 +9,7 @@ draft: false
 In this post, we will introduce [zenoh-pico](https://github.com/eclipse-zenoh/zenoh-pico), **a lightweight implementation of Zenoh APIs in C, fully compatible with its Rust counterpart**. 
 
 As a result of this work, we are happy to announce that we successfully deployed and tested Zenoh in [Zephyr](https://www.zephyrproject.org) (reel_board and nucleo-f767zi) and [Arduino](https://www.arduino.cc) (ESP32) compatible boards, with initial results showcasing a quite remarkable performance within the microcontrollers landscape:
- - Memory footprint of only ~2.8% (nucleo-f767zi), ~9.2% (reel_board), and ~0.9% (ESP32).
+ - Memory footprint of only ~37KB (ESP32), ~60KB (nucleo-f767zi), and ~96KB (reel_board).
  - Deliver more than 5.2k msg/s with a 8 bytes payload in ESP32.
  - Application-level throughput of ~9.2 Mbps (thus, saturating a 10 Mbps Ethernet link) with nucleo-f767zi.
 
@@ -241,7 +241,7 @@ Summarizing:
  - zenoh-pico provides a lightweight implementation of Zenoh, allowing you to integrate Zenoh client functionalities in your embedded systems natively in C.
  - We have successfully tested it in [Zephyr](https://www.zephyrproject.org) (reel_board and nucleo-f767zi) and [Arduino](https://www.arduino.cc) (ESP32) compatible boards
  - Initial performance tests hints for a quite remarkable performance within the microcontrollers landscape.
-   - Memory footprint of only ~2.8% (nucleo-f767zi), ~9.2% (reel_board), and ~0.9% (ESP32).
+   - Memory footprint of only ~37KB (ESP32), ~60KB (nucleo-f767zi), and ~96KB (reel_board).
    - Deliver more than 5.2k msg/s with a 8 bytes payload in ESP32.
    - Application-level throughput of ~9.2 Mbps (in an 10 Mbps Ethernet link) with nucleo-f767zi.
 
