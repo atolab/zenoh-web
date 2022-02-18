@@ -20,7 +20,7 @@ data in movement, data at rest and computation in a scalable, efficient and loca
 
 - Give total control on storage location and back-end technology integration.
 
-- Minimize network overhead – the minimal wire overhead of a data message a data message is 4 bytes.
+- Minimize network overhead – the minimal wire overhead of a data message is 4 bytes.
 
 - Support extremely constrained devices – its footprint on Arduino Uno is of 300 bytes.
 
