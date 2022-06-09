@@ -32,14 +32,14 @@ Protocols used today to build these systems, such as MQTT, DDS, CoAP and even HT
 
 APIs should provide a minimal set of well defined and composable primitives. That's easily said but takes a deep understanding of the problem space and the patience necessary to refine the solution. In Zenoh, we went through a careful thought process in order to understand the abstractions and primitives that must or must not be provided to the users, hiding irrelevant details while not reducing its expressiveness. As a result, Zenoh-Pico provides exactly the same set of primitives as provided by the Zenoh Rust-implementation and its binding, making in fact 99% of Zenoh-C source-code copyable into Zenoh-Pico code.
 
-> > “(Software design is) a craft...and it has a lot to do with valuing simplicity over complexity. Many people do have a tendency to make things more complicated than they need to be.”
+> “(Software design is) a craft...and it has a lot to do with valuing simplicity over complexity. Many people do have a tendency to make things more complicated than they need to be.”
 
 — Barbara Liskov
 
 But let’s look at some code!! In the following, we compare the minimal source code required to implement a publisher of data in constrained devices, whenever done with Zenoh or with other widely used solutions for robotics (i.e., DDS-XRCE), industrial environments (i.e., OPC-UA), and IoT (i.e., MQTT).
 
 ## Zenoh API
-```
+```C
 int main(int argc, char ****argv)
 {
    z_owned_config_t config = z_config_default();
@@ -47,8 +47,8 @@ int main(int argc, char ****argv)
    if (!z_check(s))
        exit(EXIT_FAILURE);
  
-   zp_start_read_task(z_loan(s));    # Zenoh-Pico specific code
-   zp_start_lease_task(z_loan(s));   # Zenoh-Pico specific code
+   zp_start_read_task(z_loan(s));    // Zenoh-Pico specific code
+   zp_start_lease_task(z_loan(s));   // Zenoh-Pico specific code
  
    z_keyexpr_t keyexpr = z_declare_expr(z_loan(s), z_expr(/demo/example/topic));
    z_put(z_loan(s), keyexpr, (const uint8_t **)buf, buflen);
@@ -56,15 +56,15 @@ int main(int argc, char ****argv)
    z_undeclare_expr(z_loan(s), keyexpr);
    z_close(z_move(s));
  
-   zp_stop_read_task(z_loan(s));     # Zenoh-Pico specific code
-   zp_stop_lease_task(z_loan(s));    # Zenoh-Pico specific code
+   zp_stop_read_task(z_loan(s));     // Zenoh-Pico specific code
+   zp_stop_lease_task(z_loan(s));    // Zenoh-Pico specific code
  
    return 0;
 }
 ```
 
 ## XRCE-DDS API
-```
+```C
 typedef struct
 {
    char **buf;
@@ -103,7 +103,6 @@ int main(int argc, char**** argv)
    uint8_t output_besteffort_stream_buffer[BUFFER_SIZE];
    uxrStreamId besteffort_out = uxr_create_output_best_effort_stream(&session, output_besteffort_stream_buffer, BUFFER_SIZE);
  
-   // Create entities
    uxrObjectId participant_id = uxr_object_id(0x01, UXR_PARTICIPANT_ID);
    const char** participant_xml = "<dds><participant><rtps><name>default_xrce_participant</name></rtps></participant></dds>";
    uint16_t participant_req = uxr_buffer_create_participant_xml(&session, reliable_out, participant_id, 0, participant_xml, UXR_REPLACE);
@@ -141,7 +140,7 @@ int main(int argc, char**** argv)
 ```
 
 ## MQTT API
-```
+```C
 void on_connect_failure(void** context, MQTTAsync_failureData5** response)
 {
    printf("Connect failed, rc %d\n", response->code);
@@ -197,7 +196,7 @@ int main(int argc, char**** argv)
 ```
 
 # OPC-UA API
-```
+```C
 int main(int argc, char ****argv)
 {
    UA_Client **client = UA_Client_new();
@@ -293,14 +292,16 @@ Flash memory might be an extremely restrictive element in constrained devices li
 
 It becomes quite important that Zenoh footprint is as small as possible. Check in the following table, the footprint of Zenoh w.r.t. different RTOSs and different networking configurations.
 
+---
 |                                           | **Arduino**                        | **Zephyr**                         | **MBedOS**       |
 |-------------------------------------------|----------------------------------|----------------------------------|----------------|
-| **Empty App (wo/ Zenoh-Pico)**              | 17796 bytes                      | 160400 bytes                     | 49552 bytes    |
+| **Empty App (wo/ Zenoh-Pico)**              | 17796 bytes                    | 160400 bytes                     | 49552 bytes    |
 | **Zenoh-Pico core (wo/ networking stacks)** | 62844 bytes                      | 202980 bytes                     | 99568 bytes    |
 | **Zenoh-Pico w/ UDP stack**                 | 98176 bytes                      | 209410 bytes                     | 158008 bytes   |
 | **Zenoh-Pico w/ TCP stack**                 | 104140 bytes                     | 209434 bytes                     | 158144 bytes   |
 | **Zenoh-Pico w/ UDP and TCP stacks**        | 104916 bytes                     | 211988 bytes                     | 160008 bytes   |
-| **Zenoh-Pico w/ Serial Stack**              | Not supported yet for this board | Not supported yet for this board | 122472 bytes   |
+| **Zenoh-Pico w/ Serial Stack**              | Not supported yet | Not supported yet | 122472 bytes   |
+---
 
 Note that, most of the additional footprint required to include a networking stack does not come from Zenoh-Pico itself but from the RTOS (Arduino / Zephyr / MBedOS) implementations.
 
