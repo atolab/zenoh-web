@@ -1,9 +1,9 @@
 a {
-  color: #336699;
+  color: #0A143C;
 }
 
 a:hover {
-  color: #336699;
+  color: #0A143C;
 }
 
 /* table, td {
@@ -27,15 +27,15 @@ img {
 }
 
 .btn-outline-primary {
-  color: #336699;
+  color: #0A143C;
   background-color: transparent;
   background-image: none;
-  border-color: #336699;
+  border-color: #0A143C;
 }
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #336699;
-  border-color: #336699;
+  background-color: #0A143C;
+  border-color: #0A143C;
 }
 
 /*
@@ -50,7 +50,7 @@ img {
 }
 
 .ato-navbar {
-  background-color: #3C627C;
+  background-color: #0A143C;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.05),inset 0 -1px 0 rgba(0,0,0,.1);
   position: -webkit-sticky;
   position: sticky;
@@ -819,13 +819,18 @@ h5:hover a {
 }
 
 @font-face {
+  font-family: maven;
+  src: url(../fonts/MavenPro-Bold.ttf);
+  }
+
+@font-face {
   font-family: teacher;
   src: url(../fonts/teacher.ttf);
   }
 
 .ato-text-logo {
-  font-family: teacher;
-  color: #3C627C;
+  font-family: maven;
+  color: #0A143C;
   font-size: 6rem;
   line-height: 1;
   font-weight: 700;
