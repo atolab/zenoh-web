@@ -209,9 +209,6 @@ int main(int argc, char **argv)
        return status;
    }
  
-   struct timeval start;
-   gettimeofday(&start, 0);
- 
    // ...
  
    UA_String val = UA_STRING(buf);
