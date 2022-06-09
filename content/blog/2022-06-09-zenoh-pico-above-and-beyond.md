@@ -40,26 +40,25 @@ But let’s look at some code!! In the following, we compare the minimal source 
 
 ## Zenoh API
 ```C
-int main(int argc, char ****argv)
+int main(int argc, char **argv)
 {
-   z_owned_config_t config = z_config_default();
-   z_owned_session_t s = z_open(z_move(config));
-   if (!z_check(s))
+    zn_properties_t *config = zn_config_default();
+    zn_session_t *s = zn_open(config);
+    if (s == NULL)
        exit(EXIT_FAILURE);
  
-   zp_start_read_task(z_loan(s));    // Zenoh-Pico specific code
-   zp_start_lease_task(z_loan(s));   // Zenoh-Pico specific code
+    znp_start_read_task(s);
+    znp_start_lease_task(s);
  
-   z_keyexpr_t keyexpr = z_declare_expr(z_loan(s), z_expr(/demo/example/topic));
-   z_put(z_loan(s), keyexpr, (const uint8_t **)buf, buflen);
+    zn_reskey_t reskey = zn_rid(zn_declare_resource(s, zn_rname("/demo/example/topic")));
  
-   z_undeclare_expr(z_loan(s), keyexpr);
-   z_close(z_move(s));
+    // ... 
  
-   zp_stop_read_task(z_loan(s));     // Zenoh-Pico specific code
-   zp_stop_lease_task(z_loan(s));    // Zenoh-Pico specific code
+    zn_write(s, reskey, (const uint8_t *)buf, buflen);
  
-   return 0;
+    znp_stop_read_task(s);
+    znp_stop_lease_task(s);
+    zn_close(s);
 }
 ```
 
@@ -67,23 +66,23 @@ int main(int argc, char ****argv)
 ```C
 typedef struct
 {
-   char **buf;
+   char *buf;
 } MyDataType;
  
-bool MyDataType_serialize_topic(ucdrBuffer** writer, const MyDataType** data)
+bool MyDataType_serialize_topic(ucdrBuffer* writer, const MyDataType* data)
 {
-   ucdr_serialize_array_uint8_t(writer, data->buf, msg_size + 1);
+   ucdr_serialize_array_uint8_t(writer, data->buf, buflen + 1);
    return !writer->error;
 }
  
-uint32_t MyDataType_size_of_topic(const MyDataType** data, uint32_t size)
+uint32_t MyDataType_size_of_topic(const MyDataType* data, uint32_t size)
 {
    uint32_t previousSize = size;
-   size += (uint32_t)(ucdr_alignment(size, 4) + 4 + strlen(data->buf) + 1);
+   size += (uint32_t)(ucdr_alignment(size, 4) + 4 + buflen + 1);
    return size - previousSize;
 }
  
-int main(int argc, char**** argv)
+int main(int argc, char** argv)
 {
    uxrUDPTransport transport;
    if (!uxr_init_udp_transport(&transport, UXR_IPv4, DDS_IP, DDS_PORT))
@@ -103,26 +102,29 @@ int main(int argc, char**** argv)
    uint8_t output_besteffort_stream_buffer[BUFFER_SIZE];
    uxrStreamId besteffort_out = uxr_create_output_best_effort_stream(&session, output_besteffort_stream_buffer, BUFFER_SIZE);
  
+   // Create entities
    uxrObjectId participant_id = uxr_object_id(0x01, UXR_PARTICIPANT_ID);
-   const char** participant_xml = "<dds><participant><rtps><name>default_xrce_participant</name></rtps></participant></dds>";
+   const char* participant_xml = "<dds><participant><rtps><name>default_xrce_participant</name></rtps></participant></dds>";
    uint16_t participant_req = uxr_buffer_create_participant_xml(&session, reliable_out, participant_id, 0, participant_xml, UXR_REPLACE);
  
    uxrObjectId topic_id = uxr_object_id(0x01, UXR_TOPIC_ID);
-   const char** topic_xml = "<dds><topic><name>HelloWorldTopic</name><dataType>MyDataType</dataType></topic></dds>";
+   const char* topic_xml = "<dds><topic><name>/demo/example/topic</name><dataType>MyDataType</dataType></topic></dds>";
    uint16_t topic_req = uxr_buffer_create_topic_xml(&session, reliable_out, topic_id, participant_id, topic_xml, UXR_REPLACE);
  
    uxrObjectId publisher_id = uxr_object_id(0x01, UXR_PUBLISHER_ID);
-   const char** publisher_xml = "";
+   const char* publisher_xml = "";
    uint16_t publisher_req = uxr_buffer_create_publisher_xml(&session, reliable_out, publisher_id, participant_id, publisher_xml, UXR_REPLACE);
  
    uxrObjectId datawriter_id = uxr_object_id(0x01, UXR_DATAWRITER_ID);
-   const char** datawriter_xml = "<dds><data_writer><topic><kind>NO_KEY</kind><name>HelloWorldTopic</name><dataType>MyDataType</dataType></topic></data_writer></dds>";
+   const char* datawriter_xml = "<dds><data_writer><topic><kind>NO_KEY</kind><name>/demo/example/topic</name><dataType>MyDataType</dataType></topic></data_writer></dds>";
    uint16_t datawriter_req = uxr_buffer_create_datawriter_xml(&session, reliable_out, datawriter_id, publisher_id, datawriter_xml, UXR_REPLACE);
  
    uint8_t status[4];
    uint16_t requests[4] = { participant_req, topic_req, publisher_req, datawriter_req};
    if (!uxr_run_session_until_all_status(&session, 1000, requests, status, 4))
        exit(EXIT_FAILURE);
+ 
+   // ...
  
    ucdrBuffer ub;
    MyDataType topic = { buf };
@@ -141,18 +143,18 @@ int main(int argc, char**** argv)
 
 ## MQTT API
 ```C
-void on_connect_failure(void** context, MQTTAsync_failureData5** response)
+void on_connect_failure(void* context, MQTTAsync_failureData5* response)
 {
    printf("Connect failed, rc %d\n", response->code);
    exit(EXIT_FAILURE);
 }
  
-void on_connect(void** context, MQTTAsync_successData5** response)
+void on_connect(void* context, MQTTAsync_successData5* response)
 {
    ready = 1;
 }
  
-int main(int argc, char**** argv)
+int main(int argc, char** argv)
 {
    MQTTAsync client;
    MQTTAsync_createOptions create_opts = MQTTAsync_createOptions_initializer;
@@ -177,15 +179,14 @@ int main(int argc, char**** argv)
  
    while (!ready);
  
-   while (1)
-   {
-       MQTTAsync_message pubmsg = MQTTAsync_message_initializer;
-       pubmsg.payload = buf;
-       pubmsg.payloadlen = buflen;
-       pubmsg.qos = MQTT_QOS;
-       pubmsg.retained = 0;
-       MQTTAsync_sendMessage(client, MQTT_TOPIC, &pubmsg, NULL);
-   }
+   // ...
+ 
+   MQTTAsync_message pubmsg = MQTTAsync_message_initializer;
+   pubmsg.payload = buf;
+   pubmsg.payloadlen = buflen;
+   pubmsg.qos = MQTT_QOS;
+   pubmsg.retained = 0;
+   MQTTAsync_sendMessage(client, "/demo/example/topic", &pubmsg, NULL);
  
    MQTTAsync_disconnectOptions disc_opts = MQTTAsync_disconnectOptions_initializer;
    rc = MQTTAsync_disconnect(client, &disc_opts);
@@ -197,9 +198,9 @@ int main(int argc, char**** argv)
 
 # OPC-UA API
 ```C
-int main(int argc, char ****argv)
+int main(int argc, char **argv)
 {
-   UA_Client **client = UA_Client_new();
+   UA_Client *client = UA_Client_new();
    UA_ClientConfig_setDefault(UA_Client_getConfig(client));
    UA_StatusCode status = UA_Client_connect(client, "opc.tcp://localhost:4840");
    if(status != UA_STATUSCODE_GOOD)
@@ -208,25 +209,19 @@ int main(int argc, char ****argv)
        return status;
    }
  
-   while (1)
-   {
-       struct timeval start;
-       gettimeofday(&start, 0);
+   struct timeval start;
+   gettimeofday(&start, 0);
  
-       buf[msg_size] = '\0';
-       memcpy(&buf[0], &start.tv_sec, sizeof(size_t));
-       memcpy(&buf[sizeof(size_t)], &start.tv_usec, sizeof(size_t));
+   // ...
  
-       UA_String val = UA_STRING(buf);
-       UA_Variant value;
-       UA_Variant_init(&value);
-       UA_Variant_setScalarCopy(&value, &val, &UA_TYPES[UA_TYPES_STRING]);
+   UA_String val = UA_STRING(buf);
+   UA_Variant value;
+   UA_Variant_init(&value);
+   UA_Variant_setScalarCopy(&value, &val, &UA_TYPES[UA_TYPES_STRING]);
  
-       status = UA_Client_writeValueAttribute(client, UA_NODEID_STRING(1, "/test/lat"), &value);
+   status = UA_Client_writeValueAttribute(client, UA_NODEID_STRING(1, "/demo/example/topic"), &value);
  
-       UA_Variant_clear(&value);
-       usleep(1000000 / msgs_per_second);
-   }
+   UA_Variant_clear(&value);
  
    UA_Client_delete(client);
    return status;
