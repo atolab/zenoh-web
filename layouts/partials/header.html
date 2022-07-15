@@ -139,7 +139,7 @@
             "publisher" : "{{ range .Site.Author }}{{ . }}{{ end }}",
             "accountablePerson" : "{{ range .Site.Author }}{{ . }}{{ end }}",
             "copyrightHolder" : "{{ range .Site.Author }}{{ . }}{{ end }}",
-            "copyrightYear" : "{{ .Date.Format "2021" }}",
+            "copyrightYear" : "{{ .Date.Format "2022" }}",
             "wordCount" : "{{ .WordCount }}",
             "keywords" : [ {{ with .Keywords }}{{ delimit . ", " }}{{ end }}{{ if .Site.Params.keywords }}, {{ delimit .Site.Params.keywords ", " }}{{ end }} ],
             "description" : "{{ if .Description }}{{ .Description }}{{ else if .IsPage }}{{ .Summary }}{{ else }}{{ .Site.Params.description }}{{ end }}",
