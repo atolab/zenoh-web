@@ -7,26 +7,26 @@ description: "28 April 2021 -- Paris."
 draft: false
 ---
 
-In our [previous blog](../2021-03-23-discovery/) we demonstrated how the [zenoh bridge for DDS](https://github.com/eclipse-zenoh/zenoh-plugin-dds) allows to (1) bridge DDS communications through zenoh, and (2) reduce by up to 99.97% the discovery traffic between the nodes.
+In our [previous blog](./2021-03-23-discovery/) we demonstrated how the [zenoh bridge for DDS](https://github.com/eclipse-zenoh/zenoh-plugin-dds) allows to (1) bridge DDS communications through zenoh, and (2) reduce by up to 99.97% the discovery traffic between the nodes.
 
-The previous blog was focusing on demonstrating the advantages of using zenoh as the mean for ROS2-to-ROS2 communication over wireless technologies. In this blog, we’ll go one step further and will demonstrate how you can  easily write native zenoh applications —meaning that has no dependencies on ROS2 — and seamlessly interact with [ROS2](https://docs.ros.org/en/foxy/index.html) applications. Finally, we will show how you can extend your communication to Internet scale, allowing to cover all the typical cases for Robot-to-anything (R2X) communication.
+The previous blog was focusing on demonstrating the advantages of using zenoh as the mean for ROS2-to-ROS2 communication over wireless technologies. In this blog, we’ll go one step further and will demonstrate how you can easily write native zenoh applications —meaning that has no dependencies on ROS2 — and seamlessly interact with [ROS2](https://docs.ros.org/en/foxy/index.html) applications. Finally, we will show how you can extend your communication to Internet scale, allowing to cover all the typical cases for Robot-to-anything (R2X) communication.
 
 -------
 ## What does the zenoh/DDS bridge do ?
 
-The zenoh/DDS bridge is leveraging [CycloneDDS](https://github.com/eclipse-cyclonedds/cyclonedds) to discover the DDS readers and writers declared by the ROS2 application. For each discovered DDS entity the bridge creates a mirror DDS-entity — in other terms it creates a reader when discovering a writer and vice-versa. Additionally the bridge maps the DDS topics read and written by the discovered DDS entities on zenoh resources and performs the proper declarations.
+The zenoh/DDS bridge is leveraging [CycloneDDS](https://github.com/eclipse-cyclonedds/cyclonedds) to discover the DDS readers and writers declared by the ROS2 application. For each discovered DDS entity the bridge creates a mirror DDS-entity — in other terms it creates a reader when discovering a writer and vice-versa. Additionally, the bridge maps the DDS topics read and written by the discovered DDS entities on zenoh resources and performs the proper declarations.
 
 As example, let’s consider the [turtlesim](http://docs.ros.org/en/foxy/Tutorials/Turtlesim/Introducing-Turtlesim.html) package used in the ROS2 Tutorial:  
-- By default the turtlesim node has a ROS2 Publisher on topic `/rosout`. As per [ROS2 conventions](https://design.ros2.org/articles/topic_and_service_names.html#ros-specific-namespace-prefix) this maps to a DDS Writer on topic `rt/rosout`. Consequently the zenoh/DDS bridge declares a DDS Reader on the same topic with matching QoS. This DDS Reader will receive all publications from the turtlesim on this topic and re-publish those on a zenoh resource having `/rt/rosout` as a key.
+- By default the turtlesim node has a ROS2 Publisher on topic `/rosout`. As per [ROS2 conventions](https://design.ros2.org/articles/topic_and_service_names.html#ros-specific-namespace-prefix) this maps to a DDS Writer on topic `rt/rosout`. Consequently, the zenoh/DDS bridge declares a DDS Reader on the same topic with matching QoS. This DDS Reader will receive all publications from the turtlesim on this topic and re-publish those on a zenoh resource having `/rt/rosout` as a key.
 - The turtlesim also has a ROS2 Subscriber on topic `/turtle1/cmd_vel` that maps as a DDS Reader on `rt/turtle1/cmd_vel`. The zenoh/DDS bridge declares a DDS Writer on the same topic, and a zenoh subscriber for the key `/rt/turtle1/cmd_vel`. This zenoh subscriber will receive all publications with this key from any zenoh application and re-publish those to DDS on topic `rt/turtle1/cmd_vel` to be received by the ROS2 subscriber on `/turtle1/cmd_vel`.
 
 -------
 ## How to encode/decode ROS2 messages ?
 
-You may have noticed that the zenoh/DDS bridge doesn’t need to be compiled with any ROS2 message definition. That is because the bridge doesn’t need to interpret the ROS2 messages. It just  forward the data payload as is. As a consequence a zenoh application that needs to publish/subscribe to ROS2 will need to encode/decode those messages.
+You may have noticed that the zenoh/DDS bridge doesn’t need to be compiled with any ROS2 message definition. That is because the bridge doesn’t need to interpret the ROS2 messages. It just forwards the data payload as is. As a consequence a zenoh application that needs to publish/subscribe to ROS2 will need to encode/decode those messages.
 
 For those who are curious about the details, the ROS2 messages are encoded for DDS following the [OMG DDSI-RTPS specification (see §10)]() in [CDR format (see §9.3)](https://www.omg.org/spec/CORBA/3.4/Interoperability/PDF). But fortunately, you usually don't need to implement a CDR encoder/decoder, since there are libraries for this in most languages 
-([Python](https://pypi.org/project/pycdr/), [Rust](https://crates.io/crates/cdr), [C#](https://www.nuget.org/packages/CSCDR), [Javascript](https://www.npmjs.com/package/jscdr)... )
+([Python](https://pypi.org/project/pycdr/), [Rust](https://crates.io/crates/cdr), [C#](https://www.nuget.org/packages/CSCDR), [Javascript](https://www.npmjs.com/package/jscdr)...)
 
 -------
 ## Show me some code
@@ -41,7 +41,7 @@ All that you need is:
     - the [zenoh Python API](https://github.com/eclipse-zenoh/zenoh-python#how-to-install-it) and pycdr installed -  
       just do: `pip install eclipse-zenoh pycdr`
 
-_**Note**: currently you need to build the zenoh/DDS bridge yourself. But we will provide pre-built binaries for main platforms soon. Once built, the `zenoh-bridge-dds` executable is generated in the `zenoh-plugin-dds/target/release` sub-directory._
+_**Note**: currently you need to build the zenoh/DDS bridge yourself. But we will provide pre-built binaries for main platforms soon. Once built, the `zenoh-bridge-dds` executable is generated in the `zenoh-plugin-dds/target/release` subdirectory._
 
 
 Now:
@@ -130,13 +130,13 @@ You can see more complete versions of a "teleop" code with various options and a
 
 In the scenario described above, the zenoh application discovers the zenoh/DDS bridge via its scouting protocol that leverages UDP multicast - when available. Once discovered, a TCP connection is established between the app and the bridge
 
-{{< rawhtml >}}
+
     <div style="display:flex;justify-content: left;align-items: center;">
         <img src="../../../img/blog-RO2-integration/multicast-discovery.png" alt="multicast discovery" width="800"></img>
     </div>
-{{< /rawhtml >}}
 
-But the zenoh application can also be configured to directly establish a TCP connection with a known host, without relying on scouting protocol. Thus it can connect directly to the bridge (if reachable) or to 1 or more zenoh routers that will route the zenoh communications between the application and the bridge.
+
+But the zenoh application can also be configured to directly establish a TCP connection with a known host, without relying on scouting protocol. Thus, it can connect directly to the bridge (if reachable) or to 1 or more zenoh routers that will route the zenoh communications between the application and the bridge.
 
 Let's see the different use cases:
 
@@ -144,11 +144,11 @@ Let's see the different use cases:
 
 Assuming you can configure your internet connection to open a public TCP port (e.g. 7447) and redirect it to the host running the zenoh/DDS bridge, you can do the following deployment:
 
-{{< rawhtml >}}
+
     <div style="display:flex;justify-content: left;align-items: center;">
         <img src="../../../img/blog-RO2-integration/open-port.png" alt="open port" width="950"></img>
     </div>
-{{< /rawhtml >}}
+
 
 Where:
   - the zenoh/DDS bridge is started with this command:
@@ -157,7 +157,7 @@ Where:
     ```
     The `-l` option makes the bridge to listen for TCP connection on port 7447.
 
-  - our zenoh teleop application must be configured to connect to the public IP and port of the bridge.  
+  - Our zenoh teleop application must be configured to connect to the public IP and port of the bridge.  
     In Python, this is done adding a `"peer"` configuration when initializing the API:
     ```python
     # note: replace "123.4.5.6" with your public IP in here:
@@ -169,15 +169,15 @@ Where:
 
 If you can't open a public TCP port in your LAN, let's use a zenoh router in a public cloud instance that will intermediate the communications between the bridge and the zenoh application:
 
-{{< rawhtml >}}
+
     <div style="display:flex;justify-content: left;align-items: center;">
         <img src="../../../img/blog-RO2-integration/router-in-cloud.png" alt="router in cloud" width="800"></img>
     </div>
-{{< /rawhtml >}}
+
 
 To deploy this:
 
- 1. Pick your favorite cloud provider and provision a Ubuntu 64-bit VM with a public IP.
+ 1. Pick your favorite cloud provider and provision a 64-bit Ubuntu VM with a public IP.
 
  2. Install the zenoh router in this VM following those instructions:
     http://zenoh.io/docs/getting-started/installation/#ubuntu-or-any-debian-x86-64
@@ -203,13 +203,13 @@ To deploy this:
 
 ### 3. What if my cloud instance crashes or reboot ?
 
-Just deploy several inter-connected zenoh routers in different cloud instances:
+Just deploy several interconnected zenoh routers in different cloud instances:
 
-{{< rawhtml >}}
+
     <div style="display:flex;justify-content: left;align-items: center;">
         <img src="../../../img/blog-RO2-integration/cloud-crash-2.gif" alt="cloud crash" width="1000"></img>
     </div>
-{{< /rawhtml >}}
+
 
  1. Run a first zenoh router in 1st cloud:
     ```shell
@@ -235,9 +235,9 @@ Now, both bridge and zenoh application will connect to the 1st configured locato
 
 ### 4. Other deployments (e.g. mesh network)
 
-Notice that in the previous use case, as the 2 zenoh routers are interconnected, the zenoh/DDS bridge and the zenoh application don't need to be connected to the same router to communicate with each other. If they are connected to distinct routers, those ones will route the zenoh traffic between them, and the bridge and the application will still communicate with each other.
+Notice that in the previous use case, as the 2 zenoh routers are interconnected, the zenoh/DDS bridge and the zenoh application don't need to be connected to the same router to communicate with each other. If they are connected to distinct routers, they will route the zenoh traffic between them, and the bridge and the application will still communicate with each other.
 
-Actually, you can deploy the zenoh/DDS bridge, your teleop application and one or more interconnected zenoh router in all the ways described in the [zenoh documentation](../../docs/getting-started/key-concepts/#deployment-units). Just use the `-m peer` or `-m client` argument for the `zenoh-bridge-dds` to configure it as a peer or a client. And similarly for your zenoh teleop application.
+Actually, you can deploy the zenoh/DDS bridge, your teleop application and one or more interconnected zenoh router in all the ways described in the [zenoh documentation](./../docs/getting-started/key-concepts/#deployment-units). Just use the `-m peer` or `-m client` argument for the `zenoh-bridge-dds` to configure it as a peer or a client. And similarly for your zenoh teleop application.
 
 -------
 ## One more thing...
@@ -261,7 +261,7 @@ zenoh-bridge-dds -d 3 -m peer -s /bot-3
 ```
 Now for turtlesim on domain 1, the `/rosout` and `/turtle1/cmd_vel` ROS2 topics are mapped respectively to `/bot-1/rt/rosout` and `/bot-1/rt/turtle1/cmd_vel` zenoh keys. And similarly but with a different prefix for each turtlesim.
 
-The zenoh trick to rule them all is to just subscribe and publish via [path expressions](http://zenoh.io/docs/manual/abstractions/#path-expression). In the Python code shown above:
+The zenoh trick to rule them all is to just subscribe and publish via [path expressions](http://zenoh.io/docs/manual/abstractions/#key-expressions). In the Python code shown above:
  - subscribe to `'/**/rosout'` instead of `'/rt/rosout'`
  - publish Twist messages to `'/**/cmd_vel'` instead of `'/rt/turtle1/cmd_vel'`
 
@@ -270,5 +270,5 @@ You can also test this with the "teleop" demos provided [here](https://github.co
 [**--JE**](https://github.com/JEnoch)
 
 [^1]: **Why 1 domain per robot ?**  
-In most of the cases, you don't need the robots to communicate with each other. But if you let them to use the same `ROS_DOMAIN_ID`, their DDS entities in the robots will anyway exchange discovery informations with each other leading to a lot of unecessary traffic that could be problematic over wireless communications (as seen in our previous blog). The simplest way to avoid such traffic is to use distinct domains. Other solutions could be specific network configuration, or specific DDS configuration.
+In most of the cases, you don't need the robots to communicate with each other. But if you let them use the same `ROS_DOMAIN_ID`, their DDS entities in the robots will anyway exchange discovery information with each other leading to a lot of unecessary traffic that could be problematic over wireless communications (as seen in our previous blog). The simplest way to avoid such traffic is to use distinct domains. Other solutions could be specific network configuration, or specific DDS configuration.
 

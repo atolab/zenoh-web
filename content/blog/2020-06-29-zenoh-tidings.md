@@ -73,7 +73,7 @@ When running these tests on a Linux Laptop with an Intel Core i7 we get the resu
 We have made good progress toward making the [Rust](http://rust-lang) of **zenoh** available. You can already start experimenting with the [rust-master branch](https://github.com/eclipse-zenoh/zenoh/tree/rust-master), but the good news is that by the end of July we should have the bulk of features in place. 
 You can check-out the [roadmap](https://github.com/eclipse-zenoh/zenoh/wiki/Roadmap) to see our progress as well as comment on which features you'd like to see next. 
 
-Finally, do not hesitate to reach us out on the [zenoh Gitter Channel](http://gitter.im/atolab/zenoh)
+Finally, do not hesitate to reach us out on the [Zenoh Discord Server](https://discord.gg/cY4nVjUd)
 
 
 [**A+**](https://github.com/kydos/)

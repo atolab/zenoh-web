@@ -1,27 +1,36 @@
-+++
-title = "The zenoh Community"
-description = "Get help, discuss problems, and join the fun"
-menu = "community"
-+++
+---
+title: "The Zenoh Community"
+description: "Get help, discuss problems, and join the fun"
+menu: "community"
+---
 
 # Communication
 
-The zenoh community is most readily found on
-[its gitter channel](https://gitter.im/atolab/zenoh), where you're welcome to
+The Zenoh community is most readily found on
+[its Discord server](https://discord.gg/cY4nVjUd), where you're welcome to
 ask questions, report problems, or pitch ideas.
 
 # Issues
 
-Github is used for tracking issues.  
-If your issue is related to the zenoh protocol, the infrastructure or the REST API, the primary location is https://github.com/eclipse-zenoh/zenoh/issues.  
-If your issue is related to an API, please use the Github issues related to this API:
+GitHub is used for tracking issues.  
+If your issue is related to the Zenoh protocol, the infrastructure or the REST API, the primary location is https://github.com/eclipse-zenoh/zenoh/issues.  
+If your issue is related to an API, please use the GitHub issues related to the API:
   *  [Python API](https://github.com/eclipse-zenoh/zenoh-python/issues)
-  *  [Java API](https://github.com/eclipse-zenoh/zenoh-java/issues)
-  *  [Go API](https://github.com/eclipse-zenoh/zenoh-go/issues)
+  *  [C API](https://github.com/eclipse-zenoh/zenoh-c/issues)
 
-If you're a zenoh user, you're highly encouraged to keep an eye on these issues
+If your issue is instead related to a plugin, please use the GitHub issues related to the plugin:
+  *  [DDS plugin](https://github.com/eclipse-zenoh/zenoh-plugin-dds/issues)
+  *  [Webserver plugin](https://github.com/eclipse-zenoh/zenoh-plugin-webserver/issues)
+  *  [InfluxDB backend](https://github.com/eclipse-zenoh/zenoh-backend-influxdb/issues)
+  *  [RocksDB backend](https://github.com/eclipse-zenoh/zenoh-backend-rocksdb/issues)
+  *  [Filesystem backend](https://github.com/eclipse-zenoh/zenoh-backend-filesystem/issues)
+
+If you're a Zenoh user, you're highly encouraged to keep an eye on these issues
 and jump in on the discussions, to help us understand how design tradeoffs might
 affect you.
+
+If you want to propose new features, feel free to start a discussion on the 
+  * [Zenoh's discussion board](https://github.com/eclipse-zenoh/roadmap/discussions)
 
 These repositories also contain milestones for upcoming *major* releases, which
 are currently used to track breaking changes that might be considered for the
@@ -29,5 +38,5 @@ next major release.
 
 # Get Involved
 
-Are you interested in getting involved and helping out reach-out to us 
-via the [Gitter Channel](http://gitter.im/atolab/zenoh).
+Are you interested in getting involved and helping out? Reach-out to us 
+via the [Discord Server](https://discord.gg/cY4nVjUd).

@@ -1,14 +1,15 @@
-+++
-title = "Zenoh Adopters"
-description = "A very partial list of zenoh adopters and supporters"
-menu = "adopters"
-+++
+---
+title: Zenoh Adopters
+description: A very partial list of zenoh adopters and supporters
+menu: adopters
+---
 
-Below is a list of companies, research institutes and foundations that adopted, supported or contributed to zenoh. If you cannot find your logo post a message on the [zenoh's gitter channel](https://gitter.im/atolab/zenoh) and we'll add it right away.
+Below is a list of companies, research institutes and foundations that adopted, supported or contributed to zenoh. If you cannot find your logo post a message on the [zenoh's discord server](https://discord.gg/cY4nVjUd) and we'll add it right away.
 
-# 
+#
 
-{{< rawhtml >}}
+
+
 <div class="container">
     <div class="row align-items-center justify-content-center">
         <div class="col">
@@ -27,7 +28,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
             </a>
         </div>
         <div class="col">
-            <a href="https://h2020daemon.eu/" target="_blank">
+            <a href="https://h2020daemon.eu/">
                 <img align="center" src="https://h2020daemon.eu/wp-content/uploads/2021/01/daemonlogo-300x80-1.webp" alt="Daemon"/>
             </a>
         </div>
@@ -49,7 +50,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
             </a>
         </div>
         <div class="col">
-            <a href="https://www.l2s.centralesupelec.fr/en/" target="_blank">
+            <a href="https://www.l2s.centralesupelec.fr/en/">
                 <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-centralesupelec.png" alt="CentraleSupelec"/>
             </a>
         </div>
@@ -95,5 +96,4 @@ Below is a list of companies, research institutes and foundations that adopted, 
     </div>
 </div>
 <p></p>
-{{< /rawhtml >}}
 

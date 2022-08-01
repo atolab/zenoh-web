@@ -47,7 +47,7 @@ The main schema is as follows:
       __path__?: string | string[],
       storages: {
         "<storage_name>": {
-          // The key expression that the storage should be set up for, such as "/demo/storage/**"
+          // The key expression that the storage should be set up for, such as "demo/storage/**"
           key_expr: string,
           // A prefix of `key_expr` that should be stripped from it when storing keys in the storage
           strip_prefix?: string,

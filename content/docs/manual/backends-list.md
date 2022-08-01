@@ -26,7 +26,7 @@ Here is the list of the available backends:
 A backend storing paths/values into an in-memory hashmap.
 
 The memory backend implementation is not provided by a backend library but is embeded within the [Storages plugin](../plugin-storages) itself.
-It is automatically added at zenoh router startup (under `"/@/router/<router-id>/plugin/storages/backend/memory"` admin path)
+It is automatically added at zenoh router startup (under `"@/router/<router-id>/plugin/storages/backend/memory"` admin path)
 unless the `--no-backend` argument is used (see [Storages plugin](../plugin-storages)'s startup arguments).
 
 Note that memory storages can also be created at zenoh router startup using the `--mem-storage` argument

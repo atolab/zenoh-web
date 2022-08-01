@@ -206,7 +206,7 @@ Moreover, Zenoh and Zenoh-pico are bridging the gap between ROS 2 and microcontr
  - [Zenoh-pico](https://github.com/eclipse-zenoh/zenoh-pico) allows you to integrate Zenoh functionalities in your embedded systems and microcontrollers natively in C.
  - [Zenoh bridge for DDS](https://github.com/eclipse-zenoh/zenoh-plugin-dds) allows to (1) bridge DDS communications through Zenoh, and (2) reduce by up to 99.97% the discovery traffic between the nodes.
 
-Tell us about your ideas on how to unlock the power of microcontrollers. We will provide all the support you need either in [GitHub](https://github.com/eclipse-zenoh) or [Gitter](https://gitter.im/atolab/zenoh).
+Tell us about your ideas on how to unlock the power of microcontrollers. We will provide all the support you need either in [GitHub](https://github.com/eclipse-zenoh) or [Discord](https://discord.gg/cY4nVjUd).
 
 
 [**--CG**](https://github.com/cguimaraes/)

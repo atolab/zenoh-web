@@ -16,7 +16,7 @@ The backends and storages are managed in each zenoh router by its [Storages plug
 
 The backends provided by a zenoh router can be managed via the [admin space](../abstractions#admin-space) using zenoh
 PUT/GET/DELETE operations on such Path:  
-**`/@/router/<router-id>/plugin/storages/backend/<backend-id>`**  
+**`@/router/<router-id>/plugin/storages/backend/<backend-id>`**  
 where **`<backend-id>`** is a free identifier for the backend (must be unique per-router).
 
 ### Addition of a Backend
@@ -37,7 +37,7 @@ from zenoh import Zenoh, Value
 
 z = Zenoh({"mode": "client"})
 workspace = z.workspace()
-workspace.put('/@/router/local/plugin/storages/backend/influxdb',
+workspace.put('@/router/local/plugin/storages/backend/influxdb',
     {'url': 'http://localhost:8086', 'lib': '/opt/zenoh/lib/libzbackend_influxdb.so'})
 ```
 
@@ -66,7 +66,7 @@ curl -X DELETE http://localhost:8000/@/router/local/plugin/storages/backend/infl
 
 Each Storage belongs to a Backend. A Storage can be managed via the [admin space](../abstractions#admin-space) using zenoh
 PUT/GET/DELETE operations on such Path:  
-**`/@/router/<router-id>/plugin/storages/backend/<backend-id>/storage/<storage-id>`**  
+**`@/router/<router-id>/plugin/storages/backend/<backend-id>/storage/<storage-id>`**  
 where **`<backend-id>`** is a the identifier of the Backend hosting the Storage, and **`<storage-id>`** is a free identifier for the storage (must be unique per-backend).
 
 ### Addition of a Storage
@@ -87,11 +87,11 @@ curl -X PUT -H 'content-type:application/properties' -d "path_expr=/demo/example
 Similar examples with the Python API:  
 ```python
 # for a memory storage
-workspace.put('/@/router/local/plugin/storages/backend/memory/storage/example',
+workspace.put('@/router/local/plugin/storages/backend/memory/storage/example',
     {'path_expr': '/demo/example/**'})
 
 # for an InfluxDB storage
-workspace.put('/@/router/local/plugin/storages/backend/influxdb/storage/example',
+workspace.put('@/router/local/plugin/storages/backend/influxdb/storage/example',
     {'path_expr': '/demo/example/**', 'path_prefix': '/demo/example', 'on_closure': 'drop_series', 'db': 'example', 'create_db': 'true'})
 ```
 
@@ -134,7 +134,7 @@ It's not persistent: as soon as the zenoh router stops, all the keys/values stor
 
 Example of a memory storage creation using the REST API:
 ```bash
-curl -X PUT -d '{"selector":"/demo/test/**"}' http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-test
+curl -X PUT -d '{"selector":"demo/test/**"}' http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/my-test
 ```
 
 ---
@@ -167,7 +167,7 @@ curl -X PUT -d '{"lib":"sqlite3","url":"sqlite3:///tmp/sqlite3-zenoh.db"}' http:
 ```
 Example of a SQLite3 storage creation using the REST API:
 ```bash
-curl -X PUT -d '{"selector":"/demo/example/sql/**","table":"mytable","key_size":"100","on_dispose":"truncate"}' http://localhost:8000/@/router/local/plugin/storages/backend/sqlite3/storage/mytable
+curl -X PUT -d '{"selector":"demo/example/sql/**","table":"mytable","key_size":"100","on_dispose":"truncate"}' http://localhost:8000/@/router/local/plugin/storages/backend/sqlite3/storage/mytable
 ```
 
 ---
@@ -200,7 +200,7 @@ curl -X PUT -d '{"lib":"postgresql","url":"postgresql://localhost/mydb"}' http:/
 ```
 Example of a PostgreSQL storage creation using the REST API:
 ```bash
-curl -X PUT -d '{"selector":"/demo/example/sql/**","table":"mytable","key_size":"100","on_dispose":"truncate"}' http://localhost:8000/@/router/local/plugin/storages/backend/psql/storage/mytable
+curl -X PUT -d '{"selector":"demo/example/sql/**","table":"mytable","key_size":"100","on_dispose":"truncate"}' http://localhost:8000/@/router/local/plugin/storages/backend/psql/storage/mytable
 ```
 
 ---
@@ -233,7 +233,7 @@ curl -X PUT -d '{"lib":"mariadb","url":"mariadb://localhost/mydb"}' http://local
 ```
 Example of a MariaDB storage creation using the REST API:
 ```bash
-curl -X PUT -d '{"selector":"/demo/example/sql/**","table":"mytable","key_size":"100","on_dispose":"truncate"}' http://localhost:8000/@/router/local/plugin/storages/backend/mariadb/storage/mytable
+curl -X PUT -d '{"selector":"demo/example/sql/**","table":"mytable","key_size":"100","on_dispose":"truncate"}' http://localhost:8000/@/router/local/plugin/storages/backend/mariadb/storage/mytable
 ```
 
 ---
@@ -275,7 +275,7 @@ that matches the `get`selector.
 But you can also get a serie of values for each matching key using the `starttime` and `stoptime` properties in the selector. Those properties support the InfluxDB **[time syntax](https://docs.influxdata.com/influxdb/v1.7/query_language/data_exploration/#time-syntax)** (the part after the operator).
 For instance:
 
-   - `/demo/example/influxdb/**?(starttime=2019-01-01)`
-   - `/demo/example/influxdb/**?(starttime=2019-11-01T09:30:00.000000000Z;stoptime=now())`
-   - `/demo/example/influxdb/**?(starttime=now()-2d;stoptime=now()-1d)`
+   - `demo/example/influxdb/**?(starttime=2019-01-01)`
+   - `demo/example/influxdb/**?(starttime=2019-11-01T09:30:00.000000000Z;stoptime=now())`
+   - `demo/example/influxdb/**?(starttime=now()-2d;stoptime=now()-1d)`
 -->

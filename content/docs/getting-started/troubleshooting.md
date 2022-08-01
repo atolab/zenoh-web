@@ -26,11 +26,11 @@ Note that the logs are written on `stderr`.
 
 The router is likely trying to load an incompatible plugin.
 
-To check this, [activate the logs](#activate_logging) at `debug` level and look for such logs:
+To check this look for such logs:
 ```C#
-[2021-08-24T15:24:06Z DEBUG zenohd] loaded plugin: webserver from "/Users/ato/.zenoh/lib/libzplugin_webserver.dylib"
-[2021-08-24T15:24:06Z DEBUG zenohd] loaded plugin: rest from "/Users/ato/eclipse-zenoh/zenoh/target/debug/libzplugin_rest.dylib"
-[2021-08-24T15:24:06Z DEBUG zenohd] loaded plugin: storages from "/Users/ato/eclipse-zenoh/zenoh/infra/zenoh/target/debug/libzplugin_storages.dylib"
+[2022-03-28T15:23:36Z INFO  zenohd] Successfully started plugin rest from "/Users/test/.zenoh/lib/libzplugin_rest.dylib"
+[2022-03-28T15:23:36Z INFO  zenohd] Successfully started plugin storage_manager from "/Users/test/.zenoh/lib/libzplugin_storage_manager.dylib"
+[2022-03-28T15:23:36Z INFO  zenohd] Successfully started plugin webserver from "/Users/test/.zenoh/lib/libzplugin_webserver.dylib"
 ```
 Here you can see all the plugins libraries that have been loaded by `zenohd` at startup. You must check if each of those are using the same zenoh version as dependency than `zenohd`.  
 To assess which one is causing troubles, you can also move or rename all the libraries but one and test if `zenohd` is correctly loading this one. Then repeat the process for each library.
