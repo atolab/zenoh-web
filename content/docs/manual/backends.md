@@ -267,7 +267,7 @@ curl -X PUT -d '{"lib":"influxdb","url":"http://localhost:8086"}' http://localho
 ```
 Example of a InfluxDB storage creation using the REST API:
 ```bash
-curl -X PUT -d '{"selector":"/demo/example/influxdb/**","db":"mydb","on_dispose":"DropAllSeries"}' http://localhost:8000/@/router/local/plugin/storages/backend/influxdb/storage/mydb
+curl -X PUT -d '{"selector":"demo/example/influxdb/**","db":"mydb","on_dispose":"DropAllSeries"}' http://localhost:8000/@/router/local/plugin/storages/backend/influxdb/storage/mydb
 ```
 
 By default a `get` matching an InfluxDB storage will return the last value of each measurement with a key
