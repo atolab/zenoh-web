@@ -9,7 +9,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
 #
 
 
-
+{{< rawhtml >}}
 <div class="container">
     <div class="row align-items-center justify-content-center">
         <div class="col">
@@ -28,7 +28,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
             </a>
         </div>
         <div class="col">
-            <a href="https://h2020daemon.eu/">
+            <a href="https://h2020daemon.eu/" target=="_blank">
                 <img align="center" src="https://h2020daemon.eu/wp-content/uploads/2021/01/daemonlogo-300x80-1.webp" alt="Daemon"/>
             </a>
         </div>
@@ -50,7 +50,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
             </a>
         </div>
         <div class="col">
-            <a href="https://www.l2s.centralesupelec.fr/en/">
+            <a href="https://www.l2s.centralesupelec.fr/en/" target=="_blank">
                 <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-centralesupelec.png" alt="CentraleSupelec"/>
             </a>
         </div>
