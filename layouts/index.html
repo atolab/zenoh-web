@@ -12,7 +12,7 @@
           <b>Zero Overhead Pub/sub, Store/Query and Compute.</b>
         </p>
         <p class="lead mb-4">
-          zenoh /zeno/ unifies data in motion, data at rest and computations.
+          Zenoh /zeno/ unifies data in motion, data at rest and computations.
 
           It elegantly blends traditional pub/sub with geo distributed storage,
           queries and computations, while retaining a level of time and space efficiency
@@ -35,8 +35,8 @@
     </h3>
 
     <p>
-      First class abstractions for <i>pub/sub</i>, <i>geo distributed storage</i>,
-      <i>query</i>, and <i>evals</i> simplify the development of
+      First class abstractions for <i>pub/sub</i>, <i>geo-distributed storages</i>,
+      <i>query</i>, and <i>queryables</i> simplify the development of
       distributed applications, at any scale.
     </p>
 
@@ -48,15 +48,17 @@
     </p>
 
     <p>
-      <b>Storage and Queries</b><br>
-      zenoh provides primitives for defining geo distributed storage 
-      as well defined semantics for querying and aggregating.
+      <b>Storages</b><br>
+      zenoh provides primitives for defining geo-distributed storages 
+      with sharding and replication. 
+      <!-- as well defined semantics for querying and aggregating. -->
     </p>
 
     <p>
-        <b>Evaluations</b><br>
-        zenoh allows applications to register computations that will be
-        triggered by queries. A simple mechanism that allows many patterns
+        <b>Queries and Queryables</b><br>
+        zenoh provides well-defined semantics for querying and aggregating.
+        It also allows applications to register computations that will be
+        triggered by queries; a simple mechanism that allows many patterns
         to be implemented, such as RPC and map-reduce.
       </p>
 
