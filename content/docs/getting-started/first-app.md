@@ -61,7 +61,7 @@ def run_sensor_loop(session):
     # read and produce a temperature every second
     while True:
         t = read_temp()
-        session.put('/myhome/kitchen/temp', t)
+        session.put('myhome/kitchen/temp', t)
         time.sleep(1)
 
 if __name__ == "__main__":
@@ -77,7 +77,7 @@ import zenoh
 
 if __name__ == "__main__":
     session = zenoh.open()
-    results = session.get('/myhome/kitchen/temp')
+    results = session.get('myhome/kitchen/temp')
     key, value = results[0].data.key_expr, results[0].data.value.decode()
     print('  {} : {}'.format(key, value))
 ```
@@ -94,7 +94,7 @@ def listener(sample):
 
 if __name__ == "__main__":
     session = zenoh.open()
-    sub = session.subscribe('/myhome/kitchen/temp', listener)
+    sub = session.subscribe('myhome/kitchen/temp', listener)
     time.sleep(60)
 ```
 

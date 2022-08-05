@@ -38,7 +38,7 @@ Note that memory storages can also be created at zenoh router startup using the 
 Using `curl` on the zenoh router to add storages (assuming the zenoh router was not started with `--no-backend` option):
 ```bash
 # Add a storage on /demo/example/**
-curl -X PUT -H 'content-type:application/properties' -d "path_expr=/demo/example/**" http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/example
+curl -X PUT -H 'content-type:application/properties' -d "path_expr=demo/example/**" http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/example
 ```
 
 

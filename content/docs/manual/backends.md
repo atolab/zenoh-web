@@ -78,10 +78,10 @@ allowing to specify the [Path Expression](../abstractions#path-expression) the S
 Examples with the REST API:  
 ```bash
 # for a memory storage
-curl -X PUT -H 'content-type:application/properties' -d "path_expr=/demo/example/**" http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/example
+curl -X PUT -H 'content-type:application/properties' -d "path_expr=demo/example/**" http://localhost:8000/@/router/local/plugin/storages/backend/memory/storage/example
 
 # for an InfluxDB storage
-curl -X PUT -H 'content-type:application/properties' -d "path_expr=/demo/example/**;path_prefix=/demo/example;on_closure=drop_series;db=example;create_db" http://localhost:8000/@/router/local/plugin/storages/backend/influxdb/storage/example
+curl -X PUT -H 'content-type:application/properties' -d "path_expr=demo/example/**;path_prefix=demo/example;on_closure=drop_series;db=example;create_db" http://localhost:8000/@/router/local/plugin/storages/backend/influxdb/storage/example
 ```
 
 Similar examples with the Python API:  
