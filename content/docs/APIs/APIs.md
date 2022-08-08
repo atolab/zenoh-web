@@ -22,7 +22,7 @@ https://zenoh-python.readthedocs.io/
 
 Zenoh also offers a REST API via the zenoh-rest plugin. When starting zenoh with default options,
 this REST plugin is automatically started on port 8000 and ready to answer HTTP requests.  
-The full zenoh key/value space is accessible via this REST API, including the Admin Space under the `'/@'`prefix.
+The full zenoh key/value space is accessible via this REST API, including the Admin Space under the `'@'`prefix.
 
 ### GET
 
@@ -37,7 +37,7 @@ The results are returned as a JSON array of objects containing `"key"`, `"value"
 Examples using curl:
 
 ```bash
-# Get the keys/values matching /demo/**
+# Get the keys/values matching demo/**
 $ curl http://localhost:8000/demo/**
 [
 { "key": "demo/example/zenoh-python-put",
@@ -54,7 +54,7 @@ $ curl http://localhost:8000/demo/**
   "time": "2022-03-29T10:19:45.879540920Z/BC99B84DD73D449FB7B5C03506934604" },
 ]
 
-# Get the keys/values matching /demo/example/*eval (i.e. the zenoh eval examples)
+# Get the keys/values matching demo/example/*eval (i.e. the zenoh eval examples)
 # with property name=Bob
 $ curl http://localhost:8000/demo/example/*eval?(name=Bob)
 [
@@ -64,7 +64,7 @@ $ curl http://localhost:8000/demo/example/*eval?(name=Bob)
   "time": "None" }
 ]
 
-# Get the list of storages via a Get on admin space (/@/...)
+# Get the list of storages via a Get on admin space (@/...)
 $ curl -g http://localhost:8000/@/**/storages/**
 [
 { "key": "@/router/BC99B84DD73D449FB7B5C03506934604/status/plugins/storage_manager/storages/demo",
@@ -98,13 +98,13 @@ The values with the following content-types will be automatically converted by z
 Examples using curl:
 
   ```bash
-  # Put a string value in /demo/example/test
+  # Put a string value in demo/example/test
   curl -X PUT -H "content-type:text/plain" -d 'Hello World!' http://localhost:8000/demo/example/test
 
-  # Put a JSON value in /demo/example/json
+  # Put a JSON value in demo/example/json
   curl -X PUT -H "content-type:application/json" -d '{"value": "Hello World!"}' http://localhost:8000/demo/example/test
 
-  # Create a Memory storage on /demo/test/** via a Put on admin space (/@/...)
+  # Create a Memory storage on demo/test/** via a Put on admin space (@/...)
   curl -X PUT -H 'content-type:application/json' http://localhost:8000/@/router/local/config/plugins/storage_manager/storages/demo -d '{key_expr:"demo/test/**", volume:"memory"}' 
   ```
 
@@ -119,10 +119,10 @@ Binds to the **remove(keyexpr)** operation on zenoh.
 Examples using curl:
 
   ```bash
-  # Remove the value with key /demo/example/test
+  # Remove the value with key demo/example/test
   curl -X DELETE http://localhost:8000/demo/example/test
 
-  # Remove a storage via a Remove on admin space (/@/...)
+  # Remove a storage via a Remove on admin space (@/...)
   curl -X DELETE http://localhost:8000/@/router/local/config/plugins/storage_manager/storages/demo
   ```
 
