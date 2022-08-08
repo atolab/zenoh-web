@@ -11,8 +11,8 @@ The zenoh router (`zenohd` executable) supports the loading of plugins at start-
 A zenoh plugin is a library that can be loaded by the zenoh router at start-up. It shares a runtime with it, allowing the plugin to use the regular zenoh rust APIs with the same peer ID.
 
 Zenoh already provides the following plugins in its default repository:
- - the [REST plugin](./plugin-http): providing the zenoh REST API
- - the [Storage Manager plugin](./plugin-storage-manager): providing management of [storages](./abstractions#storage)
+ - the [REST plugin](../plugin-http): providing the zenoh REST API
+ - the [Storage Manager plugin](../plugin-storage-manager): providing management of [storages](../abstractions#storage)
 
 ## Before v0.6
 By default the zenoh router will automatically search for and load plugins library files with these names:
@@ -28,7 +28,7 @@ Plugin library files to load manually can be specified using the `--plugin` opti
 ## From v0.6 
 Zenoh 0.6 has had its configuration and plugin infrastructure overhauled. The most major change is that **`zenohd` no longer loads all available plugins at startup**.
 
-Instead, only plugins that appear in the configuration are loaded. If a plugin is added to the configuration during runtime (for example through the [admin space](./abstractions#admin-space)), it will be loaded then.
+Instead, only plugins that appear in the configuration are loaded. If a plugin is added to the configuration during runtime (for example through the [admin space](../abstractions#admin-space)), it will be loaded then.
 
 This choice was made to reduce side effects, as loading all available plugins can lead to loading plugins that have behaviour you do not expect, or that may have weird interractions when running side-by-side.
 

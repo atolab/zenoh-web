@@ -16,7 +16,7 @@ Each subdirectory has the name of the Rust target. See the platforms each target
 
 You can also install it via a package manager on macOS (homebrew) or Linux Debian (apt). See instructions below.
 
-For other platforms, you can use the [Docker image](./quick-test#run-zenoh-in-docker) or [build it](https://github.com/eclipse-zenoh/zenoh#how-to-build-it) directly on your platform.
+For other platforms, you can use the [Docker image](../quick-test#run-zenoh-in-docker) or [build it](https://github.com/eclipse-zenoh/zenoh#how-to-build-it) directly on your platform.
 
 ### MacOS
 Tap our brew package repository:

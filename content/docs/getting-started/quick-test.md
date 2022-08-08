@@ -29,8 +29,8 @@ _The implication of not having UDP multicast working for the zenoh router is tha
 
 The zenoh router supports the dynamic loading of plugins libraries (at startup) and backends libraries (during runtime).  
 See the relevant chapters for more details about plugins and backends:
- - [Zenoh plugins](./../manual/plugins)
- - [Zenoh backends and storages](./../manual/backends)
+ - [Zenoh plugins](../../manual/plugins)
+ - [Zenoh backends and storages](../../manual/backends)
 
 **⚠️ WARNING ⚠️**: _To be compatible with zenoh in Docker, the libraries must be compiled for **`x86_64-unknown-linux-musl`** target. Look for `.tgz` filenames with this extension when downloading plugins or backends from the [Eclipse zenoh download space](https://download.eclipse.org/zenoh)._
 
@@ -96,7 +96,7 @@ Assuming the memory storage has been added, as described above, you can now:
 
 ## Your first app in Python
 
-Now you can see how to [build your first zenoh application in Python](./first-app).
+Now you can see how to [build your first zenoh application in Python](../first-app).
 
 ## Pick your programming language
 

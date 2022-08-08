@@ -1,6 +1,6 @@
 ---
 title: "TLS authentication"
-weight : 2200
+weight : 2199
 menu:
   docs:
     parent: manual
@@ -9,7 +9,7 @@ menu:
 Zenoh supports TLS as a transport protocol.
 As of today, the only supported TLS authentication mode is server-authentication: clients validate the server TLS certificate but not the other way around.
 That is, the same way of operating on the web where the web browsers validate the identity of the server via means of the TLS certificate.
-The configuration of TLS certificates is done via a [configuration file](./configuration).
+The configuration of TLS certificates is done via a [configuration file](../configuration).
 
 ---------
 ## TLS certificates creation

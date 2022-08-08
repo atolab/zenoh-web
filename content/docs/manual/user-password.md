@@ -9,7 +9,7 @@ menu:
 Zenoh supports basic *user-password authentication*.
 Clients and peers can use *user* and *password* for authentication against a router or a peer.
 Similarly, peers and routers can use *user* and *password* for authentication among themselves.
-The configuration of credentials is done via a [configuration file](./configuration).
+The configuration of credentials is done via a [configuration file](../configuration).
 
 ---------
 ## Client configuration

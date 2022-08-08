@@ -19,7 +19,7 @@ That is, the same way of operating on the web where the web browsers validate th
 
 In order to use QUIC as a transport protocol, we need first to create the TLS certificates. 
 
-The instructions to properly generate TLS certificates can be found [here](./tls). 
+The instructions to properly generate TLS certificates can be found [here](../tls). 
 
 As you can see, they are the same instructions required to run zenoh on TLS over TCP. 
 Here instead, the only difference is that we have TLS in QUIC!
@@ -32,7 +32,7 @@ You can test out zenoh over QUIC in both client-router and peer-to-peer scenario
 
 ### Client-Router scenario
 Let's assume a scenario with one zenoh router and two clients connected to it: one publisher and one subscriber.
-The first thing to do is to generate the *router.json5* and *client.json5* configuration files as explained [here](./tls).
+The first thing to do is to generate the *router.json5* and *client.json5* configuration files as explained [here](../tls).
 
 Next, it's time to run the router passing its configuration, i.e. *router.json5*:
 ```bash
@@ -53,7 +53,7 @@ As it can be noticed, the same *client.json5* is used for *zn_sub* and *zn_pub*.
 
 ### Peer-to-peer scenario
 Let's assume a scenario with two peers.
-The first thing to do is to generate the *peer.json5* configuration files as explained [here](./tls).
+The first thing to do is to generate the *peer.json5* configuration files as explained [here](../tls).
 
 Then, let's start the first peer in peer mode passing its configuration, i.e. *peer.json5*:
 ```bash

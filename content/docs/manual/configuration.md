@@ -23,17 +23,17 @@ If no path is specified, `zenohd` will use a default configuration instead.
 Currently, [JSON5](https://json5.org) and YAML are the primary configuration format (as opposed to v0.5's flat key-value files), but we may add support for other serialization formats in the future.
 
 An example configuration can be read [here](https://github.com/eclipse-zenoh/zenoh/blob/master/EXAMPLE_CONFIG.json5), apart from the `plugins` section, we make an effort to keep the values aligned with the defaults.  
-The exact schema for the configuration is the `Config` structure, which can be found in [this file](https://github.com/eclipse-zenoh/zenoh/blob/master/zenoh/src/config.rs).
+The exact schema for the configuration is the `Config` structure, which can be found in [this file](https://github.com/eclipse-zenoh/zenoh/blob/master/commons/zenoh-config/src/lib.rs).
 
 Don't be alarmed, all of these fields are optional. Only configure the parts that are of interest to you.
 
 We'd like to bring your attention to the `plugins` part of the configuration, as plugin management has also changed a lot with version 0.6.
-More on this in the page on [plugins](./plugins).
+More on this in the page on [plugins](../plugins).
 
 ## Command line arguments
 If you want to run `zenohd` with small changes in its configuration, without going through the hassle of writing a new configuration file for it, you may use the `--cfg` CLI argument to edit the configuration.
 
-Specifically, you may use any amount `--cfg='PATH:VALUE'` arguments to specify the VALUEs you'd like to insert at specific PATHs in the configuration.
+Specifically, you may use any amount of `--cfg='PATH:VALUE'` arguments to specify the VALUEs you'd like to insert at specific PATHs in the configuration.
 
 PATHs are `/`-separated paths to the part of the configuration you wish to change.
 Note for plugins that setting a value in a plugin-less configuration for `plugins/example-plugin/example/path` will result in the recursive creation of the intermediate objects if necessary.
@@ -52,7 +52,7 @@ It is possible to register callbacks that will be called when the configuration 
 In the case of `zenohd`, the only user-accessible way of editing the configuration during runtime is through the admin space, as explained a bit [further](#adminspace-configuration) in this page. Whether and how to react to modifications to the configuration file when it exists is still under debate by the core team.
 
 ## Adminspace configuration
-You can still change elements of a `zenohd` instance's configuration once it's started, by sending put messages to its [admin space](./abstractions#admin-space).
+You can still change elements of a `zenohd` instance's configuration once it's started, by sending put messages to its [admin space](../abstractions#admin-space).
 
 If one of the `zenohd` instances uses the REST plugin to expose Zenoh to HTTP requests, this can be done simply by sending such requests with tools such as `curl`.  
 To do this, use commands such as 

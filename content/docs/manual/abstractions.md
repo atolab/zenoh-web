@@ -153,14 +153,14 @@ The computation function will receive the selector's properties as parameters.
 
 ## Storage
 
-[Storages](./plugin-storage-manager) are an intersection of a queryable and subscriber:
+[Storages](../plugin-storage-manager) are an intersection of a queryable and subscriber:
 - They subscribe to a set of keys;
 - upon receiving publications onto a subset of their subscription set, they store the associated values;
 - when queried about a subset of their subscription set, they return the latest values for each appropriate key.
 
-`zenohd`, the reference implementation of a Zenoh node, supports storages through the [`storages` plugin](./plugin-storage-manager).
+`zenohd`, the reference implementation of a Zenoh node, supports storages through the [`storages` plugin](../plugin-storage-manager).
 
-Since there exist many ways to implement the storing part of the process, the `storages` plugin relies on dynamically loaded [volumes](./plugin-storage-manager#backends-and-volumes) to do the actual value-storing. Each volume has its own tradeoffs, as well as potential uses besides acting as a database for `zenohd`.
+Since there exist many ways to implement the storing part of the process, the `storages` plugin relies on dynamically loaded [volumes](../plugin-storage-manager#backends-and-volumes) to do the actual value-storing. Each volume has its own tradeoffs, as well as potential uses besides acting as a database for `zenohd`.
 
 ---
 
@@ -180,7 +180,7 @@ For instance, the following keys can be used:
 - `@/router/<router-id>/config/**` (write-only):  
   Allows you to edit the configuration of the router at runtime.
 
-Some plugins may extend the admin space, such as [Storages](./plugin-storage-manager), which will add the following keys:
+Some plugins may extend the admin space, such as [Storages](../plugin-storage-manager), which will add the following keys:
 
 - `@/router/<router-id>/status/plugins/storage_manager/volumes/<volume-name>` (read-only):  
   Returning information about the selected backend in JSON format

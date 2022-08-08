@@ -33,7 +33,7 @@ This name-based lookup consists in searching the configured `backends_search_dir
 By design, the storage manager may make some volumes available regardless of configuration. Currently, the only such volume is the `memory` volume. This volume stores key-value pairs in RAM. While convenient, keep in mind that this storage is not persistent through restarts of `zenohd`.
 
 ## Configuration
-Storages use structured [configurations](./configuration) to require the creation and deletion of backends and storages.  
+Storages use structured [configurations](../configuration) to require the creation and deletion of backends and storages.  
 The main schema is as follows:
 ```typescript
 {
@@ -86,9 +86,9 @@ Here is a list of the available backends:
 ## Storage management during runtime
 Storages can be configured before starting `zenohd` through a configuration file, or through `--cfg` arguments to `zenohd`.
 
-Thanks to the support of [configuration reactivity](./configuration#reactive-configuration), storages may also be configured after starting `zenohd` without need to restart the program.
+Thanks to the support of [configuration reactivity](../configuration#reactive-configuration), storages may also be configured after starting `zenohd` without need to restart the program.
 
-The most convenient way to edit configuration at runtime is through the [admin space](./configuration#adminspace-configuration), via the [REST API](../APIs/APIs#rest-api). This is the method we will teach here through `curl` commands. If you're unfamiliar with `curl`, it's a command line tool to make HTTP requests, here's a quick catch-up, with the equivalent in JS's standard library's `fetch`:
+The most convenient way to edit configuration at runtime is through the [admin space](../configuration#adminspace-configuration), via the [REST API](../../apis/apis#rest-api). This is the method we will teach here through `curl` commands. If you're unfamiliar with `curl`, it's a command line tool to make HTTP requests, here's a quick catch-up, with the equivalent in JS's standard library's `fetch`:
 ```bash
 curl -X POST       'http://hostname.host/key/expression' -H 'content-type:application/json'      -d '{"some": ["json", "data"]}'
 #    ^HTTP METHOD  ^Target URL for the request           ^Header saying the data is in JSON      ^The body of the request
