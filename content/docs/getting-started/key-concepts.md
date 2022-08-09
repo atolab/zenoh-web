@@ -31,7 +31,7 @@ A software process able to route the zenoh protocol between **clients** and **pe
 
 ![full topology](/img/full_topology.png "full topology" )
 
-The router executable file is named `zenohd` and is available in [zenoh releases](./installation#installing-zenohs-router), as a [Docker image](./quick-test) or [building it by yourself](https://github.com/eclipse-zenoh/zenoh#how-to-build-it).
+The router executable file is named `zenohd` and is available in [zenoh releases](../installation#installing-zenohs-router), as a [Docker image](../quick-test) or [building it by yourself](https://github.com/eclipse-zenoh/zenoh#how-to-build-it).
 
 ------
 ## User API
