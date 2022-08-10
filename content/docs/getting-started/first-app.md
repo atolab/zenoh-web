@@ -29,7 +29,7 @@ create a `zenoh-myhome.json5` configuration file for Zenoh with this content:
     storage_manager: {             // activate and configure the storage_manager plugin
       storages: {
         myhome: {                  // configure a "myhome" storage
-          key_expr: "myhome/**",   // which subscribes and replies to query on /myhome/**
+          key_expr: "myhome/**",   // which subscribes and replies to query on myhome/**
           volume: {                // and using the "memory" volume (always present by default)
             id: "memory"
           }
