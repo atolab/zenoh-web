@@ -8,11 +8,11 @@ menu:
 
 Zenoh is a **distributed service** to define, manage and operate on **key/value** spaces.
 
-The key abstractions at the core of zenoh are the following:
+The key abstractions at the core of Zenoh are the following:
 
 ## Key
 
-Zenoh operates on **key/value** pairs. The most important thing to know about Zenoh keys is that `/` is the hierarchical separator, just like in unix filesystems. While you could set up your own hierarchy using other separators, your zenoh exchanges would likely suffer much worse performance, as using `/` will let Zenoh do clever optimisations (users have informed us in the past that switching from `.` to `/` as their hierarchy-separator almost divided their CPU usage by 2).
+Zenoh operates on **key/value** pairs. The most important thing to know about Zenoh keys is that `/` is the hierarchical separator, just like in unix filesystems. While you could set up your own hierarchy using other separators, your Zenoh exchanges would likely suffer much worse performance, as using `/` will let Zenoh do clever optimisations (users have informed us in the past that switching from `.` to `/` as their hierarchy-separator almost divided their CPU usage by 2).
 
 However, you will much more often interact with [key expressions](#key-expressions), which provide a small regular language to match sets of keys.
 
@@ -63,7 +63,7 @@ A value-selector is abstracted as a list of key-value pairs, formatted such that
 - each pair follows the (?<key>[^=]*)(=(?<value>[^&]*))? regex: note that the value section is optional: somekey parses to ("somekey", "").
 - both the key and value fields shall be URL-encoded to allow for character escapement.
 
-<!-- A zenoh-typical value selector is made of 3 sections, in that order:
+<!-- A Zenoh-typical value selector is made of 3 sections, in that order:
 - The **filter** section is a `&` separated list of predicates, such that the queryable should filter out values that don't fulfill all predicates.  
   Each predicate has the form `<field><operator><literal>`. `<field>` is the name of a field in the value. If that field is not found or has an unexpected type, the predicate is considered unfulfilled. The `<operator>` may be `<`, `>`, `<=`, `>=`, `=` or `!=`. The `<literal>` is the value for the comparison.
   _For now, very few queryables actually support this element_
@@ -96,10 +96,10 @@ A user provided data item along with its [encoding](#encoding).
 
 ## Encoding
 
-A description of the [value](#value) format, allowing zenoh (or your application) to know how to encode/decode the value to/from a bytes buffer.
+A description of the [value](#value) format, allowing Zenoh (or your application) to know how to encode/decode the value to/from a bytes buffer.
 
-By default, zenoh is able to transport and store any format of data as long as it's serializable as a bytes buffer.
-But for advanced features such as content filtering (using [selector](#selector)) or to automatically deserialize the data into a concrete type in the client APIs, zenoh requires a description of the data encoding.
+By default, Zenoh is able to transport and store any format of data as long as it's serializable as a bytes buffer.
+But for advanced features such as content filtering (using [selector](#selector)) or to automatically deserialize the data into a concrete type in the client APIs, Zenoh requires a description of the data encoding.
 
 Some noteworthy supported encodings are:
 - **TextPlain**: the value is a UTF-8 string
@@ -116,7 +116,7 @@ You may also write your own encodings by either suffixing an existing one, or by
 
 ## Timestamp
 
-When a [value](#value) is put into zenoh, the first zenoh router receiving this value automatically
+When a [value](#value) is put into Zenoh, the first Zenoh router receiving this value automatically
 associates it with a timestamp.  
 This timestamp is made of 2 items:
 
@@ -129,16 +129,16 @@ This timestamp is made of 2 items:
   This time gives a theoritical resolution of 2^-32 seconds (60 nanoseconds), and
   guarantees that the same time cannot be generated twice and that the _happened-before_ relationship is preserved.
 
-- The **UUID** of the zenoh router that generated the time.
+- The **UUID** of the Zenoh router that generated the time.
 
-Such a timestamp allows zenoh to guarantee that each value introduced into the system has a unique timestamp, and that those timestamps (and therefore the values) can be ordered in the same way at any point of the system, without the need of any consensus algorithm.
+Such a timestamp allows Zenoh to guarantee that each value introduced into the system has a unique timestamp, and that those timestamps (and therefore the values) can be ordered in the same way at any point of the system, without the need of any consensus algorithm.
 
 ---
 
 ## Subscriber
 
 An entity registering interest for being notified whenever a key/value with a key matchings the subscriber
-[selector](#selector) is put, updated or removed on zenoh.
+[selector](#selector) is put, updated or removed on Zenoh.
 
 ---
 
@@ -166,12 +166,12 @@ Since there exist many ways to implement the storing part of the process, the `s
 
 ## Admin space
 
-The administration space of zenoh allowing to administrate a zenoh router and its plugins.
-It is accessible via regular get/put on zenoh, under the `@/router/<router-id>` prefix, where
-**`<router-id>`** is the UUID of a zenoh router.
+The administration space of Zenoh allowing to administrate a Zenoh router and its plugins.
+It is accessible via regular get/put on Zenoh, under the `@/router/<router-id>` prefix, where
+**`<router-id>`** is the UUID of a Zenoh router.
 
 When using the REST API, you can replace the `<router-id>` with the **`local`** keyword,
-meaning the operation addresses the zenoh router the HTTP client is connected to.
+meaning the operation addresses the Zenoh router the HTTP client is connected to.
 
 For instance, the following keys can be used:
 

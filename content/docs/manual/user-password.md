@@ -76,7 +76,7 @@ Let's assume that the above configurations are then saved with the name *router.
 ---------
 ## Testing the user-password authentication
 
-Let's assume a scenario with one zenoh router and two clients connected to it: one publisher and one subscriber.
+Let's assume a scenario with one Zenoh router and two clients connected to it: one publisher and one subscriber.
 
 The first thing to do is to run the router passing its configuration, i.e. *router.json5*:
 ```bash

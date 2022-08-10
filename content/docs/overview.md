@@ -1,5 +1,5 @@
 ---
-title: "What is zenoh?"
+title: "What is Zenoh?"
 weight: 1
 menu: "docs"
 ---
@@ -27,6 +27,6 @@ Additionally, for performance, efficiency and privacy reasons, there is an incre
   
 - Provides a rich set of abstraction for distributing, querying and storing data along the entire system. 
   
-- Provide extremely low latency and high throughput. ~~We also provide analytical and empirical comparison of zenoh’s efficiency against mainstream protocols such as DDS and MQTT.~~ 
+- Provide extremely low latency and high throughput. ~~We also provide analytical and empirical comparison of Zenoh’s efficiency against mainstream protocols such as DDS and MQTT.~~ 
 <!-- This last sentence feels out of place -->
     

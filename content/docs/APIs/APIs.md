@@ -20,13 +20,13 @@ https://zenoh-python.readthedocs.io/
 
 ## REST API
 
-Zenoh also offers a REST API via the zenoh-rest plugin. When starting zenoh with default options,
+Zenoh also offers a REST API via the zenoh-rest plugin. When starting Zenoh with default options,
 this REST plugin is automatically started on port 8000 and ready to answer HTTP requests.  
-The full zenoh key/value space is accessible via this REST API, including the Admin Space under the `'@'`prefix.
+The full Zenoh key/value space is accessible via this REST API, including the Admin Space under the `'@'`prefix.
 
 ### GET
 
-Binds to the **get(selector)** operation on zenoh.
+Binds to the **get(selector)** operation on Zenoh.
 
 - **URL**: `http://host:8000/<selector>`
 - **body**: none
@@ -54,7 +54,7 @@ $ curl http://localhost:8000/demo/**
   "time": "2022-03-29T10:19:45.879540920Z/BC99B84DD73D449FB7B5C03506934604" },
 ]
 
-# Get the keys/values matching demo/example/*eval (i.e. the zenoh eval examples)
+# Get the keys/values matching demo/example/*eval (i.e. the Zenoh eval examples)
 # with property name=Bob
 $ curl http://localhost:8000/demo/example/*eval?(name=Bob)
 [
@@ -77,16 +77,16 @@ $ curl -g http://localhost:8000/@/**/storages/**
 
 ### PUT
 
-Binds to the **put(keyexpr, value)** operation on zenoh.
+Binds to the **put(keyexpr, value)** operation on Zenoh.
 
 - **URL**: `http://host:8000/<keyexpr>`
 - **body**: the value to put
 - **headers**: 
    - **content-type**: the value encoding (optional; unspecified implies "application/octet-stream" encoding. Note that curl by default uses "application/x-www-form-urlencoded")
 
-The values with the following content-types will be automatically converted by zenoh into a typed Value:
+The values with the following content-types will be automatically converted by Zenoh into a typed Value:
 
-| content-type             | zenoh Value type |
+| content-type             | Zenoh Value type |
 | ------------------------ | ---------------- |
 | text/plain               | TextPlain        |
 | application/properties   | AppProperties    |
@@ -110,7 +110,7 @@ Examples using curl:
 
 ### DELETE
 
-Binds to the **remove(keyexpr)** operation on zenoh.
+Binds to the **remove(keyexpr)** operation on Zenoh.
 
 - **URL**: `http://host:8000/<keyexpr>`
 - **body**: none

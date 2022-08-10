@@ -6,7 +6,7 @@ menu:
     parent: manual
 ---
 
-From version 0.6 of zenoh, configuration has changed in major ways. This page will take you through the new behaviour of configuration, whether you're using Zenoh as a library, or as an executable through `zenohd`.
+From version 0.6 of Zenoh, configuration has changed in major ways. This page will take you through the new behaviour of configuration, whether you're using Zenoh as a library, or as an executable through `zenohd`.
 
 # Configuring `zenohd` 
 There are 3 ways to configure `zenohd`, which may be used in any combination:
@@ -15,7 +15,7 @@ There are 3 ways to configure `zenohd`, which may be used in any combination:
 * and by putting values on the configuration through the [adminspace](#adminspace-configuration).
 
 ## Configuration files
-`zenohd` has supported configuration files for a long time now, but with version 0.6, we hope to make this the primary interface for configuring your zenoh infrastructure.
+`zenohd` has supported configuration files for a long time now, but with version 0.6, we hope to make this the primary interface for configuring your Zenoh infrastructure.
 
 As was the case before, you can specify which configuration file to load with the `--config=/path/to/config/file` CLI argument.
 If no path is specified, `zenohd` will use a default configuration instead.

@@ -1,25 +1,25 @@
 ---
-title: "Your First zenoh app"
+title: "Your First Zenoh app"
 weight : 1000
 menu:
   docs:
     parent: getting_started
 ---
-Getting started with zenoh is quite straightforward. Below we will show you how to create a simple telemetry application. Let's assume that we have some sensor, say a temperature sensor, and we want to store this temperature into a zenoh storage. Later on, we want to retrieve this temperature from the zenoh storage. 
+Getting started with Zenoh is quite straightforward. Below we will show you how to create a simple telemetry application. Let's assume that we have some sensor, say a temperature sensor, and we want to store this temperature into a Zenoh storage. Later on, we want to retrieve this temperature from the Zenoh storage. 
 
 Before cranking some code, let's define some terminology. 
 
 <b>Zenoh</b> deals with <i>keys/values</i> where each key is a <i>path</i> and is associated to a <i>value</i>. A path looks like just a Unix file system path, such as ```myhome/kitchen/temp```. The value can be defined with different
 encodings (string, JSON, raw bytes buffer...). 
 
-To query the values stored by zenoh, we use <i>selectors</i>. As the name suggest, a <i>selector</i> can use wildcards, such as <b>*</b> and <b>**</b> to represent a set of paths, such as, ```myhome/*/temp```.
+To query the values stored by Zenoh, we use <i>selectors</i>. As the name suggest, a <i>selector</i> can use wildcards, such as <b>*</b> and <b>**</b> to represent a set of paths, such as, ```myhome/*/temp```.
 
 Let's get started!
 
 ## Zenoh Programming in Python
 
-By default, a zenoh router starts without any storage. In order to store the temperature, we need to configure one:  
-create a `zenoh-myhome.json5` configuration file for zenoh with this content:
+By default, a Zenoh router starts without any storage. In order to store the temperature, we need to configure one:  
+create a `zenoh-myhome.json5` configuration file for Zenoh with this content:
 ```json5
 {
   plugins: {
@@ -40,7 +40,7 @@ create a `zenoh-myhome.json5` configuration file for zenoh with this content:
 }
 ```
 
-[Install](../installation) and start the zenoh router with this configuration file:
+[Install](../installation) and start the Zenoh router with this configuration file:
 
 ```bash
 zenohd -c zenoh-myhome.json5
@@ -70,7 +70,7 @@ if __name__ == "__main__":
 ```
 
 
-Below is the application that will retrieve the latest temperature value stored in zenoh:
+Below is the application that will retrieve the latest temperature value stored in Zenoh:
 
 ```python
 import zenoh
@@ -79,11 +79,11 @@ if __name__ == "__main__":
     session = zenoh.open()
     results = session.get('myhome/kitchen/temp')
     key, value = results[0].data.key_expr, results[0].data.value.decode()
-    print('  {} : {}'.format(key, value))
+    print('{} : {}'.format(key, value))
 ```
 
 Finally, if ever we want to receive the temperatures in direct from the publisher,
-without querying the zenoh storage, we can use a subscriber:
+without querying the Zenoh storage, we can use a subscriber:
 
 ```python
 import zenoh, time
@@ -104,4 +104,4 @@ Now you can also have a look to the examples provided with each client API:
 
  - **Rust**: https://github.com/eclipse-zenoh/zenoh/tree/master/examples
  - **Python**: https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples
- - **C (zenoh-net)**: https://github.com/eclipse-zenoh/zenoh-c/tree/master/examples
+ - **C**: https://github.com/eclipse-zenoh/zenoh-c/tree/master/examples

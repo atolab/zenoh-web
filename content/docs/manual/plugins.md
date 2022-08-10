@@ -6,21 +6,21 @@ menu:
     parent: manual
 ---
 
-The zenoh router (`zenohd` executable) supports the loading of plugins at start-up.
+The Zenoh router (`zenohd` executable) supports the loading of plugins at start-up.
 
-A zenoh plugin is a library that can be loaded by the zenoh router at start-up. It shares a runtime with it, allowing the plugin to use the regular zenoh rust APIs with the same peer ID.
+A Zenoh plugin is a library that can be loaded by the Zenoh router at start-up. It shares a runtime with it, allowing the plugin to use the regular Zenoh rust APIs with the same peer ID.
 
 Zenoh already provides the following plugins in its default repository:
- - the [REST plugin](../plugin-http): providing the zenoh REST API
+ - the [REST plugin](../plugin-http): providing the Zenoh REST API
  - the [Storage Manager plugin](../plugin-storage-manager): providing management of [storages](../abstractions#storage)
 
 ## Before v0.6
-By default the zenoh router will automatically search for and load plugins library files with these names:
+By default the Zenoh router will automatically search for and load plugins library files with these names:
  - on Unix/Linux: `libzplugin_*.so`
  - on macOS: `libzplugin_*.dylib`
  - on Windows: `zplugin_*.dll`
 
-The list of paths in which the zenoh router will search for plugins can be configured via the `--plugin-search-dir` option (this can be repeated to specify several directories). The default list can be seen using the `--help` option.
+The list of paths in which the Zenoh router will search for plugins can be configured via the `--plugin-search-dir` option (this can be repeated to specify several directories). The default list can be seen using the `--help` option.
 
 This automatic search and load of plugins can be deactivated using the `--plugin-nolookup` option.  
 Plugin library files to load manually can be specified using the `--plugin` option (repeatable). In this case, the complete path of the library file must be specified, and its filename can be anything.

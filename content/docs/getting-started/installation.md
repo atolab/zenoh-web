@@ -6,10 +6,10 @@ menu:
     parent: getting_started
 ---
 
-To get up and running with <b>zenoh</b> you will have to install the router and then get hold of the API you would like to use to write your applications. 
+To get up and running with <b>Zenoh</b> you will have to install the router and then get hold of the API you would like to use to write your applications. 
 
-## Installing the zenoh router
-The zenoh router (a.k.a. `zenohd`) and its plugins are currently available as pre-built binaries for various platforms. All release packages can be downloaded from:  
+## Installing the Zenoh router
+The Zenoh router (a.k.a. `zenohd`) and its plugins are currently available as pre-built binaries for various platforms. All release packages can be downloaded from:  
   -  **https://download.eclipse.org/zenoh/zenoh/latest/**
 
 Each subdirectory has the name of the Rust target. See the platforms each target corresponds to on https://doc.rust-lang.org/stable/rustc/platform-support.html
@@ -25,13 +25,13 @@ Tap our brew package repository:
 $ brew tap eclipse-zenoh/homebrew-zenoh
 ```
 
-Install zenoh:
+Install Zenoh:
 
 ```bash
 $ brew install zenoh
 ```
 
-Then you can start the zenoh router with this command:
+Then you can start the Zenoh router with this command:
 ```bash
 $ zenohd -V
 ```
@@ -45,13 +45,13 @@ $ echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | s
 $ sudo apt update
 ```
 
-Install zenoh:
+Install Zenoh:
 
 ```bash
 $ sudo apt install zenoh 
 ```
  
-Then you can start the zenoh router with this command:
+Then you can start the Zenoh router with this command:
 
 ```bash
 $ zenohd -V
@@ -59,12 +59,12 @@ $ zenohd -V
 
 ### Windows
 
-Download the zenoh archive from https://download.eclipse.org/zenoh/zenoh/latest/ :
+Download the Zenoh archive from https://download.eclipse.org/zenoh/zenoh/latest/ :
 - For Windows 64 bits: get the `x86_64-pc-windows-msvc/zenoh-<version>-x86_64-pc-windows-msvc.zip`file
 
 Unzip the archive.
 
-Go to zenoh directory and start zenoh router:
+Go to Zenoh directory and start Zenoh router:
 
 ```cmd
 > cd C:\path\to\zenoh\dir
@@ -72,7 +72,7 @@ Go to zenoh directory and start zenoh router:
 ```
 
 ## Testing Your Installation
-To test the installation, try to see the zenoh man page by executing the following command:
+To test the installation, try to see the Zenoh man page by executing the following command:
 
 ```bash
 $ zenohd --help
@@ -80,7 +80,7 @@ $ zenohd --help
 You should see the following output on your console:
 
 ```text
-The zenoh router v0.6.0-beta.X
+The Zenoh router v0.6.0-beta.X
 
 USAGE:
     zenohd [OPTIONS]
@@ -146,7 +146,7 @@ OPTIONS:
 ```
 
 ## Installing client library
-To develop your application zenoh application, you need to install a zenoh client library.
+To develop your application Zenoh application, you need to install a Zenoh client library.
 Depending on your programmation language of choice, pick one of the following API and refer to the installation and usage instructions in here:
 
 - [Rust API](https://crates.io/crates/zenoh)
