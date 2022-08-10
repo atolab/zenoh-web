@@ -1,6 +1,6 @@
 ---
 title: "Your First zenoh app"
-weight : 1020
+weight : 1000
 menu:
   docs:
     parent: getting_started
@@ -40,7 +40,7 @@ create a `zenoh-myhome.json5` configuration file for zenoh with this content:
 }
 ```
 
-and start the zenoh router with this configuration file:
+[Install](../installation) and start the zenoh router with this configuration file:
 
 ```bash
 zenohd -c zenoh-myhome.json5

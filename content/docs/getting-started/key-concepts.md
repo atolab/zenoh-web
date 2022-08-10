@@ -1,6 +1,6 @@
 ---
 title: "Key concepts"
-weight : 1000
+weight : 1005
 menu:
   docs:
     parent: getting_started
