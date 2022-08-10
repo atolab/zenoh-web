@@ -7,8 +7,8 @@ menu:
 
 
 # Slides
-- [Zenoh: The Edge Data Fabric](https://drive.google.com/file/d/1MJL2hodWX3Arx_XQCsyOvuEwp0R0KVOi/view?usp=sharing)
-- [Zenoh: Coding Lab](https://drive.google.com/file/d/1CeYNOKmw63uDczXx0qM9XipeGh2wvrPy/view?usp=sharing)
+- [Zenoh: The Edge Data Fabric](https://drive.google.com/file/d/1673XJ03rdNB-a-JCuWhREMAT2bIUuVcg/view?usp=sharing)
+- [Zenoh: Coding Lab](https://drive.google.com/file/d/16HQbt1t8sJqZP2WFyqSDBrMEJB0OPmBe/view?usp=sharing)
 
 # Videos
 
