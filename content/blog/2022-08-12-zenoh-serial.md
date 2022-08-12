@@ -16,7 +16,7 @@ In this post, we will show how **Zenoh can simultaneously operate over multiple 
 Simply put, **Zenoh is capable of running above a Data Link, Network, or Transport Layer**. 
 Such capability is available by protocol design, which defines and builds upon a Zenoh Session Protocol that provides abstractions for ordered best effort and reliable channels, different priorities and unlimited MTU.
 
-Zenoh has minimal overhead, introducing only 4-6 bytes of overhead per data exchange. This is once again the result of careful design and protocol behavior as demonstrated in our previous blog post \[1\](https://zenoh.io/blog/2021-07-13-zenoh-performance-async/) \[2\](https://zenoh.io/blog/2022-06-09-zenoh-pico-above-and-beyond/).
+Zenoh has minimal overhead, introducing only 4-6 bytes of overhead per data exchange. This is once again the result of careful design and protocol behavior as demonstrated in our previous blog post [1](https://zenoh.io/blog/2021-07-13-zenoh-performance-async/) [2](https://zenoh.io/blog/2022-06-09-zenoh-pico-above-and-beyond/).
 
 Below, you can find the protocols currently supported by Zenoh. The modularity of our implementations allow us to easily add new underlying protocols. Check-out our [roadmap](https://github.com/eclipse-zenoh/roadmap) to see what is planned, and let us know if you have any transport you would like to see supported.
 
