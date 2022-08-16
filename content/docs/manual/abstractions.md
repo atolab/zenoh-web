@@ -56,7 +56,7 @@ A selector is an extension of the [key expression](#key-expressions) syntax, and
 - The key expression, which is the part of the selector that routers will consider when routing a Zenoh message.
 - Optionally, separated from the key expression by a `?`, the value-selector acts as arguments for a Zenoh query.
 
-Queryables are free to interpret the value-selector however they see fit, but Zenoh-provided [queryables](#queryable-previously-named-eval), such as the [admin-space](#admin-space) will generally use the the same format as a URL query section, that we encourage queryable-implementers to use also for consistency.
+Queryables are free to interpret the value-selector however they see fit, but Zenoh-provided [queryables](#queryable), such as the [admin-space](#admin-space) will generally use the the same format as a URL query section, that we encourage queryable-implementers to use also for consistency.
 
 A value-selector is abstracted as a list of key-value pairs, formatted such that:
 - key-value pairs are separated by &.
@@ -142,7 +142,7 @@ An entity registering interest for being notified whenever a key/value with a ke
 
 ---
 
-## Queryable (previously named Eval)
+## Queryable
 
 A computation registered at a specific [key expression](#key-expressions).
 
