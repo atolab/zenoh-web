@@ -19,8 +19,8 @@ However, you will much more often interact with [key expressions](#key-expressio
 There are a few restrictions on what may be a key:
 - A character in a key should be a non-empty UTF-8 string.
 - An individual key may not contain the characters `*`, `$`, `?`, `#`.
-- ~~Some characters such as `?`, `(`, `)`, `[` and `]` are not explicitly forbidden, but may interact very poorly with the [selector](#selector) syntax. We may forbid them from existing in key-expression in future releases.~~ ~~Using `?`, `(`, `)`, `[` and `]` are discouraged since it will interfere with the [selector](#selector) syntax. We may forbid them in future releases.~~
-- ~~While it likely won't affect Zenoh's inner-workings, we advise that your keys remain UTF-8 strings, as most tools that display keys will assume that they are and suffer render-issues if not.~~ 
+<!-- - ~~Some characters such as `?`, `(`, `)`, `[` and `]` are not explicitly forbidden, but may interact very poorly with the [selector](#selector) syntax. We may forbid them from existing in key-expression in future releases.~~ ~~Using `?`, `(`, `)`, `[` and `]` are discouraged since it will interfere with the [selector](#selector) syntax. We may forbid them in future releases.~~
+- ~~While it likely won't affect Zenoh's inner-workings, we advise that your keys remain UTF-8 strings, as most tools that display keys will assume that they are and suffer render-issues if not.~~  -->
 
 A typical Zenoh key would look something like `organizationA/building8/room275/sensor3/temperature`.
 

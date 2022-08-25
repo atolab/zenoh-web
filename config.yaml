@@ -16,6 +16,9 @@ sitemap:
 
 menu:
   docs:
+    - identifier: "overview"
+      name: "Overview"
+      weight: 100
     - identifier: "getting_started"
       name: "Getting started"
       weight: 1000
