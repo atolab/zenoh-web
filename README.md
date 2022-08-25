@@ -4,7 +4,7 @@ The website for the Eclipse zenoh project. Lives at [http://zenoh.io](https://ze
 
 ## Getting Started
 
-Building the website depends on [Hugo](http://gohugo.io). So, first make sure
+Building the website depends on [Hugo 0.91.2](http://gohugo.io). So, first make sure
 that you have it installed. If on OS X and using Homebrew, run the following:
 
 ```sh
