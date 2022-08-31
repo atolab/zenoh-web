@@ -24,7 +24,8 @@ Below is a list of companies, research institutes and foundations that adopted, 
         </div>
         <div class="col">
             <a href="https://5g-dive.eu/" target=="_blank">
-                <img align="center" src="https://5g-dive.eu/wp-content/uploads/2019/10/cropped-5G-Dive_rgb_horizontal-1.png" alt="5G-Dive"/>
+                <img align="center" src="/img/adopters/5g-dive.png" alt="5G-Dive"/>
+                <!-- <img align="center" src="https://5g-dive.eu/wp-content/uploads/2019/10/cropped-5G-Dive_rgb_horizontal-1.png" alt="5G-Dive"/> -->
             </a>
         </div>
         <div class="col">
@@ -73,7 +74,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
         </div>
         <div class="col">
              <a href="https://www.futurewei.com" target=="_blank">
-                <img align="center" src="/img/futurewei-logo.png" alt="FutureWei"/>
+                <img align="center" src="/img/adopters/futurewei-logo.png" alt="FutureWei"/>
             </a>            
         </div>
     </div>
