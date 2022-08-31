@@ -8,11 +8,12 @@ menu:
 
 Zenoh is a **distributed service** to define, manage and operate on **key/value** spaces.
 
-The key abstractions at the core of Zenoh are the following:
+The main abstractions at the core of Zenoh are the following:
 
 ## Key
 
-Zenoh operates on **key/value** pairs. The most important thing to know about Zenoh keys is that `/` is the hierarchical separator, just like in unix filesystems. While you could set up your own hierarchy using other separators, your Zenoh exchanges would likely suffer much worse performance, as using `/` will let Zenoh do clever optimisations (users have informed us in the past that switching from `.` to `/` as their hierarchy-separator almost divided their CPU usage by 2).
+Zenoh operates on **key/value** pairs. The most important thing to know about Zenoh keys is that `/` is the hierarchical separator, just like in unix filesystems. 
+While you could set up your own hierarchy using other separators, your Zenoh exchanges would benefit from better performance using `/` as it will let Zenoh do clever optimisations (users have informed us in the past that switching from `.` to `/` as their hierarchy-separator almost divided their CPU usage by 2).
 
 However, you will much more often interact with [key expressions](#key-expressions), which provide a small regular language to match sets of keys.
 
@@ -22,15 +23,16 @@ There are a few restrictions on what may be a key:
 <!-- - ~~Some characters such as `?`, `(`, `)`, `[` and `]` are not explicitly forbidden, but may interact very poorly with the [selector](#selector) syntax. We may forbid them from existing in key-expression in future releases.~~ ~~Using `?`, `(`, `)`, `[` and `]` are discouraged since it will interfere with the [selector](#selector) syntax. We may forbid them in future releases.~~
 - ~~While it likely won't affect Zenoh's inner-workings, we advise that your keys remain UTF-8 strings, as most tools that display keys will assume that they are and suffer render-issues if not.~~  -->
 
-A typical Zenoh key would look something like `organizationA/building8/room275/sensor3/temperature`.
+A typical Zenoh key would look something like:
+```organizationA/building8/room275/sensor3/temperature```
 
 ---
 
-## Key Expressions
+## Key Expression
 
-Key expressions allow you to adress a set of keys in a single request. This can be used for convenience, or as a bandwidth-saving measure to avoid making the same request multiple times with only small changes in the key.
-
-Key expressions are a small regular language, where `*` behaves much like it does in globs:
+<!-- Key expressions allow you to adress a set of keys in a single request. This can be used for convenience, or as a bandwidth-saving measure to avoid making the same request multiple times with only small changes in the key. -->
+A key expression denotes a set of keys.
+It is declared using [Key Expression Language](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Key%20Expressions.md), a small regular language, where:
 - `*` matches any set of characters in a key, except `'/'`. It can only be surrounded by `/`.
   For example, subscribing to `organizationA/building8/room275/*/temperature` will ensure that any temperature message from any device in room 275 of building 8 will be routed to your subscriber.  
   Note however that this expression wouldn't match `organizationA/building8/room275/temperature`.
@@ -39,14 +41,12 @@ Key expressions are a small regular language, where `*` behaves much like it doe
 - `**` is equivalent to `.*` in regular expression syntax: it will match absolutely anything, including nothing. They may appear at the beginning of a key expression or after a `/`, and `/` is the only allowed character after a `**`  
   For example, subscribing to `organizationA/**/temperature` will ensure that any temperature message from ALL devices in organization A.
 
-The [Key Expression Language](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Key%20Expressions.md) is defined [here](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Key%20Expressions.md).
-
 ### Optimizing key expressions
 
-While the language is simple, it hides sometimes complex algorithms and behaviours. Forming your key expressions well can be the key to reducing the ressource-requirements of your Zenoh infrastructure:
+While the language is simple, it hides sometimes complex algorithms and behaviours. Forming your key expressions well can be the key to reducing the resource-requirements of your Zenoh infrastructure:
 - Make your expressions as precise as possible: `organizationA/building8/room275/*/temperature` and `organizationA/building8/room275/thermometer$*/temperature` are similar, but if your rooms also contain `robot12` and `pc18` (even though neither exposes a direct `temperature` child), specifying that you're only interested in thermometers will reduce matching costs on the infrastructure.
-- Avoid middle-`**`: while trailing-`**` are very low-cost, middle-`**` such as the one in the previous example are generally more costly to evaluate. If your hierarchy is well-formed, you should be able to replace a middle-`**` by an appropriately long chain of `*` segments, such as `organizationA/*/*/*/temperature` for our example, which will be much cheaper to evaluate.
-- You may sometimes want to use a combination of `*` and `**` to express that you want to match "any key that is at least this deep". For example `**/*/*/temperature` would match any key that contains at least 3 segments with the last one matching `temperature`. When doing so, bubble up your `*`s to the left, to obtain the canonical form `*/*/**/temperature`. By doing so, you will significantly reduce the cost of evaluating matches for that expression.
+- Avoid middle-`**`: Trailing-`**` are generally less costly to evaluate compared to middle-`**`. If your hierarchy is well-formed, you should be able to replace a middle-`**` by an appropriately long chain of `*` segments, such as `organizationA/*/*/*/temperature` for our example, for better performance.
+- You may sometimes want to use a combination of `*` and `**` to express that you want to match "any key that is at least this deep". For example `**/*/*/temperature` would match any key that contains at least 3 segments with the last one matching `temperature`. When doing so, bubble up your `*`s to the left, to obtain the canonical form `*/*/**/temperature`. This will significantly reduce the cost of evaluating matches for that expression.
 
 ---
 
