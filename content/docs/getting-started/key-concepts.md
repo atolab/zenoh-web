@@ -36,13 +36,13 @@ The router executable file is named `zenohd` and is available in [Zenoh releases
 ------
 ## User API
 
-The Zenoh API provides the primitives to allow pub/sub (push) communications as well as query/reply (pull) communications:
+The Zenoh API provides the primitives to allow pub/sub communications as well as query/reply communications:
  - **put :** push live data to the matching subscribers and storages.
- - **subscribe :** subscriber to live data publications.
+ - **subscribe :** subscribe to live data publications (includes an option to do a pull subscription).
  - **get :** query data from the matching queryables (including storages).
  - **queryable :** declare an entity able to reply to queries.
 
-Based on those primitives, Zenoh introduces the **Storage** abstraction that uses both **subscribe** (to receive and store publications) and **queryable** (to reply to queries with stored data).
+Based on these primitives, Zenoh introduces the **Storage** abstraction that uses both **subscribe** (to receive and store publications) and **queryable** (to reply to queries with stored data).
 
 ![key primitives](/img/key_primitives_v0.6.png "key primitives")
 
