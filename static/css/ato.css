@@ -399,11 +399,13 @@ img {
 
 .ato-toc-item.active > .ato-sidenav {
     display: block;
+    margin-left: 1rem;
 }
 
 .active .active {
   font-weight: 500;
   color: rgba(0,0,0,.85)!important;
+  background-color: rgba(240,240,240)!important;
 }
 
 .ato-toc-link {
