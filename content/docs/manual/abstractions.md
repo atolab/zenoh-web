@@ -79,7 +79,7 @@ A value-selector is abstracted as a list of key-value pairs, formatted such that
 
 Any key that doesn't start with an alphanumeric character is reserved for Zenoh internals. Zenoh may adapt its behavior to the presence and values associated with any key that doesn't start with an alphanumeric character.
 Zenoh supports the following keys currently:
-- `_time` property is reserved. Queryables that maintain a history of values are encouraged to use the `_time` key
+- `_time` property is reserved to specify either the time range (with start and end) or the duration (with start and the duration). Queryables that maintain a history of values are encouraged to use the `_time` key
 as a way to obtain the range of time the querier is interested in.
 - `_filter` property is reserved to specify filtering function to be applied on the query result.
 - `_projection` property is reserved for the querier to specify the projection of values.
