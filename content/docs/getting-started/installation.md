@@ -44,7 +44,7 @@ $ brew install zenoh
 
 Then you can start the Zenoh router with this command:
 ```bash
-$ zenohd -V
+$ zenohd
 ```
 
 ### Ubuntu or any Debian
@@ -65,7 +65,7 @@ $ sudo apt install zenoh
 Then you can start the Zenoh router with this command:
 
 ```bash
-$ zenohd -V
+$ zenohd
 ```
 
 ### Windows
@@ -79,7 +79,7 @@ Go to Zenoh directory and start Zenoh router:
 
 ```cmd
 > cd C:\path\to\zenoh\dir
-> zenohd.exe -V
+> zenohd.exe
 ```
 
 ## Testing Your Installation
