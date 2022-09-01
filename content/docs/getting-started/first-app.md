@@ -1,5 +1,5 @@
 ---
-title: "Your First Zenoh app"
+title: "Your first Zenoh app"
 weight : 1000
 menu:
   docs:

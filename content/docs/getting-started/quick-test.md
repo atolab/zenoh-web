@@ -1,5 +1,5 @@
 ---
-title: "For a Quick Test using Docker"
+title: "For a quick test using Docker"
 weight : 1015
 menu:
   docs:
