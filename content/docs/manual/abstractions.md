@@ -30,7 +30,7 @@ A typical Zenoh key would look something like:
 
 ## Key Expression
 
-<!-- Key expressions allow you to adress a set of keys in a single request. This can be used for convenience, or as a bandwidth-saving measure to avoid making the same request multiple times with only small changes in the key. -->
+<!-- Key expressions allow you to address a set of keys in a single request. This can be used for convenience, or as a bandwidth-saving measure to avoid making the same request multiple times with only small changes in the key. -->
 A key expression denotes a set of keys.
 It is declared using [Key Expression Language](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Key%20Expressions.md), a small regular language, where:
 - `*` matches any set of characters in a key, except `'/'`. It can only be surrounded by `/`.
@@ -64,7 +64,7 @@ A value-selector is abstracted as a list of key-value pairs, formatted such that
 - both the key and value fields shall be URL-encoded to allow for character escapement.
 
 <!-- A Zenoh-typical value selector is made of 3 sections, in that order:
-- The **filter** section is a `&` separated list of predicates, such that the queryable should filter out values that don't fulfill all predicates.  
+- The **filter** section is a `&` separated list of predicates, such that the queryable should filter out values that don't fulfil all predicates.  
   Each predicate has the form `<field><operator><literal>`. `<field>` is the name of a field in the value. If that field is not found or has an unexpected type, the predicate is considered unfulfilled. The `<operator>` may be `<`, `>`, `<=`, `>=`, `=` or `!=`. The `<literal>` is the value for the comparison.
   _For now, very few queryables actually support this element_
 - The **arguments** (previously named **properties**) section, surrounded by parentheses, serves as a list of named arguments for the queryable. For example, time-series queryable have a `starttime` argument used to mark that no value older than that time is wanted by the querier.
@@ -79,7 +79,7 @@ A value-selector is abstracted as a list of key-value pairs, formatted such that
 
 Any key that doesn't start with an alphanumeric character is reserved for Zenoh internals. Zenoh may adapt its behavior to the presence and values associated with any key that doesn't start with an alphanumeric character.
 Zenoh supports the following keys currently:
-- `_time` property is reserved queryables that maintain a history of values are encouraged to use the _time key
+- `_time` property is reserved. Queryables that maintain a history of values are encouraged to use the `_time` key
 as a way to obtain the range of time the querier is interested in.
 - `_filter` property is reserved to specify filtering function to be applied on the query result.
 - `_projection` property is reserved for the querier to specify the projection of values.
@@ -126,7 +126,7 @@ This timestamp is made of 2 items:
     (implying a rollover in 2106).
   - The lower 32-bit part is a fraction of second, but with the 8 last bits replaced by a counter.
 
-  This time gives a theoritical resolution of 2^-32 seconds (60 nanoseconds), and
+  This time gives a theoretical resolution of 2^-32 seconds (60 nanoseconds), and
   guarantees that the same time cannot be generated twice and that the _happened-before_ relationship is preserved.
 
 - The **UUID** of the Zenoh router that generated the time.

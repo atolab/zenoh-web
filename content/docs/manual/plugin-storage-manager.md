@@ -60,7 +60,7 @@ The main schema is as follows:
       // A prefix of `key_expr` that should be stripped from it when storing keys in the storage
       strip_prefix?: string,
       // Storages depend on a volume to do the actual storing of data.
-      // `volume: "memory"` is equivalend to `volume: {id: "memory"}`, but some volumes may require additional configuration. For example, a volume running on the `filesystem` backend needs each storage to specify a `base_dir`.
+      // `volume: "memory"` is equivalent to `volume: {id: "memory"}`, but some volumes may require additional configuration. For example, a volume running on the `filesystem` backend needs each storage to specify a `base_dir`.
       volume: string | { id: string, ...configuration: any}
     }
   }
@@ -125,7 +125,7 @@ The storage manager will delete the associated storages as well.
 
 
 ### Adding a storage
-You can add storages at any time by ading them to the configuration through the admin space.
+You can add storages at any time by adding them to the configuration through the admin space.
 
 The simplest volume to use is the integrated "memory" volume, since it requires no extra configuration. Let's have "my-storage" work on `demo/my-storage/**`:
 ```bash

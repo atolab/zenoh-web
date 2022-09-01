@@ -123,7 +123,7 @@ A configuration file for a *peer* would be:
 }
 ```
 
-When using such configuration, the peer will use the provided **root_ca_certificate** to authenticate the *TLS certificate* of the *peer* he is connecting to.
+When using such configuration, the peer will use the provided **root_ca_certificate** to authenticate the *TLS certificate* of the *peer* it is connecting to.
 At the same time, the peer will use the provided **server_private_key** and **server_certificate** for initiating incoming TLS sessions from other peers.
 
 Let's assume that the above configurations are then saved with the name *peer.json5*.

@@ -32,7 +32,7 @@ Plugin library files to load manually can be specified using the `--plugin` opti
 Zenoh relies on the configuration files provided to decide the plugins to be loaded at startup. 
 If a plugin is added to the configuration during runtime (for example through the [admin space](../abstractions#admin-space)), it will be loaded then.
 
-<!-- This choice was made to reduce side effects, as loading all available plugins can lead to loading plugins that have behaviour you do not expect, or that may have weird interractions when running side-by-side. -->
+<!-- This choice was made to reduce side effects, as loading all available plugins can lead to loading plugins that have behaviour you do not expect, or that may have weird interactions when running side-by-side. -->
 
 The configuration has 2 fields that is related to plugins:
 * `plugins`, where you may specify which plugins you require, as well as provide configuration for them.

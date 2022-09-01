@@ -4,7 +4,7 @@ description: A very partial list of Zenoh adopters and supporters
 menu: adopters
 ---
 
-Below is a list of companies, research institutes and foundations that adopted, supported or contributed to Zenoh. If you cannot find your logo post a message on the [Zenoh's discord server](https://discord.gg/cY4nVjUd) and we'll add it right away.
+Below is a list of companies, research institutes and foundations that adopted, supported or contributed to Zenoh. If you cannot find your logo, please post a message on the [Zenoh's discord server](https://discord.gg/cY4nVjUd) and we'll add it right away.
 
 #
 

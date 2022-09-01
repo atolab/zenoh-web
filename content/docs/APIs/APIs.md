@@ -4,7 +4,7 @@ weight : 9000
 menu: "docs"
 ---
 
-All the client APIs documentations are avaliable on [Read the Docs](https://readthedocs.org/search/?q=zenoh):
+All the client APIs documentations are available on [Read the Docs](https://readthedocs.org/search/?q=zenoh):
 
 ## Rust
 https://zenoh-rust.readthedocs.io/

@@ -21,7 +21,7 @@ The required configuration fields for a *client* would hence be:
   mode: "client",
   transport: {
     auth: {
-      /// The configuration of authentification.
+      /// The configuration of authentication.
       /// A password implies a username is required.
       usrpwd: {
         user: "clientusername",
@@ -45,7 +45,7 @@ The required configuration fields for a *router* or a *peer* would hence be:
   mode: "router",
   transport: {
     auth: {
-      /// The configuration of authentification.
+      /// The configuration of authentication.
       usrpwd: {
         user: "routerusername",
         password: "routerpassword",
@@ -118,7 +118,7 @@ Therefore, the *client.json5* would become:
   mode: "client",
   transport: {
     auth: {
-      /// The configuration of authentification.
+      /// The configuration of authentication.
       /// A password implies a username is required.
       usrpwd: {
         user: "clientusername",
@@ -136,7 +136,7 @@ And the *router.json5* file would become:
   mode: "router",
   transport: {
     auth: {
-      /// The configuration of authentification.
+      /// The configuration of authentication.
       usrpwd: {
         user: "routerusername",
         password: "2ce01a11893f276a4064f586f24b8f1868008e2e623f6c4e74ef381247e49df1",

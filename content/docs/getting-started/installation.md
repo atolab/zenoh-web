@@ -6,7 +6,18 @@ menu:
     parent: getting_started
 ---
 
-To get up and running with <b>Zenoh</b> you will have to install the router and then get hold of the API you would like to use to write your applications. 
+<!-- To get up and running with <b>Zenoh</b> you will have to install the router or the client (possibly both).  -->
+To start playing with <b>Zenoh</b> we need the Zenoh router and/or the Zenoh client library. 
+## Installing client library
+To develop your application Zenoh, you need to install a Zenoh client library.
+Depending on your programming language, pick one of the following API and refer to the installation and usage instructions in here:
+
+- [Rust API](https://crates.io/crates/zenoh)
+- [Python API](https://github.com/eclipse-zenoh/zenoh-python)
+- [C API](https://github.com/eclipse-zenoh/zenoh-c)
+- [Pico API](https://github.com/eclipse-zenoh/zenoh-pico): A port of Zenoh in C, targeted at low-power devices.
+
+Note that if you wish to always have access to all of Zenoh's latest features, Rust is Zenoh's original language, and will therefore always be the most feature-complete version.
 
 ## Installing the Zenoh router
 The Zenoh router (a.k.a. `zenohd`) and its plugins are currently available as pre-built binaries for various platforms. All release packages can be downloaded from:  
@@ -145,13 +156,3 @@ OPTIONS:
             Print version information
 ```
 
-## Installing client library
-To develop your application Zenoh application, you need to install a Zenoh client library.
-Depending on your programmation language of choice, pick one of the following API and refer to the installation and usage instructions in here:
-
-- [Rust API](https://crates.io/crates/zenoh)
-- [Python API](https://github.com/eclipse-zenoh/zenoh-python)
-- [C API](https://github.com/eclipse-zenoh/zenoh-c)
-- [Pico API](https://github.com/eclipse-zenoh/zenoh-pico): A port of Zenoh in C, targeted at low-power devices.
-
-Note that if you wish to always have access to all of Zenoh's latest features, Rust is Zenoh's original language, and will therefore always be the most feature-complete version.
