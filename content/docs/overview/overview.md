@@ -12,7 +12,7 @@ Additionally, for performance, efficiency and privacy reasons, there is an incre
 
 <!-- ~~**Zenoh** has been designed to address the needs of those applications that need to deal with data in movement, data at rest and computation in a scalable, efficient and location transparent manner.~~ -->
 
-**Zenoh** unifies data in motion, data in use, data at rest and computations.  It carefully blends traditional pub/sub with geo-distributed storages, queries and computations, while retaining a level of time and space efficiency that is well beyond any of the mainstream stacks. 
+**Zenoh is a pub/sub/query protocol** that unifies data in motion, data in use, data at rest and computations.  It carefully blends traditional pub/sub with geo-distributed storages, queries and computations, while retaining a level of time and space efficiency that is well beyond any of the mainstream stacks. 
 
 
 **Zenoh** has been designed to:
