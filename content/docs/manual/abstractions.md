@@ -15,7 +15,7 @@ The main abstractions at the core of Zenoh are the following:
 Zenoh operates on **key/value** pairs. The most important thing to know about Zenoh keys is that `/` is the hierarchical separator, just like in unix filesystems. 
 While you could set up your own hierarchy using other separators, your Zenoh exchanges would benefit from better performance using `/` as it will let Zenoh do clever optimisations (users have informed us in the past that switching from `.` to `/` as their hierarchy-separator almost divided their CPU usage by 2).
 
-However, you will much more often interact with [key expressions](#key-expressions), which provide a small regular language to match sets of keys.
+However, you will much more often interact with [key expressions](#key-expression), which provide a small regular language to match sets of keys.
 
 There are a few restrictions on what may be a key:
 - A character in a key should be a non-empty UTF-8 string.
@@ -52,7 +52,7 @@ While the language is simple, it hides sometimes complex algorithms and behaviou
 
 ## Selector
 
-A selector is an extension of the [key expression](#key-expressions) syntax, and is made of two parts: 
+A selector is an extension of the [key expression](#key-expression) syntax, and is made of two parts: 
 - The key expression, which is the part of the selector that routers will consider when routing a Zenoh message.
 - Optionally, separated from the key expression by a `?`, the value-selector acts as arguments for a Zenoh query.
 
@@ -137,14 +137,21 @@ Such a timestamp allows Zenoh to guarantee that each value introduced into the s
 
 ## Subscriber
 
-An entity registering interest for being notified whenever a key/value with a key matchings the subscriber
-[selector](#selector) is put, updated or removed on Zenoh.
+An entity registering interest for any change (put, update or delete) to a value associated with a key matching the specified
+[key expression](#key-expression).
 
 ---
 
+## Publisher
+
+An entity declaring that it will be updating the key/value with keys matching a given [key expression](#key-expression).
+
+---
+
+
 ## Queryable
 
-A computation registered at a specific [key expression](#key-expressions).
+A computation registered at a specific [key expression](#key-expression).
 
 This computation can be triggered by a `get` operation on a [selector](#selector) matching this key expression.
 The computation function will receive the selector's properties as parameters.
@@ -153,10 +160,10 @@ The computation function will receive the selector's properties as parameters.
 
 ## Storage
 
-[Storages](../plugin-storage-manager) are an intersection of a queryable and subscriber:
-- They subscribe to a set of keys;
-- upon receiving publications onto a subset of their subscription set, they store the associated values;
-- when queried about a subset of their subscription set, they return the latest values for each appropriate key.
+[Storages](../plugin-storage-manager) are an intersection of a queryable and subscriber. They
+- subscribe to [key expression](#key-expression);
+- upon receiving publications matching their subscription, they store the associated values;
+- when queried with a selector matching their subscription, they return the latest values for each matching key.
 
 `zenohd`, the reference implementation of a Zenoh node, supports storages through the [`storages` plugin](../plugin-storage-manager).
 
@@ -166,7 +173,7 @@ Since there exist many ways to implement the storing part of the process, the `s
 
 ## Admin space
 
-The administration space of Zenoh allowing to administrate a Zenoh router and its plugins.
+The key space of Zenoh dedicate to administer a Zenoh router and its plugins.
 It is accessible via regular get/put on Zenoh, under the `@/router/<router-id>` prefix, where
 **`<router-id>`** is the UUID of a Zenoh router.
 
