@@ -53,5 +53,5 @@ Based on these primitives, Zenoh introduces the **Storage** abstraction that is 
 
 ![key primitives](/img/key_primitives_v0.6.png "key primitives")
 
-The Zenoh API is provided for a set of programming languages (full list in [API documentations](../APIs/APIs)). Each one implements the Zenoh protocol to support those primitives.  
+The Zenoh API is provided for a set of programming languages (full list in [API documentations](../../apis/apis)). Each one implements the Zenoh protocol to support those primitives.  
 <!-- ~~Thanks to limited prerequisites, the Zenoh protocol can be implemented on top of either Physical, Data Link or Transport [communication layers](https://en.wikipedia.org/wiki/OSI_model).~~ -->

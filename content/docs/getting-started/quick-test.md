@@ -22,7 +22,7 @@ The ports used by Zenoh are the following:
 
 **⚠️ WARNING ⚠️**: _Docker doesn't support UDP multicast between a container and its host (see cases [moby/moby#23659](https://github.com/moby/moby/issues/23659), [moby/libnetwork#2397](https://github.com/moby/libnetwork/issues/2397) or [moby/libnetwork#552](https://github.com/moby/libnetwork/issues/552)). The only case where it works is on Linux using the `--net host` option to make the container to share the host's networking space (i.e. run: `docker run --init --net host eclipse/zenoh`)._  
 _The implication of not having UDP multicast working for the Zenoh router is that you need to configure your Zenoh applications (peer or client) with the router's locator as `peer`:_
-  - _running the [examples we provide](##pick-your-programming-language), just add the option: `-e tcp/localhost:7447`_
+  - _running the [examples we provide](#pick-your-programming-language), just add the option: `-e tcp/localhost:7447`_
   - _writing your own Zenoh application, you need to add a `connect: {endpoints: ["tcp/localhost:7447"]}}` configuration when initiating the Zenoh API_
 
 ### Adding plugins and backends to the container
@@ -30,7 +30,7 @@ _The implication of not having UDP multicast working for the Zenoh router is tha
 The Zenoh router supports the dynamic loading of plugins libraries (at startup) and backends libraries (during runtime).  
 See the relevant chapters for more details about plugins and backends:
  - [Zenoh plugins](../../manual/plugins)
- - [Zenoh backends and storages](../../manual/backends)
+ - [Zenoh backends and storages](../../manual/plugin-storage-manager)
 
 **⚠️ WARNING ⚠️**: _To be compatible with Zenoh in Docker, the libraries must be compiled for **`x86_64-unknown-linux-musl`** target. Look for `.tgz` filenames with this extension when downloading plugins or backends from the [Eclipse zenoh download space](https://download.eclipse.org/zenoh)._
 
@@ -101,5 +101,5 @@ Now you can see how to [build your first Zenoh application in Python](../first-a
 ## Pick your programming language
 
 If you prefer, you could also have a look to the `examples/zenoh` directory we provide in each Zenoh API:
-- [Rust examples](https://github.com/eclipse-zenoh/zenoh/tree/master/zenoh/examples/zenoh)
-- [Python examples](https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples/zenoh)
+- [Rust examples](https://github.com/eclipse-zenoh/zenoh/tree/master/examples)
+- [Python examples](https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples)

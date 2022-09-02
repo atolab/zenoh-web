@@ -6,7 +6,7 @@ menu:
     parent: manual
 ---
 
-The REST plugin provides access to the Zenoh [REST API](../apis/apis#rest-api) by enabling an HTTP server on the Zenoh node where it is running.
+The REST plugin provides access to the Zenoh [REST API](../../apis/apis#rest-api) by enabling an HTTP server on the Zenoh node where it is running.
 
 ------
 **Library name:** `zplugin_rest`

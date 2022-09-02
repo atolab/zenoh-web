@@ -56,7 +56,7 @@ if __name__ == "__main__":
     time.sleep(60)
 ```
 
-[Install](https://github.com/eclipse-zenoh/zenoh-python#how-to-install-it) the library and start the subscriber
+[Install](https://github.com/eclipse-zenoh/zenoh-python) the library and start the subscriber
 ```bash
 python3 z_subscriber.py
 ```
