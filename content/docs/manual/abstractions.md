@@ -13,15 +13,13 @@ The main abstractions at the core of Zenoh are the following:
 ## Key
 
 Zenoh operates on **key/value** pairs. The most important thing to know about Zenoh keys is that `/` is the hierarchical separator, just like in unix filesystems. 
-While you could set up your own hierarchy using other separators, your Zenoh exchanges would benefit from better performance using `/` as it will let Zenoh do clever optimisations (users have informed us in the past that switching from `.` to `/` as their hierarchy-separator almost divided their CPU usage by 2).
+While you could set up your own hierarchy using other separators, your Zenoh exchanges would benefit from better performance using `/`, as it will let Zenoh do clever optimisations (users have informed us in the past that switching from `.` to `/` as their hierarchy-separator almost divided their CPU usage by 2).
 
 However, you will much more often interact with [key expressions](#key-expression), which provide a small regular language to match sets of keys.
 
 There are a few restrictions on what may be a key:
-- A character in a key should be a non-empty UTF-8 string.
+- It is a `/`-joined list of non-empty UTF-8 chunks. This implies that leading and trailing `/` are forbidden, as well as the `//` pattern.
 - An individual key may not contain the characters `*`, `$`, `?`, `#`.
-<!-- - ~~Some characters such as `?`, `(`, `)`, `[` and `]` are not explicitly forbidden, but may interact very poorly with the [selector](#selector) syntax. We may forbid them from existing in key-expression in future releases.~~ ~~Using `?`, `(`, `)`, `[` and `]` are discouraged since it will interfere with the [selector](#selector) syntax. We may forbid them in future releases.~~
-- ~~While it likely won't affect Zenoh's inner-workings, we advise that your keys remain UTF-8 strings, as most tools that display keys will assume that they are and suffer render-issues if not.~~  -->
 
 A typical Zenoh key would look something like:
 ```organizationA/building8/room275/sensor3/temperature```
@@ -41,49 +39,57 @@ It is declared using [Key Expression Language](https://github.com/eclipse-zenoh/
 - `**` is equivalent to `.*` in regular expression syntax: it will match absolutely anything, including nothing. They may appear at the beginning of a key expression or after a `/`, and `/` is the only allowed character after a `**`  
   For example, subscribing to `organizationA/**/temperature` will ensure that any temperature message from ALL devices in organization A.
 
-### Optimizing key expressions
+This language is designed to ensure that two key expressions addressing the same set of keys *must* be the same string.
+To ensure that, only a *canon* form is allowed for key expressions:
+- `**/**` must always be replaced by `**`
+- `**/*` must always be replaced by `*/**`
+- `$*$*` must always be replaced by `$*`
+- `$*` must be replaced by `*` if alone in a chunk.
 
-While the language is simple, it hides sometimes complex algorithms and behaviours. Forming your key expressions well can be the key to reducing the resource-requirements of your Zenoh infrastructure:
-- Make your expressions as precise as possible: `organizationA/building8/room275/*/temperature` and `organizationA/building8/room275/thermometer$*/temperature` are similar, but if your rooms also contain `robot12` and `pc18` (even though neither exposes a direct `temperature` child), specifying that you're only interested in thermometers will reduce matching costs on the infrastructure.
-- Avoid middle-`**`: Trailing-`**` are generally less costly to evaluate compared to middle-`**`. If your hierarchy is well-formed, you should be able to replace a middle-`**` by an appropriately long chain of `*` segments, such as `organizationA/*/*/*/temperature` for our example, for better performance.
-- You may sometimes want to use a combination of `*` and `**` to express that you want to match "any key that is at least this deep". For example `**/*/*/temperature` would match any key that contains at least 3 segments with the last one matching `temperature`. When doing so, bubble up your `*`s to the left, to obtain the canonical form `*/*/**/temperature`. This will significantly reduce the cost of evaluating matches for that expression.
+### Notes on key-space design
+Here are some rules of thumb to make Zenoh more comfortable to work with, and more ressource-efficient:
+- `$*` is slower than `*`, design your key-space to avoid needing it. The need for `$*` usually stems from mixing different discriminants within a chunk. Prefer `robot/12` and `pc/18` to `robot12` and `pc18`.
+- A strict hierarchy, where you ensure that `a/keyexpr/that/ends/with/*` always yields data from a single type, will save you the hassle of filtering out data that's not of the right type, while saving the network bandwidth.
 
 ---
 
 ## Selector
 
-A selector is an extension of the [key expression](#key-expression) syntax, and is made of two parts: 
+A selector ([specification](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Selectors/README.md)) is an extension of the [key expression](#key-expression) syntax, and is made of two parts: 
 - The key expression, which is the part of the selector that routers will consider when routing a Zenoh message.
-- Optionally, separated from the key expression by a `?`, the value-selector acts as arguments for a Zenoh query.
+- Optionally, separated from the key expression by a `?`, the parameters.
 
-Queryables are free to interpret the value-selector however they see fit, but Zenoh-provided [queryables](#queryable), such as the [admin-space](#admin-space) will generally use the the same format as a URL query section, that we encourage queryable-implementers to use also for consistency.
-
-A value-selector is abstracted as a list of key-value pairs, formatted such that:
-- key-value pairs are separated by &.
-- each pair follows the (?<key>[^=]*)(=(?<value>[^&]*))? regex: note that the value section is optional: somekey parses to ("somekey", "").
-- both the key and value fields shall be URL-encoded to allow for character escapement.
-
-<!-- A Zenoh-typical value selector is made of 3 sections, in that order:
-- The **filter** section is a `&` separated list of predicates, such that the queryable should filter out values that don't fulfil all predicates.  
-  Each predicate has the form `<field><operator><literal>`. `<field>` is the name of a field in the value. If that field is not found or has an unexpected type, the predicate is considered unfulfilled. The `<operator>` may be `<`, `>`, `<=`, `>=`, `=` or `!=`. The `<literal>` is the value for the comparison.
-  _For now, very few queryables actually support this element_
-- The **arguments** (previously named **properties**) section, surrounded by parentheses, serves as a list of named arguments for the queryable. For example, time-series queryable have a `starttime` argument used to mark that no value older than that time is wanted by the querier.
-- The **projection** (or **fragment**) section, surrounded by square brackets, is a list of field-names, such that only these fields will be returned for each value. -->
-
-```none
-/s1/s2/.../sn?p1=v1&p2=v2&...&_filter=x>1ANDy<2AND...ORz=4&_projection=a;b;x;y;...;z
-|           | |             |          |             |                |             |
-|           | |- arguments--|          |--- filter --|                |--projection-|
-|- key expr | |-------------------- value selector ---------------------------------|
+Here's what a selector concretely looks like:
+```
+path/**/something?arg1=val1&arg2=value%202
+^               ^ ^                      ^
+|Key Expression-| |----- parameters -----|
+```
+Which deserializes to:
+```javascript
+{
+  key_expr: "path/**/something",
+  parameters: {arg1: "val1", arg2: "value 2"}
+}
 ```
 
-Any key that doesn't start with an alphanumeric character is reserved for Zenoh internals. Zenoh may adapt its behavior to the presence and values associated with any key that doesn't start with an alphanumeric character.
-Zenoh supports the following keys currently:
-- `_time` property is reserved to specify either the time range (with start and end) or the duration (with start and the duration). Queryables that maintain a history of values are encouraged to use the `_time` key
-as a way to obtain the range of time the querier is interested in.
-- `_filter` property is reserved to specify filtering function to be applied on the query result.
-- `_projection` property is reserved for the querier to specify the projection of values.
-To avoid collisions of keys between queryables that may treat them with different semantics, implementers are encouraged to select a prefix for their own keys.
+
+The selector's `parameters` section functions just like query parameters:
+* It's separated from the path (Key Expr) by a `?`.
+* It's a `?` list of key-value pairs.
+* The first `=` in a key-value pair separates the key from the value.
+* If no `=` is found, the value is an empty string: `hello=there&kenobi` is interpreted as `{"hello": "there", "kenobi": ""}`.
+* The selector is assumed to be url-encoded: any character can be escaped using `%<charCode>`.
+
+There are however some additional conventions:
+* Duplicate keys are considered Undefined Behaviour; but the recommended behaviour (implemented by the tools we provide for selector interpretation) is to check for duplicates of the interpreted keys, returning errors when they arise.
+* The Zenoh Team considers any key that does not start with an ASCII alphabetic character reserved, intending to standardize some parameters to facilitate working with diverse queryables.
+* Since Zenoh operations may be distributed over diverse networks, we encourage queryable developpers to use some prefix in their custom keys to avoid collisions.
+* When interpreting a key-value pair as a boolean, the absence of the key-value pair, or the value being `"false"` are the only "falsey" values: in the previous examples, the both `hello` and `kenobi` would be considered truthy if interpreted as boolean.
+
+Queryables are free to interpret the parameters however they see fit, but Zenoh-provided [queryables](#queryable), such as the [admin-space](#admin-space).
+
+The list of standardized parameters, as well as their usage, is documented in the [selector specification](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Selectors/README.md).
 
 
 ---
@@ -137,7 +143,7 @@ Such a timestamp allows Zenoh to guarantee that each value introduced into the s
 
 ## Subscriber
 
-An entity registering interest for any change (put, update or delete) to a value associated with a key matching the specified
+An entity registering interest for any change (put or delete) to a value associated with a key matching the specified
 [key expression](#key-expression).
 
 ---
