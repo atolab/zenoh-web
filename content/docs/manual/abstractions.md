@@ -160,7 +160,7 @@ An entity declaring that it will be updating the key/value with keys matching a 
 A computation registered at a specific [key expression](#key-expression).
 
 This computation can be triggered by a `get` operation on a [selector](#selector) matching this key expression.
-The computation function will receive the selector's properties as parameters.
+The computation function will receive the selector as parameters.
 
 ---
 
