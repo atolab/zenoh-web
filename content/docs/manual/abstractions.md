@@ -166,7 +166,7 @@ The computation function will receive the selector as parameters.
 
 ## Storage
 
-[Storages](../plugin-storage-manager) are an intersection of a queryable and subscriber. They
+[Storages](../plugin-storage-manager) are both a queryable and subscriber. They
 - subscribe to [key expression](#key-expression);
 - upon receiving publications matching their subscription, they store the associated values;
 - when queried with a selector matching their subscription, they return the latest values for each matching key.
