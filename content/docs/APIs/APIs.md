@@ -74,6 +74,15 @@ $ curl -g http://localhost:8000/@/**/storages/**
 ]
 ```
 
+### Long-lived (SSE) GET
+
+Binds to the **declare_subscriber(key_expression)** operation on Zenoh.
+
+- **URL**: `http://host:8000/<key_expression>`
+- **body**: none
+- **headers**: `Accept: text/event-stream`
+
+The connection will be upgraded to an SSE (Server-Sent Events), letting Zenoh keep on forwarding samples mathing your key expressions in JSON format.
 
 ### PUT
 
