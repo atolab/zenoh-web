@@ -1,6 +1,6 @@
 ---
 title: "Storage manager plugin"
-weight : 2120
+weight : 3500
 menu:
   docs:
     parent: manual

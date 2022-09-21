@@ -1,6 +1,6 @@
 ---
 title: "What is Zenoh?"
-weight: 100
+weight: 1100
 menu: 
     docs:
         parent: overview
@@ -20,7 +20,7 @@ Technically speaking,  Zenoh is a pub/sub/query protocol that unifies data in mo
 
 **Adopted by Next Generation Applications.** In spite of its young age, Zenoh has witnessed an incredibly swift adoption and is used today in next generation applications, such as, Robotics, Autonomous Vehicles, Internet Gaming, and Telecommunications. Specifically, in Robotics, Zenoh is emerging as the protocol of choice for Robot-to-Robot communication and  Internet-scale monitoring management and real-time teleoperation. Likewise, several Autonomous Vehicles and Mobility initiatives have adopted Zenoh for Vehicle-to-Anything communication and in a growing number of cases as the only protocol used for on- and off- vehicle communication.
 
-Zenoh has achieved all of this by extremely careful design and craftsmanship. It is the first protocol available on the market that has managed to integrate Internet-Scale Publish/ Subscribe with Geo-Distributed Queries. Thus, why not  getting started with it now?  
+Zenoh has achieved all of this by extremely careful design and craftsmanship. It is the first protocol available on the market that has managed to integrate Internet-Scale Publish/ Subscribe with Geo-Distributed Queries. Thus, why not  [getting started](https://zenoh.io/docs/getting-started/key-concepts/) with it now?  
 
 
 <!-- 
@@ -46,4 +46,3 @@ Additionally, for performance, efficiency and privacy reasons, there is an incre
 - Provides a rich set of abstraction for distributing, querying and storing data along the entire system. 
   
 - Provide extremely low latency and high throughput.  -->
-    

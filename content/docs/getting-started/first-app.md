@@ -1,6 +1,6 @@
 ---
 title: "Your first Zenoh app"
-weight : 1000
+weight : 2100
 menu:
   docs:
     parent: getting_started

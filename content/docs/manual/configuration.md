@@ -1,6 +1,6 @@
 ---
 title: "Configuration"
-weight : 2050
+weight : 3200
 menu:
   docs:
     parent: manual

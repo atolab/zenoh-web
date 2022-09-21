@@ -1,6 +1,6 @@
 ---
 title: "Zenoh plugins"
-weight : 2100
+weight : 3300
 menu:
   docs:
     parent: manual
