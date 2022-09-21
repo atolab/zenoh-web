@@ -23,7 +23,7 @@ You can also observe the presence of a sleeping subscriber connected to the netw
 ## Queries in Zenoh
 ![Zenoh queries in action](/img/zenoh-query.gif "Zenoh queries in action")
 
-This animation shows a simplequery in action through Zenoh. You can see the presence of storages and queryables. 
+This animation shows a simple query in action through Zenoh. You can see the presence of storages and queryables. 
 A queryable is any process that can reply to queries. A storage is a combination of a subscriber and a queryable.
 
 --
