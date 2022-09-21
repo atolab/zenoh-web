@@ -1,6 +1,6 @@
 ---
 title: "REST plugin"
-weight : 2110
+weight : 3400
 menu:
   docs:
     parent: manual

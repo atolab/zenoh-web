@@ -1,6 +1,6 @@
 ---
 title: "Deployment"
-weight : 1010
+weight : 2300
 menu:
   docs:
     parent: getting_started

@@ -1,6 +1,6 @@
 ---
 title: "User-Password authentication"
-weight : 2200
+weight : 3800
 menu:
   docs:
     parent: manual

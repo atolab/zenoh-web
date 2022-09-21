@@ -1,6 +1,6 @@
 ---
 title: "For a quick test using Docker"
-weight : 1015
+weight : 2400
 menu:
   docs:
     parent: getting_started

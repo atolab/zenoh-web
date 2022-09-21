@@ -1,6 +1,6 @@
 ---
 title: "Troubleshooting"
-weight : 1030
+weight : 2500
 menu:
   docs:
     parent: getting_started

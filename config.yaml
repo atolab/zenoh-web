@@ -18,11 +18,14 @@ menu:
   docs:
     - identifier: "overview"
       name: "Overview"
-      weight: 100
+      weight: 1000
     - identifier: "getting_started"
       name: "Getting started"
-      weight: 1000
+      weight: 2000
     - identifier: "manual"
       name: "Reference manual"
-      weight: 2000  
+      weight: 3000
+    - identifier: "APIs"
+      name: "API"
+      weight: 4000
  

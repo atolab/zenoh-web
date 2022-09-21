@@ -1,6 +1,6 @@
 ---
 title: "Installation"
-weight : 1005
+weight : 2200
 menu:
   docs:
     parent: getting_started
