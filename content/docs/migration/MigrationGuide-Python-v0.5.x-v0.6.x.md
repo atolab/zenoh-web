@@ -1,6 +1,6 @@
 ---
-title: "Migrating from zenoh v0.5.x to v0.6.x with the Python API"
-weight : 5700
+title: "Migrating from zenoh v0.5.x Python API to zenoh v0.6.x Python API"
+weight : 5500
 menu:
   docs:
     parent: migration
@@ -8,7 +8,7 @@ menu:
 
 ## Explorability
 
-In previous releases, the Python bindings entirely defined in Rust, making it very hard for Pythoners to explore it.
+In previous releases, the Python bindings were entirely defined in Rust, making it very hard for Pythoners to explore it.
 
 With 0.6, the bindings have evolved: a "private" layer is exposed by Rust, and wrapped in Python, with 2 main advantages:
 - IDEs can now find available symbols, signatures and documentation more easily.
@@ -34,9 +34,7 @@ While you can keep using strings for any function `IntoKeyExpr`, constructing a 
 
 ### Subscribing
 
-The `subscribe` operation has been replaced by a `declare_subscriber` operation.
-
-It now accepts more than just callbacks
+The `declare_subscriber` operation now accepts more than just callbacks.
 
 *zenoh v0.5.x*
 ```python

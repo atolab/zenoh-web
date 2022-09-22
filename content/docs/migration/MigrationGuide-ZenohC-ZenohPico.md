@@ -1,6 +1,6 @@
 ---
 title: "Migrating from zenoh-C to Zenoh-Pico (and vice-versa)"
-weight : 5600
+weight : 5700
 menu:
   docs:
     parent: migration
