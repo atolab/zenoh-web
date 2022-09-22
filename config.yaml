@@ -28,4 +28,7 @@ menu:
     - identifier: "APIs"
       name: "API"
       weight: 4000
+    - identifier: "migration"
+      name: "Migration guides"
+      weight: 5000
  
