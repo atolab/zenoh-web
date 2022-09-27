@@ -90,12 +90,12 @@ Thanks to the support of [configuration reactivity](../configuration#reactive-co
 
 The most convenient way to edit configuration at runtime is through the [admin space](../configuration#adminspace-configuration), via the [REST API](../../apis/apis#rest-api). This is the method we will teach here through `curl` commands. If you're unfamiliar with `curl`, it's a command line tool to make HTTP requests, here's a quick catch-up, with the equivalent in JS's standard library's `fetch`:
 ```bash
-curl -X POST       'http://hostname.host/key/expression' -H 'content-type:application/json'      -d '{"some": ["json", "data"]}'
+curl -X PUT        'http://hostname:8000/key/expression' -H 'content-type:application/json'      -d '{"some": ["json", "data"]}'
 #    ^HTTP METHOD  ^Target URL for the request           ^Header saying the data is in JSON      ^The body of the request
 ```
 ```javascript
-fetch('http://hostname.host/key/expression', {
-      method: 'POST', 
+fetch('http://hostname:8000/key/expression', {
+      method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({some: ["json", "data"]})
     })
@@ -105,20 +105,20 @@ fetch('http://hostname.host/key/expression', {
 To create a volume, add an entry describing it to the configuration. Let's say you'd like to create "my-volume" on a node that had the influxdb daemon listen on port 8086:
 
 ```bash
-curl -X POST 'http://hostname.host/@/router/local/config/plugins/storage_manager/volumes/my-volume' -H 'content-type:application/json' -d '{"backend": "influxdb", "url": "http://localhost:8086"}'
+curl -X PUT 'http://hostname:8000/@/router/local/config/plugins/storage_manager/volumes/my-volume' -H 'content-type:application/json' -d '{"backend": "influxdb", "url": "http://localhost:8086"}'
 ```
 
 Note that if you only planned on having a single volume relying on influxdb, you might as well name that volume "influxdb", saving you the need to specify that the "influxdb" backend is the one you want to use:
 
 ```bash
-curl -X POST 'http://hostname.host/@/router/local/config/plugins/storage_manager/volumes/influxdb' -H 'content-type:application/json' -d '{"url": "http://localhost:8086"}'
+curl -X PUT 'http://hostname:8000/@/router/local/config/plugins/storage_manager/volumes/influxdb' -H 'content-type:application/json' -d '{"url": "http://localhost:8086"}'
 ```
 
 ### Removing a volume
 To remove a volume, simply delete its entry from the configuration with:
 
 ```bash
-curl -X DELETE 'http://hostname.host/@/router/local/config/plugins/storage_manager/volumes/my-volume'
+curl -X DELETE 'http://hostname:8000/@/router/local/config/plugins/storage_manager/volumes/my-volume'
 ```
 
 The storage manager will delete the associated storages as well.
@@ -129,19 +129,19 @@ You can add storages at any time by adding them to the configuration through the
 
 The simplest volume to use is the integrated "memory" volume, since it requires no extra configuration. Let's have "my-storage" work on `demo/my-storage/**`:
 ```bash
-curl -X POST 'http://hostname.host/@/router/local/config/plugins/storage_manager/storages/my-storage' -H 'content-type:application/json' -d '{"key_expr": "demo/my-storage/**", "volume": "memory"}'
+curl -X PUT 'http://hostname:8000/@/router/local/config/plugins/storage_manager/storages/my-storage' -H 'content-type:application/json' -d '{"key_expr": "demo/my-storage/**", "volume": "memory"}'
 ```
 
 Some volumes, like that "my-volume" one we created [earlier](#adding-a-volume), need a bit more configuration. Any volume supported by the `influxdb` backend, for example, needs to know on what database to store the data associated with each storage through a `db` argument:
 ```bash
-curl -X POST 'http://hostname.host/@/router/local/config/plugins/storage_manager/storages/my-other-storage' -H 'content-type:application/json' -d '{"key_expr": "demo/my-other-storage/**", "volume": {"id": "my-volume", "db": "MyOtherStorage"}}'
+curl -X PUT 'http://hostname:8000/@/router/local/config/plugins/storage_manager/storages/my-other-storage' -H 'content-type:application/json' -d '{"key_expr": "demo/my-other-storage/**", "volume": {"id": "my-volume", "db": "MyOtherStorage"}}'
 ```
 
 ### Removing a storage
 Just like volumes, removing a storage is as simple as deleting its entry in the configuration. Note that removing a volume's last storage will not remove that volume: volumes with 0 storages depending on them are perfectly legal.
 
 ```bash
-curl -X DELETE 'http://hostname.host/@/router/local/config/plugins/storage_manager/storages/my-storage'
+curl -X DELETE 'http://hostname:8000/@/router/local/config/plugins/storage_manager/storages/my-storage'
 ```
 
 ### Checking a volume's or a storage's status
