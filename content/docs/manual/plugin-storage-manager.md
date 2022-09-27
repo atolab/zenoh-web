@@ -88,7 +88,7 @@ The Volumes and Storages of a Zenoh router can be managed at runtime via its adm
  - either via the configuration file in the `adminspace.permissions` section
  - either via the `zenohd` command line option: `--adminspace-permissions <[r|w|rw|none]>`
 
-The most convenient way to edit configuration at runtime is through the [admin space](../configuration#adminspace-configuration), via the [REST API](../../apis/apis#rest-api). This is the method we will teach here through `curl` commands. If you're unfamiliar with `curl`, it's a command line tool to make HTTP requests, here's a quick catch-up, with the equivalent in JS's standard library's `fetch`:
+The most convenient way to edit configuration at runtime is through the [admin space](../configuration#adminspace-configuration), via the [REST API](../../apis/rest). This is the method we will teach here through `curl` commands. If you're unfamiliar with `curl`, it's a command line tool to make HTTP requests, here's a quick catch-up, with the equivalent in JS's standard library's `fetch`:
 ```bash
 curl -X PUT        'http://hostname:8000/key/expression' -H 'content-type:application/json'      -d '{"some": ["json", "data"]}'
 #    ^HTTP METHOD  ^Target URL for the request           ^Header saying the data is in JSON      ^The body of the request
