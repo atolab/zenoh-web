@@ -1,5 +1,5 @@
 ---
-title: "Migrating from zenoh v0.5.x Rust API to zenoh v0.6.x Rust API"
+title: "Migrating from Zenoh v0.5.x Rust API to Zenoh v0.6.x Rust API"
 weight : 5300
 menu:
   docs:

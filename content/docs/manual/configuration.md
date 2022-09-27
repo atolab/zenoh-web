@@ -22,7 +22,7 @@ If no path is specified, `zenohd` will use a default configuration instead.
 
 Currently, [JSON5](https://json5.org) and YAML are the primary configuration format (as opposed to v0.5's flat key-value files), but we may add support for other serialization formats in the future.
 
-An example configuration can be read [here](https://github.com/eclipse-zenoh/zenoh/blob/master/EXAMPLE_CONFIG.json5), apart from the `plugins` section, we make an effort to keep the values aligned with the defaults.  
+An example configuration can be read [here](https://github.com/eclipse-zenoh/zenoh/blob/master/DEFAULT_CONFIG.json5), apart from the `plugins` section, we make an effort to keep the values aligned with the defaults.  
 The exact schema for the configuration is the `Config` structure, which can be found in [this file](https://github.com/eclipse-zenoh/zenoh/blob/master/commons/zenoh-config/src/lib.rs).
 
 Don't be alarmed, all of these fields are optional. Only configure the parts that are of interest to you.
@@ -52,7 +52,11 @@ It is possible to register callbacks that will be called when the configuration 
 In the case of `zenohd`, the only user-accessible way of editing the configuration during runtime is through the admin space, as explained a bit [further](#adminspace-configuration) in this page. Whether and how to react to modifications to the configuration file when it exists is still under debate by the core team.
 
 ## Adminspace configuration
-You can still change elements of a `zenohd` instance's configuration once it's started, by sending put messages to its [admin space](../abstractions#admin-space).
+The configuration of a Zenoh router can be changed at runtime via its admin space, if it's configured to be writeable:
+ - either via the configuration file in the `adminspace.permissions` section
+ - either via the `zenohd` command line option: `--adminspace-permissions <[r|w|rw|none]>`
+
+Then you can change elements of it's configuration once it's started, by sending put messages to its [admin space](../abstractions#admin-space).
 
 If one of the `zenohd` instances uses the REST plugin to expose Zenoh to HTTP requests, this can be done simply by sending such requests with tools such as `curl`.  
 To do this, use commands such as 

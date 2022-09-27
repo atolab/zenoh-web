@@ -163,6 +163,12 @@ multicast_ipv6_address=[ff24::224]:7447
       }
     }
   },
+  adminspace: {
+    permissions: {
+      read: true,
+      write: false,
+    },
+  },
   plugins_search_dirs: [],
   plugins: {
     rest: {
@@ -182,6 +188,11 @@ In zenoh version 0.6.0 the admin space is splitted in 3 parts:
  - `@/router/<router_id>` : **read-only** key returning the status of the router itself
  - `@/router/<router_id>/config/**` : **write-only** subset of keys to change the configuration. The keys under this prefix exactly map the configuration file structure. Not all configuration keys can be changed, but the storages plugin configuration can in order to add/remove Backends and Storages (see below).
  - `@/router/<router_id>/status/plugins/**` : **read-only** subset of keys to retrieve the status of plugins (and Backends and Storages)
+
+In zenoh version 0.5.0, the admin space was writeable by default. In v0.6.0 it's read-only by default.
+Read/Write permission on its admin space can be now configured for a Zenoh router in 2 ways:
+ - via the configuration file in the `adminspace.permissions` section
+ - via the `zenohd` command line option: `--adminspace-permissions <[r|w|rw|none]>`
 
 ### Plugins configurations
 
@@ -279,7 +290,8 @@ Starting from zenoh 0.6.0, the Backends and Storages are configurable for startu
 }
 ```
 
-The Volumes and Storages can be dynamically added/removed at runtime via PUT/GET on the admin space, updating the storage_manager plugin config under `@/router/<router_id>/config/plugins/storage_manager`.
+Providing that the Zenoh router is configured with write permission on its admin space, the Volumes and Storages can be dynamically added/removed
+at runtime via PUT/GET on the admin space, updating the storage_manager plugin config under `@/router/<router_id>/config/plugins/storage_manager`.
 Examples:
  - to add a memory Storage:
    ```bash

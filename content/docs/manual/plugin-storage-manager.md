@@ -14,7 +14,7 @@ The `storage_manager` plugin provides `zenohd` with the ability to store values 
 ------
 
 
-## Backends and volumes
+## Backends and Volumes
 Since there exist many ways for a Zenoh node to store values it may need to serve later, the storage manager plugin relies on dynamically loaded "backends" to provide this functionality. Typically, a backend will leverage some third-party technology, such as databases, to handle storage. A possibly convenient side effect of using databases as backends is that they may also be used as an interface between your Zenoh infrastructure and an external infrastructure that may interact independently with the database.
 
 You may want to load the same backend multiple times with different configurations: we refer to these instances as "volumes". These volumes can in turn be relied on by any number of storages, just like you can store many files on a filesystem volume.
@@ -66,7 +66,7 @@ The main schema is as follows:
   }
 }
 ```
-The example configuration provided [here](https://github.com/eclipse-zenoh/zenoh/blob/master/EXAMPLE_CONFIG.json5) has concrete examples of backend and storage configuration.
+The example configuration provided [here](https://github.com/eclipse-zenoh/zenoh/blob/master/DEFAULT_CONFIG.json5) has concrete examples of backend and storage configuration.
 
 ## Backends list
 Here is a list of the available backends:
@@ -83,10 +83,10 @@ Here is a list of the available backends:
 
 -------------------------------
 
-## Storage management during runtime
-Storages can be configured before starting `zenohd` through a configuration file, or through `--cfg` arguments to `zenohd`.
-
-Thanks to the support of [configuration reactivity](../configuration#reactive-configuration), storages may also be configured after starting `zenohd` without need to restart the program.
+## Volumes and Storage management during runtime
+The Volumes and Storages of a Zenoh router can be managed at runtime via its admin space, if it's configured to be writeable:
+ - either via the configuration file in the `adminspace.permissions` section
+ - either via the `zenohd` command line option: `--adminspace-permissions <[r|w|rw|none]>`
 
 The most convenient way to edit configuration at runtime is through the [admin space](../configuration#adminspace-configuration), via the [REST API](../../apis/apis#rest-api). This is the method we will teach here through `curl` commands. If you're unfamiliar with `curl`, it's a command line tool to make HTTP requests, here's a quick catch-up, with the equivalent in JS's standard library's `fetch`:
 ```bash

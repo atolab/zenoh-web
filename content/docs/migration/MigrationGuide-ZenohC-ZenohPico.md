@@ -1,5 +1,5 @@
 ---
-title: "Migrating from zenoh-C to Zenoh-Pico (and vice-versa)"
+title: "Migrating from Zenoh-C to Zenoh-Pico (and vice-versa)"
 weight : 5700
 menu:
   docs:

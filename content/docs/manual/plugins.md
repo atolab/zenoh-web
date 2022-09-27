@@ -6,7 +6,7 @@ menu:
     parent: manual
 ---
 
-The Zenoh router (`zenohd` executable) supports the loading of plugins at start-up.
+The Zenoh router (`zenohd` executable) supports the loading of plugins at start-up, or at runtime if write permission is configured on its admin space.
 
 A Zenoh plugin is a library that can be loaded by the Zenoh router at start-up. It shares a runtime with it, allowing the plugin to use the regular Zenoh rust APIs with the same peer ID.
 

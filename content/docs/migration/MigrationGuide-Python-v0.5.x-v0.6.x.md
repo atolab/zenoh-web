@@ -1,5 +1,5 @@
 ---
-title: "Migrating from zenoh v0.5.x Python API to zenoh v0.6.x Python API"
+title: "Migrating from Zenoh v0.5.x Python API to Zenoh v0.6.x Python API"
 weight : 5500
 menu:
   docs:
