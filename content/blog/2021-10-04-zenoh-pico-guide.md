@@ -9,7 +9,7 @@ draft: false
 In this post, we will introduce [zenoh-pico](https://github.com/eclipse-zenoh/zenoh-pico), **a lightweight implementation of Zenoh APIs in C, fully compatible with its Rust counterpart**. 
 
 As a result of this work, we are happy to announce that we successfully deployed and tested Zenoh in [Zephyr](https://www.zephyrproject.org) (reel_board and nucleo-f767zi) and [Arduino](https://www.arduino.cc) (ESP32) compatible boards, with initial results showcasing a quite remarkable performance within the microcontrollers landscape:
- - Memory footprint of only ~37KB (ESP32), ~60KB (nucleo-f767zi), and ~96KB (reel_board).
+ - Memory footprint of only ~2.8% (nucleo-f767zi), ~9.2% (reel_board), and ~0.9% (ESP32).
  - Deliver more than 5.2k msg/s with a 8 bytes payload in ESP32.
  - Application-level throughput of ~9.2 Mbps (thus, saturating a 10 Mbps Ethernet link) with nucleo-f767zi.
 
@@ -27,7 +27,7 @@ Internet of Things (IoT), home automation, and robotic systems appear among a se
 Not yet, but **zenoh-pico comes to rescue**. Zenoh-pico is a lightweight implementation of the Zenoh protocol in C, fully compatible with its Rust counterpart. Its goal is three-fold: (i) provide a library implementation optimized for microcontrollers; (ii) provide a native C-based implementation (around 80% of embedded systems use C programming language); and (iii) keep the Rust-based implementation abstracted from the constraints imposed by microcontrollers.
 
 2. **Being a lightweight implementation, what is it missing?**
-Currently, zenoh-pico does offer all the functionalities for you to implement a Zenoh [client mode](../../docs/getting-started/key-concepts/#client-application) in microcontrollers. The support for peer-to-peer communication is still under planning and it does not feature the same level of message scheduling of the Rust stack.
+Currently, zenoh-pico does offer all the functionalities for you to implement a Zenoh [client mode](./../docs/getting-started/key-concepts/#client-application) in microcontrollers. The support for peer-to-peer communication is still under planning and it does not feature the same level of message scheduling of the Rust stack.
 
 3. **Which frameworks, platforms, or boards are currently supported?**
 So far, we have successfully tested zenoh-pico in [Zephyr](https://www.zephyrproject.org) ([reel_board](https://docs.zephyrproject.org/latest/boards/arm/reel_board/doc/index.html) and [nucleo-f767zi](https://docs.zephyrproject.org/2.6.0/boards/arm/nucleo_f767zi/doc/index.html) boards) and [Arduino](https://www.arduino.cc) ([ESP32](https://www.espressif.com/en/products/socs/esp32)). No changes have been made in the core of zenoh-pico, requiring only the implementation of the system calls for your specific framework / platform.
@@ -219,7 +219,7 @@ platformio run -t upload
 ```
 
 # First look on memory footprint and performance results
-The scarce memory and flash resources in microcontrollers stresses out the importance of the memory footprint of zenoh-pico. In the following table, you will find that zenoh-pico is introducing a memory footprint of only ~37KB (ESP32), ~60KB (nucleo-f767zi), and ~96KB (reel_board).
+The scarce memory and flash resources in microcontrollers stresses out the importance of the memory footprint of zenoh-pico. In the following table, you will find that zenoh-pico is introducing a memory footprint of only ~2.8% (nucleo-f767zi), ~9.2% (reel_board), and ~0.9% (ESP32).
 
 |                                |   |   | **reel_board (Zephyr)** |   |   | **nucleo-f767zi (Zephyr)** |   |   | **ESP32-D0WDQ6 (Arduino)** |
 |--------------------------------|---|---|:-----------------------:|---|---|:--------------------------:|---|---|:--------------------------:|
@@ -241,11 +241,11 @@ Summarizing:
  - zenoh-pico provides a lightweight implementation of Zenoh, allowing you to integrate Zenoh client functionalities in your embedded systems natively in C.
  - We have successfully tested it in [Zephyr](https://www.zephyrproject.org) (reel_board and nucleo-f767zi) and [Arduino](https://www.arduino.cc) (ESP32) compatible boards
  - Initial performance tests hints for a quite remarkable performance within the microcontrollers landscape.
-   - Memory footprint of only ~37KB (ESP32), ~60KB (nucleo-f767zi), and ~96KB (reel_board).
+   - Memory footprint of only ~2.8% (nucleo-f767zi), ~9.2% (reel_board), and ~0.9% (ESP32).
    - Deliver more than 5.2k msg/s with a 8 bytes payload in ESP32.
    - Application-level throughput of ~9.2 Mbps (in an 10 Mbps Ethernet link) with nucleo-f767zi.
 
-Help us increase the number of supported platforms, frameworks, and boards. We will provide all the support you need either in [GitHub](https://github.com/eclipse-zenoh) or [Gitter](https://gitter.im/atolab/zenoh).
+Help us increase the number of supported platforms, frameworks, and boards. We will provide all the support you need either in [GitHub](https://github.com/eclipse-zenoh) or [Discord](https://discord.gg/cY4nVjUd).
 
 
 [**--CG**](https://github.com/cguimaraes/)

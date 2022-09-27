@@ -9,9 +9,9 @@ draft: false
 
 Zenoh's webpage states that zenoh has a minimal wire overhead of **5 bytes**. This is the result of careful considerations in the zenoh design: from using **Variable Length Encoding (VLE)**, to efficient **mapping of resource keys** and **automatic batching**.
 
-If you are intrigued about this and want to know more, rest assured that you are not alone. In fact, the minimal overhead aspect of zenoh attracted a lot of attention and curiosity in our community that led to some interesting discussions on zenoh's [gitter channel](https://gitter.im/atolab/zenoh). 
+If you are intrigued about this and want to know more, rest assured that you are not alone. In fact, the minimal overhead aspect of zenoh attracted a lot of attention and curiosity in our community that led to some interesting discussions on zenoh's [Discord Server](https://discord.gg/cY4nVjUd). 
 
-Given the amount of messages and information exchanged, we thought it would be  a good idea to write a blog post to explain how zenoh achieves this wire efficiency. It's easier to read a blog post than scrolling backwards many messages on Gitter, isn't it?
+Given the amount of messages and information exchanged, we thought it would be a good idea to write a blog post to explain how zenoh achieves this wire efficiency. It's easier to read a blog post than scrolling backwards many messages on Discord, isn't it?
 
 ## Minimal overhead: what is it?
 Let's start from the beginning. We said that 5 bytes are the minimal overhead in zenoh. What does that mean? It means that zenoh adds at least 5 bytes to user payload but, as you might have guessed, it may also add more if necessary. You might be wondering now in which cases zenoh offers the minimal overhead. To answer these questions we should first have a look at how zenoh serializes data on the wire. 
@@ -28,7 +28,7 @@ As shown below, user payload is always carried in a zenoh data message. In turn,
 ## Zenoh data messages: carrying your data
 In zenoh, users deal with keys/values where each key is a path and is associated with a value. A key looks like just a Unix file system path, such as `/myhome/kitchen/temp`, and it represents a resource. For what concerns the value, it can be defined with different encodings (string, JSON, raw bytes buffer, etc.). 
 
-As a result, the data, i.e. the value, is always published to a given resource. Zenoh takes this information from the user and it includes it in a zenoh data message as shown below. 
+As a result, the data, i.e. the value, is always published to a given resource. Zenoh takes this information from the user, and it includes it in a zenoh data message as shown below. 
 Particularly, the overhead in a zenoh data message is computed as follows:
 - **1 byte** for the **data header**
 - **1+ bytes** for the **resource**
@@ -162,7 +162,7 @@ This is a not-negligible savings especially for small user payload: up to thousa
 Summarizing, the minimal overhead in frame messages is as little as 2 bytes when the SN resolution is bounded to 128. 
 Moreover, the overhead of the SN (even the larger ones) are then equally shared across all the data messages in a single frame, leading to considerable bandwidth savings also in high throughput scenarios when batching comes really into play. This leaves us with a minimal overhead of just **5 bytes** when a single message is sent.
 
-If you liked this blog post and you have more questions or simply curiosities on zenoh, don't hesitate to join our community on zenoh's [gitter channel](https://gitter.im/atolab/zenoh)!
+If you liked this blog post and you have more questions or simply curiosities on zenoh, don't hesitate to join our community on zenoh's [Discord Server](https://discord.gg/cY4nVjUd)!
 
 
 [**--LC**](https://github.com/Mallets/)

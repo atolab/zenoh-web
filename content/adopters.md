@@ -1,12 +1,13 @@
-+++
-title = "Zenoh Adopters"
-description = "A very partial list of zenoh adopters and supporters"
-menu = "adopters"
-+++
+---
+title: Zenoh Adopters
+description: A very partial list of Zenoh adopters and supporters
+menu: adopters
+---
 
-Below is a list of companies, research institutes and foundations that adopted, supported or contributed to zenoh. If you cannot find your logo post a message on the [zenoh's gitter channel](https://gitter.im/atolab/zenoh) and we'll add it right away.
+Below is a list of companies, research institutes and foundations that adopted, supported or contributed to Zenoh. If you cannot find your logo, please post a message on the [Zenoh's discord server](https://discord.gg/cY4nVjUd) and we'll add it right away.
 
-# 
+#
+
 
 {{< rawhtml >}}
 <div class="container">
@@ -23,11 +24,12 @@ Below is a list of companies, research institutes and foundations that adopted, 
         </div>
         <div class="col">
             <a href="https://5g-dive.eu/" target=="_blank">
-                <img align="center" src="https://5g-dive.eu/wp-content/uploads/2019/10/cropped-5G-Dive_rgb_horizontal-1.png" alt="5G-Dive"/>
+                <img align="center" src="/img/adopters/5g-dive.png" alt="5G-Dive"/>
+                <!-- <img align="center" src="https://5g-dive.eu/wp-content/uploads/2019/10/cropped-5G-Dive_rgb_horizontal-1.png" alt="5G-Dive"/> -->
             </a>
         </div>
         <div class="col">
-            <a href="https://h2020daemon.eu/" target="_blank">
+            <a href="https://h2020daemon.eu/" target=="_blank">
                 <img align="center" src="https://h2020daemon.eu/wp-content/uploads/2021/01/daemonlogo-300x80-1.webp" alt="Daemon"/>
             </a>
         </div>
@@ -49,7 +51,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
             </a>
         </div>
         <div class="col">
-            <a href="https://www.l2s.centralesupelec.fr/en/" target="_blank">
+            <a href="https://www.l2s.centralesupelec.fr/en/" target=="_blank">
                 <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-centralesupelec.png" alt="CentraleSupelec"/>
             </a>
         </div>
@@ -72,7 +74,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
         </div>
         <div class="col">
              <a href="https://www.futurewei.com" target=="_blank">
-                <img align="center" src="/img/futurewei-logo.png" alt="FutureWei"/>
+                <img align="center" src="/img/adopters/futurewei-logo.png" alt="FutureWei"/>
             </a>            
         </div>
     </div>
@@ -95,5 +97,4 @@ Below is a list of companies, research institutes and foundations that adopted, 
     </div>
 </div>
 <p></p>
-{{< /rawhtml >}}
 

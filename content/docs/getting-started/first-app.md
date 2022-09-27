@@ -1,97 +1,127 @@
 ---
-title: "Your First zenoh app"
-weight : 1020
+title: "Your first Zenoh app"
+weight : 2100
 menu:
   docs:
     parent: getting_started
 ---
-Getting started with zenoh is quite straightforward. Below we will show you how to create a simple telemetry application. Let's assume that we have some sensor, say a temperature sensor, and we want to store this temperature into a zenoh storage. Later on, we want to retrieve this temperature from the zenoh storage. 
+
+Let us take a step-by-step approach in putting together your first Zenoh application in Python.
+As the first step, let us see how we get some data from a temperature sensor in our kitchen.
+Then we see how we can route this data to store and perform some analytics.
 
 Before cranking some code, let's define some terminology. 
 
-<b>zenoh</b> deals with <i>keys/values</i> where each key is a <i>path</i> and is associated to a <i>value</i>. A path looks like just a Unix file system path, such as ```/myhome/kitchen/temp```. The value can be defined with different
+<b>Zenoh</b> deals with <i>keys/values</i> where each key is a <i>path</i> and is associated to a <i>value</i>. A key looks like just a Unix file system path, such as ```myhome/kitchen/temp```. The value can be defined with different
 encodings (string, JSON, raw bytes buffer...). 
-
-To query the values stored by zenoh, we use <i>selectors</i>. As the name suggest, a <i>selector</i> can uses wildcards, such as <b>*</b> and <b>**</b> to represent a set of paths, such as, ```/myhome/*/temp```.
+<!-- To query the values stored by Zenoh, we use <i>selectors</i>. As the name suggest, a <i>selector</i> can use wildcards, such as <b>*</b> and <b>**</b> to represent a set of paths, such as, ```myhome/*/temp```. -->
 
 Let's get started!
 
-## zenoh Programming in Python 
+## Pub/sub in Zenoh
 
-By default, a zenoh router starts without any storage. In order to store the temperature, we need to add one,
-starting `zenohd` with the `--mem-storage`option.
-The following command starts the router with a storage in zenoh memory that will store any key starting with `/myhome/`:
-
-```bash
-zenohd --mem-storage='/myhome/**'
-```
-
-
-Now let's write an application that will produce temperature measurements at each second:
+First, let's write an application, `z_sensor.py` that will produce temperature measurements at each second:
 
 ```python
-from zenoh import Zenoh
-import random
-import time
+import zenoh, random, time
 
 random.seed()
 
 def read_temp():
     return random.randint(15, 30)
 
-def run_sensor_loop(w):
-    # read and produce a temperature every second
+if __name__ == "__main__":
+    session = zenoh.open()
+    key = 'myhome/kitchen/temp'
+    pub = session.declare_publisher(key)
     while True:
         t = read_temp()
-        w.put('/myhome/kitchen/temp', t)
+        buf = f"{t}"
+        print(f"Putting Data ('{key}': '{buf}')...")
+        pub.put(buf)
         time.sleep(1)
-
-if __name__ == "__main__":
-    z = Zenoh({})
-    w = z.workspace('/')
-    run_sensor_loop(w)
 ```
 
-
-Below is the application that will retrieve the latest temperature value stored in zenoh:
-
-```python
-from zenoh import Zenoh
-
-if __name__ == "__main__":
-    z = Zenoh({})
-    w = z.workspace('/')
-    results = w.get('/myhome/kitchen/temp')
-    key, value = results[0].path, results[0].value
-    print('  {} : {}'.format(key, value))
-```
-
-
-Finally, if ever we want to receive the temperatures in direct from the publisher,
-without querying the zenoh storage, we can use a subscriber:
+Now we need a subscriber, `z_subscriber.py` that can receive the measurements:
 
 ```python
-from zenoh import Zenoh, ChangeKind
-import time
+import zenoh, time
 
-def listener(change):
-    if change.kind == ChangeKind.PUT:
-        print('Publication received: "{}" = "{}"'
-                .format(change.path, change.value))
+def listener(sample):
+    print(f"Received {sample.kind} ('{sample.key_expr}': '{sample.payload.decode('utf-8')}')")
 
 if __name__ == "__main__":
-    z = Zenoh({})
-    w = z.workspace('/')
-    results = w.subscribe('/myhome/kitchen/temp', listener)
+    session = zenoh.open()
+    sub = session.declare_subscriber('myhome/kitchen/temp', listener)
     time.sleep(60)
 ```
 
-## Other code examples
+[Install](https://github.com/eclipse-zenoh/zenoh-python) the library and start the subscriber
+```bash
+python3 z_subscriber.py
+```
+The subscriber waits for an update on `myhome/kitchen/temp`. 
+Now start `z_sensor.py` as follows
+```bash
+python3 z_sensor.py
+```
 
-Now you can also have a look to the examples provided with each client API:
+You can see the values produced by the sensor being consumed by the subscriber.
 
- - **Rust**: https://github.com/eclipse-zenoh/zenoh/tree/master/zenoh/examples/zenoh
- - **Rust (zenoh-net)**: https://github.com/eclipse-zenoh/zenoh/tree/master/zenoh/examples/zenoh-net
- - **C (zenoh-net)**: https://github.com/eclipse-zenoh/zenoh-c/tree/master/examples/net
- - **Python**: https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples/zenoh
- - **Python (zenoh-net)**: https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples/zenoh-net
+## Store and Query in Zenoh
+
+As the next step, let's see how the value generated by a publisher can be stored in Zenoh.
+For this, we use [Zenoh router](../installation) (`zenohd`). 
+By default, a Zenoh router starts without any storage. In order to store the temperature, we need to configure one.
+Create a `zenoh-myhome.json5` configuration file for Zenoh with this content:
+```json5
+{
+  plugins: {
+    rest: {                        // activate and configure the REST plugin
+      http_port: 8000              // with HTTP server listening on port 8000
+    },
+    storage_manager: {             // activate and configure the storage_manager plugin
+      storages: {
+        myhome: {                  // configure a "myhome" storage
+          key_expr: "myhome/**",   // which subscribes and replies to query on myhome/**
+          volume: {                // and using the "memory" volume (always present by default)
+            id: "memory"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+[Install](../installation) and start the Zenoh router with this configuration file:
+
+```bash
+zenohd -c zenoh-myhome.json5
+```
+
+Now the data generated by our temperature sensor is stored in memory. 
+We can retrieve the latest temperature value stored in Zenoh:
+
+```python
+import zenoh
+
+if __name__ == "__main__":
+    session = zenoh.open()
+    replies = session.get('myhome/kitchen/temp', zenoh.ListCollector())
+    for reply in replies():
+        try:
+            print("Received ('{}': '{}')"
+                .format(reply.ok.key_expr, reply.ok.payload.decode("utf-8")))
+        except:
+            print("Received (ERROR: '{}')"
+                .format(reply.err.payload.decode("utf-8")))
+session.close()
+```
+## Other examples
+
+You can also have a look at the examples provided with each client API:
+
+ - **Rust**: https://github.com/eclipse-zenoh/zenoh/tree/master/examples
+ - **Python**: https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples
+ - **C**: https://github.com/eclipse-zenoh/zenoh-c/tree/master/examples

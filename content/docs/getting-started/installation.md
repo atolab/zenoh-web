@@ -1,20 +1,31 @@
 ---
 title: "Installation"
-weight : 1010
+weight : 2200
 menu:
   docs:
     parent: getting_started
 ---
 
-To get up and running with <b>zenoh</b> you will have to install the router and then get hold of the API you would like to use to write your applications. 
+<!-- To get up and running with <b>Zenoh</b> you will have to install the router or the client (possibly both).  -->
+To start playing with <b>Zenoh</b> we need the Zenoh router and/or the Zenoh client library. 
+## Installing client library
+To develop your application Zenoh, you need to install a Zenoh client library.
+Depending on your programming language, pick one of the following API and refer to the installation and usage instructions in here:
 
-## Installing the zenoh router
-The zenoh router (a.k.a. `zenohd`) and its plugins are currently available as a pre-built binaries for various platforms. All release packages can be downloaded from:  
+- [Rust API](https://crates.io/crates/zenoh)
+- [Python API](https://github.com/eclipse-zenoh/zenoh-python)
+- [C API](https://github.com/eclipse-zenoh/zenoh-c)
+- [Pico API](https://github.com/eclipse-zenoh/zenoh-pico): A port of Zenoh in C, targeted at low-power devices.
+
+Note that if you wish to always have access to all of Zenoh's latest features, Rust is Zenoh's original language, and will therefore always be the most feature-complete version.
+
+## Installing the Zenoh router
+The Zenoh router (a.k.a. `zenohd`) and its plugins are currently available as pre-built binaries for various platforms. All release packages can be downloaded from:  
   -  **https://download.eclipse.org/zenoh/zenoh/latest/**
 
-Each sub-directory has the name of the Rust target. See the platforms each target corresponds to on https://doc.rust-lang.org/stable/rustc/platform-support.html
+Each subdirectory has the name of the Rust target. See the platforms each target corresponds to on https://doc.rust-lang.org/stable/rustc/platform-support.html
 
-You can also install it via a package manager on MacOS (homebrew) or Linux Debian (apt). See instructions below.
+You can also install it via a package manager on macOS (homebrew) or Linux Debian (apt). See instructions below.
 
 For other platforms, you can use the [Docker image](../quick-test#run-zenoh-in-docker) or [build it](https://github.com/eclipse-zenoh/zenoh#how-to-build-it) directly on your platform.
 
@@ -25,15 +36,15 @@ Tap our brew package repository:
 $ brew tap eclipse-zenoh/homebrew-zenoh
 ```
 
-Install zenoh:
+Install Zenoh:
 
 ```bash
 $ brew install zenoh
 ```
 
-Then you can start the zenoh router with this command:
+Then you can start the Zenoh router with this command:
 ```bash
-$ zenohd -V
+$ zenohd
 ```
 
 ### Ubuntu or any Debian
@@ -45,34 +56,34 @@ $ echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | s
 $ sudo apt update
 ```
 
-Install zenoh:
+Install Zenoh:
 
 ```bash
 $ sudo apt install zenoh 
 ```
  
-Then you can start the zenoh router with this command:
+Then you can start the Zenoh router with this command:
 
 ```bash
-$ zenohd -V
+$ zenohd
 ```
 
 ### Windows
 
-Download the zenoh archive from https://download.eclipse.org/zenoh/zenoh/latest/ :
+Download the Zenoh archive from https://download.eclipse.org/zenoh/zenoh/latest/ :
 - For Windows 64 bits: get the `x86_64-pc-windows-msvc/zenoh-<version>-x86_64-pc-windows-msvc.zip`file
 
 Unzip the archive.
 
-Go to zenoh directory and start zenoh router:
+Go to Zenoh directory and start Zenoh router:
 
 ```cmd
 > cd C:\path\to\zenoh\dir
-> zenohd.exe -V
+> zenohd.exe
 ```
 
 ## Testing Your Installation
-To test the installation, try to see the zenoh man page by executing the following command:
+To test the installation, try to see the Zenoh man page by executing the following command:
 
 ```bash
 $ zenohd --help
@@ -80,48 +91,68 @@ $ zenohd --help
 You should see the following output on your console:
 
 ```text
-The zenoh router v0.5.0-beta.X
+The Zenoh router v0.6.0-beta.X
 
 USAGE:
-    zenohd [FLAGS] [OPTIONS]
-
-FLAGS:
-    -h, --help               Prints help information
-        --no-backend         If true, no backend (and thus no storage) are created at startup. If false (default) the
-                             Memory backend it present at startup.
-        --no-timestamp       By default zenohd adds a HLC-generated Timestamp to each routed Data if there isn't already
-                             one. This option desactivates this feature.
-        --plugin-nolookup    When set, zenohd will not look for plugins nor try to load any plugin except the ones
-                             explicitely configured with -P or --plugin.
-    -V, --version            Prints version information
+    zenohd [OPTIONS]
 
 OPTIONS:
-        --backend-search-dir <DIRECTORY>...    A directory where to search for backends libraries to load. Repeat this
-                                               option to specify several search directories'. By default, the backends
-                                               libraries will be searched in: '/usr/local/lib:/usr/lib:~/.zenoh/lib:.'
-    -c, --config <FILE>                        The configuration file.
-    -i, --id <hex_string>                      The identifier (as an hexadecimal string - e.g.: 0A0B23...) that zenohd
-                                               must use. WARNING: this identifier must be unique in the system! If not
-                                               set, a random UUIDv4 will be used.
-    -l, --listener <LOCATOR>...                A locator on which this router will listen for incoming sessions. Repeat
-                                               this option to open several listeners. [default: tcp/0.0.0.0:7447]
-        --mem-storage <PATH_EXPR>...           A memory storage to be created at start-up. Repeat this option to created
-                                               several storages
-    -e, --peer <LOCATOR>...                    A peer locator this router will try to connect to. Repeat this option to
-                                               connect to several peers.
-    -P, --plugin <PATH_TO_PLUGIN_LIB>...       A plugin that must be loaded. Repeat this option to load several plugins.
-        --plugin-search-dir <DIRECTORY>...     A directory where to search for plugins libraries to load. Repeat this
-                                               option to specify several search directories'. By default, the plugins
-                                               libraries will be searched in: '/usr/local/lib:/usr/lib:~/.zenoh/lib:.'
-        --rest-http-port <rest-http-port>      The REST plugin's http port [default: 8000]
-[...]
+    -c, --config [<FILE>...]
+            The configuration file. Currently, this file must be a valid JSON5 or YAML file.
+
+        --cfg <KEY:VALUE>
+            Allows arbitrary configuration changes as column-separated KEY:VALUE pairs, where:
+              - KEY must be a valid config path.
+              - VALUE must be a valid JSON5 string that can be deserialized to the expected type for
+            the KEY field.
+            Examples:
+            --cfg='startup/subscribe:["demo/**"]'
+            --cfg='plugins/storage_manager/storages/demo:{key_expr:"demo/example/**",volume:"memory"}'
+
+    -e, --connect [<ENDPOINT>...]
+            A peer locator this router will try to connect to.
+            Repeat this option to connect to several peers.
+
+    -h, --help
+            Print help information
+
+    -i, --id [<HEX_STRING>]
+            The identifier (as an hexadecimal string, with odd number of chars - e.g.: 0A0B23...)
+            that zenohd must use. If not set, a random UUIDv4 will be used.
+            WARNING: this identifier must be unique in the system and must be 16 bytes maximum (32
+            chars)!
+
+    -l, --listen [<ENDPOINT>...]
+            A locator on which this router will listen for incoming sessions.
+            Repeat this option to open several listeners.
+
+        --no-multicast-scouting
+            By default zenohd replies to multicast scouting messages for being discovered by peers
+            and clients. This option disables this feature.
+
+        --no-timestamp
+            By default zenohd adds a HLC-generated Timestamp to each routed Data if there isn't
+            already one. This option disables this feature.
+
+    -P, --plugin [<PLUGIN>...]
+            A plugin that MUST be loaded. You can give just the name of the plugin, zenohd will
+            search for a library named 'libzplugin_<name>.so' (exact name depending the OS). Or you
+            can give such a string: "<plugin_name>:<library_path>".
+            Repeat this option to load several plugins. If loading failed, zenohd will exit.
+
+        --plugin-search-dir [<DIRECTORY>...]
+            A directory where to search for plugins libraries to load.
+            Repeat this option to specify several search directories.
+
+        --rest-http-port [<SOCKET>]
+            Configures HTTP interface for the REST API (enabled by default). Accepted values:
+              - a port number
+              - a string with format `<local_ip>:<port_number>` (to bind the HTTP server to a
+            specific interface)
+              - `none` to disable the REST API
+             [default: 8000]
+
+    -V, --version
+            Print version information
 ```
 
-## Installing client library
-To develop your application zenoh application, you need to install a zenoh client library.
-Depending your programmation language, choose one of the following API and refer to the installation and usage instructions in here:
-
-- [Rust API](https://crates.io/crates/zenoh)
-- [Python API](https://github.com/eclipse-zenoh/zenoh-python)
-- [C API](https://github.com/eclipse-zenoh/zenoh-c) (only zenoh-net API)
-- [Pico API ](https://github.com/eclipse-zenoh/zenoh-pico): C API for constrained devices (only zenoh-net API, no peer-to-peer mode)
