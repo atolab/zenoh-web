@@ -1,6 +1,6 @@
 ---
 title: "Zenoh Bahamut takes flight!"
-date: 2022-09-30
+date: 2022-09-28
 menu: "blog"
 weight: 20220930
 description: "30 September 2022 -- Paris."
@@ -219,15 +219,15 @@ In this [blog post](https://zenoh.io/blog/2021-07-13-zenoh-performance-async/) w
 
 The figure below shows (in log scale) the number of messages per second for different payloads: from `8 bytes` to `1 GiB`.
 
-![Throughput - Msg/s](../../img/20220929-blog-zenoh-bahamut/throughput-msg.png)
+![Throughput - Msg/s](../../img/20220930-blog-zenoh-bahamut/throughput-msg.png)
 
 The figure below shows (in log scale) the results in terms of throughput (bit/s) delivered at API level. We also report the throughput obtained with iperf on the same 100GbE connection as reference baseline: `60 Gb/s`.
 
-![Throughput - Gb/s](../../img/20220929-blog-zenoh-bahamut/throughput-gbs.png)
+![Throughput - Gb/s](../../img/20220930-blog-zenoh-bahamut/throughput-gbs.png)
 
 The figure below shows (in log scale) the one-hop latency for different message rates. The inf case represents the scenario where messages are sent back-to-back as fast as possible. In such a backlogged scenario, we can see that zenoh latency is as little as 15 µsec, less than half of before. The payload size is 64 bytes, the same as standard ICMP. A more in-depth explanation on why latency decreases when the message rate increases is available [here](https://zenoh.io/blog/2021-07-13-zenoh-performance-async/#latency).
 
-![Latency](../../img/20220929-blog-zenoh-bahamut/latency.png)
+![Latency](../../img/20220930-blog-zenoh-bahamut/latency.png)
 
 ----
 # Replicated Storages
@@ -239,7 +239,7 @@ Zenoh Bahamut brings in a new experimental feature to support replicated storage
 
 Zenoh also evolved its lightweight implementation targeting microcontrollers. In addition to the above features, Zenoh-Pico introduces other improvements, not only in terms of supporting platforms but also in terms of better suitability for such constrained devices.
 
-![Boards](../../img/20220929-blog-zenoh-bahamut/boards.png)
+![Boards](../../img/20220930-blog-zenoh-bahamut/boards.png)
 
 The [list of supported platforms](https://github.com/eclipse-zenoh/zenoh-pico) has been extended with:
 - More RTOSs, including well-known platforms like [MbedOS](https://os.mbed.com/) and [ESP-IDF](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/).
@@ -258,7 +258,7 @@ Finally, as experimental support, Zenoh-Pico now supports **peer** mode for **mu
 # What’s next?
 Are you ready to keep rocking with Zenoh?
 
-![Guitar](../../img/20220929-blog-zenoh-bahamut/zenoh-on-fire.gif)
+![Guitar](../../img/20220930-blog-zenoh-bahamut/zenoh-on-fire.gif)
 
 These are the cool features you can expect for the months to come:
 - A [MQTT plugin](https://github.com/eclipse-zenoh/roadmap/issues/29)
@@ -269,7 +269,5 @@ These are the cool features you can expect for the months to come:
 And many other cool things...
 
 And don’t forget to stay in touch with the Zenoh team on [Discord](https://discord.gg/vSDSpqnbkm) and to propose new features on the [roadmap](https://github.com/eclipse-zenoh/roadmap/discussions).
-
-
 
 [**--The Zenoh Team**](https://github.com/orgs/eclipse-zenoh/people)
