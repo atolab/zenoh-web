@@ -6,6 +6,19 @@ menu:
     parent: migration
 ---
 
+## Key expressions
+
+Some key expressions are now considered invalid: 
+- Heading slashes are forbidden. Example: `"/key/expression"`.
+- Trailing slashes are forbidden. Example: `"key/expression/"`.
+- Empty chunks are forbidden. Example: `"key//expression"`.
+
+An error will be returned when trying to use such invalid key expressions.
+
+## APIs
+
+In zenoh version 0.6.0, zenoh and zenoh-net APIs have been merged into a single API.
+
 ## Configuration
 
 In v0.5.x the Zenoh configuration was a list of key/value pairs.
@@ -305,16 +318,3 @@ Examples:
    ```bash
    curl -X PUT -H 'content-type:application/json' -d '{key_expr:"demo/example/**",db:"zenoh_example",create_db:true,volume:{id:"influxdb"}}' http://localhost:8000/@/router/local/config/plugins/storage_manager/storages/demo2
    ```
-
-## Key expressions
-
-Some key expressions are now considered invalid: 
-- Heading slashes are forbidden. Example: `"/key/expression"`.
-- Trailing slashes are forbidden. Example: `"key/expression/"`.
-- Empty chunks are forbidden. Example: `"key//expression"`.
-
-An error will be returned when trying to use such invalid key expressions.
-
-## APIs
-
-In zenoh version 0.6.0, zenoh and zenoh-net APIs have been merged into a single API.
