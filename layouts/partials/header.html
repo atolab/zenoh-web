@@ -77,7 +77,7 @@
           <a class="nav-link {{ if $isMedias }} active {{ end }}" href="{{ $medias.URL }}">Media</a>
         </li>
         <li class="nav-item">
-          {{ $blog := index (.Site.Menus.blog) 0 }}
+          {{ $blog := index (sort .Site.Menus.blog "Weight" "desc") 0 }}
           {{ $isBlog := hasPrefix .Permalink "/blog" }}
           <a class="nav-link {{ if $isBlog }} active {{ end }}" href="{{ $blog.URL }}">Blog</a>
         </li>
