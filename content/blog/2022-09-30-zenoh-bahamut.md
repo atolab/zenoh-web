@@ -1,10 +1,10 @@
 ---
 title: "Zenoh Bahamut takes flight!"
-date: 2022-09-28
+date: 2022-09-30
 menu: "blog"
 weight: 20220930
 description: "30 September 2022 -- Paris."
-draft: true
+draft: false
 ---
 
 The little Zenoh dragon has vigorously grown up in the last year and now craves to take higher flight towards the highest peaks in marvellous lands. 
