@@ -22,13 +22,13 @@ The new 0.6.0 release of Zenoh is code-named Bahamut: the king of the good drago
 - support for more platforms and multicast transport in zenoh-pico
 - many bug fixes
 
-The full change list for Bahamut can be found [here](https://github.com/eclipse-zenoh/zenoh/releases/tag/untagged-63446f2b3928df8dc470). But let’s find out together what the main news is and what’s next.
+The full change list for Bahamut can be found [here](https://github.com/eclipse-zenoh/zenoh/releases/tag/0.6.0-beta.1). But let’s find out together what the main news is and what’s next.
 
 
 ----
 # An improved API
 
-A brand new API has just landed. And this is without a shadow of a doubt the biggest change brought by Zenoh Bahamut. Some of you may say “oh no, this is a breaking change” and some others may say “oh yes, tons of cool new features”! But worry not! Even if this is a breaking change, moving to the new API is quite trivial (see the [migration guide](https://zenoh.io/docs/migration/migrationguide-v0.5.x-v0.6.x/)! 
+A brand new API has just landed. And this is without a shadow of a doubt the biggest change brought by Zenoh Bahamut. Some of you may say “oh no, this is a breaking change” and some others may say “oh yes, tons of cool new features”! But worry not! Even if this is a breaking change, moving to the new API is quite trivial (see the [migration guide](https://zenoh.io/docs/migration/migrationguide-v0.5.x-v0.6.x/))! 
 
 So, let’s have a look at why we did it.
 
