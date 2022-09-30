@@ -218,7 +218,7 @@ if (qable == NULL) {
 
 *zenoh v0.6.x*
 ```C
-void query_handler(z_query_t *query, void *ctx)
+void query_handler(const z_query_t *query, void *ctx)
 {
     char *keystr = z_keyexpr_to_string(z_query_keyexpr(query));
     z_bytes_t pred = z_query_value_selector(query);
