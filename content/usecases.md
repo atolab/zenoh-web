@@ -15,6 +15,12 @@ menu:
         </div>
         <div class="col">
             <h3>
+            Zenoh in robotics
+            </h3>
+            <iframe src="https://www.youtube.com/embed/1NE8cU72frk" width="320" height="240" allow="autoplay"></iframe>
+        </div>
+        <div class="col">
+            <h3>
             Indy autonomous challenge
             </h3>
             <iframe src="https://drive.google.com/file/d/12EtaDcnIL-3KqeSYauCNkEzRb5vcQejc/preview" width="320" height="240" allow="autoplay"></iframe>
@@ -25,9 +31,6 @@ menu:
             </h3>
             <iframe src="https://drive.google.com/file/d/1SMlvm4X28d0uu6Py4sQBH0sN_Z7dLBkD/preview" width="320" height="240" allow="autoplay"></iframe>
         </div>
-    </div>
-    <p>
-    <div class="row align-items-center justify-content-center">
         <div class="col">
             <h3>
             Autonomous car in simulator
@@ -47,4 +50,5 @@ menu:
             <iframe src="https://www.youtube.com/embed/rNTY3nxcpc8" width="320" height="240" allow="autoplay"></iframe>
         </div>
     </div>
+    <p>
 </div>
