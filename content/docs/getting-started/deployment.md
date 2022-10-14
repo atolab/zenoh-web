@@ -88,6 +88,7 @@ Zenoh applications in `client` mode run `multicast` scouting to discover Zenoh r
   connect: {
     endpoints: ["192.168.1.1:7447", "192.168.1.2:7447"],
   },
+}
 ```
 
 ## Peers mesh
@@ -121,6 +122,7 @@ Zenoh routers route data between clients and local subnetworks of peers. They ca
   connect: {
     endpoints: ["192.168.1.1:7447", "192.168.1.2:7447"],
   },
+}
 ```
 
 
