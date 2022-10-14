@@ -26,7 +26,7 @@ Zenoh applications in `peer` mode run both `multicast` and `gossip` scouting to 
 
 **Multicast scouting**
 
-Zenoh applications in `peer` mode join multicast group `224.0.0.224` on UDP port `7447` and send scout messages on this address to discover local applications and routers. They automatically connect to all accessible `peer` mode applications and routers they discover. The scouting address and behavior can be configured.
+Zenoh applications in `peer` mode join multicast group `224.0.0.224` on UDP port `7446` and send scout messages on this address to discover local applications and routers. They automatically connect to all accessible `peer` mode applications and routers they discover. The scouting address and behavior can be configured.
 
 **Configuration**
 ```
@@ -35,7 +35,7 @@ Zenoh applications in `peer` mode join multicast group `224.0.0.224` on UDP port
   scouting: {
     multicast: {
       enabled: true,
-      address: "224.0.0.224:7447",
+      address: "224.0.0.224:7446",
       interface: "",
       autoconnect: { peer: "router|peer" },
       listen: true,
@@ -53,7 +53,7 @@ Zenoh applications in `peer` mode forward all local applications and router they
 {
   mode: peer,
   connect: {
-    endpoints: ["192.168.1.1:7447", "192.168.1.2:7447"],
+    endpoints: ["tcp/192.168.1.1:7447", "tcp/192.168.1.2:7447"],
   },
   scouting: {
     gossip: {
@@ -86,7 +86,7 @@ Zenoh applications in `client` mode run `multicast` scouting to discover Zenoh r
 {
   mode: client,
   connect: {
-    endpoints: ["192.168.1.1:7447", "192.168.1.2:7447"],
+    endpoints: ["tcp/192.168.1.1:7447", "tcp/192.168.1.2:7447"],
   },
 }
 ```
@@ -120,7 +120,7 @@ Zenoh routers route data between clients and local subnetworks of peers. They ca
 ```
 {
   connect: {
-    endpoints: ["192.168.1.1:7447", "192.168.1.2:7447"],
+    endpoints: ["tcp/192.168.1.1:7447", "tcp/192.168.1.2:7447"],
   },
 }
 ```
