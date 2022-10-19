@@ -42,12 +42,18 @@
 </head>
 
 <body>
-  <header class="navbar navbar-expand navbar-dark flex-column flex-md-row ato-navbar">
-    <a class="navbar-brand" href="/">
-      <img src="/img/zenoh-dragon-bg-150x163.png" class="align-middle" alt="">
-    </a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav">
+  <header class="navbar-expand navbar-dark d-flex flex-column flex-md-row align-items-md-center ato-navbar">
+    <div class="d-flex flex-row justify-content-between pl-2 pr-2">
+      <a class="navbar-brand" href="/">
+        <img src="/img/zenoh-dragon-bg-150x163.png" class="align-middle" alt="">
+      </a>
+      <button class="btn btn-link d-md-none p-0" type="button" data-toggle="collapse" data-target="#ato-nav" aria-controls="ato-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" focusable="false">
+        <title>Menu</title><path stroke="white" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"></path></svg>
+      </button>
+    </div>
+    <div class="ato-links collapse pl-4 pl-md-0" id="ato-nav">
+      <ul class="navbar-nav flex-column flex-md-row">
         <li class="nav-item">
           <a class="nav-link {{ if .IsHome }} active {{ end }}" href="/">Home</a>
         </li>
