@@ -87,6 +87,11 @@ Below is a list of companies, research institutes and foundations that adopted, 
             <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-tractonomy-robotics.png" alt="Tractonomy" width="200"/>
         </a>
     </div>
+    <div class="p-2">
+        <a href="https://flecs-technologies.com" target=="_blank">
+            <img align="center" src="/img/adopters/flecs-logo_rgb_color.svg" alt="FLECS" width="200"/>
+        </a>
+    </div>
 </div>
 <p></p>
 
