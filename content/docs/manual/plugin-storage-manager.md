@@ -73,10 +73,12 @@ Here is a list of the available backends:
 
 | Backend     | Description                                               | GitHub repo & doc                         |
 |-------------|-----------------------------------------------------------|-------------------------------------------------|
+| S3          | Storages in S3 databases.                                 | [eclipse-zenoh/zenoh-backend-s3]          |
 | InfluxDB    | Storages in InfluxDB databases.                           | [eclipse-zenoh/zenoh-backend-influxdb]    |
 | RocksDB     | Storages in RocksDB databases.                            | [eclipse-zenoh/zenoh-backend-rocksdb]     |
 | File System | Storages on local files system, each key/value in a file. | [eclipse-zenoh/zenoh-backend-filesystem]  |
 
+[eclipse-zenoh/zenoh-backend-s3]: https://github.com/eclipse-zenoh/zenoh-backend-s3
 [eclipse-zenoh/zenoh-backend-influxdb]: https://github.com/eclipse-zenoh/zenoh-backend-influxdb
 [eclipse-zenoh/zenoh-backend-rocksdb]: https://github.com/eclipse-zenoh/zenoh-backend-rocksdb
 [eclipse-zenoh/zenoh-backend-filesystem]: https://github.com/eclipse-zenoh/zenoh-backend-filesystem
