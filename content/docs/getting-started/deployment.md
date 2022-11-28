@@ -93,7 +93,7 @@ Zenoh applications in `client` mode run `multicast` scouting to discover Zenoh r
 
 ## Peers mesh
 
-In a mesh network, applications cannot directly connect to each other. Peer to peer and brokered communications my be impossible or undesirable. Zenoh applications in `peer` mode can run a linkstate protocol that allow them to comminucate in a mesh network.
+In a mesh network, applications cannot directly connect to each other. Peer to peer and brokered communications may be impossible or undesirable. Zenoh applications in `peer` mode can run a linkstate protocol that allow them to comminucate in a mesh network.
 
 ![peers mesh](/img/peers_mesh.png "peers mesh")
 
