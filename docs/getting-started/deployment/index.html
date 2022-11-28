@@ -36,7 +36,7 @@
     endpoints: [&#34;tcp/192.168.1.1:7447&#34;, &#34;tcp/192.168.1.2:7447&#34;],
   },
 }
-</code></pre><h2 id=peers-mesh>Peers mesh</h2><p>In a mesh network, applications cannot directly connect to each other. Peer to peer and brokered communications my be impossible or undesirable. Zenoh applications in <code>peer</code> mode can run a linkstate protocol that allow them to comminucate in a mesh network.</p><p><img src=../../../img/peers_mesh.png alt="peers mesh" title="peers mesh"></p><p><strong>Configuration</strong></p><pre tabindex=0><code>{
+</code></pre><h2 id=peers-mesh>Peers mesh</h2><p>In a mesh network, applications cannot directly connect to each other. Peer to peer and brokered communications may be impossible or undesirable. Zenoh applications in <code>peer</code> mode can run a linkstate protocol that allow them to comminucate in a mesh network.</p><p><img src=../../../img/peers_mesh.png alt="peers mesh" title="peers mesh"></p><p><strong>Configuration</strong></p><pre tabindex=0><code>{
   mode: peer,
   routing: {
     peer: {
