@@ -4,7 +4,7 @@ date: 2022-11-30
 menu: "blog"
 weight: 20221130
 description: "30 November 2022 -- Paris."
-draft: true
+draft: false
 ---
 
 [Zenoh Bahamut](https://zenoh.io/blog/2022-09-30-zenoh-bahamut/#replicated-storages) introduced a new experimental feature to support replicated storage alignment. With this feature, Zenoh ensures eventual consistency for storages that subscribe to the same key expression, even in the presence of network partitions and system faults. As promised, today we dig into some details about the storage alignment protocol. We will also give insights on how to efficiently configure a replicated storage in Zenoh.
