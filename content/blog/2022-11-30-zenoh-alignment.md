@@ -40,7 +40,7 @@ In line with our goal to minimize the overhead of Zenoh as much as possible, we 
 
 In the first case the resources that had the most recent updates will be misaligned. In the second case, the timeline will extend a bit further into the past and in the last case we would need to copy all the data into the newly provisioned storage.
 
-Based on this observation, Zenoh’s fingerprinting mechanism divides all the resources into eras (i.e., a temporal range) that in turn is composed of intervals and subintervals. This forms a tree-like data structure with hashes. Each update needs to be time stamped to be used by the fingerprinting algorithm. Each resource is allocated to a subinterval according to its timestamp. In order to ensure uniqueness, the combination of timestamp and key is used to generate a hash for each subinterval. The hashes of subintervals are used to compute the hash of the interval and likewise interval hashes are used to generate the hash of the era. The hash of the eras are used to generate the top-level hash.
+Based on this observation, Zenoh’s fingerprinting mechanism divides all the resources into eras (i.e., a temporal range) that in turn is composed of intervals and subintervals. This forms a tree-like data structure with hashes. Each update needs to be timestamped to be used by the fingerprinting algorithm. Each resource is allocated to a subinterval according to its timestamp. In order to ensure uniqueness, the combination of timestamp and key is used to generate a hash for each subinterval. The hashes of subintervals are used to compute the hash of the interval and likewise interval hashes are used to generate the hash of the era. The hash of the eras are used to generate the top-level hash.
 
 ![Slicing time into eras](../../img/20221130-blog-zenoh-alignment/slicing-time.png)
 ![An era-based hash tree](../../img/20221130-blog-zenoh-alignment/era-based-hashtree.png)
@@ -89,7 +89,7 @@ Specifying the parameters is optional, Zenoh will use the default values as show
 ---
 # Conclusion
 
-The new anti-entropy protocol ensures that replicated storages in Zenoh have the same latest value for each resource. The protocol also helps align new storages to be aligned with the existing storages. We also discussed how to configure the replication parameters for your application specific requirements. 
+The new anti-entropy protocol ensures that replicated storages in Zenoh have the same latest value for each resource. The protocol also helps align new storages with the existing storages. We also discussed how to configure the replication parameters for your application specific requirements. 
 
 Please let us know your questions and feedback on our discord!
 
