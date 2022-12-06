@@ -7,9 +7,12 @@ menu:
 ---
 
 Zenoh supports TLS as a transport protocol.
-As of today, the only supported TLS authentication mode is server-authentication: clients validate the server TLS certificate but not the other way around.
-That is, the same way of operating on the web where the web browsers validate the identity of the server via means of the TLS certificate.
-The configuration of TLS certificates is done via a [configuration file](../configuration).
+TLS can be configured in two ways:
+* server side authentication: clients validate the server TLS certificate but not the other way around, that is, the same way of operating on the web where the web browsers validate the identity of the server via means of the TLS certificate.
+
+* mutual authentication (mTLS): where both server-side and client-side authentication is required.
+
+The configuration of TLS certificates is done via a [configuration file](../configuration.md).
 
 ---------
 ## TLS certificates creation
@@ -54,13 +57,13 @@ Once the above certificates have been correctly generated, we can proceed to con
 
 The required configuration fields for authenticating a *TLS server* for a client is **root_ca_certificate**.
 A configuration file for a *client* would be:
-```
+```json
 {
   /// The node's mode (router, peer or client)
   mode: "client",
   connect: {
     endpoints: [ "tls/localhost:7447" ]
-  }
+  },
   transport: {
     link: {
       tls: {
@@ -80,13 +83,13 @@ Let's assume the above configuration is then saved with the name *client.json5*.
 The required **tls** fields for configuring a *TLS certificate* for a router are **server_private_key** and **server_certificate**.
 
 A configuration file for a *router* would be:
-```
+```json
 {
   /// The node's mode (router, peer or client)
   mode: "router",
   listen: {
     endpoints: [ "tls/localhost:7447" ]
-  }
+  },
   transport: {
     link: {
       tls: {
@@ -107,7 +110,7 @@ Let's assume that the above configurations are then saved with the name *server.
 The required **tls** fields for configuring a *TLS certificate* for a router are **root_ca_certificate**, **server_private_key** and **server_certificate**.
 
 A configuration file for a *peer* would be:
-```
+```json
 {
   /// The node's mode (router, peer or client)
   mode: "peer",
@@ -127,6 +130,72 @@ When using such configuration, the peer will use the provided **root_ca_certific
 At the same time, the peer will use the provided **server_private_key** and **server_certificate** for initiating incoming TLS sessions from other peers.
 
 Let's assume that the above configurations are then saved with the name *peer.json5*.
+
+---------
+## Mutual authentication (mTLS)
+
+In order to enable mutual authentication, we'll need two sets of keys and certificates, one for the "server" and one for the "client". These sets of keys and certificates can be generated as explained [in the previous section](#tls-certificates-creation).
+Let's suppose we are storing them under `$home/user/` with the following files and folders structure:
+```
+user
+├── client
+│   ├── localhost
+│   │   ├── cert.pem
+│   │   └── key.pem
+│   ├── minica-key.pem
+│   └── minica.pem
+└── server
+    ├── localhost
+    │   ├── cert.pem
+    │   └── key.pem
+    ├── minica-key.pem
+    └── minica.pem
+```
+
+### Router configuration
+
+The filed `client_auth` needs to be set to `true` and we must provide the router (acting as server) the certificate authority to validate the client's keys and certificates under the field `root_ca_certificate`. The `server_private_key` and `server_certificate` fields are also required in order to authenticate the router in front of the client.
+
+```json
+{
+  mode: "router",
+  listen: {
+    endpoints: [ "tls/localhost:7447" ]
+  },
+  transport: {
+    link: {
+      tls: {
+        root_ca_certificate: "/home/user/client/minica.pem",
+        client_auth: true,
+        server_private_key: "/home/user/server/localhost/key.pem",
+        server_certificate: "/home/user/server/localhost/cert.pem",
+      },
+    },
+  },
+}
+```
+
+### Client configuration
+
+Again, the field `client_auth` needs to be set to `true` and we must provide the certificate authority to validate the server keys and certificates. Similarly, we need to provide the client keys and certificates for the server to authenticate our connection.
+```json
+{
+  mode: "client",
+  connect: {
+    endpoints: [ "tls/localhost:7447" ]
+  },
+  transport: {
+    link: {
+      tls: {
+        root_ca_certificate: "/home/user/server/minica.pem",
+        client_auth: true,
+        client_private_key: "/home/user/client/localhost/key.pem",
+        client_certificate: "/home/user/client/localhost/cert.pem",
+      },
+    },
+  },
+}
+```
 
 ---------
 ## Testing the TLS transport
