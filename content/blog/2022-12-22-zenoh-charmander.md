@@ -14,11 +14,11 @@ Charmander introduces some long-awaited functionalities:
 - [S3 storage backend](#s3-storage-backend);
 
 some new freshly-landed functionalities:
-- [Query payload](query-payload);
+- [Query payload](#query-payload);
 - [C++ binding](#c-bindings);
 - [Connectivity status and notifications](#connectivity-status-and-notifications);
 
-and [MISRA-C compliance for Zenoh-Pico](zenoh-pico-and-misra-c).
+and [MISRA-C compliance for Zenoh-Pico](#zenoh-pico-and-misra-c).
 
 ----
 # Mutual TLS authentication
