@@ -36,7 +36,7 @@ Zenoh applications in `peer` mode join multicast group `224.0.0.224` on UDP port
     multicast: {
       enabled: true,
       address: "224.0.0.224:7446",
-      interface: "",
+      interface: "auto",
       autoconnect: { peer: "router|peer" },
       listen: true,
     },
@@ -58,6 +58,7 @@ Zenoh applications in `peer` mode forward all local applications and router they
   scouting: {
     gossip: {
       enabled: true,
+      multihop: false,
       autoconnect: { peer: "router|peer" },
     },
   },
