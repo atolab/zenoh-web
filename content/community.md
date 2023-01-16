@@ -7,7 +7,7 @@ menu: "community"
 # Communication
 
 The Zenoh community is most readily found on
-[its Discord server](https://discord.gg/cY4nVjUd), where you're welcome to
+[its Discord server](https://discord.gg/cRFZDJfS3g), where you're welcome to
 ask questions, report problems, or pitch ideas.
 
 # Issues
@@ -39,4 +39,4 @@ next major release.
 # Get Involved
 
 Are you interested in getting involved and helping out? Reach-out to us 
-via the [Discord Server](https://discord.gg/cY4nVjUd).
+via the [Discord Server](https://discord.gg/cRFZDJfS3g).
