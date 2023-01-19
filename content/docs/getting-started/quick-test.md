@@ -20,7 +20,7 @@ The ports used by Zenoh are the following:
   - **7447/tcp** : the Zenoh protocol via TCP
   - **8000/tcp** : the Zenoh REST API
 
-**⚠️ WARNING ⚠️**: _Docker doesn't support UDP multicast between a container and its host (see cases [moby/moby#23659](https://github.com/moby/moby/issues/23659), [moby/libnetwork#2397](https://github.com/moby/libnetwork/issues/2397) or [moby/libnetwork#552](https://github.com/moby/libnetwork/issues/552)). The only case where it works is on Linux using the `--net host` option to make the container to share the host's networking space (i.e. run: `docker run --init --net host eclipse/zenoh`)._  
+**⚠️ WARNING ⚠️**: _Docker doesn't support UDP multicast between a container and its host (see cases [moby/moby#23659](https://github.com/moby/moby/issues/23659), [moby/libnetwork#2397](https://github.com/moby/libnetwork/issues/2397) or [moby/libnetwork#552](https://github.com/moby/libnetwork/issues/552)). The only case where it works is on Linux using the `--net=host` option to make the container to share the host's networking space (i.e. run: `docker run --init --net=host eclipse/zenoh`)._  
 _The implication of not having UDP multicast working for the Zenoh router is that you need to configure your Zenoh applications (peer or client) with the router's locator as `peer`:_
   - _running the [examples we provide](#pick-your-programming-language), just add the option: `-e tcp/localhost:7447`_
   - _writing your own Zenoh application, you need to add a `connect: {endpoints: ["tcp/localhost:7447"]}}` configuration when initiating the Zenoh API_
