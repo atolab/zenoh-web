@@ -6,6 +6,9 @@ menu:
     parent: getting_started
 ---
 
+## Overview
+
+![topology animation](/img/topology_anim.gif "topology animation")
 
 ## Peer to peer
 
