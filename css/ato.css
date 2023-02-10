@@ -295,6 +295,10 @@ img {
   }
 }
 
+.ato-content {
+    text-align: justify;
+}
+
 .ato-lead h1.ato-title {
   font-size: 3rem;
   font-weight: 600;
@@ -312,6 +316,8 @@ img {
   margin-bottom: 0.75rem;
 }
 .ato-content h2 {
+    margin-top: 4rem;
+    margin-bottom: 2rem;
   font-size: 1.75rem;
   font-weight: 400;
 }
@@ -334,6 +340,14 @@ img {
 
 .ato-content p {
   max-width: 80%;
+}
+
+.ato-content ul {
+    max-width: 80%;
+}
+
+.ato-content ol {
+    max-width: 80%
 }
 
 .ato-next {
@@ -839,3 +853,30 @@ h5:hover a {
   letter-spacing: 0.1rem;
 }
   
+/* === Figures === */
+
+.figure-inline {
+    max-width: 80%;
+    margin-top: 2rem;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+figcaption {
+    margin-top: 2rem;
+    font-style: italic;
+    font-size: small;
+}
+
+.flex-row {
+    max-width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.highlight {
+    max-width: 80%;
+}
