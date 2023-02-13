@@ -23,30 +23,7 @@ Technically speaking,  Zenoh is a pub/sub/query protocol that unifies data in mo
 Zenoh has achieved all of this by extremely careful design and craftsmanship. It is the first protocol available on the market that has managed to integrate Internet-Scale Publish/ Subscribe with Geo-Distributed Queries. Thus, why not  [getting started](https://zenoh.io/docs/getting-started/first-app/) with it now?  
 
 ### Online References
+- [Taming the Dragon Webinar Series](https://www.youtube.com/playlist?list=PLZDEtJusUvAY04pwmpY8uqCG5iQ7NgSrR)
 - [Zenoh: The Genesys](https://www.youtube.com/watch?v=BryexPfh0Jc&t=898s)
 - [Improving the Communication Layer of Robot Applications with ROS2 and Zenoh](https://www.youtube.com/watch?v=1NE8cU72frk)
 - [Zenoh and Edge Computing: A Perfect Marriage](https://www.youtube.com/watch?v=_NUP-ihrXjQ)
-
-<!-- 
-Additionally, for performance, efficiency and privacy reasons, there is an increasing desire to keep the data processing as close as possible to the source, while at the same time not hindering access to geographically remote applications. In other terms, we are experiencing a mainstream [architectural switch](https://perspectives.tech/2019/12/10/architectural-liberum-arbitrium/) from cloud-centric paradigms in which data is stored, processed and retrieved from the cloud to fog and [edge-centric](https://edgenative.eclipse.org/) paradigms where data is stored and processed where it makes most sense for performance, energy efficiency and security matters.  -->
-
-<!-- ~~**Zenoh** has been designed to address the needs of those applications that need to deal with data in movement, data at rest and computation in a scalable, efficient and location transparent manner.~~ -->
-
-<!-- **Zenoh is a pub/sub/query protocol** that unifies data in motion, data in use, data at rest and computations.  It carefully blends traditional pub/sub with geo-distributed storages, queries and computations, while retaining a level of time and space efficiency that is well beyond any of the mainstream stacks. 
-
-
-**Zenoh** has been designed to:
-
-- Provide a small set of primitives to deal with data in motion, data at rest and computations.
-
-- Give total control on storage location and back-end technology integration.
-
-- Minimize network overhead – the minimal wire overhead of a data message is 4 bytes.
-
-- Support extremely constrained devices – its footprint on Arduino Uno is of 300 bytes.
-
-- Supports devices with low duty-cycle by allowing the negotiation of data exchange modes and schedules.
-  
-- Provides a rich set of abstraction for distributing, querying and storing data along the entire system. 
-  
-- Provide extremely low latency and high throughput.  -->
