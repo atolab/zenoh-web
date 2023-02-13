@@ -4,7 +4,7 @@ date: 2023-02-10
 menu: "blog"
 weight: 20230210
 description: "10 February 2023 -- Paris."
-draft: true
+draft: false
 ---
 
 Zenoh-Flow was the concluding episode of Zenoh’s webinar series "Taming the Dragon" released recently and available on ZettaScale’s Youtube channel. In case you haven’t watched the webinar (which you should definitely do!), click [here](https://www.youtube.com/playlist?list=PLZDEtJusUvAY04pwmpY8uqCG5iQ7NgSrR)!
