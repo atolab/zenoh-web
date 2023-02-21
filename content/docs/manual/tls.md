@@ -15,48 +15,16 @@ TLS can be configured in two ways:
 The configuration of TLS certificates is done via a [configuration file](../configuration.md).
 
 ---------
-## TLS certificates creation
 
-In order to use TLS as a transport protocol, we need first to create the TLS certificates. 
-While multiple ways of creating TLS certificates exist, in this guide we are going to use [minica](https://github.com/jsha/minica) for simplicity:
 
-> *Minica is a simple CA intended for use in situations where the CA operator also operates each host where a certificate will be used. It automatically generates both a key and a certificate when asked to produce a certificate. It does not offer OCSP or CRL services. Minica is appropriate, for instance, for generating certificates for RPC systems or microservices.*
-
-First, you need to install minica by following these [instructions](https://github.com/jsha/minica#installation).
-Once you have successfully installed on your machine, let's create the certificates as follows assuming that we will test Zenoh over TLS on *localhost*.
-First let's create a folder to store our certificates:
-```bash
-$/home/user: mkdir tls
-$/home/user: cd tls
-$/home/user/tls: pwd
-/home/user/tls
-```
-
-Then, let's generate the TLS certificate for the *localhost* domain:
-```bash
-$/home/user/tls: minica --domains localhost
-```
-
-This should create the following files:
-```bash
-$/home/user/tls: ls
-localhost   minica-key.pem  minica.pem
-```
-
-*minica.pem* is the root CA certificate that will be used by the client to validate the server certificate.
-The server certificate *cert.pem* and private key *key.pem* can be found inside the *localhost* folder.
-```bash
-$/home/user/tls: ls localhost
-cert.pem    key.pem
-```
-
-Once the above certificates have been correctly generated, we can proceed to configure Zenoh to use TLS.
-
----------
 ## Client configuration
 
-The required configuration fields for authenticating a *TLS server* for a client is **root_ca_certificate**.
-A configuration file for a *client* would be:
+The field **root_ca_certificate** is used to specify the path to the certificate used to authenticate the *TLS server*. 
+
+It's important to note that if the field is not specified then the default behaviour is to load the root certificates provided by [Mozilla's CA for use with webpki](https://docs.rs/crate/webpki-roots/latest/source/src/lib.rs).
+
+However, if we manage our own certificates, we need to specify the root certificate. 
+Suppose we generated the certificate using [MiniCA as explained below](#appendix-tls-certificates-creation), then the configuration file for a *client* would be:
 ```json
 {
   /// The node's mode (router, peer or client)
@@ -74,7 +42,7 @@ A configuration file for a *client* would be:
 }
 ```
 
-When using such configuration, the client will use the provided **root_ca_certificate** to authenticate the *TLS server certificate*.
+When using such configuration, the client will use the provided `minica.pem` certificate to authenticate the *TLS server certificate*.
 
 Let's assume the above configuration is then saved with the name *client.json5*.
 
@@ -134,9 +102,9 @@ Let's assume that the above configurations are then saved with the name *peer.js
 ---------
 ## Mutual authentication (mTLS)
 
-In order to enable mutual authentication, we'll need two sets of keys and certificates, one for the "server" and one for the "client". These sets of keys and certificates can be generated as explained [in the previous section](#tls-certificates-creation).
+In order to enable mutual authentication, we'll need two sets of keys and certificates, one for the "server" and one for the "client". These sets of keys and certificates can be generated as explained [in the appendix section below](#appendix-tls-certificates-creation).
 Let's suppose we are storing them under `$home/user/` with the following files and folders structure:
-```
+```bash
 user
 ├── client
 │   ├── localhost
@@ -233,3 +201,41 @@ $ zn_pub -c peer.json5 -l tls/localhost:7448 -e tls/localhost:7447
 ```
 
 As it can be noticed, the same *peer.json5* is used for *zn_sub* and *zn_pub*.
+
+---------
+## Appendix: TLS certificates creation
+
+In order to use TLS as a transport protocol, we need first to create the TLS certificates. 
+While multiple ways of creating TLS certificates exist, in this guide we are going to use [minica](https://github.com/jsha/minica) for simplicity:
+
+> *Minica is a simple CA intended for use in situations where the CA operator also operates each host where a certificate will be used. It automatically generates both a key and a certificate when asked to produce a certificate. It does not offer OCSP or CRL services. Minica is appropriate, for instance, for generating certificates for RPC systems or microservices.*
+
+First, you need to install minica by following these [instructions](https://github.com/jsha/minica#installation).
+Once you have successfully installed on your machine, let's create the certificates as follows assuming that we will test Zenoh over TLS on *localhost*.
+First let's create a folder to store our certificates:
+```bash
+$/home/user: mkdir tls
+$/home/user: cd tls
+$/home/user/tls: pwd
+/home/user/tls
+```
+
+Then, let's generate the TLS certificate for the *localhost* domain:
+```bash
+$/home/user/tls: minica --domains localhost
+```
+
+This should create the following files:
+```bash
+$/home/user/tls: ls
+localhost   minica-key.pem  minica.pem
+```
+
+*minica.pem* is the root CA certificate that will be used by the client to validate the server certificate.
+The server certificate *cert.pem* and private key *key.pem* can be found inside the *localhost* folder.
+```bash
+$/home/user/tls: ls localhost
+cert.pem    key.pem
+```
+
+Once the above certificates have been correctly generated, we can proceed to configure Zenoh to use TLS as explained.
