@@ -54,6 +54,16 @@ In the case of `zenohd`, the only user-accessible way of editing the configurati
 ## Adminspace configuration
 The configuration of a Zenoh router can be changed at runtime via its admin space, if it's configured to be writeable:
  - either via the configuration file in the `adminspace.permissions` section
+```json
+{
+  adminspace: {
+    permissions: {
+      read: true,
+      write: true
+    }
+  }
+}
+```
  - either via the `zenohd` command line option: `--adminspace-permissions <[r|w|rw|none]>`
 
 Then you can change elements of it's configuration once it's started, by sending put messages to its [admin space](../abstractions#admin-space).
