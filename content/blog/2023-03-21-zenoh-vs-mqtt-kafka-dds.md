@@ -17,13 +17,13 @@ Zenoh Team and the community as this evaluation asnwers a couple of questions we
 
 
 ## Introduction
-High performance has always been one of the main goals of Zenoh. While we
-already addressed Zenoh\'s performance in some older posts (see
+High performance has always been one of the main goals of Zenoh. While  Zenoh\'s performance are provided for each release (see
 [here](https://zenoh.io/blog/2022-09-30-zenoh-bahamut/#improved-performance),
 [here](https://zenoh.io/blog/2022-04-14-rust-async-eval/), and
-[here](https://zenoh.io/blog/2021-07-13-zenoh-performance-async/)), we never
-compared Zenoh with other technologies. Now that time has come! In this blog
-post, we present an evaluation conducted by the [National Taiwan
+[here](https://zenoh.io/blog/2021-07-13-zenoh-performance-async/)), so far there were no peformances evaluations that 
+compared Zenoh with other technologies. Yet, this was a question commonly asked on Zenoh's discord server and on github, 
+thus we decided to look into this.  
+In this blog, we'll present an evaluation conducted by the [National Taiwan
 University](https://www.ntu.edu.tw/english/) with our support where Zenoh\'s
 performance is compared with MQTT, Kafka, and DDS. A comprehensive version of this
 blog is available on [arXiv](https://arxiv.org/abs/2303.09419) to provide a detailed description and analysis
