@@ -1,12 +1,22 @@
 ---
-title: " Performance Comparison of Zenoh with MQTT, Kafka, and DDS"
+title: "Comparing Performance of Zenoh, MQTT, Kafka, and DDS"
 date: 2023-03-21
 menu: "blog"
 weight: 20230321
 description: "21 March 2023 -- Taipei."
 draft: false
 ---
+### Prologue
+This installemnt we have a blog contribugted by a team of reserarchers from the prestigious 
+[National Taiwan University (NTU)](https://www.ntu.edu.tw/english/). This team has been using 
+Zenoh for some time in R2X and V2X R&D projects and recently did an interesting performance comparison 
+between our blue dragon protocol, MQTT, Kafka and DDS. I'd like to thank the NTU team on behalf of the 
+Zenoh Team and the community as this evaluation asnwers a couple of questions we are asked quite often. 
 
+-- [kydos](https://github.com/kydos)
+
+
+## Introduction
 High performance has always been one of the main goals of Zenoh. While we
 already addressed Zenoh\'s performance in some older posts (see
 [here](https://zenoh.io/blog/2022-09-30-zenoh-bahamut/#improved-performance),
@@ -336,14 +346,6 @@ the shortest learning curve. We believe that Zenoh is the best choice
 for industrial, IoT, robotics, and automotive applications that can
 seamlessly support the cloud-to-edge and to-things continuum.
 
-## Authors
+Hope you enjoyed it,
 
-[**William Liang**<sup>*</sup>](https://www.linkedin.com/in/wyliang/), [**Yuyuan Yuan**<sup>+</sup>](https://github.com/YuanYuYuan), and [**Jerry Lin**<sup>+</sup>](https://github.com/jerry73204)
-
-<sup>*</sup> Zenoh Taiwan Team, [Zettascale](https://www.zettascale.tech/)
-
-<sup>+</sup> Zenoh Contributors, [National Taiwan University](https://csie.ntu.edu.tw/)
-
-## Acknowledgments
-
-Special thanks to [**Carlos Guimarães**](https://github.com/cguimaraes) and [**Gabriele Baldoni**](https://github.com/gabrik) for helping run the tests in the ideal experiment environment, and [**Luca Cominardi**](https://github.com/Mallets), [**Angelo Corsaro**](https://github.com/kydos), [**Olivier Hecart**](https://github.com/OlivierHecart), and the whole **[Zenoh Team](https://github.com/orgs/eclipse-zenoh/people) in Paris** for helping review and solve problems. Also thanks to **Eddie Wang** and **Rex Yu**, former interns of the Zenoh Taiwan Team, for helping at the beginning of this evaluation.
+-- William, Circle, andJerry
