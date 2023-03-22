@@ -1,0 +1,199 @@
+<!doctype html><html lang=en><head><link rel=apple-touch-icon sizes=180x180 href=../../apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=../../favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=../../favicon-16x16.png><link rel=manifest href=../../site.webmanifest><link rel=mask-icon href=../../safari-pinned-tab.png><meta name=msapplication-TileImage content="/safari-pinned-tab.png"><meta name=msapplication-TileColor content="#7da7d8"><meta name=theme-color content="#7da7d8"><meta charset=utf-8><meta name=description content="Eclipse Zenoh, unify data in motion, data at rest and computations."><meta name=keywords content="pub/sub,query,geo distributed storage,Rust,protocol,DDS,MQTT,Edge,IoT,MEC"><meta name=author content="The Zenoh Team"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=../../css/bootstrap-reboot.css><link rel=stylesheet href=../../css/bootstrap.css><link rel=stylesheet href=../../css/font-awesome.min.css><link rel=stylesheet href=../../css/ato.css><link rel=stylesheet href=../../css/syntax.css><link rel=alternate type=application/rss+xml href=../../blog/index.xml><title>Performance Comparison of Zenoh with MQTT, Kafka, and DDS · Zenoh - pub/sub, geo distributed storage, query</title></head><body><header class="navbar-expand navbar-dark d-flex flex-column flex-md-row align-items-md-center ato-navbar"><div class="d-flex flex-row justify-content-between pl-2 pr-2"><a class=navbar-brand href=../../><img src=../../img/zenoh-dragon-bg-150x163.png class=align-middle alt></a>
+<button class="btn btn-link d-md-none p-0" type=button data-toggle=collapse data-target=#ato-nav aria-controls=ato-nav aria-expanded=false aria-label="Toggle navigation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" focusable="false"><title>Menu</title><path stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/></svg></button></div><div class="ato-links collapse pl-4 pl-md-0" id=ato-nav><ul class="navbar-nav flex-column flex-md-row"><li class=nav-item><a class=nav-link href=../../>Home</a></li><li class=nav-item><a class=nav-link href=../../docs/getting-started/first-app/>Documentation</a></li><li class=nav-item><a class=nav-link href=../../usecases/>Use Cases</a></li><li class=nav-item><a class=nav-link href=../../community/>Community</a></li><li class=nav-item><a class=nav-link href=../../adopters/>Adopters</a></li><li class=nav-item><a class=nav-link href=../../media/>Media</a></li><li class=nav-item><a class="nav-link active" href=../../blog/2023-03-21-zenoh-vs-mqtt-kafka-dds/>Blog</a></li></ul></div><ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex"><li class=nav-item><a class="nav-link p-2" href=https://github.com/eclipse-zenoh/zenoh target=_blank rel=noopener aria-label=GitHub><svg class="navbar-nav-svg" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 499.36" focusable="false"><title>GitHub</title><path d="M256 0C114.64.0.0 114.61.0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34.0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49.0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75.0.0 21.49-6.88 70.4 26.24a242.65 242.65.0 01128.18.0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69.0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41.0 34.22-.31 61.83-.31 70.23.0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37.0 256 0z" fill="currentcolor" fill-rule="evenodd"/></svg></a></li><li class=nav-item><a class="nav-link p-2" href=https://twitter.com/zettascaletech target=_blank rel=noopener aria-label=Twitter><svg class="navbar-nav-svg" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 416.32" focusable="false"><title>Twitter</title><path d="M160.83 416.32c193.2.0 298.92-160.22 298.92-298.92.0-4.51.0-9-.2-13.52A214 214 0 00512 49.38a212.93 212.93.0 01-60.44 16.6 105.7 105.7.0 0046.3-58.19 209 209 0 01-66.79 25.37 105.09 105.09.0 00-181.73 71.91 116.12 116.12.0 002.66 24c-87.28-4.3-164.73-46.3-216.56-109.82A105.48 105.48.0 0068 159.6a106.27 106.27.0 01-47.53-13.11v1.43a105.28 105.28.0 0084.21 103.06 105.67 105.67.0 01-47.33 1.84 105.06 105.06.0 0098.14 72.94A210.72 210.72.0 0125 370.84a202.17 202.17.0 01-25-1.43 298.85 298.85.0 00160.83 46.92" fill="currentcolor"/></svg></a></li><li class=nav-item><a class="nav-link p-2" href=https://discord.gg/2GJ958VuHs target=_blank rel=noopener aria-label=Discord><svg class="navbar-nav-svg" xmlns="http://www.w3.org/2000/svg" focusable="false"><title>Discord</title><path fill="currentcolor" d="M13.545 2.907a13.227 13.227.0 00-3.257-1.011.05.05.0 00-.052.025c-.141.25-.297.577-.406.833a12.19 12.19.0 00-3.658.0 8.258 8.258.0 00-.412-.833.051.051.0 00-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041.0 00-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276.0 003.995 2.02.05.05.0 00.056-.019c.308-.42.582-.863.818-1.329a.05.05.0 00-.01-.059.051.051.0 00-.018-.011 8.875 8.875.0 01-1.248-.595.05.05.0 01-.02-.066.051.051.0 01.015-.019c.084-.063.168-.129.248-.195a.05.05.0 01.051-.007c2.619 1.196 5.454 1.196 8.041.0a.052.052.0 01.053.007c.08.066.164.132.248.195a.051.051.0 01-.004.085 8.254 8.254.0 01-1.249.594.05.05.0 00-.03.03.052.052.0 00.003.041c.24.465.515.909.817 1.329a.05.05.0 00.056.019 13.235 13.235.0 004.001-2.02.049.049.0 00.021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034.0 00-.02-.019zm-8.198 7.307c-.789.0-1.438-.724-1.438-1.612.0-.889.637-1.613 1.438-1.613.807.0 1.45.73 1.438 1.613.0.888-.637 1.612-1.438 1.612zm5.316.0c-.788.0-1.438-.724-1.438-1.612.0-.889.637-1.613 1.438-1.613.807.0 1.451.73 1.438 1.613.0.888-.631 1.612-1.438 1.612z"/></svg></a></li><li class=nav-item><a class="nav-link p-2" href=https://www.youtube.com/channel/UCslbiyiqgOAPMjCrPWIfQ5Q target=_blank rel=noopener aria-label=Youtube><svg class="navbar-nav-svg" xmlns="http://www.w3.org/2000/svg" focusable="false"><title>Youtube</title><path fill="currentcolor" d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01.0 011.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007.0 01-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309.0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007.0 01-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82.082 9.716A31.4 31.4.0 010 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007.0 011.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788.0 017.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/></svg></a></li></ul><script async src="https://www.googletagmanager.com/gtag/js?id=UA-120904581-1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-41082619-2")</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":""},"articleSection":"blog","name":" Performance Comparison of Zenoh with MQTT, Kafka, and DDS","headline":" Performance Comparison of Zenoh with MQTT, Kafka, and DDS","datePublished":"2023-03-21 00:00:00 \u002b0000 UTC","dateModified":"2023-03-21 00:00:00 \u002b0000 UTC","url":"\/blog\/2023-03-21-zenoh-vs-mqtt-kafka-dds\/","inLanguage":"en-US","author":"","creator":"","publisher":"","accountablePerson":"","copyrightHolder":"","copyrightYear":"212121","wordCount":"2279","keywords":[],"description":"21 March 2023 -- Taipei."}</script></header><div class="container-fluid ato-blog"><div class="row flex-xl-nowrap"><div class="col-12 col-md-3 col-xl-2 ato-sidebar"><div class="ato-docs-toggle d-md-none p-0 d-flex ml-3 collapsed align-item-center"><h1 class=ato-title>Performance Comparison of Zenoh with MQTT, Kafka, and DDS</h1><button class="btn btn-link" type=button data-toggle=collapse data-target=#ato-docs-nav aria-controls=ato-docs-nav aria-expanded=false aria-label="Toggle docs navigation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" focusable="false"><title>Menu</title><path stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/></svg></button></div><nav class="ato-links collapse" id=ato-docs-nav><div class="ato-toc-item active"><p class=ato-toc-link>Blog Posts</p><ul class="nav ato-sidenav"><li><a href=../../blog/2023-03-21-zenoh-vs-mqtt-kafka-dds/>Performance Comparison of Zenoh with MQTT, Kafka, and DDS</a></li><li><a href=../../blog/2023-02-10-zenoh-flow/>Data Flow programming with Zenoh-Flow</a></li><li><a href=../../blog/2023-01-17-zenoh-wireshark/>The Blue Dragon meets the Wire’s Shark</a></li><li><a href=../../blog/2023-01-10-zenoh-charmander/>Zenoh Charmander is coming to town</a></li><li><a href=../../blog/2022-11-29-zenoh-alignment/>Keeping storages aligned in Zenoh</a></li><li><a href=../../blog/2022-09-30-zenoh-bahamut/>Zenoh Bahamut takes flight!</a></li><li><a href=../../blog/2022-08-12-zenoh-serial/>There is Land Besides IP: How to Cross It with Zenoh</a></li><li><a href=../../blog/2022-06-09-zenoh-pico-above-and-beyond/>Zenoh-Pico: Above and Beyond</a></li><li><a href=../../blog/2022-04-14-rust-async-eval/>A Performance Evaluation on Rust Asynchronous Frameworks</a></li><li><a href=../../blog/2022-03-30-zenoh-mobility/>Mobility, Latency and Energy saving</a></li><li><a href=../../blog/2022-02-08-dragonbot/>DragonBotOne Egg Hatching with Zenoh and Zenoh-Pico</a></li><li><a href=../../blog/2021-11-09-ros2-zenoh-pico/>ROS 2 and microcontrollers integration via Zenoh-pico</a></li><li><a href=../../blog/2021-10-04-zenoh-pico-guide/>Zenoh goes embedded with zenoh-pico</a></li><li><a href=../../blog/2021-09-28-iac-experiences-from-the-trenches/>Indy Autonomous Challenge (IAC): Experiences from the Trenches</a></li><li><a href=../../blog/2021-07-13-zenoh-performance-async/>Zenoh performance: a stroll in Rust async wonderland</a></li><li><a href=../../blog/2021-07-05-zenoh-overhead/>Zenoh overhead: a story from our community</a></li><li><a href=../../blog/2021-06-14-zenoh-reliability/>Zenoh Reliability, Scalability and Congestion Control</a></li><li><a href=../../blog/2021-04-28-ros2-integration/>Integrating ROS2 with Eclipse zenoh</a></li><li><a href=../../blog/2021-03-23-discovery/>Minimizing Discovery Overhead in ROS2</a></li><li><a href=../../blog/2020-10-08-aithusa/>Zenoh Aithusa Hatched Out!</a></li><li><a href=../../blog/2020-06-29-zenoh-tidings/>Zenoh Tidings</a></li><li><a href=../../blog/2020-01-01-zenohtude/>A Year Full of Zenoh</a></li></ul></div></nav></div><div class="d-none d-xl-block col-xl-2 ato-toc"><div class=section-nav><nav id=TableOfContents><ul><li><a href=#communication-models>Communication models</a></li><li><a href=#tested-performance-indicators>Tested Performance Indicators</a></li><li><a href=#testbed-configuration>Testbed configuration</a></li><li><a href=#throughput-comparison>Throughput Comparison</a></li><li><a href=#latency-comparison>Latency Comparison</a></li><li><a href=#conclusion>Conclusion</a></li><li><a href=#authors>Authors</a></li><li><a href=#acknowledgments>Acknowledgments</a></li></ul></nav></div></div><main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 ato-content ato-docs"><h1 class=ato-title>Performance Comparison of Zenoh with MQTT, Kafka, and DDS</h1><p class=ato-date>21 March 2023 -- Taipei.</p><p>High performance has always been one of the main goals of Zenoh. While we
+already addressed Zenoh's performance in some older posts (see
+<a href=https://zenoh.io/blog/2022-09-30-zenoh-bahamut/#improved-performance>here</a>,
+<a href=https://zenoh.io/blog/2022-04-14-rust-async-eval/>here</a>, and
+<a href=https://zenoh.io/blog/2021-07-13-zenoh-performance-async/>here</a>), we never
+compared Zenoh with other technologies. Now that time has come! In this blog
+post, we present an evaluation conducted by the <a href=https://www.ntu.edu.tw/english/>National Taiwan
+University</a> with our support where Zenoh's
+performance is compared with MQTT, Kafka, and DDS. A comprehensive version of this
+blog is available on <a href=https://arxiv.org/abs/2303.09419>arXiv</a> to provide a detailed description and analysis
+for further study <sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.</p><h2 id=communication-models>Communication models</h2><p>MQTT and Kafka adopt a brokered communication model where every message must go
+through a broker. Differently, DDS adopts a peer-to-peer communication model
+where messages are directly exchanged between publishers and subscribers
+without any middleman. Zenoh supports both the brokered and the peer-to-peer
+communication models, as well as a routed infrastructure mode.
+Fig. 1 illustrates the models with mixed topology, in which
+Mesh and Clique are peer-to-peer models. See the various <a href=https://zenoh.io/docs/getting-started/deployment/>deployment
+models</a> for more insights.
+For a fair comparison with MQTT, Kafka, and DDS, both brokered and peer-to-peer
+modes are used in Zenoh.</p><figure class=figure-inline><img src=../../img/20230321-performance-comparison/topology.png alt="Topology offered by Zenoh" width=60% height=auto><figcaption><p style=max-width:100%;text-align:center>Fig. 1 Topology offered by Zenoh</p></figcaption></figure><h2 id=tested-performance-indicators>Tested Performance Indicators</h2><p>For this performance evaluation, we were interested in evaluating two key
+performance indicators, namely throughput and latency. Fig. 2 shows the
+communication diagram for the throughput measurements. For the
+comparison between Zenoh, MQTT, and Kafka, all the data flows through
+the &ldquo;Broker&rdquo; or the &ldquo;Zenoh Router&rdquo; to the subscriber. For the Zenoh peer
+mode and DDS tests, the data pass directly from the publisher to the
+subscriber.</p><figure class=figure-inline><img src=../../img/20230321-performance-comparison/throughput-configuration.png alt="The configuration diagram for throughput tests" width=70% height=auto><figcaption><p style=max-width:100%;text-align:center>Fig. 2 The configuration diagram for throughput tests</p></figcaption></figure><p>Fig. 3 shows the communication diagram for the latency measurement.
+Similar to the throughput test, the message will be forwarded by the
+broker or the router for MQTT, Kafka, and the Zenoh client mode, and for
+the Zenoh peer mode and DDS, the data will be passed between the ping
+and pong nodes directly.</p><figure class=figure-inline><img src=../../img/20230321-performance-comparison/latency-configuration.png alt="The configuration diagram for latency tests" width=70% height=auto><figcaption><p style=max-width:100%;text-align:center>Fig. 2 The configuration diagram for latency tests</p></figcaption></figure><h2 id=testbed-configuration>Testbed configuration</h2><p>Two scenarios were prepared for the experiments: on a single machine and
+on multiple machines connected through Ethernet. For the
+multiple-machine scenario, the tested programs and the broker (or the
+Zenoh Router) will be run on different machines. Tab. 1 shows the
+configuration for each of the used machines.</p><p>Tab. 1 The configuration of the testing machines</p><table class="table table-striped table-bordered w-auto"><thead><tr><th>Type</th><th>Specification</th></tr></thead><tbody><tr><td>OS</td><td>Ubuntu 20.04.3 LTS</td></tr><tr><td>CPU</td><td>AMD Ryzen 7 5800X running at a fixed frequency of 4.0 GHz 8-Core Processor, 16 threads</td></tr><tr><td>RAM</td><td>32 GiB DDR4 3200MHz</td></tr><tr><td>Network</td><td>100Gb Ethernet (for the multiple-machine scenario)</td></tr></tbody></table><p>The testing procedures are the same for all of Zenoh, DDS, MQTT, and
+Kafka. Their versions and settings are described below. The procedures
+were designed according to the suggestions from <a href=https://easyperf.net/blog/2019/08/02/Perf-measurement-environment-on-Linux>the guide for accurate
+measurement</a>.
+All the benchmark programs can be found under the <a href=https://github.com/ZettaScaleLabs/zenoh-perf/tree/master/comparison>Zenoh performance
+test project</a>.</p><p>For Zenoh, the
+<a href=https://github.com/ZettaScaleLabs/zenoh-perf/tree/master/comparison/zenoh>test programs</a>
+use <a href=https://github.com/eclipse-zenoh/zenoh/tree/0.7.0-rc>version 0.7.0-rc</a>
+and the Zenoh router <code>zenohd</code> can be built by following this
+<a href=https://github.com/eclipse-zenoh/zenoh#how-to-install-it>guide</a>. Its
+reliability was set to &ldquo;reliable&rdquo; and the congestion control option was set to
+&ldquo;Block&rdquo; on the publisher side. For the latency measurements, its reliability
+was set to &ldquo;BestEffort&rdquo; to align with the behavior of Kafka and MQTT.</p><p>For MQTT, the
+<a href=https://github.com/ZettaScaleLabs/zenoh-perf/tree/master/comparison/mqtt>test programs</a>
+use <a href=https://github.com/eclipse/mosquitto/archive/refs/tags/v2.0.15.tar.gz>Eclipse Mosquitto version 2.0.15</a>.
+The MQTT clients were implemented with the <a href=https://github.com/eclipse/paho.mqtt.c/releases/tag/v1.3.11>Eclipse Paho MQTT C client
+library
+v.1.3.11</a>.
+For all MQTT clients, the communication QoS level was set to 0 to
+achieve its best performance.</p><p>For Kafka, the
+<a href=https://github.com/ZettaScaleLabs/zenoh-perf/tree/master/comparison/kafka>test programs</a>
+use the <a href=https://archive.apache.org/dist/kafka/3.2.1/kafka_2.13-3.2.1.tgz>official broker
+3.2.1</a> and the</p><p><a href=https://github.com/fede1024/rust-rdkafka/tree/v0.28.0>rdkafka client library
+0.28.0</a>. The following
+parameters were chosen according to the suggestions from the <a href=https://docs.confluent.io/cloud/current/client-apps/optimizing/index.html>online
+documents</a>
+and real experiments in order to get better results: linger.ms=0 and
+batch.size=400KB for throughput, 1 for latency; compression.type=none, acks=0
+and fetch.min.bytes=1 (only for latency tests).</p><p>For DDS, the
+<a href=https://github.com/ZettaScaleLabs/zenoh-perf/tree/master/comparison/cyclonedds>test programs</a>
+use <a href=https://github.com/eclipse-cyclonedds/cyclonedds>Eclipse Cyclone
+DDS</a> as
+the target implementation. They are based on the <a href=https://github.com/eclipse-cyclonedds/cyclonedds/tree/master/examples/roundtrip>official DDS
+examples</a>.
+For the reliability QoS, RELIABLE was employed. For the history QoS,
+while KEEP_LAST was used in latency tests, KEEP_ALL was selected for
+throughput tests.</p><h2 id=throughput-comparison>Throughput Comparison</h2><p>In the throughput tests, the publisher program publishes messages
+back-to-back. The consumer program subscribed to the same topic collects
+a set of messages and calculates the message rate (msg/s).
+The procedure will be repeated multiple times for each payload size and
+the median number is selected from the samples as the result <sup id=fnref1:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>,
+in which outliers are excluded from the samples beyond 1st and 99th percentiles.
+The same procedure is applied to Zenoh, Cyclone DDS (briefly represented as
+DDS below), MQTT, and Kafka. The bitrates (bit/s) were also calculated
+based on the message rate and the payload size. In addition, the
+<code>iperf</code> utility was also used to measure the ideal data rate from the
+application layer between two peers. Various payload sizes from 8 bytes
+to 512 MB were tested to see the trend of the throughput. Note that in
+the charts below, the Y-axis is shown in the log scale for both the
+message rate and bitrate. The statistics data can be found
+<a href=https://github.com/ZettaScaleLabs/zenoh-perf/tree/master/comparison#numerical-results>here</a>.
+Some of the numbers will be reported in the following
+paragraphs for discussion purposes.</p><figure class=figure-inline><img src=../../img/20230321-performance-comparison/plots/single/message_per_second.png alt="Throughput data in msg/s for the single-machine scenario" width=100% height=auto><figcaption><p style=max-width:100%;text-align:center>Fig. 4 Throughput data in msg/s for the single-machine scenario</p></figcaption></figure><p>Fig. 4 shows the results for the single-machine scenario. From the
+figure, we can see that Zenoh can reach up to more than 4M msg/s for
+small payload sizes. Among the two lines for Zenoh, the peer mode
+(indicated by <code>Zenoh P2P</code>) provides better results than that of the
+client mode (marked by <code>Zenoh brokered</code>), because the data
+transmission doesn&rsquo;t need to be relayed by the Zenoh router. DDS,
+although slower, is relatively close to Zenoh and can still reach up to
+2M msg/s. Note that in the charts, the Y-axis is in the log scale.</p><p>As for Kafka, it maintains a stable message rate between 56K to 63K
+msg/s for payload sizes less than 2 KB and starts to decrease until the
+last data that was successfully measured at the payload size of 512 KB.
+On the other hand, MQTT has a slightly lower throughput between 33K to
+38K msg/s before 32 KB of the payload size. However, it then starts to
+reduce drastically and shows the worst performance number, although it
+supports larger payload sizes compared to Kafka. However, Kafka in
+principle should be able to support more payload sizes. The reason
+behind the observed limitation is that the Kafka bindings we used failed
+on extending the message size over 1 MB.</p><figure class=figure-inline><img src=../../img/20230321-performance-comparison/plots/single/bit_per_second.png alt="Throughput data in bit/s for the single-machine scenario" width=100% height=auto><figcaption><p style=max-width:100%;text-align:center>Fig. 5 Throughput data in bit/s for the single-machine scenario</p></figcaption></figure><p>Fig. 5 provides the throughput in bits-per-second (bit/s or bps). It
+shows that Zenoh starts to saturate toward the ideal throughput
+measured by <code>iperf</code> (at 76 Gpbs) for the payload size equal to or
+larger than 4 KB. The peer mode <code>Zenoh P2P</code> can reach up to 67 Gbps.
+For DDS, the highest throughput achieved is about 26 Gpbs. Kafka appears to
+saturate at about 4~5 Gbps when the payload size is larger than 16 KB.
+For MQTT, it reaches up to ~9 Gbps at the payload size of 32 KB. The
+performance degradation phenomenon of MQTT appeared in the tests
+consistently. The reason behind this is still unknown and will be worth
+further study in the future.</p><p>Overall, in this single-machine scenario, taking bitrate numbers for the
+throughput comparison, considering the best numbers obtained from Zenoh,
+DDS, Kafka, and MQTT, Zenoh peer mode achieves ~2x higher performance
+compared to that of DDS and 65x and 130x for Kafka and MQTT at the
+payload size of 8 bytes. Zenoh achieves peak performances at 8KB,
+achieving more than 4x throughput than DDS, 24x than Kafka, and 27x than
+MQTT. Finally, for a payload of 32 KB, Zenoh achieves more than 2x higher
+throughput than DDS, 5x than MQTT, and 10x than Kafka.</p><p>The throughput across multiple machines over a 100 Gb Ethernet is shown
+in Fig. 6 and Fig. 7. We will mainly focus on the bitrate results here.</p><figure class=figure-inline><img src=../../img/20230321-performance-comparison/plots/multi/message_per_second.png alt="Throughput data in msg/s for the multiple-machine scenario" width=100% height=auto><figcaption><p style=max-width:100%;text-align:center>Fig. 6 Throughput data in msg/s for the multiple-machine scenario</p></figcaption></figure><figure class=figure-inline><img src=../../img/20230321-performance-comparison/plots/multi/bit_per_second.png alt="Throughput data in bit/s for the multiple-machine scenario" width=100% height=auto><figcaption><p style=max-width:100%;text-align:center>Fig. 7 Throughput data in bit/s for the multiple-machine scenario</p></figcaption></figure><p>In the figure, <code>iperf</code> shows that the ideal throughput of the target
+network is 44 Gpbs. The maximal bitrate is about 34 Gbps for
+<code>Zenoh brokered</code> and 50 Gbps for <code>Zenoh P2P</code>, respectively. For
+Cyclone DDS, its throughput ranking remains at number three in the
+charts at 14 Gbps. On the other hand, MQTT's bitrates can reach up to ~9
+Gbps at the payload size of 32 KB and then goes down, similar to the
+single-machine scenario. For Kafka, its best bitrate number is 5 Gbps,
+also at the payload size of 32 KB.</p><p>As a summary of the comparison, the results observed from the
+multiple-machine scenario maintain a similar performance trend to the
+single-machine results, showing that Zenoh outperforms DDS, Kafka, and
+MQTT by several to tens of performance improvements.</p><h2 id=latency-comparison>Latency Comparison</h2><p>In the latency tests, the <code>ping</code> program publishes the ping message,
+and the <code>pong</code> program replies with the same message upon receiving
+the ping. The tested payload size is fixed at 64 bytes (aligned with
+ICMP echo/reply), and the testing is performed in a back-to-back manner
+to reduce the impact of the process scheduling and the context switches
+induced by the underlying operating system. The latency is defined as
+half of the median round-trip time covering the ping and pong
+operations <sup id=fnref2:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.
+Similarly, we remove the outliers beyond 1st and 99th percentiles.
+The statistics data can also be found
+<a href=https://github.com/ZettaScaleLabs/zenoh-perf/tree/master/comparison#numerical-results>here</a>.
+Tab. 2 shows the results of the tests. The Linux <code>ping</code>
+utility was included as a baseline of the minimum latency that can be
+achieved.</p><p>Tab. 2 Latency data in µs (microseconds) for the single-machine and multiple-machine scenario</p><table class="table table-striped table-bordered w-auto"><thead><tr><th>Target</th><th>Single-machine</th><th>Multiple-machine</th></tr></thead><tbody><tr><td>Kafka</td><td>73</td><td>81</td></tr><tr><td>MQTT</td><td>27</td><td>45</td></tr><tr><td>Cyclone DDS</td><td>8</td><td>37</td></tr><tr><td>Zenoh brokered</td><td>21</td><td>41</td></tr><tr><td>Zenoh P2P</td><td>10</td><td>16</td></tr><tr><td>Zenoh-pico</td><td>5</td><td>13</td></tr><tr><td>ping</td><td>1</td><td>7</td></tr></tbody></table><p>For the single-machine environment, the ideal latency value obtained
+from <code>ping</code> is 1 µs. MQTT and Kafka have a latency of 73 µs and 27 µs,
+respectively. As for Zenoh, while the client mode <code>Zenoh brokered</code> has
+a latency of 21 µs, mainly due to routing data through a middleman,
+<code>Zenoh P2P</code> shows that it can be further reduced to 10 µs. For Cyclone
+DDS, the latency is even lower than Zenoh, achieving down to 8 µs. The
+reason is that it&rsquo;s using UDP Multicast. Although Zenoh currently hasn&rsquo;t
+implemented the same data transport yet, the microcontroller
+implementation of Zenoh &ndash; <code>Zenoh-pico</code> &ndash; has already realized this. As a
+result, we&rsquo;ve also tested its latency and the result is 5 µs, as
+indicated by <code>Zenoh-pico</code>, which is even lower than that of Cyclone
+DDS, mainly because the Zenoh protocol and its implementation can be
+more lightweight and efficient than the OMG DDSI-RTPS protocol
+(implemented by all DDS-compliant implementations).</p><p>For the multiple-machine scenario over a real network with 100 Gb
+Ethernet, the latency for the <code>Zenoh brokered</code> is about 41 µs, and the
+number of <code>Zenoh P2P</code> for the peer mode is 16 µs, which is lower than
+that for Kafka at 81 µs, MQTT at 45 µs, and Cyclone DDS at 37 µs. For
+<code>Zenoh-pico</code>, it remains the best one at 13 µs, closest to the
+baseline obtained by the <code>ping</code> utility at 7 µs.</p><p>In general, the latency of Zenoh is low. Zenoh with the default
+peer-to-peer mode has the shortest latency compared to MQTT and Kafka
+(and DDS for the multiple-machine scenario). When the UDP Multicast
+transport is supported by Zenoh, as the result indicated by Zenoh-pico,
+it is expected that Zenoh can achieve the lowest number among all the
+software.</p><h2 id=conclusion>Conclusion</h2><p>In this blog, we compared the performance of Zenoh, MQTT, Kafka, and
+DDS. Zenoh consistently outperformed MQTT and Kafka. The results show
+that Zenoh is relatively closer to the ideal numbers obtained by the
+classic baseline tools <code>iperf</code> and <code>ping</code> for throughput and latency
+evaluation from the application layer, thanks to the low overhead design
+and multiple optimization techniques embedded in Zenoh&rsquo;s implementation.</p><p>In our evaluation, Zenoh achieved up to <strong>67</strong> Gbps throughput on
+single-machine tests and <strong>51</strong> Gbps on multiple-machine tests with a 100
+GbE network when the default peer mode was used. It can reach up to 1~2
+orders of magnitude improvement on MQTT and Kafka and could double the
+throughput of DDS. One noticeable thing is that Cyclone DDS performed
+the best in the latency tests of the single-machine scenario, due to its
+use of the UDP multicast transport mechanism. However, when Zenoh-pico,
+the microcontroller implementation of Zenoh which has also realized the
+UDP multicast transport, is added to the comparison, it attains the
+lowest latency in all cases. This capability will later be supported by
+all Zenoh implementations.</p><p>Zenoh&rsquo;s goal is to provide a next-generation communication framework
+with unparalleled performance and scalability. Besides being incredibly
+performant, Zenoh was also the technology featuring the simplest API and
+the shortest learning curve. We believe that Zenoh is the best choice
+for industrial, IoT, robotics, and automotive applications that can
+seamlessly support the cloud-to-edge and to-things continuum.</p><h2 id=authors>Authors</h2><p><a href=https://www.linkedin.com/in/wyliang/><strong>William Liang</strong>*</a>, <a href=https://github.com/YuanYuYuan><strong>Yuyuan Yuan</strong>+</a>, and <a href=https://github.com/jerry73204><strong>Jerry Lin</strong>+</a></p><p>* Zenoh Taiwan Team, <a href=https://www.zettascale.tech/>Zettascale</a></p><p>+ Zenoh Contributors, <a href=https://csie.ntu.edu.tw/>National Taiwan University</a></p><h2 id=acknowledgments>Acknowledgments</h2><p>Special thanks to <a href=https://github.com/cguimaraes><strong>Carlos Guimarães</strong></a> and <a href=https://github.com/gabrik><strong>Gabriele Baldoni</strong></a> for helping run the tests in the ideal experiment environment, and <a href=https://github.com/Mallets><strong>Luca Cominardi</strong></a>, <a href=https://github.com/kydos><strong>Angelo Corsaro</strong></a>, <a href=https://github.com/OlivierHecart><strong>Olivier Hecart</strong></a>, and the whole <strong><a href=https://github.com/orgs/eclipse-zenoh/people>Zenoh Team</a> in Paris</strong> for helping review and solve problems. Also thanks to <strong>Eddie Wang</strong> and <strong>Rex Yu</strong>, former interns of the Zenoh Taiwan Team, for helping at the beginning of this evaluation.</p><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>Instead of displaying averaged numbers (with standard deviations)
+in the <a href=https://arxiv.org/abs/2303.09419>arXiv</a> version,
+median values are used in this blog to increase the fairness of the comparison.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a>&#160;<a href=#fnref1:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a>&#160;<a href=#fnref2:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div><div class=ato-next><b>Next up</b>: <a href=../../blog/2023-02-10-zenoh-flow/>Data Flow programming with Zenoh-Flow</a></div></main></div></div><footer class="ato-footer text-muted"><div class="container-fluid p-6 p-md-5"><div class=row><div class=col-md-2><h5>Eclipse Incubation</h5><p><img src=../../img/eclipse-incubation.png style=width:100px></p><p>Eclipse zenoh &trade; is an incubating project under the Eclipse Foundation.</p></div><div class=col-md-2><h5>More Information</h5><p><a href=https://www.eclipse.org/legal target=_blank>Legal</a></p><p><a href=https://www.eclipse.org/legal/privacy.php target=_blank>Privacy policy</a></p><p><a href=https://www.eclipse.org/legal/termsofuse.php target=_blank>Terms of use</a></p><p><a href=https://www.eclipse.org/legal/copyright.php target=_blank>Copyright</a></p><p><a href=https://www.eclipse.org/security/ target=_blank>Report a security issue</a></p><p><a href=https://www.eclipse.org/legal/epl-2.0/ target=_blank>Eclipse Public License 2.0</a></p><p><a href=https://www.apache.org/licenses/LICENSE-2.0 target=_blank>Apache License 2.0</a></p><p><a href=https://www.eclipse.org/ target=_blank>Eclipse Foundation</a></p></div><div class=col-md-2><h5>Sponsored by:</h5><p><a href=https://www.eclipse.org target=_blank><img src=../../img/eclipse-foundation.svg style=width:120px></a></p><p><a href=https://zettascale.tech target=_blank><img src=../../img/zettascale-dark.svg style=width:120px></a></p></div><div class=col-md-2><h5>Follow us</h5><p><a href=https://github.com/eclipse-zenoh/zenoh><i class="fa fa-github" aria-hidden=true></i>
+GitHub</a></p><p><a href=https://discord.gg/vSDSpqnbkm><i class="fa fa fa-comments-o" aria-hidden=true></i>
+Discord</a></p><p><a href=https://www.youtube.com/channel/UCslbiyiqgOAPMjCrPWIfQ5Q><i class="fa fa-youtube-play" aria-hidden=true></i> Youtube</a></p><p><a href=../../docs/overview/what-is-zenoh><i class="fa fa-info-circle" aria-hidden=true></i> About</a></p></div><div class=col-md-2><p><img src=../../img/zenoh-dragon-150x163.png style=width:45px></p><p>Eclipse zenoh &trade; is free, open source and always will be.</p><p>Copyright &copy 2022 Eclipse Foundation</p><p>Built with <a href=https://gohugo.io/ target=_blank>HUGO</a></p></div></div></div></footer><script src=https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js integrity=sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7 crossorigin=anonymous></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js integrity=sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8 crossorigin=anonymous></script>
+<script src=../../js/bootstrap.min.js></script>
+<script src=../../js/highlight.min.js></script>
+<script>$(function(){$("pre code").each(function(e,t){if(t.className.indexOf("language-rust")>=0){for(var s="",n=t.textContent.split(`
+`),e=0;e<n.length;e++){if(n[e].indexOf("# ")==0||n[e]=="#")continue;s+=n[e].trimRight()+`
+`}t.textContent=s.replace(/\n\n\n/g,`
+
+`).trimRight()}hljs.highlightBlock(t)})})</script><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-41082619-2","auto"),ga("send","pageview"))</script></body></html>
