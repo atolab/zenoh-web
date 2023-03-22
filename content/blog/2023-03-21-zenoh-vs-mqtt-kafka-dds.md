@@ -1,5 +1,5 @@
 ---
-title: "Comparing Performance of Zenoh, MQTT, Kafka, and DDS"
+title: "Comparing the Performance of Zenoh, MQTT, Kafka, and DDS"
 date: 2023-03-21
 menu: "blog"
 weight: 20230321
