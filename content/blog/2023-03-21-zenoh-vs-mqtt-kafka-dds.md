@@ -7,22 +7,22 @@ description: "21 March 2023 -- Taipei."
 draft: false
 ---
 ### Prologue
-This instalment we have a blog contributed by a team of researchers from the prestigious 
-[National Taiwan University (NTU)](https://www.ntu.edu.tw/english/). This team has been using 
-Zenoh for some time in R2X and V2X R&D projects and recently did an interesting performance comparison 
-between our blue dragon protocol, MQTT, Kafka and DDS. I'd like to thank the NTU team on behalf of the 
-Zenoh Team and the community as this evaluation asnwers a couple of questions we are asked quite often. 
+This instalment we have a blog contributed by a team of researchers from the prestigious
+[National Taiwan University (NTU)](https://www.ntu.edu.tw/english/). This team has been using
+Zenoh for some time in R2X and V2X R&D projects and recently did an interesting performance comparison
+between our blue dragon protocol, MQTT, Kafka and DDS. I'd like to thank the NTU team on behalf of the
+Zenoh Team and the community as this evaluation answers a couple of questions we are asked quite often.
 
 -- [kydos](https://github.com/kydos)
 
 
 ## Introduction
-High performance has always been one of the main goals of Zenoh. While  Zenoh\'s performance are provided for each release (see
+High performance has always been one of the main goals of Zenoh. While  Zenoh\'s performance is provided for each release (see
 [here](https://zenoh.io/blog/2022-09-30-zenoh-bahamut/#improved-performance),
 [here](https://zenoh.io/blog/2022-04-14-rust-async-eval/), and
-[here](https://zenoh.io/blog/2021-07-13-zenoh-performance-async/)), so far there were no peformances evaluations that 
-compared Zenoh with other technologies. Yet, this was a question commonly asked on Zenoh's discord server and on github, 
-thus we decided to look into this.  
+[here](https://zenoh.io/blog/2021-07-13-zenoh-performance-async/)), so far there were no peformance evaluations that
+compared Zenoh with other technologies. Yet, this was a question commonly asked on Zenoh's discord server and on github,
+thus we decided to look into this.
 In this blog, we'll present an evaluation conducted by the [National Taiwan
 University](https://www.ntu.edu.tw/english/) with our support where Zenoh\'s
 performance is compared with MQTT, Kafka, and DDS. A comprehensive version of this
@@ -348,4 +348,5 @@ seamlessly support the cloud-to-edge and to-things continuum.
 
 Hope you enjoyed it,
 
--- William, Circle, andJerry
+-- William, Circle, and Jerry
+-- [**William**](https://github.com/william-wyliang), [**Circle**](https://github.com/YuanYuYuan), and [**Jerry**](https://github.com/jerry73204)
