@@ -21,10 +21,9 @@ High performance has always been one of the main goals of Zenoh. While  Zenoh\'s
 [here](https://zenoh.io/blog/2022-09-30-zenoh-bahamut/#improved-performance),
 [here](https://zenoh.io/blog/2022-04-14-rust-async-eval/), and
 [here](https://zenoh.io/blog/2021-07-13-zenoh-performance-async/)), so far there were no peformance evaluations that
-compared Zenoh with other technologies. Yet, this was a question commonly asked on Zenoh's discord server and on github,
-thus we decided to look into this.
+compared Zenoh with other technologies. Yet, this was a question commonly asked on Zenoh's discord server and on github.
 In this blog, we'll present an evaluation conducted by the [National Taiwan
-University](https://www.ntu.edu.tw/english/) with our support where Zenoh\'s
+University](https://www.ntu.edu.tw/english/) where Zenoh\'s
 performance is compared with MQTT, Kafka, and DDS. A comprehensive version of this
 blog is available on [arXiv](https://arxiv.org/abs/2303.09419) to provide a detailed description and analysis
 for further study [^median_vs_mean].
