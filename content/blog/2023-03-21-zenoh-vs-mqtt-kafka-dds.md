@@ -7,7 +7,7 @@ description: "21 March 2023 -- Taipei."
 draft: false
 ---
 ### Prologue
-This instalment we have a blog contributed by a team of researchers from the prestigious
+This instalment features a blog contributed by a team of researchers from the prestigious
 [National Taiwan University (NTU)](https://www.ntu.edu.tw/english/). This team has been using
 Zenoh for some time in R2X and V2X R&D projects and recently did an interesting performance comparison
 between our blue dragon protocol, MQTT, Kafka and DDS. I'd like to thank the NTU team on behalf of the
