@@ -348,5 +348,4 @@ seamlessly support the cloud-to-edge and to-things continuum.
 
 Hope you enjoyed it,
 
--- William, Circle, and Jerry
 -- [**William**](https://github.com/william-wyliang), [**Circle**](https://github.com/YuanYuYuan), and [**Jerry**](https://github.com/jerry73204)
