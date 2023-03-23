@@ -11,7 +11,7 @@ This instalment features a blog contributed by a team of researchers from the pr
 [National Taiwan University (NTU)](https://www.ntu.edu.tw/english/). This team has been using
 Zenoh for some time in R2X and V2X R&D projects and recently did an interesting performance comparison
 between our blue dragon protocol, MQTT, Kafka and DDS. I'd like to thank the NTU team on behalf of the
-Zenoh Team and the community as this evaluation answers a couple of questions we are asked quite often.
+Zenoh community as this evaluation answers a couple of questions we are asked quite often.
 
 -- [kydos](https://github.com/kydos)
 
