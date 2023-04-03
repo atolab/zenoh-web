@@ -2,23 +2,23 @@
 title: "Securing Zenoh with LetsEncrypt: A Comprehensive Guide"
 date: 2023-03-29
 menu: "blog"
-weight: 20230324
-description: "29 March 2023 -- Paris"
+weight: 20230403
+description: "3 April 2023 -- Paris"
 draft: false
 author: Darius Maitia
 ---
 
 Over the last months, many people have reached out to us in our [Discord server](https://discord.gg/vSDSpqnbkm) to ask if Zenoh was compatible with LetsEncrypt when using TLS as the communication transport. In other words, how to use LetsEncrypt with Zenoh.
 
-In this blog post we'll show it is indeed possible and we'll go through the steps needed in order to set everything up. If you are already familiar with Transport Layer Security and LetsEncrypt, feel free to skip the explanation [dive straight into the tutorial](#how-to-use-letsencrypt-with-zenoh).
+In this blog post we'll show it is indeed possible and we'll go through the steps needed in order to set everything up. If you are already familiar with Transport Layer Security and LetsEncrypt, feel free to skip the explanation and [dive straight into the tutorial](#how-to-use-letsencrypt-with-zenoh).
 
 ## Transport Layer Security (TLS)
 
-Before we dive into LetsEncrypt, it may be useful for readers who are not familiar with Transport Layer Security (TLS) to make a brief explanation of it. TLS is a cryptographic protocol designed to provide security and privacy for communication over the internet (or any type of IP-based network). It is used to establish an encrypted connection between two peers in order to ensure that information is transmitted securely. For instance, it is widely used for securing web connections by the HTTPS protocol.
+Before we dive into LetsEncrypt, it may be useful for readers who are not familiar with Transport Layer Security (TLS) to get a brief introduction. TLS is a cryptographic protocol designed to provide security and privacy for communication over the internet (or any type of IP-based network). It is used to establish an encrypted connection between two peers in order to ensure that information is transmitted securely. For instance, it is widely used for securing web connections by the HTTPS protocol.
 
 Zenoh [supports both TLS and mTLS (mutual TLS) as communication transports](../2023-01-10-zenoh-charmander).
 
-Checkout our documentation on [how to configure TLS on Zenoh](../../docs/manual/tls). In it, we explain how to set up the configuration for Zenoh in order to use the generated keys and certificates from a tool named [MiniCA](https://github.com/jsha/minica), which _"is a small, simple CA intended for use in situations where the CA operator also operates each host where a certificate will be used"_.
+Checkout our documentation on [how to configure TLS on Zenoh](../../docs/manual/tls). There, we explain how to set up the configuration for Zenoh in order to use the generated keys and certificates from a tool named [MiniCA](https://github.com/jsha/minica), which _"is a small, simple CA intended for use in situations where the CA operator also operates each host where a certificate will be used"_.
 
 ### What are Certificate authorities (CAs)?
 
@@ -36,7 +36,7 @@ Nowadays, there are several trusted third-party certificate authorities used to 
 
 ## How to use LetsEncrypt with Zenoh
 
-Loading the WebPKI's certificate authorities is the default behavior of Zenoh when setting up a TLS communication when not specifying the `root_ca_certificate` field. However, this requires hosting the Zenoh router on a web server with a DNS domain, as the certificate authorities will very rarely provide certificates bound to a static IP address.
+Loading the WebPKI's certificate authorities is the default behavior of Zenoh when setting up a TLS communication when not specifying the `root_ca_certificate` field. However, this requires hosting the Zenoh router on a public server with a DNS domain, as the certificate authorities will very rarely provide certificates bound to a static IP address.
 
 The next step is to get the LetsEncrypt certificates. For that we need to solve one of the [challenges](https://letsencrypt.org/docs/challenge-types/) within our server. Here we will use the HTTP-01 challenge, which, as explained in the LetsEncrypt [documentation](https://letsencrypt.org/docs/challenge-types/#http-01-challenge):
 
