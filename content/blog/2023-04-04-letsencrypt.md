@@ -1,11 +1,10 @@
 ---
 title: "Securing Zenoh with LetsEncrypt: A Comprehensive Guide"
-date: 2023-03-29
+date: 2023-04-04
 menu: "blog"
-weight: 20230403
-description: "3 April 2023 -- Paris"
+weight: 20230404
+description: "April 4th, 2023 -- Paris"
 draft: false
-author: Darius Maitia
 ---
 
 Over the last months, many people have reached out to us in our [Discord server](https://discord.gg/vSDSpqnbkm) to ask if Zenoh was compatible with LetsEncrypt when using TLS as the communication transport. In other words, how to use LetsEncrypt with Zenoh.
