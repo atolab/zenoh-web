@@ -22,13 +22,13 @@ To do so, a "wildcard" syntax similar to those of glob patterns was introduced, 
 
 ## Specifying the KEL.
 
-But there still was a major caveat: the language was largely underspecified, leaving the behaviour of certain patterns up to interpretation. To remedy this, we went the way most languages tend to, and stopped considering any text string as a valid KE.
+But there still was a major caveat: the language was largely underspecified, leaving the behaviour of certain patterns up to interpretation. To remedy this, we went the way most languages tend to, and stopped considering any text string as a valid KE, by defining a proper language for KEs.
 
 This one done in a classic 3 steps program: make KEs better, ???, profit. Want the actual steps?
 1. Redefine KEs as a `/`-separated list of non-empty UTF-8 strings called "chunks". With this, the ambiguities (and many internal debates) about the expected behaviours of `a/b/` and `a//b` in relation to `a/b` were finally laid to rest, since only the latter was a valid KE.
 2. Make the wildcards special chunks, and not special characters. That way `*` now means "any chunk", and `**` means "any amount of any chunks". By raising them above the character level, we make the syntax easier and the parser (which has to be used _a lot_ for routing) faster.
 3. To keep the ability to have sub-chunk wilds we define `$*` as the subchunk equivalent of `*`: it matches any amount of any characters, but cannot expand accross chunks. Actually, let's also reserve `$` as the marker for future sub-languages that will allow more precise sub-chunk expressions.
-4. (I lied about the program having 3 steps)<span style="width:2em;"/> Make KEs bijective: by introducing a set of substitution rules to convert certain wildcard combinations into semantically identical combinations, and enfocing that these rules be applied until the expression is stabilized before considering it a valid KE, we can ensure that any KE is the only one that describes its exact set of keys.  
+4. (I lied about the program having 3 steps)<span style="width:2em;"/> Make KEs bijective: by introducing a set of substitution rules to convert certain wildcard combinations into semantically identical combinations, and enforcing that these rules be applied until the expression is stabilized before considering it a valid KE, we can ensure that any KE is the only one that describes its exact set of keys.  
     For example, `*/**/*`, `*/**/**/*` and `**/*/*/**` would mean the same thing (the set of all keys that are made of at least 2 chunks), but by repeatedly applying the `**/* -> */**` and `**/** -> **` rules, they all come down to the same `*/*/**`.
 
 With steps 1 and 2, ambiguities in the language disappear. With step 3, we gain extensibility for future features, which will one day allow us to express more precise sets than currently possible. But step 4 is the true hero of the story: thanks to bijectivity, there's no longer a need to worry about different strings meaning the same thing, which may have trapped many people that haven't spent the last year obsessing over KEs. Bijectivity also greatly simplifies the implementation of data structures tailor-made for KEs, such as the one we'll explore in the next part.
@@ -37,7 +37,7 @@ With steps 1 and 2, ambiguities in the language disappear. With step 3, we gain 
 
 One thing you might have noticed is that with all these slashes, KEs definitely take after paths. One other aspect they take from paths is their intrisic hierarchical nature: like most good address spaces, KEs are hierarchical.
 
-And what data-structure rimes with hierarchy? The section title spoiled it, it's the _tree_. But the KeTree isn't just any old tree: it's a tree that's made to help you treat KEs as the sets they represent, complete with _intersection_ and _inclusion_ comparisons.
+And what data-structure rhymes with hierarchy? The section title spoiled it, it's the _tree_. But the KeTree isn't just any old tree: it's a tree that's made to help you treat KEs as the sets they represent, complete with _intersection_ and _inclusion_ comparisons.
 
 ## Wait, what does it mean for KEs to _intersect_ and _include_?
 
@@ -49,9 +49,9 @@ As aluded to repeatedly in this post, KEs define sets of keys, and operations in
 3. If the operation KE's set contains all keys defined by the existing data's KE, the operation KE is said to _include_ the existing data KE. This means that the operation will affect _all_ of the existing data. Note that inclusion is generally asymmetric, but that "A includes B" or "B includes A" implies that "A and B intersect".
 4. If the operation KE and data KE define the same set, they are equal. This is the only situation where inclusion is symmetrical, and thanks to our previously discussed [3 steps program](#specifying-the-kel), this is equivalent to string equality.
 
-Intersection is often the most important comparison, since it means that two KEs have to interract in some way, because they share a region of interest. This is the criterion that Zenoh uses to route samples to subscribers, and you'll likely use this criterion too, applied to your business logic, when working with queryables.
+Intersection is often the most important comparison, since it means that things addressed by two KEs have to interact in some way, because they share a region of interest. This is the criterion that Zenoh uses to route samples to subscribers, and you'll likely use this criterion too, applied to your business logic, when working with queryables.
 
-Inclusion is a bit more "optimizy": if some writes to A that includes B and C, the records for B and C may be erased, since A has now taken over both of their regions on interest.
+Inclusion is a bit more "optimizy": if some writes to A that includes B and C, the records for B and C may be erased, since A has now taken over both of their regions of interest.
 
 Equality and disjunction are generally not very useful: equality because inclusion is generally sufficient for most optimizations, and disjunction because it usually just means that two things do not care about each other, which we in turn don't care about.
 
@@ -61,7 +61,7 @@ Ah, yes. Well, KE trees are just a data structure that lets you efficiently inse
 
 While there are some interesting things to say about its implementation, its main interest for this current post is that it exists, and will help you handle sets of KE-value pairs in a KE-compliant way much more efficiently and easily than rolling your own implementation (if you disagree, feel free to make your own data structure that does that better, and don't forget to send it to us in a PR, Zenoh is always open to contributions).
 
-Its current implementations are made in a few ways that may warrant posts that are more Rust-centric, in which we'll also delve deeper into how to use them. If you have questions about it, be it Rust-centric or about the abstract concept of a KE Tree, feel free to [join our Discord](discord) and ask.
+Its current implementations are made in a few ways that may warrant blog posts that are more Rust-centric, in which we'll also delve deeper into how to use them. If you have questions about it, be it Rust-centric or about the abstract concept of a KE Tree, feel free to [join our Discord](discord) and ask.
 
 For now, there exists two categories of KeTrees:
 - Fully owned trees (`KeBoxTree`) own all of their nodes. This means you won't be able to safely keep references to its nodes, but they're simpler to use and generally fit well where you would have normally used a `HashMap`.
