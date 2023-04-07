@@ -94,4 +94,4 @@ Below is a list of companies, research institutes and foundations that adopted, 
     </div>
 </div>
 <p></p>
-
+{{< /rawhtml >}}
