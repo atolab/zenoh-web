@@ -15,7 +15,7 @@ As of today, the only supported TLS authentication mode in Zenoh is server-authe
 That is, the same way of operating on the web where the web browsers validate the identity of the server via means of the TLS certificate.
 
 [^mtls]: Starting from [Zenoh 0.7.0-rc](https://github.com/eclipse-zenoh/zenoh/tree/0.7.0-rc),
-Zenoh [supports both TLS and mTLS (mutual TLS) as communication transports](../../blog/2023-01-10-zenoh-charmander).
+Zenoh [supports both TLS and mTLS (mutual TLS) as communication transports](https://zenoh.io/blog/2023-01-10-zenoh-charmander/#mutual-tls-authentication).
 
 ---------
 ## TLS configuration
