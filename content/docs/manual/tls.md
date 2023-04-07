@@ -12,7 +12,7 @@ TLS can be configured in two ways:
 
 * mutual authentication (mTLS): where both server-side and client-side authentication is required.
 
-The configuration of TLS certificates is done via a [configuration file](../configuration.md).
+The configuration of TLS certificates is done via a [configuration file](../configuration).
 
 ---------
 
@@ -75,7 +75,7 @@ Let's assume that the above configurations are then saved with the name *server.
 
 ## Peer configuration
 
-The required **tls** fields for configuring a *TLS certificate* for a router are **root_ca_certificate**, **server_private_key** and **server_certificate**.
+The required **tls** fields for configuring a *TLS certificate* for a peer are **root_ca_certificate**, **server_private_key** and **server_certificate**.
 
 A configuration file for a *peer* would be:
 ```json
@@ -192,15 +192,15 @@ Let's assume a scenario with two peers.
 
 First, let's start the first peer in peer mode passing its configuration, i.e. *peer.json5*:
 ```bash
-$ zn_sub -c peer.json5 -l tls/localhost:7447
+$ z_sub -c peer.json5 -l tls/localhost:7447
 ```
 
 Next, let's start the second peer in peer mode passing its configuration, i.e. *peer.json5*:
 ```bash
-$ zn_pub -c peer.json5 -l tls/localhost:7448 -e tls/localhost:7447
+$ z_pub -c peer.json5 -l tls/localhost:7448 -e tls/localhost:7447
 ```
 
-As it can be noticed, the same *peer.json5* is used for *zn_sub* and *zn_pub*.
+As it can be noticed, the same *peer.json5* is used for *z_sub* and *z_pub*.
 
 ---------
 ## Appendix: TLS certificates creation
