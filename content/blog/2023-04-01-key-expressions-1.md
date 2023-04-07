@@ -7,7 +7,7 @@ description: "03 April 2023 -- Paris."
 draft: false
 ---
 One of the major changes introduced by Zenoh 0.6 Bahamut was a new definition of the [Key Expression Language](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Key%20Expressions.md).
-With Zenoh 0.7.1, we introduce new data structures that let you interract with this language more easily than ever before.
+With Zenoh 0.7.1, we introduce new data structures that let you interact with this language more easily than ever before.
 
 Come with me on a journey into Zenoh's vision of a Named Data Address Space: Key Expressions (KE). The major parts of this post are all rather independent, so feel free to skip past one if it's not to your taste.
 
@@ -44,7 +44,7 @@ And what data-structure rhymes with hierarchy? The section title spoiled it, it'
 Glad you asked, inner monologue of my future reader, forcing you to read this question in your mind was definitely helpful!
 
 As aluded to repeatedly in this post, KEs define sets of keys, and operations in Zenoh are addressed by KE, so they affect sets of things. In fact, there are four ways an operation on a KE can affect data associated with a given KE:
-1. If the KEs define disjoint sets (where there doesn't exist a key that belongs to both), they just don't interract.
+1. If the KEs define disjoint sets (where there doesn't exist a key that belongs to both), they just don't interact.
 2. If the operation KE and the existing data's KE define sets that have keys in common, like `a/*` and `*/b` both contain the `a/b` key, they are said to _intersect_. That means the operation will affect at least a subset of the existing data. Intersection is always symmetric: A intersects with B implies that B intersects with A.
 3. If the operation KE's set contains all keys defined by the existing data's KE, the operation KE is said to _include_ the existing data KE. This means that the operation will affect _all_ of the existing data. Note that inclusion is generally asymmetric, but that "A includes B" or "B includes A" implies that "A and B intersect".
 4. If the operation KE and data KE define the same set, they are equal. This is the only situation where inclusion is symmetrical, and thanks to our previously discussed [3 steps program](#specifying-the-kel), this is equivalent to string equality.
