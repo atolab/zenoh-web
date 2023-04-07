@@ -61,7 +61,7 @@ Ah, yes. Well, KE trees are just a data structure that lets you efficiently inse
 
 While there are some interesting things to say about its implementation, its main interest for this current post is that it exists, and will help you handle sets of KE-value pairs in a KE-compliant way much more efficiently and easily than rolling your own implementation (if you disagree, feel free to make your own data structure that does that better, and don't forget to send it to us in a PR, Zenoh is always open to contributions).
 
-Its current implementations are made in a few ways that may warrant posts that are more Rust-centric. If you have questions about it, be it Rust-centric or about the abstract concept of a KE Tree, feel free to [join our Discord](discord) and ask.
+Its current implementations are made in a few ways that may warrant posts that are more Rust-centric, in which we'll also delve deeper into how to use them. If you have questions about it, be it Rust-centric or about the abstract concept of a KE Tree, feel free to [join our Discord](discord) and ask.
 
 For now, there exists two categories of KeTrees:
 - Fully owned trees (`KeBoxTree`) own all of their nodes. This means you won't be able to safely keep references to its nodes, but they're simpler to use and generally fit well where you would have normally used a `HashMap`.
