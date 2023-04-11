@@ -20,14 +20,31 @@ Early in Zenoh's design, we found that the ability to act not just on a single k
 
 To do so, a "wildcard" syntax similar to those of glob patterns was introduced, and the Key Expression Language (KEL) was born.
 
-## Specifying the KEL.
+![key-expression](../../img/admin-tool/zenoh-keyexp.png)
 
-But there still was a major caveat: the language was largely underspecified, leaving the behaviour of certain patterns up to interpretation. To remedy this, we went the way most languages tend to, and stopped considering any text string as a valid KE, by defining a proper language for KEs.
+# Specifying the KEL.
+
+But there still was a major caveat: the language was largely _underspecified_, leaving the behaviour of certain patterns up to interpretation. To remedy this, we went the way most languages tend to, and stopped considering any text string as a valid KE, by defining a proper language for KEs.
 
 This one done in a classic 3 steps program: make KEs better, ???, profit. Want the actual steps?
 1. Redefine KEs as a `/`-separated list of non-empty UTF-8 strings called "chunks". With this, the ambiguities (and many internal debates) about the expected behaviours of `a/b/` and `a//b` in relation to `a/b` were finally laid to rest, since only the latter was a valid KE.
+
+![key-expression-chunks](../../img/admin-tool/keyexp-chunks.png)
+
+
 2. Make the wildcards special chunks, and not special characters. That way `*` now means "any chunk", and `**` means "any amount of any chunks". By raising them above the character level, we make the syntax easier and the parser (which has to be used _a lot_ for routing) faster.
+
+![Any amount of chunks](../../img/admin-tool/keyexp-chunks.png)
+
+![Any single chunk](../../img/admin-tool/single-chunk.png)
+  
+
 3. To keep the ability to have sub-chunk wilds we define `$*` as the subchunk equivalent of `*`: it matches any amount of any characters, but cannot expand accross chunks. Actually, let's also reserve `$` as the marker for future sub-languages that will allow more precise sub-chunk expressions.
+
+`demo/*/temp` will match `demo/bathroom/temp`, but not `demo/bedrooms/parents/temp` (`*` means single chunk).
+
+`demo/dress$*/temp` will match `demo/dressroom/temp`, but not `demo/kitchen/temp`.
+
 4. (I lied about the program having 3 steps)<span style="width:2em;"/> Make KEs bijective: by introducing a set of substitution rules to convert certain wildcard combinations into semantically identical combinations, and enforcing that these rules be applied until the expression is stabilized before considering it a valid KE, we can ensure that any KE is the only one that describes its exact set of keys.  
     For example, `*/**/*`, `*/**/**/*` and `**/*/*/**` would mean the same thing (the set of all keys that are made of at least 2 chunks), but by repeatedly applying the `**/* -> */**` and `**/** -> **` rules, they all come down to the same `*/*/**`.
 
@@ -72,14 +89,54 @@ For now, there exists two categories of KeTrees:
 Now that you're all caught up on KEs and all of their wonderful properties, let's finally talk about some guidelines that you can follow to design easy to use APIs around your KEs, while lightening the load on our infrastructure to keep getting the best performance.
 
 <ol>
-<li>With great declarations, come great ressource costs: Zenoh operations that are titled <code>declare</code> imply that you are creating state on the infrastructure. No need to panic, that's what your infrastructure is for. One nice property of KE Trees is that as long as they aren't storing any wild KEs (KEs that contain wildcards), they can shortcut intersection and inclusion into a simple fetch, which is generally much faster than iterating. Note that this of course depends on your specific needs: if you end up using only wild KEs in your puts and queries to compensate for not declaring wild KEs, all of these puts and queries won't be able to take the shortcut either, but the iteration through intersection will have many more steps.</li>
-<li>Make your KEs reflect your data model: it may sometimes help you to think of a Zenoh infrastructure as a distributed database. Any time you create a new KE format, try to follow the tennants of [Normal Forms](https://en.wikipedia.org/wiki/Database_normalization) that DB engineers have been following for years.</li>
-<li>Give yourself room to grow: often, your requirements will change during the development of a project. Try to plan ahead and not setup traps for your later self. For example, if some of your operations are done on <code>**</code>, or other fully wild KEs, you're technically consuming your entire address space, which means there won't be any left when you want to add new features, or you'll have to resort to receiver-side filtering. Much like the creation of the universe, occupying the entire address space will make many a lot of people very angry and will be widely regarded as a bad move.</li>
-<li>Sort your KE's chunks by variance: Zenoh nodes will construct a mapping of integers to string with their neighbours, and encode KEs as a prefix-id/suffix-string pairs. This means that the more your KEs share a common non-wild prefix, the smaller they will become on the network.</li>
-<li id="rule5">Separate the "typing" chunks from the "addressing" chunks by a predefined chunk: this helps a lot with the seemingly conflicting natures of rules 3 and 4. By turning <code>org/${org:*}/factory/${factory:*}/path/${path:**}</code> into <code>org/factor/path/-/${org:*}/${factory:*}/${path:**}</code>, you gain the ability to later add <code>org/factor/path/extension/-/${org:*}/${factory:*}/${path:**}/${extension:*}</code> to your address space without disrupting the pre-existing one, whereas the former pattern's naive extension would have been <code>org/${org:*}/factory/${factory:*}/path/${path:**}/extension/${extension:*}</code>, which is included in the first <code>org/${org:*}/factory/${factory:*}/path/${path:**}</code>, and may therefore cause conflicts in your system's semantics.</li>
-<li>Insert versionning somewhere in your address space: you never know when you'll paint yourself into a corner with an address space, so it's always useful to be able to switch to a new one that's orthogonal from the previous one to avoid old subsystems messing up your brand-new address space.</li>
-<li>Don't put _everything_ in the address-space: you may be tempted to put every parameter of your queries in the KE, but unless you want those parameters to affect routing, it's usually more relevant for them to be in the <code>query</code>'s <code>parameters</code>. The same goes for publication: non-routing parameters should probably stay in the <code>value</code>.</li>
-<li>Better safe than sorry: you may start thinking that I'm putting too much weight on all this, but keep in mind that distributed systems tend to grow big, and sometimes have low-bandwidth communication between the maintainers of their sub-systems. Do not underestimate how hard address space mismanagement could bite you: maybe you won't mess the address space up, but are you sure every member of the project will be as dilligent?</li>
+<li>
+
+With great declarations, come great ressource costs: Zenoh operations that are titled <code>declare</code> imply that you are creating state on the infrastructure. No need to panic, that's what your infrastructure is for. One nice property of KE Trees is that as long as they aren't storing any wild KEs (KEs that contain wildcards), they can shortcut intersection and inclusion into a simple fetch, which is generally much faster than iterating. Note that this of course depends on your specific needs: if you end up using only wild KEs in your puts and queries to compensate for not declaring wild KEs, all of these puts and queries won't be able to take the shortcut either, but the iteration through intersection will have many more steps.
+
+</li>
+<li>
+
+Make your KEs reflect your data model: it may sometimes help you to think of a Zenoh infrastructure as a distributed database. Any time you create a new KE format, try to follow the tennants of [Normal Forms](https://en.wikipedia.org/wiki/Database_normalization) that DB engineers have been following for years.</li>
+<li>
+
+Give yourself room to grow: often, your requirements will change during the development of a project. Try to plan ahead and not setup traps for your later self. For example, if some of your operations are done on <code>**</code>, or other fully wild KEs, you're technically consuming your entire address space, which means there won't be any left when you want to add new features, or you'll have to resort to receiver-side filtering. Much like the creation of the universe, occupying the entire address space will make a lot of people very angry and will be widely regarded as a bad move.</li>
+<li>
+
+Sort your KE's chunks by variance: Zenoh nodes will construct a mapping of integers to string with their neighbours, and encode KEs as a prefix-id/suffix-string pairs. This means that the more your KEs share a common non-wild prefix, the smaller they will become on the network.</li>
+<li id="rule5">
+
+Separate the "typing" chunks from the "addressing" chunks by a predefined chunk: this helps a lot with the seemingly conflicting natures of rules 3 and 4. 
+
+By turning 
+
+`org/${org:*}/factory/${factory:*}/path/${path:**}`
+
+into 
+
+`org/factor/path/-/${org:*}/${factory:*}/${path:**}`, 
+
+you gain the ability to later add 
+
+`org/factor/path/extension/-/${org:*}/${factory:*}/${path:**}/${extension:*}` 
+
+to your address space without disrupting the pre-existing one, whereas the former pattern's naive extension would have been 
+
+`org/${org:*}/factory/${factory:*}/path/${path:**}/extension/${extension:*}`, 
+
+which is included in the first 
+
+`org/${org:*}/factory/${factory:*}/path/${path:**}`, 
+
+and may therefore cause conflicts in your system's semantics.</li>
+<li>
+
+Insert versionning somewhere in your address space: you never know when you'll paint yourself into a corner with an address space, so it's always useful to be able to switch to a new one that's orthogonal from the previous one to avoid old subsystems messing up your brand-new address space.</li>
+<li>
+
+Don't put _everything_ in the address-space: you may be tempted to put every parameter of your queries in the KE, but unless you want those parameters to affect routing, it's usually more relevant for them to be in the <code>query</code>'s <code>parameters</code>. The same goes for publication: non-routing parameters should probably stay in the <code>value</code>.</li>
+<li>
+
+Better safe than sorry: you may start thinking that I'm putting too much weight on all this, but keep in mind that distributed systems tend to grow big, and sometimes have low-bandwidth communication between the maintainers of their sub-systems. Do not underestimate how hard address space mismanagement could bite you: maybe you won't mess the address space up, but are you sure every member of the project will be as dilligent?</li>
 </ol>
 
 # ...and never breaking it with KE formats!
