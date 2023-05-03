@@ -26,8 +26,8 @@ But there still was a major caveat: the language was largely underspecified, lea
 
 This one done in a classic 3 steps program: make KEs better, ???, profit. Want the actual steps?
 1. Redefine KEs as a `/`-separated list of non-empty UTF-8 strings called "chunks". With this, the ambiguities (and many internal debates) about the expected behaviours of `a/b/` and `a//b` in relation to `a/b` were finally laid to rest, since only the latter was a valid KE.
-2. Make the wildcards special chunks, and not special characters. That way `*` now means "any chunk", and `**` means "any amount of any chunks". By raising them above the character level, we make the syntax easier and the parser (which has to be used _a lot_ for routing) faster.
-3. To keep the ability to have sub-chunk wilds we define `$*` as the subchunk equivalent of `*`: it matches any amount of any characters, but cannot expand accross chunks. Actually, let's also reserve `$` as the marker for future sub-languages that will allow more precise sub-chunk expressions.
+2. Make the wildcards special chunks, and not special characters. That way `*` now means "any chunk", and `**` means "any amount of any chunks". By raising them above the character level, we make the syntax easier and the parser (which has to be used _a lot_ for routing) faster. `a/*` will intersect with `a/b` and `*/c`, but not with `b/c` nor `a/b/c`. `a/**/c` will intersect with `a/b/c`, but also `a/b/d/c` and `a/c`.
+3. To keep the ability to have sub-chunk wilds we define `$*` as the subchunk equivalent of `*`: it matches any amount of any characters, but cannot expand accross chunks: `a$*/c` will intersect with `ab/c`, but not with `ba/c`. Actually, let's also reserve `$` as the marker for future sub-languages that will allow more precise sub-chunk expressions.
 4. (I lied about the program having 3 steps)<span style="width:2em;"/> Make KEs bijective: by introducing a set of substitution rules to convert certain wildcard combinations into semantically identical combinations, and enforcing that these rules be applied until the expression is stabilized before considering it a valid KE, we can ensure that any KE is the only one that describes its exact set of keys.  
     For example, `*/**/*`, `*/**/**/*` and `**/*/*/**` would mean the same thing (the set of all keys that are made of at least 2 chunks), but by repeatedly applying the `**/* -> */**` and `**/** -> **` rules, they all come down to the same `*/*/**`.
 
@@ -66,6 +66,18 @@ Its current implementations are made in a few ways that may warrant blog posts t
 For now, there exists two categories of KeTrees:
 - Fully owned trees (`KeBoxTree`) own all of their nodes. This means you won't be able to safely keep references to its nodes, but they're simpler to use and generally fit well where you would have normally used a `HashMap`.
 - Shared ownership trees, such as `KeArcTree`, allow you to keep references to their nodes outside the tree. `KeArcTree` leverages [`token_cell`](https://crates.io/crates/token-cell) to allow sharing ownership of its nodes and safely mutating it, without needing distinct mutexes on each node. We have plans to experiment with a `petgraph`-based KeTree, which will likely offer the exact same API, using the graph itself as the token, and the node indices as nodes.
+
+Here's what it looks like to use a KeTree:
+```rust
+let mut tree = KeBoxTree::new();
+tree.insert(keyexpr::new("a/b").unwrap(), 1);
+tree.insert(keyexpr::new("a/c").unwrap(), 2);
+tree.insert(keyexpr::new("b/c").unwrap(), 3);
+let intersection = tree.intersection(keyexpr::new("a/**").unwrap());
+// intersection is an iterator which will yield the nodes for "a",
+// "a/b" and "a/c", which will have weights `None`, `Some(1)` and `Some(2)`
+// respectively. The order isn't guaranteed.
+```
 
 # Good addressing with Key Expressions...
 
