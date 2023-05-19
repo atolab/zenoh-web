@@ -66,7 +66,6 @@ Now:
     ```python
     # Some required imports
     import zenoh
-    from zenoh.net import config, SubInfo, Reliability, SubMode
     from pycdr import cdr
     from pycdr.types import int8, int32, uint32, float64
 
@@ -99,25 +98,24 @@ Now:
        line: uint32
 
     # Initiate the zenoh-net API
-    session = zenoh.net.open({})
+    session = zenoh.open()
 
-    # Declare the callback and the subscriber for Log messages with key '/rt/rosout'
+    # Declare the callback and the subscriber for Log messages with key 'rt/rosout'
     def rosout_callback(sample):
         log = Log.deserialize(sample.payload)
         print('[{}.{}] [{}]: {}'.format(
             log.stamp.sec, log.stamp.nanosec, log.name, log.msg))
 
-    sub_info = SubInfo(Reliability.Reliable, SubMode.Push)
-    sub = session.declare_subscriber('/rt/rosout', sub_info, rosout_callback)
+    sub = session.declare_subscriber('rt/rosout', rosout_callback, reliability=zenoh.Reliability.RELIABLE())
 
-    # Publish a Twist message with key '/rt/turtle1/cmd_vel' to make the turtlesim to move forward
+    # Publish a Twist message with key 'rt/turtle1/cmd_vel' to make the turtlesim to move forward
     t = Twist(linear=Vector3(x=2.0, y=0.0, z=0.0),
               angular=Vector3(x=0.0, y=0.0, z=0.0)).serialize()
-    session.write('/rt/turtle1/cmd_vel', t)
+    session.put('rt/turtle1/cmd_vel', t)
 
     # Make it move forward until it hits the wall!!
-    session.write('/rt/turtle1/cmd_vel', t)
-    session.write('/rt/turtle1/cmd_vel', t)
+    session.put('rt/turtle1/cmd_vel', t)
+    session.put('rt/turtle1/cmd_vel', t)
     ```
 
 You can see more complete versions of a "teleop" code with various options and arrows key-pressed listener here:
