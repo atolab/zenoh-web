@@ -128,10 +128,7 @@ You can see more complete versions of a "teleop" code with various options and a
 
 In the scenario described above, the zenoh application discovers the zenoh/DDS bridge via its scouting protocol that leverages UDP multicast - when available. Once discovered, a TCP connection is established between the app and the bridge
 
-
-    <div style="display:flex;justify-content: left;align-items: center;">
-        <img src="../../../img/blog-RO2-integration/multicast-discovery.png" alt="multicast discovery" width="800"></img>
-    </div>
+![multicast discovery](../../img/blog-RO2-integration/multicast-discovery.png)
 
 
 But the zenoh application can also be configured to directly establish a TCP connection with a known host, without relying on scouting protocol. Thus, it can connect directly to the bridge (if reachable) or to 1 or more zenoh routers that will route the zenoh communications between the application and the bridge.
@@ -142,10 +139,7 @@ Let's see the different use cases:
 
 Assuming you can configure your internet connection to open a public TCP port (e.g. 7447) and redirect it to the host running the zenoh/DDS bridge, you can do the following deployment:
 
-
-    <div style="display:flex;justify-content: left;align-items: center;">
-        <img src="../../../img/blog-RO2-integration/open-port.png" alt="open port" width="950"></img>
-    </div>
+![open port](../../img/blog-RO2-integration/open-port.png)
 
 
 Where:
@@ -167,10 +161,7 @@ Where:
 
 If you can't open a public TCP port in your LAN, let's use a zenoh router in a public cloud instance that will intermediate the communications between the bridge and the zenoh application:
 
-
-    <div style="display:flex;justify-content: left;align-items: center;">
-        <img src="../../../img/blog-RO2-integration/router-in-cloud.png" alt="router in cloud" width="800"></img>
-    </div>
+![router in cloud](../../img/blog-RO2-integration/router-in-cloud.png)
 
 
 To deploy this:
@@ -203,10 +194,7 @@ To deploy this:
 
 Just deploy several interconnected zenoh routers in different cloud instances:
 
-
-    <div style="display:flex;justify-content: left;align-items: center;">
-        <img src="../../../img/blog-RO2-integration/cloud-crash-2.gif" alt="cloud crash" width="1000"></img>
-    </div>
+![cloud crash](../../img/blog-RO2-integration/cloud-crash-2.gif)
 
 
  1. Run a first zenoh router in 1st cloud:
