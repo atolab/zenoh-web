@@ -66,7 +66,6 @@ Now:
     ```python
     # Some required imports
     import zenoh
-    from zenoh.net import config, SubInfo, Reliability, SubMode
     from pycdr import cdr
     from pycdr.types import int8, int32, uint32, float64
 
@@ -99,41 +98,36 @@ Now:
        line: uint32
 
     # Initiate the zenoh-net API
-    session = zenoh.net.open({})
+    session = zenoh.open()
 
-    # Declare the callback and the subscriber for Log messages with key '/rt/rosout'
+    # Declare the callback and the subscriber for Log messages with key 'rt/rosout'
     def rosout_callback(sample):
         log = Log.deserialize(sample.payload)
         print('[{}.{}] [{}]: {}'.format(
             log.stamp.sec, log.stamp.nanosec, log.name, log.msg))
 
-    sub_info = SubInfo(Reliability.Reliable, SubMode.Push)
-    sub = session.declare_subscriber('/rt/rosout', sub_info, rosout_callback)
+    sub = session.declare_subscriber('rt/rosout', rosout_callback, reliability=zenoh.Reliability.RELIABLE())
 
-    # Publish a Twist message with key '/rt/turtle1/cmd_vel' to make the turtlesim to move forward
+    # Publish a Twist message with key 'rt/turtle1/cmd_vel' to make the turtlesim to move forward
     t = Twist(linear=Vector3(x=2.0, y=0.0, z=0.0),
               angular=Vector3(x=0.0, y=0.0, z=0.0)).serialize()
-    session.write('/rt/turtle1/cmd_vel', t)
+    session.put('rt/turtle1/cmd_vel', t)
 
     # Make it move forward until it hits the wall!!
-    session.write('/rt/turtle1/cmd_vel', t)
-    session.write('/rt/turtle1/cmd_vel', t)
+    session.put('rt/turtle1/cmd_vel', t)
+    session.put('rt/turtle1/cmd_vel', t)
     ```
 
 You can see more complete versions of a "teleop" code with various options and arrows key-pressed listener here:
-  - in Python: https://github.com/atolab/zenoh-demo/tree/main/ROS2/zenoh-python-teleop
-  - in Rust: https://github.com/atolab/zenoh-demo/tree/main/ROS2/zenoh-rust-teleop
-  - in C#: https://github.com/atolab/zenoh-demo/tree/main/ROS2/zenoh-csharp-teleop
+  - in Python: https://github.com/eclipse-zenoh/zenoh-demos/tree/master/ROS2/zenoh-python-teleop
+  - in Rust: https://github.com/eclipse-zenoh/zenoh-demos/tree/master/ROS2/zenoh-rust-teleop
 
 -------
 ## How do I use zenoh to operate my robot from anywhere in the world ?
 
 In the scenario described above, the zenoh application discovers the zenoh/DDS bridge via its scouting protocol that leverages UDP multicast - when available. Once discovered, a TCP connection is established between the app and the bridge
 
-
-    <div style="display:flex;justify-content: left;align-items: center;">
-        <img src="../../../img/blog-RO2-integration/multicast-discovery.png" alt="multicast discovery" width="800"></img>
-    </div>
+![multicast discovery](../../img/blog-RO2-integration/multicast-discovery.png)
 
 
 But the zenoh application can also be configured to directly establish a TCP connection with a known host, without relying on scouting protocol. Thus, it can connect directly to the bridge (if reachable) or to 1 or more zenoh routers that will route the zenoh communications between the application and the bridge.
@@ -144,10 +138,7 @@ Let's see the different use cases:
 
 Assuming you can configure your internet connection to open a public TCP port (e.g. 7447) and redirect it to the host running the zenoh/DDS bridge, you can do the following deployment:
 
-
-    <div style="display:flex;justify-content: left;align-items: center;">
-        <img src="../../../img/blog-RO2-integration/open-port.png" alt="open port" width="950"></img>
-    </div>
+![open port](../../img/blog-RO2-integration/open-port.png)
 
 
 Where:
@@ -169,10 +160,7 @@ Where:
 
 If you can't open a public TCP port in your LAN, let's use a zenoh router in a public cloud instance that will intermediate the communications between the bridge and the zenoh application:
 
-
-    <div style="display:flex;justify-content: left;align-items: center;">
-        <img src="../../../img/blog-RO2-integration/router-in-cloud.png" alt="router in cloud" width="800"></img>
-    </div>
+![router in cloud](../../img/blog-RO2-integration/router-in-cloud.png)
 
 
 To deploy this:
@@ -205,10 +193,7 @@ To deploy this:
 
 Just deploy several interconnected zenoh routers in different cloud instances:
 
-
-    <div style="display:flex;justify-content: left;align-items: center;">
-        <img src="../../../img/blog-RO2-integration/cloud-crash-2.gif" alt="cloud crash" width="1000"></img>
-    </div>
+![cloud crash](../../img/blog-RO2-integration/cloud-crash-2.gif)
 
 
  1. Run a first zenoh router in 1st cloud:
