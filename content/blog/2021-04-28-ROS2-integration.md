@@ -119,9 +119,8 @@ Now:
     ```
 
 You can see more complete versions of a "teleop" code with various options and arrows key-pressed listener here:
-  - in Python: https://github.com/atolab/zenoh-demo/tree/main/ROS2/zenoh-python-teleop
-  - in Rust: https://github.com/atolab/zenoh-demo/tree/main/ROS2/zenoh-rust-teleop
-  - in C#: https://github.com/atolab/zenoh-demo/tree/main/ROS2/zenoh-csharp-teleop
+  - in Python: https://github.com/eclipse-zenoh/zenoh-demos/tree/master/ROS2/zenoh-python-teleop
+  - in Rust: https://github.com/eclipse-zenoh/zenoh-demos/tree/master/ROS2/zenoh-rust-teleop
 
 -------
 ## How do I use zenoh to operate my robot from anywhere in the world ?
