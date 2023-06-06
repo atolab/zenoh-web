@@ -1,9 +1,9 @@
 ---
 title: "Zenoh Charmander Grows Stronger"
-date: 2023-06-05
+date: 2023-06-07
 menu: "blog"
-weight: 20230605
-description: "June 6th, 2023 -- Paris"
+weight: 20230607
+description: "June 7th, 2023 -- Paris"
 draft: false
 ---
 
@@ -32,6 +32,8 @@ And it also comes with a load of various bug fixes and improvements.
 [Zenoh Charmander 0.7.0-rc](https://zenoh.io/blog/2023-01-10-zenoh-charmander/#c-bindings) introduced experimental support for [C++ bindings](https://zenoh.io/blog/2023-01-10-zenoh-charmander/#c-bindings), which are built on top of the Zenoh C API. This release introduces the support of [zenoh-pico](https://github.com/eclipse-zenoh/zenoh-pico) in addition to the already supported [zenoh-c](https://github.com/eclipse-zenoh/zenoh-c). This means you can now write your Zenoh C++ application and run it on any embedded platform supported by [zenoh-pico](https://github.com/eclipse-zenoh/zenoh-pico#zenoh-pico-native-c-library-for-constrained-devices)! You can check [here](https://github.com/eclipse-zenoh/zenoh-cpp#library-usage) how to set up zenoh-cpp as a library and switch between zenoh-c and zenoh-pico.
 
 Moreover, this release finally provides the full coverage of the Zenoh stable API, including shared memory support (see [C](https://github.com/eclipse-zenoh/zenoh-c/blob/master/examples/z_pub_shm.c) and [C++](https://github.com/eclipse-zenoh/zenoh-cpp/blob/main/examples/zenohc/z_pub_shm.cxx) examples). The build for zenoh C/C++ projects was also made simpler and more flexible. Now zenoh-c, zenoh-pico and zenoh-cpp can be directly included into the parent CMake project without installation - see examples [here](https://github.com/eclipse-zenoh/zenoh-cpp/tree/main/examples/simple). The full set of C++ examples is available [here](https://github.com/eclipse-zenoh/zenoh-cpp/tree/main/examples/).
+
+Stay tuned for an upcoming, detailed blog post on the C++ API that will be published shortly.
 
 ## Query payload
 
