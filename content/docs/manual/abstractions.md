@@ -84,7 +84,7 @@ The selector's `parameters` section functions just like query parameters:
 There are however some additional conventions:
 * Duplicate keys are considered Undefined Behaviour; but the recommended behaviour (implemented by the tools we provide for selector interpretation) is to check for duplicates of the interpreted keys, returning errors when they arise.
 * The Zenoh Team considers any key that does not start with an ASCII alphabetic character reserved, intending to standardize some parameters to facilitate working with diverse queryables.
-* Since Zenoh operations may be distributed over diverse networks, we encourage queryable developpers to use some prefix in their custom keys to avoid collisions.
+* Since Zenoh operations may be distributed over diverse networks, we encourage queryable developers to use some prefix in their custom keys to avoid collisions.
 * When interpreting a key-value pair as a boolean, the absence of the key-value pair, or the value being `"false"` are the only "falsey" values: in the previous examples, the both `hello` and `kenobi` would be considered truthy if interpreted as boolean.
 
 Queryables are free to interpret the parameters however they see fit, but Zenoh-provided [queryables](#queryable), such as the [admin-space](#admin-space).
