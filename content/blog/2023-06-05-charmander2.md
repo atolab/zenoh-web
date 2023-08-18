@@ -138,7 +138,7 @@ A typical ROS1 system is a set of services communicating through some closed net
 
 Despite the fact that ROS1 operates on a peer-to-peer network, it is not designed to be ultimately scalable and leaves a lot of scalability problems to be solved by the user. In this condition, we believe that bridging ROS1 systems to Zenoh could do the trick, allowing ROS1 users to utilize all power of Zenoh in their solutions.
 
-An alpha version of ROS1 to Zenoh bridge is introduced in this release. This bridge is quite similar to the ROS2 bridge, but it offers some limited functionality for ROS1 systems. An example integration is shown on the following schema:
+[An alpha version of ROS1 to Zenoh bridge](https://github.com/eclipse-zenoh/zenoh-plugin-ros1) is introduced in this release. This bridge is quite similar to the ROS2 bridge, but it offers some limited functionality for ROS1 systems. An example integration is shown on the following schema:
 
 {{< figure-inline
     src="../../img/20230605-blog-zenoh-charmander2/zenoh-ros1.png"
@@ -221,4 +221,3 @@ And many other cool things…
 And don’t forget to stay in touch with the Zenoh team on [Discord](https://discord.gg/vSDSpqnbkm) and to propose new features on the [roadmap](https://github.com/eclipse-zenoh/roadmap/discussions).
 
 [–The Zenoh Team](https://github.com/orgs/eclipse-zenoh/people)
-
