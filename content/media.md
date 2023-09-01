@@ -4,6 +4,8 @@ weight : 1010
 menu: 
   medias
 ---
+# Papers
+- [Zenoh: Unifying Communication, Storage and Computation from the Cloud to the Microcontroller](https://bit.ly/3P2ZPTj)
 
 # Slides
 - [Zenoh: The Edge Data Fabric](https://drive.google.com/file/d/1673XJ03rdNB-a-JCuWhREMAT2bIUuVcg/view?usp=sharing)
