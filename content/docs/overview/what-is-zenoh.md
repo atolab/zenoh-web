@@ -23,6 +23,7 @@ Technically speaking,  Zenoh is a pub/sub/query protocol that unifies data in mo
 Zenoh has achieved all of this by extremely careful design and craftsmanship. It is the first protocol available on the market that has managed to integrate Internet-Scale Publish/ Subscribe with Geo-Distributed Queries. Thus, why not  [getting started](https://zenoh.io/docs/getting-started/first-app/) with it now?  
 
 ### Online References
+- [Zenoh: Unifying Communication, Storage and Computation from the Cloud to the Microcontroller](https://bit.ly/3P0DJ3N)
 - [Taming the Dragon Webinar Series](https://www.youtube.com/playlist?list=PLZDEtJusUvAY04pwmpY8uqCG5iQ7NgSrR)
 - [Zenoh: The Genesys](https://www.youtube.com/watch?v=BryexPfh0Jc&t=898s)
 - [Improving the Communication Layer of Robot Applications with ROS2 and Zenoh](https://www.youtube.com/watch?v=1NE8cU72frk)
