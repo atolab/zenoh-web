@@ -130,10 +130,10 @@ This timestamp is made of 2 items:
   This time is a 64-bit time with a similar structure than a NTP timestamp (but with a different epoch):
   - The higher 32-bit part is the number of seconds since midnight, January 1, 1970 UTC
     (implying a rollover in 2106).
-  - The lower 32-bit part is a fraction of second, but with the 8 last bits replaced by a counter.
+  - The lower 32-bit part is a fraction of second, but with the 4 last bits replaced by a counter.
 
-  This time gives a theoretical resolution of 2^-32 seconds (60 nanoseconds), and
-  guarantees that the same time cannot be generated twice and that the _happened-before_ relationship is preserved.
+  This time gives a theoretical resolution of (0xF * 10^9 / 2^32) = 3.5 nanoseconds.  
+  It's counter part guarantees that the same time cannot be generated twice and that the _happened-before_ relationship is preserved.
 
 - The **UUID** of the Zenoh router that generated the time.
 
