@@ -1,9 +1,9 @@
 ---
 title: "Zenoh Dragonite Took Off!"
-date: 2023-09-27
+date: 2023-10-03
 menu: "blog"
-weight: 20230927
-description: "September 27th, 2023 -- Paris"
+weight: 20231003
+description: "October 3rd, 2023 -- Paris"
 draft: false
 ---
 
@@ -22,31 +22,31 @@ This version introduces new important features and improvements we have been wor
 # The Best Pub/Sub/Query Protocol Gets Better!
 
 {{< figure-inline
-    src="../../img/20230927-blog-zenoh-dragonite/comic_august_2023.jpg"
+    src="../../img/20231003-blog-zenoh-dragonite/comic_august_2023.jpg"
     class="figure-inline"
     alt="Zenoh Comic"
     width="40%" >}}
 
-With this release, Zenoh gets a series of protocol improvements and extensions, such as improved support for multicast and constrained devices. Additionally some new mechanisms have been introduced to make it easier to add protocol extensions in the future without compromising backward compatibility.
+With this release, Zenoh gets a series of protocol improvements and extensions, such as improved support for multicast and constrained devices. Additionally, some new mechanisms have been introduced to make it easier to add protocol extensions in the future without compromising backward compatibility.
 
 These were the first batch of changes that will break wire-compatibility. We plan to have the second and final batch on the next release and then seal the protocol with a shiny 1.0 stamp !
 
 # New Zenoh WireShark Plugin
 
 {{< figure-inline
-    src="../../img/20230927-blog-zenoh-dragonite/zenoh-dissector.png"
+    src="../../img/20231003-blog-zenoh-dragonite/zenoh-dissector.png"
     class="figure-inline"
     alt="Zenoh Dissector"
     width="60%" >}}
 
 Those of you that, like us, love dissecting protocols, will be pleased to learn that we have a new WireShark plugin for Zenoh – this new dissector is written in Rust!
 
-The new [zenoh-dissector](https://github.com/ZettaScaleLabs/zenoh-dissector) makes it easier to spoof Zenoh packets and display them as human-readable messages. We also decided to change the implementation of the Wireshark plugin from Lua to Rust to reuse the codec defined in the Zenoh source code. Now, the parsing of zenoh messages will be smoothly synchronized with any newer version of the Zenoh protocol! Moreover, the change gives us better performance and brings the potential to visualize more information in cooperation with Zenoh Rust library. Please give it a try, and any feedback is welcome!
+The new [zenoh-dissector](https://github.com/ZettaScaleLabs/zenoh-dissector) makes it easier to spoof Zenoh packets and display them as human-readable messages. We also decided to change the implementation of the Wireshark plugin from Lua to Rust to reuse the codec defined in the Zenoh source code. Now, the parsing of Zenoh messages will be smoothly synchronized with any newer version of the Zenoh protocol! Moreover, the change gives us better performance and brings the potential to visualize more information in cooperation with Zenoh Rust library. Please give it a try, and any feedback is welcome!
 
 # Zenoh Kotlin API
 
 {{< figure-inline
-    src="../../img/20230927-blog-zenoh-dragonite/zenoh-kotlin.png"
+    src="../../img/20231003-blog-zenoh-dragonite/zenoh-kotlin.png"
     class="figure-inline"
     alt="Zenoh Kotlin"
     width="30%" >}}
@@ -124,7 +124,7 @@ cd  target/release/examples
 ./z_ping 64 --no-multicast-scouting -c lowlatency.json5 -e unixpipe/example_endpoint.pipe
 ```
 
-On our machine, the newly introduced experimental features for ultra low latency support reduce latency of ~30% as shown in the table below.
+On our testing machine (AMD Ryzen 7 5800X with 32 GB of RAM), the newly introduced experimental features for ultra low latency support reduce latency of ~30% as shown in the table below.
 
 ```
 | Protocol            |   5th Percentile |   Median |   95th Percentile |
@@ -142,7 +142,7 @@ Clearly, this is a first step for Zenoh and more is to be expected in the future
 We are happy to announce that the ROS1 bridge, introduced in [Zenoh Charmander](/blog/2023-06-05-charmander2/#ros1-bridge), has been released! To better understand how the ROS1 bridge works, let’s recall that any ROS1 system is centralized and contains one ROS1 Master service and a set of services called ROS1 Nodes. Each Node is capable of publishing, subscribing or querying some topics. ROS Master aggregates information about Nodes and their topics and provides a nameservice for Nodes to help them discover each other and establish direct connections when necessary. Those direct connections are used by Nodes to transport the actual topic data.
 
 {{< figure-inline
-    src="../../img/20230927-blog-zenoh-dragonite/zenoh-ros1.png"
+    src="../../img/20231003-blog-zenoh-dragonite/zenoh-ros1.png"
     class="figure-inline"
     alt="Zenoh & Ros1"
     width="60%" >}}
@@ -179,7 +179,7 @@ ROS_MASTER_URI=http://localhost:10001 rostopic echo /topic
 As the result, you will see the topic `/topic` bridged from one ROS1 system to another:
 
 {{< figure-inline
-    src="../../img/20230927-blog-zenoh-dragonite/ros-topics.png"
+    src="../../img/20231003-blog-zenoh-dragonite/ros-topics.png"
     class="figure-inline"
     alt="Ros1 Topics"
     width="60%" >}}
@@ -230,7 +230,7 @@ Many more things are yet to come!
 
 You can take part in this process by joining our community on [Discord](https://discord.com/invite/vSDSpqnbkm). There you will be able to chat with us as well as with other members of the community, discuss features on the roadmap, and more.
 
-![Guitar](../../img/20230927-blog-zenoh-dragonite/zenoh-on-fire.gif)
+![Guitar](../../img/20231003-blog-zenoh-dragonite/zenoh-on-fire.gif)
 
 —
 
