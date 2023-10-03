@@ -125,12 +125,12 @@ cd  target/release/examples
 
 On our testing machine (AMD Ryzen 7 5800X with 32 GB of RAM), the newly introduced experimental features for ultra low latency support reduce latency of ~30% as shown in the table below.
 
-```
-| Protocol            |   5th Percentile |   Median |   95th Percentile |
-|:--------------------|-----------------:|---------:|------------------:|
-| P2P, Y LowLat, Pipe |              6.0 |      7.0 |               9.0 |
-| P2P, N LowLat, TCP  |             10.0 |     10.0 |              11.0 |
-```
+{{< table "table table-striped table-bordered w-auto" >}}
+| Protocol | 5th Percentile | Median | 95th Percentile |
+| :------------------ | -------------: | -----: | --------------: |
+| P2P, Y LowLat, Pipe | 6.0 | 7.0 | 9.0 |
+| P2P, N LowLat, TCP | 10.0 | 10.0 | 11.0 |
+{{< /table >}}
 
 Clearly, this is a first step for Zenoh and more is to be expected in the future!
 
