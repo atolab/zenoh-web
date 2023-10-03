@@ -7,9 +7,7 @@ description: "October 3rd, 2023 -- Paris"
 draft: false
 ---
 
-# Zenoh Dragonite Took Off!
-
-We are happy to announce the release of Zenoh 0.10.0-rc “Dragonite”.
+We are happy to announce the release of Zenoh 0.10.0-rc **Dragonite**.
 
 This version introduces new important features and improvements we have been working on the last couple of months. Specifically, this release introduces:
 
