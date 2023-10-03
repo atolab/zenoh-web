@@ -14,6 +14,7 @@ This version introduces new important features and improvements we have been wor
 - [Improved protocol: _The Best Pub/Sub/Query Protocol Gets Better_](#the-best-pubsubquery-protocol-gets-better)
 - [New WireShark Plugin](#new-zenoh-wireshark-plugin)
 - [New Kotlin API](#zenoh-kotlin-api)
+- [Support for Ultra Low Latency](#support-for-ultra-low-latency)
 - [ROS1 Bridge](#ros1-bridge)
 - [C++ API Changes & Documentation release](#c-documentation--api-changes)
 
