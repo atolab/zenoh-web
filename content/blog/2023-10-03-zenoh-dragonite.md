@@ -152,7 +152,7 @@ Another significant change is the new fine-grained bridging mode config. Now use
 
 As a result, the bridge is capable to expose ROS1 topics for publishers, subscribers, services and clients into Zenoh network as a set of Zenoh publishers, subscribers, queryables and queries, providing ROS1 system all set of Zenoh features, like highly-efficient and flexible network operation, storage-based data caching, etc. Moreover, multiple ROS1 systems bridged into one Zenoh network are capable of seeing each other and interact seamlessly.
 
-ROS1 to Zenog Bridge aims to be completely transparent, making interaction with remote ROS1 topics as if they were local. The integration to any existing ROS1 system does not require its tuning, recompilation etc (of course, if its application logic won't get mad of seeing remote ROS1 topics in its environment :) ).
+ROS1 to Zenoh Bridge aims to be completely transparent, making interaction with remote ROS1 topics as if they were local. The integration to any existing ROS1 system does not require its tuning, recompilation etc (of course, if its application logic won't get mad of seeing remote ROS1 topics in its environment :) ).
 
 To test a new bridge, please try the following:
 
