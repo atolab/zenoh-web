@@ -46,7 +46,7 @@ All source-code and step-by-step guides can be found in our [GitHub repositories
 
 
 ## Remote Controller: ESP32 with a MPU-6050 accelerometer and gyroscope module
-Borning in a time where immersive experiences are becoming the mainstream, it is only natural if the controlling interfaces of DragonBotOne also follow such a paradigm. Thus, you can not only control DragonBotOne with a keyboard or a joypad but also by means of hand gestures.
+Born in a time where immersive experiences are becoming the mainstream, it is only natural if the controlling interfaces of DragonBotOne also follow such a paradigm. Thus, you can not only control DragonBotOne with a keyboard or a joypad but also by means of hand gestures.
 
 For the development of this remote controller, we used an ESP32 with a MPU-6050 accelerometer and gyroscope module. By tilting the controller, you can make DragonBotOne to move forward and backward as well as to turn left and right. Moreover, you can control the velocity according to the inclination of the remote controller.
 
@@ -85,7 +85,7 @@ PlatformIO is a great tool when it comes to working with embedded development. S
    - If you do not have this directory then you can opt by cloning the full repository instead.
      - Since you are manually installing the packages, you need to manually create the PlatformIO package manager files. To do so, create the following file ```.piopm``` in ```$PLATFORMIO_DIR/platforms/ststm32``` directory with the following content:
 ```
-{"type": "platform", "name": "ststm32", "version": "15.2.0", "spec": {"owner": "platformio", "id": 8020, "name": "ststm32", "requirements": null, "url": null}
+{"type": "platform", "name": "ststm32", "version": "15.2.0", "spec": {"owner": "platformio", "id": 8020, "name": "ststm32", "requirements": null, "url": null}}
 ```
 
 2. https://github.com/cguimaraes/framework-arduinoststm32-opencr
