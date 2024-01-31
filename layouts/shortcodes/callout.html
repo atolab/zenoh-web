@@ -1,0 +1,33 @@
+<style>
+  #callout {
+    padding: 1.5em 1.25em;
+    border-radius: 3px;
+    border-color: #0A143C;
+    border: 1px transparent;
+    display: flex;
+    max-width: 80%;
+    flex-direction: row;
+    margin-bottom: 20px;
+    font-size: small;
+    background-color: #FCFCFD;
+  }
+  #callout-inner {
+    margin-left: 1em;
+    margin-right: 1.5em;
+  }
+  @media (max-width: 767px) {
+    #callout {
+    padding: 1.5em 0.75em 1.5em 0.6em;
+    }
+    #callout-inner {
+      margin-left: 0.5em;
+    }
+  }
+</style>
+
+<div id="callout" style="">
+  <div>💡️</div>
+  <div id="callout-inner">
+    {{ .Inner }}
+  </div>
+</div>
