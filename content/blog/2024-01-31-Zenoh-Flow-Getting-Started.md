@@ -15,6 +15,12 @@ If you want more details and an introduction to its core concepts, we have alrea
 
 Let us dive in!
 
+{{< figure-inline
+    src="../../img/20240131-Zenoh-Flow-Getting-Started/zf-getting-started.png"
+    class="figure-inline"
+    alt="Data Flow descriptor"
+    width="100%" >}}
+
 # Zenoh-Flow 0.6.0-rc: Getting Started
 
 {{< callout >}}
