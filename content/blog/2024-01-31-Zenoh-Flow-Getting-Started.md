@@ -11,7 +11,9 @@ At ZettaScale, we are developing a next-generation middleware called [Zenoh](htt
 
 This blog post will focus on another exciting project we are building: Zenoh-Flow. As its name indicates, Zenoh-Flow brings together the control of data flow programming and the power of Zenoh. Think of distributed applications where you don’t have to know the exact location of your computing units, but simply agree on the name (and type) of the resources they are going to exchange, how they are connected and, if needed, the properties of the host(s) on which they are going to run. Add to this list a validation step, uniquely named resources, great performance and you would start to have a good idea of what Zenoh-Flow has to offer!
 
-If you want more details and an introduction to its core concepts, we have already written a [blog post](https://zenoh.io/blog/2023-02-10-zenoh-flow/) earlier that we invite you to read — we might skip explaining few concepts that we introduced before.
+{{< callout >}}
+If you want an introduction to the core concepts of Zenoh-Flow and motivating use-cases, we have written a <a href="https://zenoh.io/blog/2023-02-10-zenoh-flow/">blog post</a> earlier that we invite you to read — we might skip explaining few concepts that we introduced before.
+{{< /callout >}}
 
 Let us dive in!
 
