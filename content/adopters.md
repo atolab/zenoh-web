@@ -16,11 +16,13 @@ Below is a list of companies, research institutes and foundations that adopted, 
             <img align="center" src="https://5g-ppp.eu/wp-content/uploads/2017/05/5GCityLogo.png" alt="5GCity" width="200"/>
         </a>
     </div>
+<!-- 5g-coral.eu website has been hijacked... remove this logo and link until back to normal
     <div class="p-2">
         <a href="http://5g-coral.eu/" target=="_blank">
             <img align="center" src="http://5g-coral.eu/wp-content/uploads/2017/05/cropped-cropped-logo-coral-1-2.png" alt="5G-Coral" width="200"/>
         </a>
     </div>
+-->
     <div class="p-2">
         <a href="https://5g-dive.eu/" target=="_blank">
             <img align="center" src="/img/adopters/5g-dive.png" alt="5G-Dive" width="200"/>
