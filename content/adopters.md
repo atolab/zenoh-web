@@ -99,6 +99,21 @@ Below is a list of companies, research institutes and foundations that adopted, 
             <img align="center" src="https://filics.eu/wp-content/uploads/2021/10/Logo_gr%C3%BCn.svg" alt="Filics" width="200"/>
         </a>
     </div>
+    <div class="p-2">
+        <a href="https://www.icos-project.eu/" target=="_blank">
+            <img align="center" src="/img/adopters/ICOS_logo_bright-61fe1c68-338w.webp" alt="ICOS" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://empyrean-horizon.eu/" target=="_blank">
+            <img align="center" src="/img/adopters/Empyrean-logo.png" alt="EMPYREAN" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://www.ecomobility-project.eu/" target=="_blank">
+            <img align="center" src="/img/adopters/eco_mobility_logo_goood-01.png" alt="EcoMobility" width="200"/>
+        </a>
+    </div>
 </div>
 <p></p>
 {{< /rawhtml >}}
