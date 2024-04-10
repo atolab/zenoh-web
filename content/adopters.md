@@ -13,7 +13,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
 <div class="d-flex flex-wrap align-items-center justify-content-between">
     <div class="p-2">
         <a href="https://www.5gcity.eu/" target=="_blank">
-            <img align="center" src="https://5g-ppp.eu/wp-content/uploads/2017/05/5GCityLogo.png" alt="5GCity" width="200"/>
+            <img align="center" src="/img/adopters/5GCityLogo.png" alt="5GCity" width="200"/>
         </a>
     </div>
 <!-- 5g-coral.eu website has been hijacked... remove this logo and link until back to normal
@@ -31,7 +31,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
     </div>
     <div class="p-2">
         <a href="https://h2020daemon.eu/" target=="_blank">
-            <img align="center" src="https://h2020daemon.eu/wp-content/uploads/2021/01/daemonlogo-300x80-1.webp" alt="Daemon" width="200"/>
+            <img align="center" src="/img/adopters/daemonlogo-300x80-1.webp" alt="Daemon" width="200"/>
         </a>
     </div>
     <div class="p-2">
@@ -81,7 +81,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
     </div>
     <div class="p-2">
         <a href="https://www.irt-systemx.fr" target=="_blank">
-            <img align="center" src="https://www.start-systemx.fr/wp-content/uploads/2016/06/systemx-logo.png" alt="SystemX" width="200"/>
+            <img align="center" src="/img/adopters/systemx-logo.png" alt="SystemX" width="200"/>
         </a>
     </div>
     <div class="p-2">
@@ -96,7 +96,7 @@ Below is a list of companies, research institutes and foundations that adopted, 
     </div>
     <div class="p-2">
         <a href="https://filics.eu/" target=="_blank">
-            <img align="center" src="https://filics.eu/wp-content/uploads/2021/10/Logo_gr%C3%BCn.svg" alt="Filics" width="200"/>
+            <img align="center" src="/img/adopters/Filics_Logo_grun.svg" alt="Filics" width="200"/>
         </a>
     </div>
     <div class="p-2">
