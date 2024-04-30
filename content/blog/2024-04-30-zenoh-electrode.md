@@ -1,5 +1,5 @@
 ---
-date: "2024-04-25"
+date: "2024-04-30"
 title: 'Zenoh 0.11.0 "Electrode" release is out!'
 description: "30th April 2024"
 menu: "blog"
@@ -8,7 +8,7 @@ weight: 20240425
 
 During the summer of 2023, we rolled out Zenoh v0.7.0 'Charmander,' which brought significant enhancements to the Zenoh ecosystem. This was followed by the release of v0.10.0-rc 'Dragonite' in autumn, and a winter update with v0.10.1-rc.
 
-As spring approaches, we are excited to announce Zenoh v0.11.0 “Electrode”. This release introduces new features, essential improvements, and is expected to be our final beta version before the much-anticipated launch of version 1.0.0, planned for this upcoming summer.
+This spring, we are pleased to announce Zenoh v0.11.0 “Electrode”. This release introduces new features, essential improvements, and is expected to be our final beta version before the much-anticipated launch of version 1.0.0, planned for June 2024.
 
 Here’s below the list of the most significant features we have been working on for the last couple of months that are part of this release and that we are going to present here:
 
@@ -48,9 +48,11 @@ Here’s below the list of the most significant features we have been working on
     alt="Zenoh kotlin header"
     width="50%" >}}
 
+Back in September we announced that after C, C++ and Python, you could now use Zenoh with Kotlin [https://github.com/eclipse-zenoh/zenoh-kotlin](https://github.com/eclipse-zenoh/zenoh-kotlin).
+
 However there were some important aspects to tackle.
 
-To begin with, the 0.10.0-rc Zenoh-Kotlin release target was limited to JVM. But you may have asked yourself “what about Android?”... Indeed, on this release we got your back. We have refactored the build scripts in order to integrate the [Kotlin Multiplatform Plugin](https://kotlinlang.org/docs/multiplatform-plugin-releases.html), which allows us to have a common codebase to be reused across multiple targets, with some specificity for each. Therefore, we now can build Zenoh-Kotlin for both Android and JVM targets.
+To begin with, the 0.10.0-rc Zenoh-Kotlin release target was limited to JVM. But you may have asked yourself “what about Android?”... Indeed, on this release we got your back covered ;-). We have refactored the build scripts in order to integrate the [Kotlin Multiplatform Plugin](https://kotlinlang.org/docs/multiplatform-plugin-releases.html), which allows us to have a common codebase to be reused across multiple targets, with some specificity for each. Therefore, we now can build Zenoh-Kotlin for both Android and JVM targets.
 
 A second important improvement is that we now provide packaging, which is very much important to ease the importing of Zenoh on Kotlin projects. Before that, users were required to download the repository, install all the necessary tools for building the project, build it and import the package published locally… None of this is necessary anymore since we have published [our first packages on Github Packages](https://github.com/orgs/eclipse-zenoh/packages?repo_name=zenoh-kotlin), for both JVM and Android targets!
 
@@ -106,7 +108,7 @@ Although a Zenoh Bridge for DDS has been available already, facilitating numerou
 
 [https://github.com/eclipse-zenoh/zenoh-backend-influxdb](https://github.com/eclipse-zenoh/zenoh-backend-influxdb)
 
-The previous version of our influxdb-plugin supported the InfluxDB v1.x database as a storage backend for Zenoh. The new release has extended the same support for InfluxDB v2.x. Our plugin still maintains support v1.x for our users that are still on the old version of the database. For InfluxDB 2.x backend we have implemented the following features:
+The previous version of our influxdb-plugin supported the InfluxDB v1.x database as a storage backend for Zenoh. The new release has extended the support to InfluxDB v2.x. Our plugin maintains support v1.x for our users that are still on the old version of the database. For InfluxDB 2.x backend we have implemented the following features:
 
 - Support for GET, PUT and DELETE queries on measurements
 - Support for creating and deleting buckets
@@ -115,24 +117,24 @@ The previous version of our influxdb-plugin supported the InfluxDB v1.x database
 
 # Tokio Porting
 
-Zenoh has transitioned to the new asynchronous runtime. Back to April 2022, we conducted a[ performance evaluation on Rust asynchronous runtimes](https://zenoh.io/blog/2022-04-14-rust-async-eval/) and chose[ async-std](https://async.rs/) as the backend of zenoh. Fast forward two years,[ Tokio](https://tokio.rs/) has grown to become the most extensive asynchronous framework in Rust. As more users adopt Tokio, the ecosystem has expanded with valuable tools and innovative features. We began another thorough performance study a few months ago and the results were enough to prompt us to switch to Tokio. The change of asynchronous runtime is internal and does not affect the user API. Moreover, it offers us cool features like,
+Back to April 2022, we conducted a[ performance evaluation on Rust asynchronous runtimes](https://zenoh.io/blog/2022-04-14-rust-async-eval/) and chose[ async-std](https://async.rs/) as the Rust async framework for Zenoh. Fast forward two years, [Tokio](https://tokio.rs/) has grown to become the most extensive asynchronous framework in Rust. As more users adopt Tokio, the ecosystem has expanded with valuable tools and innovative features. We began another thorough performance study a few months ago and the results were enough to prompt us to switch to Tokio. The change of asynchronous runtime is internal and does not affect the user API. Moreover, it offers us cool features like:
 
 **Controllability**
 
-We can adjust the runtime settings through the environmental variable. For instance, controlling the number of worker threads and the maximal blocking threads for the specific zenoh runtimes.
+You can adjust the runtime settings through the environmental variable. For instance, controlling the number of worker threads and the maximal blocking threads for the specific zenoh runtimes.
 
 ```bash
 export ZENOH_RUNTIME='(
-    app: (worker_threads: 2),
-    tx: (max_blocking_threads: 1)
-)'
+ app: (worker_threads: 2),
+ tx: (max_blocking_threads: 1)
+ )'
 ```
 
 The configuration syntax follows[ RON](https://github.com/ron-rs/ron) and the available parameters are listed[ here](https://docs.rs/zenoh-runtime/latest/zenoh_runtime/struct.RuntimeParam.html). We plan to enhance our runtime and add more parameters in the future!
 
 **Debugging**
 
-Developers can leverage the tokio-console to monitor the detailed status of each async task. Taking the z_sub as the example,
+Developers can leverage the tokio-console to monitor the detailed status of each async task. Taking the z_sub example,
 
 {{< figure-inline
     src="../../img/20240430-blog-zenoh-electrode/tokio.png"
@@ -140,13 +142,13 @@ Developers can leverage the tokio-console to monitor the detailed status of each
     alt="Tokio"
     width="100%" >}}
 
-To learn how to enable it, please refer to this[ tutorial](https://github.com/tokio-rs/console?tab=readme-ov-file#using-it).
+To learn how to enable it, please refer to this [tutorial](https://github.com/tokio-rs/console?tab=readme-ov-file#using-it).
 
 # Attach arbitrary metadata to your data
 
-Sometimes, you just want to attach a bit more data to a large payload, and you really don’t want to add a layer of serialization in order to do so. Well now, you can use the new `attachment` API! Available in the Rust, C, C++, Kotlin and Java APIs, coming to zenoh-pico and other bindings soon; this API lets you attach a list of key-value pairs to your publications, queries and replies.
+Sometimes, you just want to attach some meta-information to your payload, and you really don’t want to add a layer of serialization in order to do so. Well now, you can use the new `attachment` API! Available in the Rust, C, C++, Kotlin and Java APIs, coming to zenoh-pico and other bindings soon; this API lets you attach a list of key-value pairs to your publications, queries and replies.
 
-For instance, on our Rust Zenoh implementation, let’s suppose we have a publisher and we want to perform a put operation specifying an attachment:
+For instance, this is how you can use attachments with a publisher using Zenoh’s Rust API:
 
 ```rust
 // Declaring a publisher
@@ -184,9 +186,9 @@ publisher.put(payload).withAttachment(
     alt="Zenoh TypeScript header"
     width="20%" >}}
 
-A largely requested set of language bindings is on its way!
+Many of you have asked for the ability to run Zenoh in your browser… Well, that’s coming up!
 
-The focus for the Typescript bindings right now will be getting the core set of Zenoh features working in the browser, with Node support becoming a priority once enough features are stable in the browser.
+We have a Typescript API providing the core set of Zenoh features working in the browser, with Node.js support becoming a priority once enough features are stable in the browser.
 
 For now we can offer only a taste of the API that will be presented to developers, but keep in mind this is still in the experimental stage and changes are likely to happen as we continue to develop the bindings.
 
@@ -202,9 +204,7 @@ function sleep(ms: number) {
 }
 
 async function main() {
-
-    const session = await    zenoh.Session.open(zenoh.Config.new("ws/127.0.0.1:10000"))
-
+    const session = await zenoh.Session.open(zenoh.Config.new("ws/127.0.0.1:10000"))
     // Subscriber Example
     const key_expr: zenoh.KeyExpr = await session.declare_ke("demo/send/to/ts");
     var subscriber = await session.declare_subscriber_handler_async(key_expr,
@@ -214,7 +214,6 @@ async function main() {
             console.debug("sample: " + sample.keyexpr + "': '" + text);
         }
     );
-
     // Publisher Example
     const key_expr2 = await session.declare_ke("demo/send/from/ts");
     const publisher : zenoh.Publisher = await session.declare_publisher(key_expr2);
@@ -227,7 +226,6 @@ async function main() {
         (publisher).put(value);
         await sleep(1000);
     }
-
     // Loop to spin and keep Subscriber alive
     var count = 0;
     while (true) {
@@ -241,7 +239,7 @@ async function main() {
 
 # Access Control
 
-As a part of the 0.11 release, Zenoh has added the option of access control via network interfaces. It works by restricting actions (eg: put) on key-expressions (eg: test/demo ) based on network interface values(eg: lo). The access control is managed by filtering messages (where message types are denoted as actions in the access_control config): put, get, declare_subscriber, declare_queryable. The filter can be applied on both incoming (ingress) and outgoing messages (egress).
+As a part of the 0.11.0 release, Zenoh has added the option of access control via network interfaces. It works by restricting actions (eg: put) on key-expressions (eg: test/demo ) based on network interface values(eg: lo). The access control is managed by filtering messages (where message types are denoted as actions in the access_control config): `put`, `get`, `declare_subscriber` and `declare_queryable`. The filter can be applied on both incoming (ingress) and outgoing messages (egress).
 
 Enabling access control for the network is a straightforward process: the rules for the access control can be directly provided in the configuration file.
 
@@ -251,17 +249,17 @@ A typical access control configuration in the config file looks as follows:
 
 ```json
 access_control: {
-   "enabled": true,
-   "default_permission": "deny",
-   "rules":
-   [
-      {
-         "actions": ["put","declare_subscriber"],
-         "flows":["egress","ingress"],
-         "permission": "allow",
-         "key_exprs": ["test/demo"],
-         "interfaces": ["lo0"]
-      }
+  "enabled": true,
+  "default_permission": "deny",
+  "rules":
+  [
+	{
+  	  "actions": ["put", "declare_subscriber"],
+  	  "flows":["egress", "ingress"],
+  	  "permission": "allow",
+  	  "key_exprs": ["test/demo"],
+  	  "interfaces": ["lo0"]
+	}
    ]
 }
 ```
@@ -278,13 +276,13 @@ The _default_permission_ field provides the implicit permission for filtering me
 
 The _rules_ field itself has sub-fields: _actions_, _flows_, _permission_, _key_exprs_, _interfaces_. The values provided in these fields set the explicit rules for the access control:
 
-- **actions**: supports four different types of messages - _put_, _get_, _declare_subscriber_, _declare_queryable_
+- **actions**: supports four different types of messages - `put`, `get`, `declare_subscriber`, `declare_queryable`
 - **flows**: supports _egress_ and _ingress_
 - **permission**: supports _allow_ or _deny_
 - **key_exprs**: supports values of any key type or key-expression (set of keys) type, eg: `temp/room_1, temp/**` etc. (see [Key_Expressions](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Key%20Expressions.md))
 - **interfaces**: supports all possible values for network interfaces, eg: lo, lo0 etc.
 
-For example, in the above config, the default_permission is set to deny and then a rule is added to explicitly allow certain behavior. Here, a node connecting via the “lo0” interface will be allowed to “put” and “declare_subscriber” on the “test/demo” key expression for both incoming and outgoing messages. However, if there is a node connected via another interface or trying to perform another action (eg: “get”), it will be denied. This provides a granular access control over permissions, ensuring that only authorized devices or networks can perform allowed behavior. More details on this can be found in our access control [RFC](https://github.com/eclipse-zenoh/roadmap/tree/main/rfcs/ALL).
+For example, in the above config, the default_permission is set to deny and then a rule is added to explicitly allow certain behavior. Here, a node connecting via the “lo0” interface will be allowed to `put` and `declare_subscriber` on the `test/demo` key expression for both incoming and outgoing messages. However, if there is a node connected via another interface or trying to perform another action (e.g.: `get`), it will be denied. This provides a granular access control over permissions, ensuring that only authorized devices or networks can perform allowed behavior. More details on this can be found in our access control [RFC](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Access%20Control%20Rules.md).
 
 # Downsampling
 
@@ -301,7 +299,10 @@ downsampling: [
     flow: "egress",
     // A list of downsampling rules: key_expression and the maximum frequency in Hertz
     rules: [
-      { key_expr: "demo/example/zenoh-rs-pub", freq: 0.1 },
+      {
+        key_expr: "demo/example/zenoh-rs-pub",
+        freq: 0.1
+      },
     ],
   },
 ],
@@ -327,20 +328,32 @@ Zenoh introduces advanced capabilities for binding network interfaces in TCP/UDP
 
 Users can specify the interface to be connected to when establishing TCP/UDP connections, ensuring that connections are established only if the target IP address is reachable via the designated interface. This capability enhances network reliability and efficiency by directing outgoing connections through the most appropriate network path.
 
-For example:
+For instance:
 
-```
-tcp/192.168.0.1:7447#iface=eth0, to connect only if the IP address is reachable via the interface eth0
+```json
+// connect only if the address 192.168.0.1 is reachable via
+// the interface eth0
+connect: {
+      endpoints: [
+           "tcp/192.168.0.1:7447#iface=eth0"
+      ],
+}
 ```
 
 #### Incoming Connections
 
 Furthermore, Zenoh allows users to bind connections to specific interfaces for listening purposes, even if the interface is not available at the time of launching Zenoh. By specifying the interface to be listened to when accepting incoming TCP/UDP connections, users can ensure that Zenoh binds to the designated interface when it becomes available.
 
-For example:
+For instance:
 
-```
-E.g. tcp/0.0.0.0:7447#iface=eth0, to listen for connections only on interface eth0 (even if not yet available)
+```json
+// listen for connections only on interface eth0
+// (even if not yet available)
+listen: {
+      endpoints: [
+           "tcp/0.0.0.0:7447#iface=eth0"
+      ],
+}
 ```
 
 # Transparent network compression
@@ -376,7 +389,7 @@ It’s worth highlighting that Zenoh applications don’t need to be modified to
 
 # Plugins support in applications
 
-Plugins have been available only in [zenohd](https://github.com/eclipse-zenoh/zenoh/tree/main/zenohd) so far. Starting from the 0.11.0 release, plugins can be loaded and started by any application written in any supported language, e.g. Rust, C, C++, Python. To enable it it’s sufficient to pass the following configuration upon zenoh session open:
+Plugins have been available only on Zenoh routers, _i.e._, [zenohd](https://github.com/eclipse-zenoh/zenoh/tree/main/zenohd). Starting from the 0.11.0 release, plugins can be loaded and started by any application written in any supported language, e.g. Rust, C, C++, Python. To enable it it’s sufficient to pass the following configuration upon zenoh session open:
 
 ```json
 {
@@ -403,11 +416,18 @@ More configuration details on plugins are available [here](https://github.com/ec
 
 A Zenoh key-expression is defined as a `/`-separated list of chunks, where each chunk is a non-empty UTF-8 string that can't contain the following characters: `*$?#`. E.g.: The key expression `home/kitchen/temp` is composed of 3 chunks: `home`, `kitchen`, and `temp`.
 
-Wild chunks `*` and `**` then allow addressing multiple keys at once. E.g.: The key expression `home/*/temp `addresses the `temp` for any value of the second chunk, such as bedroom, livingroom, etc.
+Wild chunks `*` and `**` then allow addressing multiple keys at once. For instance, the key expression `home/*/temp `addresses the `temp` for any value of the second chunk, such as bedroom, livingroom, etc.
 
 This release introduces a new type of chunk: the verbatim chunk. The goal of these chunks is to allow some key spaces to be _hermetically sealed_ from each other. Any chunk that starts with `@` is treated as a verbatim chunk, and can only be matched by an identical chunk.
 
-E.g.: key expression `my-api/@v1/** `does not intersect any of the following key expression: `my-api/@v2/**`, `my-api/*/**`, `my-api/@$*/**`, and `my-api/**` because the verbatim chunk `@v1` prohibits it.
+For instance, the key expression `my-api/@v1/** `does not intersect any of the following key expressions:
+
+- `my-api/@v2/**`
+- `my-api/*/**`
+- `my-api/@$*/**`, and
+- `my-api/**`
+
+because the verbatim chunk `@v1` prohibits it.
 
 In general, verbatim chunks are useful in ensuring that `*` and `** `accidentally match chunks that are not supposed to be matched. A common case is API versioning where `@v1` and `@v2` should not be mixed or at least explicitly selected. The full RFC on key expressions is available [here](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Key%20Expressions.md#verbatim-chunks-behavioural-breaking-change-in-zenoh-0110).
 
@@ -419,7 +439,9 @@ Users can specify endpoints using both numeric and string-based addressing forma
 
 # Connection timeouts and retries
 
-The configuration has been improved to allow fine tuning of the way Zenoh tries to connect to configured remote endpoints and tries to open listening endpoints. In both [connect](https://github.com/eclipse-zenoh/zenoh/blob/ac6bbf4676949677887e96e9bb38519cab69ad28/DEFAULT_CONFIG.json5#L24) and [listen](https://github.com/eclipse-zenoh/zenoh/blob/ac6bbf4676949677887e96e9bb38519cab69ad28/DEFAULT_CONFIG.json5#L57) sections of the configuration, the following entries have been added:
+Zenoh’s configuration has been improved to fine tune how Zenoh connects to configured remote endpoints and tries to open listening endpoints.
+
+In both [connect](https://github.com/eclipse-zenoh/zenoh/blob/ac6bbf4676949677887e96e9bb38519cab69ad28/DEFAULT_CONFIG.json5#L24) and [listen](https://github.com/eclipse-zenoh/zenoh/blob/ac6bbf4676949677887e96e9bb38519cab69ad28/DEFAULT_CONFIG.json5#L57) sections of the configuration, the following entries have been added:
 
 - `timeout_ms` defines the maximum amount of time (in milliseconds) Zenoh should spend trying (and eventually retrying) to connect to remote endpoints or to open listening endpoints before eventually failing. Special value `0` indicates no retry and special value `-1` indicates infinite time.
 - `exit_on_failure` defines how Zenoh should behave when it fails to connect to remote endpoints or to open listening endpoints in the allocated `timeout_ms` time. `true` indicates that `open()` should return an error when the timeout elapsed. `false` indicates that `open()` should return `Ok` when the timeout elapsed and continue to try to connect to configured remote endpoints and to open configured listening endpoints in background.
@@ -430,7 +452,7 @@ The configuration has been improved to allow fine tuning of the way Zenoh tries 
 
 For example, the following configuration:
 
-```json
+```
 retry {
     period_init_ms: 1000,
     period_increase_factor: 4000,
@@ -446,7 +468,7 @@ It is also possible to define different configurations for different endpoints b
 
 Congestion control has been improved in this release and made both less aggressive and configurable. For the sake of understanding this change, it’s important to know that Zenoh uses an internal queue for transmission. Until now, messages published with `CongestionControl::Drop` were dropped as soon as the internal queue was full. However, this led to an aggressive dropping strategy since short bursts couldn’t be accommodated unless the size of the queue was increased, at the cost of additional memory consumption.
 
-Now, messages are dropped not when the queue is full but when the queue has been full for at least a given amount of time. By default, messages are dropped if the queue is full for 1ms. Congestion control timeout can be configured as follows:
+Now, messages are dropped not when the queue is full but when the queue has been full for at least a given amount of time. By default, messages are dropped if the queue is full for \_1ms. \_Congestion control timeout can be configured as follows:
 
 ```json
 {
@@ -471,7 +493,7 @@ Now, messages are dropped not when the queue is full but when the queue has been
 
 # Mutual TLS authentication in QUIC
 
-Zenoh supported QUIC from the beginning, allowing users to leverage it to achieve secure communication towards routers over UDP.
+Zenoh supported QUIC from the very beginning., allowing users to leverage it to achieve secure communication towards routers over UDP.
 
 A recently added feature is the support of mutual authentication with TLS (mTLS) also for QUIC.
 
@@ -515,7 +537,7 @@ In addition to addressing numerous bugs, the upcoming release of zenoh-pico 0.11
 
 # Bugfixes
 
-- Fix session mode overwritting in configuration file
+- Fix session mode overwriting in configuration file
 - Fix reviving of dropped liveliness tokens
 - Fix formatter reuse and \*_ sometimes being considered as included into _
 - Fix CLI argument parsing in examples
@@ -539,10 +561,10 @@ As always, we like wrapping up by giving a brief overview of what’s coming nex
 
 In this opportunity, we are happy to announce that we aim to be releasing in June 2024 the 1.0.0 release, providing our users and community a first stable version. This will be a major breakthrough for us, the result of a long term commitment with this next generation protocol that is gaining adoption and popularity across a wide range of users, spanning from roboticists to the automotive industry.
 
-What’s next:
+Happy Hacking,
 
-// TODO
+– The Zenoh Team
 
-Please, feel free to reach out to us on our [Discord server](https://discord.com/invite/vSDSpqnbkm)!
+P.S. You can reach us out on Zenoh’s [Discord server](https://discord.com/invite/vSDSpqnbkm)!
 
 ![Guitar](../../img/20231003-blog-zenoh-dragonite/zenoh-on-fire.gif)
