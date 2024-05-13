@@ -1,36 +1,15 @@
 ---
-date: "2024-04-30"
+date: "2024-05-13"
 title: 'Zenoh 0.11.0 "Electrode" release is out!'
-description: "30th April 2024"
+description: "13th May 2024"
 menu: "blog"
-weight: 20240425
+weight: 20240512
 ---
 
 During the summer of 2023, we rolled out Zenoh v0.7.0 'Charmander,' which brought significant enhancements to the Zenoh ecosystem. This was followed by the release of v0.10.0-rc 'Dragonite' in autumn, and a winter update with v0.10.1-rc.
+This spring, we are pleased to announce Zenoh v0.11.0 “Electrode”. This release introduces several new features, some key improvements. Next will come the much-anticipated version 1.0.0, planned for June 2024🎉!
 
-This spring, we are pleased to announce Zenoh v0.11.0 “Electrode”. This release introduces new features, essential improvements, and is expected to be our final beta version before the much-anticipated launch of version 1.0.0, planned for June 2024.
-
-Here’s below the list of the most significant features we have been working on for the last couple of months that are part of this release and that we are going to present here:
-
-- [Expanding the Zenoh ecosystem to Android, Kotlin and Java](#expanding-the-zenoh-ecosystem-to-android-kotlin-and-java)
-- [A new Zenoh plugin for ROS 2 enhanced connectivity](#a-new-zenoh-plugin-for-ros-2-enhanced-connectivity)
-- [Zenoh Backend Plugin update for InfluxDB v2.x](#zenoh-backend-plugin-update-for-influxdb-v2x)
-- [Tokio Porting](#tokio-porting)
-- [Attach arbitrary metadata to your data](#attach-arbitrary-metadata-to-your-data)
-- [Typescript Bindings](#typescript-bindings)
-- [Access Control](#access-control)
-- [Downsampling](#downsampling)
-- [Ability to bind on an interface](#ability-to-bind-on-an-interface)
-- [Transparent network compression](#transparent-network-compression)
-- [Plugins support in applications](#plugins-support-in-applications)
-- [Verbatim chunks](#verbatim-chunks)
-- [Vsock links](#vsock-links)
-- [Connection timeouts and retries](#connection-timeouts-and-retries)
-- [Improved congestion control](#improved-congestion-control)
-- [Mutual TLS authentication in QUIC](#mutual-tls-authentication-in-quic)
-- [New features for Zenoh-Pico](#new-features-for-zenoh-pico)
-- [Bugfixes](#bugfixes)
-- [What’s next?](#whats-next)
+But let’s see what comes with Zenoh Electrode.
 
 {{< figure-inline
     src="../../img/20240430-blog-zenoh-electrode/comic-april-2024.png"
@@ -40,7 +19,7 @@ Here’s below the list of the most significant features we have been working on
 
 ---
 
-# Expanding the Zenoh ecosystem to Android, Kotlin and Java
+# Android, Kotlin and Java
 
 {{< figure-inline
     src="../../img/20240430-blog-zenoh-electrode/zenoh-kotlin-header.png"
@@ -48,17 +27,17 @@ Here’s below the list of the most significant features we have been working on
     alt="Zenoh kotlin header"
     width="50%" >}}
 
-Back in September we announced that after C, C++ and Python, you could now use Zenoh with Kotlin [https://github.com/eclipse-zenoh/zenoh-kotlin](https://github.com/eclipse-zenoh/zenoh-kotlin).
+Back in September we announced that after C, C++ and Python, you could now use Zenoh with Kotlin (checkout the [repository](https://github.com/eclipse-zenoh/zenoh-kotlin)).
 
 However there were some important aspects to tackle.
 
 To begin with, the 0.10.0-rc Zenoh-Kotlin release target was limited to JVM. But you may have asked yourself “what about Android?”... Indeed, on this release we got your back covered ;-). We have refactored the build scripts in order to integrate the [Kotlin Multiplatform Plugin](https://kotlinlang.org/docs/multiplatform-plugin-releases.html), which allows us to have a common codebase to be reused across multiple targets, with some specificity for each. Therefore, we now can build Zenoh-Kotlin for both Android and JVM targets.
 
-A second important improvement is that we now provide packaging, which is very much important to ease the importing of Zenoh on Kotlin projects. Before that, users were required to download the repository, install all the necessary tools for building the project, build it and import the package published locally… None of this is necessary anymore since we have published [our first packages on Github Packages](https://github.com/orgs/eclipse-zenoh/packages?repo_name=zenoh-kotlin), for both JVM and Android targets!
+Additionally, we now provide packaging, which is key to ease the importing of Zenoh on Kotlin projects. Find them out here on [Github Packages](https://github.com/orgs/eclipse-zenoh/packages?repo_name=zenoh-kotlin), for both JVM and Android targets!
 
-The third important improvement is that Java joined the party! Indeed, we have forked the Kotlin bindings, making the necessary adjustments to make the bindings fully Java compatible. Checkout the examples! [https://github.com/eclipse-zenoh/zenoh-java/tree/master/examples](https://github.com/eclipse-zenoh/zenoh-java/tree/master/examples)
+The third important item is that Java joined the party! Indeed, we have forked the Kotlin bindings, making the necessary adjustments to make the bindings fully Java compatible. Checkout the examples! [https://github.com/eclipse-zenoh/zenoh-java/tree/master/examples](https://github.com/eclipse-zenoh/zenoh-java/tree/master/examples)
 
-Because Zenoh-Kotlin (and now Zenoh-Java) relies on the Zenoh-JNI native library, we have to take into consideration the platforms on top of which the library is going to run.
+Because Zenoh-Kotlin (and now Zenoh-Java) relies on the Zenoh-JNI native library, we need to take into consideration the platforms on top of which the library is going to run.
 
 For Android, we support the following architectures:
 
@@ -78,37 +57,40 @@ While for JVM we support:
 Take a look at the [Zenoh demo app](https://github.com/eclipse-zenoh/zenoh-demos/tree/master/zenoh-android/ZenohApp) we have published to see how to use the package:
 
 {{< rawhtml >}}
-<video controls width="720">
 
+<p align="center">
+<video controls width="720">
 <source src="../../img/20240430-blog-zenoh-electrode/android_demo.webm"
             type="video/webm">
 
     <a href="../../img/20240430-blog-zenoh-electrode/android_demo.webm">android_demo.webm</a>
 
 </video>
+</p>
 {{< /rawhtml >}}
 
 _In this example we communicate from an Android phone using the Zenoh Kotlin bindings to a computer using the Zenoh Rust implementation, reproducing a publisher/subscriber example._
 
 You can also see a live demo we did during the Zenoh User Meeting of an android application using the kotlin bindings to control a turtlebot: [https://youtu.be/oaRe2bkIyIo?feature=shared&t=15268](https://youtu.be/oaRe2bkIyIo?feature=shared&t=15268)
 
-# A new Zenoh plugin for ROS 2 enhanced connectivity
+# ROS 2 Plug-in
 
 [https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds)
 
-Although a Zenoh Bridge for DDS has been available already, facilitating numerous robotic applications in overcoming [wireless connectivity](https://zenoh.io/blog/2021-03-23-discovery/), [bandwidth](https://zenoh.io/blog/2021-09-28-iac-experiences-from-the-trenches/), and [integration](https://zenoh.io/blog/2021-11-09-ros2-zenoh-pico/) challenges, this new ROS 2 plugin introduces several benefits:
+We have had a Zenoh Bridge/Plug-in for DDS for some time. This plug-in has been heavily used by numerous robotic applications in overcoming [wireless connectivity](https://zenoh.io/blog/2021-03-23-discovery/), [bandwidth](https://zenoh.io/blog/2021-09-28-iac-experiences-from-the-trenches/), and [integration](https://zenoh.io/blog/2021-11-09-ros2-zenoh-pico/) challenges. Yet, this plugin was for generic DDS applications and was not leveraging some of the semantics that are specific to ROS2. This is why we decided to do a new plugin/bridge optimized for ROS2, which provides the following features:
 
 - Better integration of the ROS 2 graph, allowing visibility of all ROS topics, services, and actions across multiple bridges.
 - Improved compatibility with ROS 2 tooling such as `ros2`, `rviz2` and more.
 - Configuration of a ROS 2 namespace on the bridge, eliminating the need to configure it individually for each ROS 2 node.
 - Simplified integration with Zenoh native applications, with services and actions being mapped to Zenoh Queryables.
 - Streamlined exchange of discovery information between bridges, resulting in more compact data exchanges.
+- Even better performance than the DDS plugin/bridge!
 
-# Zenoh Backend Plugin update for InfluxDB v2.x
+# InfluxDB v2.x Plug-in
 
 [https://github.com/eclipse-zenoh/zenoh-backend-influxdb](https://github.com/eclipse-zenoh/zenoh-backend-influxdb)
 
-The previous version of our influxdb-plugin supported the InfluxDB v1.x database as a storage backend for Zenoh. The new release has extended the support to InfluxDB v2.x. Our plugin maintains support v1.x for our users that are still on the old version of the database. For InfluxDB 2.x backend we have implemented the following features:
+The release extends the support to InfluxDB v2.x. Our plugin maintains support v1.x for our users that are still on the old version of the database. For InfluxDB 2.x backend we have implemented the following features:
 
 - Support for GET, PUT and DELETE queries on measurements
 - Support for creating and deleting buckets
@@ -117,11 +99,9 @@ The previous version of our influxdb-plugin supported the InfluxDB v1.x database
 
 # Tokio Porting
 
-Back to April 2022, we conducted a[ performance evaluation on Rust asynchronous runtimes](https://zenoh.io/blog/2022-04-14-rust-async-eval/) and chose[ async-std](https://async.rs/) as the Rust async framework for Zenoh. Fast forward two years, [Tokio](https://tokio.rs/) has grown to become the most extensive asynchronous framework in Rust. As more users adopt Tokio, the ecosystem has expanded with valuable tools and innovative features. We began another thorough performance study a few months ago and the results were enough to prompt us to switch to Tokio. The change of asynchronous runtime is internal and does not affect the user API. Moreover, it offers us cool features like:
+Back to April 2022, we conducted a[ performance evaluation on Rust asynchronous runtimes](https://zenoh.io/blog/2022-04-14-rust-async-eval/) and chose[ async-std](https://async.rs/) as the Rust async framework for Zenoh. Fast forward two years,[ Tokio](https://tokio.rs/) has grown to become the most extensive asynchronous framework in Rust. As more users adopt Tokio, the ecosystem has expanded with valuable tools and innovative features. We began another thorough performance study a few months ago and the results were enough to prompt us to switch to Tokio. The change of asynchronous runtime is internal and does not affect the user API. Moreover, it offers us cool features like,
 
-**Controllability**
-
-You can adjust the runtime settings through the environmental variable. For instance, controlling the number of worker threads and the maximal blocking threads for the specific zenoh runtimes.
+**Controllability.** You can adjust the runtime settings through the environmental variable. For instance, controlling the number of worker threads and the maximal blocking threads for the specific zenoh runtimes.
 
 ```bash
 export ZENOH_RUNTIME='(
@@ -134,7 +114,7 @@ The configuration syntax follows[ RON](https://github.com/ron-rs/ron) and the av
 
 **Debugging**
 
-Developers can leverage the tokio-console to monitor the detailed status of each async task. Taking the z_sub example,
+Developers can leverage the tokio-console to monitor the detailed status of each async task. Taking the z_sub as the example,
 
 {{< figure-inline
     src="../../img/20240430-blog-zenoh-electrode/tokio.png"
@@ -144,7 +124,7 @@ Developers can leverage the tokio-console to monitor the detailed status of each
 
 To learn how to enable it, please refer to this [tutorial](https://github.com/tokio-rs/console?tab=readme-ov-file#using-it).
 
-# Attach arbitrary metadata to your data
+# Attachments
 
 Sometimes, you just want to attach some meta-information to your payload, and you really don’t want to add a layer of serialization in order to do so. Well now, you can use the new `attachment` API! Available in the Rust, C, C++, Kotlin and Java APIs, coming to zenoh-pico and other bindings soon; this API lets you attach a list of key-value pairs to your publications, queries and replies.
 
@@ -493,9 +473,7 @@ Now, messages are dropped not when the queue is full but when the queue has been
 
 # Mutual TLS authentication in QUIC
 
-Zenoh supported QUIC from the very beginning., allowing users to leverage it to achieve secure communication towards routers over UDP.
-
-A recently added feature is the support of mutual authentication with TLS (mTLS) also for QUIC.
+Although Zenoh supported QUIC from the very beginning, a recently added feature is the support of mutual authentication with TLS (mTLS) also for QUIC.
 
 mTLS allows to verify the identity of the server as well as the client, this means that only a client having the right certificate can access the Zenoh infrastructure.
 
@@ -539,7 +517,7 @@ In addition to addressing numerous bugs, the upcoming release of zenoh-pico 0.11
 
 - Fix session mode overwriting in configuration file
 - Fix reviving of dropped liveliness tokens
-- Fix formatter reuse and \*_ sometimes being considered as included into _
+- Fix formatter reuse and `**` sometimes being considered as included into `*`
 - Fix CLI argument parsing in examples
 - Fix broken Debian package
 - Fix partial storages replication
@@ -557,9 +535,7 @@ And more. Checkout the [release changelog](https://github.com/eclipse-zenoh/zeno
 
 # What’s next?
 
-As always, we like wrapping up by giving a brief overview of what’s coming next.
-
-In this opportunity, we are happy to announce that we aim to be releasing in June 2024 the 1.0.0 release, providing our users and community a first stable version. This will be a major breakthrough for us, the result of a long term commitment with this next generation protocol that is gaining adoption and popularity across a wide range of users, spanning from roboticists to the automotive industry.
+The big news is that in June 2024 we are going to release v1.0.0. This version, along with several innovations, will provide users and the community a first stable version for which we’ll guarantee API and protocol backward compatibility. This is an important milestone as more and more projects and products on the market rely on our beloved Blue Dragon Protocol ;-)
 
 Happy Hacking,
 
