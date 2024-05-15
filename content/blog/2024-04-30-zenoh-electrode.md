@@ -219,7 +219,7 @@ async function main() {
 
 # Access Control
 
-As a part of the 0.11.0 release, Zenoh has added the option of access control via network interfaces. It works by restricting actions (eg: put) on key-expressions (eg: test/demo ) based on network interface values(eg: lo). The access control is managed by filtering messages (where message types are denoted as actions in the access_control config): `put`, `get`, `declare_subscriber` and `declare_queryable`. The filter can be applied on both incoming (ingress) and outgoing messages (egress).
+As a part of the 0.11.0 release, Zenoh has added the option of access control via network interfaces. It works by restricting actions (eg: put) on key-expressions (eg: test/demo) based on network interface values (eg: lo). The access control is managed by filtering messages (where message types are denoted as actions in the access_control config): `put`, `get`, `declare_subscriber` and `declare_queryable`. The filter can be applied on both incoming (ingress) and outgoing messages (egress).
 
 Enabling access control for the network is a straightforward process: the rules for the access control can be directly provided in the configuration file.
 
@@ -246,23 +246,24 @@ access_control: {
 
 The configuration has three primary fields:
 
-- **enabled**: _true_ or _false_
-- **default_permission**: _allow_ or _deny_
-- **rules**: the list of rules for specifying explicit permissions
+* **enabled**: _true_ or _false_
+* **default_permission**: _allow_ or _deny_
+* **rules**: the list of rules for specifying explicit permissions
 
 The _enabled_ field sets the access control status. If it is set to false, no filtering of messages takes place and everything that follows in the access control config is ignored.
 
 The _default_permission_ field provides the implicit permission for filtering messages, i.e., this rule applies if no other matching rule is found for an action. It therefore always has lower priority than explicit rules provided in the _rules_ field.
 
-The _rules_ field itself has sub-fields: _actions_, _flows_, _permission_, _key_exprs_, _interfaces_. The values provided in these fields set the explicit rules for the access control:
+The _rules_ field itself has sub-fields: _actions_, _flows_, _permission_, _key_exprs_ and _interfaces_. The values provided in these fields set the explicit rules for the access control:
 
-- **actions**: supports four different types of messages - `put`, `get`, `declare_subscriber`, `declare_queryable`
-- **flows**: supports _egress_ and _ingress_
-- **permission**: supports _allow_ or _deny_
-- **key_exprs**: supports values of any key type or key-expression (set of keys) type, eg: `temp/room_1, temp/**` etc. (see [Key_Expressions](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Key%20Expressions.md))
-- **interfaces**: supports all possible values for network interfaces, eg: lo, lo0 etc.
+* **actions**: supports four different types of messages - _put_, _get_, _declare_subscriber_, _declare_queryable._
+* **flows**: supports _egress_ and _ingress_.
+* **permission**: supports _allow_ or _deny._
+* **key_exprs**: supports values of any key type or key-expression (set of keys) type, eg: “_temp/room_1_”, “_temp/**_”...etc. (see [Key_Expressions](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Key%20Expressions.md))
+* **interfaces**: supports all possible values for network interfaces, eg: “_lo_”, “_lo0_”…etc.
 
-For example, in the above config, the default_permission is set to deny and then a rule is added to explicitly allow certain behavior. Here, a node connecting via the “lo0” interface will be allowed to `put` and `declare_subscriber` on the `test/demo` key expression for both incoming and outgoing messages. However, if there is a node connected via another interface or trying to perform another action (e.g.: `get`), it will be denied. This provides a granular access control over permissions, ensuring that only authorized devices or networks can perform allowed behavior. More details on this can be found in our access control [RFC](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Access%20Control%20Rules.md).
+For example, in the above config, the _default_permission_ is set to _deny_, and then a rule is added to explicitly allow certain behavior. Here, a node connecting via the “lo0” interface will be allowed to `put` and `declare_subscriber` on the `test/demo` key expression for both incoming and outgoing messages. However, if there is a node connected via another interface or trying to perform another action (eg: `get`), it will be denied. This provides a granular access control over permissions, ensuring that only authorized devices or networks can perform allowed behavior. More details on this can be found in our [Access Control RFC](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Access%20Control%20Rules.md).
+
 
 # Downsampling
 
