@@ -530,7 +530,7 @@ In addition to addressing numerous bugs, the upcoming release of zenoh-pico 0.11
 - Fix scouting on unixpipe transport
 - Fix digest calculation errors in replication
 
-And more. Checkout the [release changelog](https://github.com/eclipse-zenoh/zenoh/releases/tag/0.11.0-rc.1) to check all the new features and bug fixes with their associated PR’s!
+And more. Checkout the [release changelog](https://github.com/eclipse-zenoh/zenoh/releases/tag/0.11.0-rc.3) to check all the new features and bug fixes with their associated PR’s!
 
 ---
 
