@@ -13,9 +13,25 @@ But let’s see what comes with Zenoh Electrode.
 
 {{< figure-inline
     src="../../img/20240430-blog-zenoh-electrode/comic-april-2024.png"
-    class="figure-inline"
+    class="responsive-figure figure-inline"
     alt="Zenoh comic April 2024"
-    width="50%" >}}
+    width="100%" >}}
+
+{{< rawhtml >}}
+
+<style>
+.responsive-figure {
+    display: flex;
+    justify-content: center;
+}
+
+.responsive-figure img {
+    max-width: 720px;
+    height: auto;
+}
+</style>
+
+{{< /rawhtml >}}
 
 ---
 
@@ -23,9 +39,9 @@ But let’s see what comes with Zenoh Electrode.
 
 {{< figure-inline
     src="../../img/20240430-blog-zenoh-electrode/zenoh-kotlin-header.png"
-    class="figure-inline"
+    class="responsive-figure figure-inline"
     alt="Zenoh kotlin header"
-    width="50%" >}}
+    width="100%" >}}
 
 Back in September we announced that after C, C++ and Python, you could now use Zenoh with Kotlin (checkout the [repository](https://github.com/eclipse-zenoh/zenoh-kotlin)).
 
@@ -58,15 +74,31 @@ Take a look at the [Zenoh demo app](https://github.com/eclipse-zenoh/zenoh-demos
 
 {{< rawhtml >}}
 
-<p align="center">
-<video controls width="720">
-<source src="../../img/20240430-blog-zenoh-electrode/android_demo.webm"
-            type="video/webm">
+<style>
+.responsive-video {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    background: #000;
+}
 
-    <a href="../../img/20240430-blog-zenoh-electrode/android_demo.webm">android_demo.webm</a>
+.responsive-video video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
 
-</video>
-</p>
+<div class="responsive-video figure-inline">
+    <video controls>
+        <source src="../../img/20240430-blog-zenoh-electrode/android_demo.webm" type="video/webm">
+        <a href="../../img/20240430-blog-zenoh-electrode/android_demo.webm">android_demo.webm</a>
+    </video>
+</div>
+
 {{< /rawhtml >}}
 
 _In this example we communicate from an Android phone using the Zenoh Kotlin bindings to a computer using the Zenoh Rust implementation, reproducing a publisher/subscriber example._
@@ -119,8 +151,7 @@ Developers can leverage the tokio-console to monitor the detailed status of each
 {{< figure-inline
     src="../../img/20240430-blog-zenoh-electrode/tokio.png"
     class="figure-inline"
-    alt="Tokio"
-    width="100%" >}}
+    alt="Tokio">}}
 
 To learn how to enable it, please refer to this [tutorial](https://github.com/tokio-rs/console?tab=readme-ov-file#using-it).
 
@@ -162,9 +193,9 @@ publisher.put(payload).withAttachment(
 
 {{< figure-inline
     src="../../img/20240430-blog-zenoh-electrode/zenoh-ts-header.png"
-    class="figure-inline"
+    class="responsive-figure figure-inline"
     alt="Zenoh TypeScript header"
-    width="20%" >}}
+    width="320px">}}
 
 Many of you have asked for the ability to run Zenoh in your browser… Well, that’s coming up!
 
@@ -246,9 +277,9 @@ access_control: {
 
 The configuration has three primary fields:
 
-* **enabled**: _true_ or _false_
-* **default_permission**: _allow_ or _deny_
-* **rules**: the list of rules for specifying explicit permissions
+- **enabled**: _true_ or _false_
+- **default_permission**: _allow_ or _deny_
+- **rules**: the list of rules for specifying explicit permissions
 
 The _enabled_ field sets the access control status. If it is set to false, no filtering of messages takes place and everything that follows in the access control config is ignored.
 
@@ -256,14 +287,13 @@ The _default_permission_ field provides the implicit permission for filtering me
 
 The _rules_ field itself has sub-fields: _actions_, _flows_, _permission_, _key_exprs_ and _interfaces_. The values provided in these fields set the explicit rules for the access control:
 
-* **actions**: supports four different types of messages - _put_, _get_, _declare_subscriber_, _declare_queryable._
-* **flows**: supports _egress_ and _ingress_.
-* **permission**: supports _allow_ or _deny._
-* **key_exprs**: supports values of any key type or key-expression (set of keys) type, eg: “_temp/room_1_”, “_temp/**_”...etc. (see [Key_Expressions](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Key%20Expressions.md))
-* **interfaces**: supports all possible values for network interfaces, eg: “_lo_”, “_lo0_”…etc.
+- **actions**: supports four different types of messages - _put_, _get_, _declare_subscriber_, _declare_queryable._
+- **flows**: supports _egress_ and _ingress_.
+- **permission**: supports _allow_ or _deny._
+- **key_exprs**: supports values of any key type or key-expression (set of keys) type, eg: “_temp/room_1_”, “_temp/\*\*_”...etc. (see [Key_Expressions](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Key%20Expressions.md))
+- **interfaces**: supports all possible values for network interfaces, eg: “_lo_”, “_lo0_”…etc.
 
 For example, in the above config, the _default_permission_ is set to _deny_, and then a rule is added to explicitly allow certain behavior. Here, a node connecting via the “lo0” interface will be allowed to `put` and `declare_subscriber` on the `test/demo` key expression for both incoming and outgoing messages. However, if there is a node connected via another interface or trying to perform another action (eg: `get`), it will be denied. This provides a granular access control over permissions, ensuring that only authorized devices or networks can perform allowed behavior. More details on this can be found in our [Access Control RFC](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Access%20Control%20Rules.md).
-
 
 # Downsampling
 
@@ -363,8 +393,7 @@ Upon session establishment, Zenoh nodes performs a handshake to verify whether t
 {{< figure-inline
     src="../../img/20240430-blog-zenoh-electrode/compression.png"
     class="figure-inline"
-    alt="Zenoh transparent compression"
-    width="60%" >}}
+    alt="Zenoh transparent compression">}}
 
 It’s worth highlighting that Zenoh applications don’t need to be modified to use this feature since, from their perspective, they will send and receive uncompressed data. All the compression happens under the hood, making it completely transparent.
 
@@ -433,7 +462,7 @@ In both [connect](https://github.com/eclipse-zenoh/zenoh/blob/ac6bbf467694967788
 
 For example, the following configuration:
 
-```
+```json
 retry {
     period_init_ms: 1000,
     period_increase_factor: 4000,
