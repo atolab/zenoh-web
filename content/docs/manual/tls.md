@@ -104,6 +104,28 @@ Let's assume that the above configurations are then saved with the name _peer.js
 
 ---
 
+## TLS with Scouting :warning:
+
+Zenoh provides a [scouting mechanism](../../getting-started/deployment/#scouting) that allows peers to discover other neighboring peers automatically.
+
+By default, this feature is enabled and attempts to establish connections with other peers **using all Zenoh-supported protocols** (not just TLS).
+
+To ensure that all connections are established using TLS, you can configure the protocols filter as shown below:
+
+```json
+{
+  "transport": {
+    "link": {
+      "protocols": ["tls"]
+    }
+  }
+}
+```
+
+The `protocols` configuration field specifies which protocols Zenoh should whitelist for accepting and opening sessions. If this field is not configured, Zenoh will automatically whitelist all supported protocols.
+
+---
+
 ## Mutual authentication (mTLS)
 
 In order to enable mutual authentication, we'll need two sets of keys and certificates, one for the "server" and one for the "client". These sets of keys and certificates can be generated as explained [in the appendix section below](#appendix-tls-certificates-creation).
