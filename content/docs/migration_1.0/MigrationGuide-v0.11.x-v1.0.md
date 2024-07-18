@@ -74,3 +74,6 @@ If no search directories were specified, then the default search directories are
 }
 // ... Rest of Config 
 ```
+
+⚠️ Note : When loading a plugin, the Plugin must have been built with the same version of the Rust compiler as the bindings loading it. 
+This means that if the language bindings are using rustc version 1.75, the plugin must be built with the same version.
