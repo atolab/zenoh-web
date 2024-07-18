@@ -53,3 +53,24 @@ From Zenoh 1.0.0 user-applications can load plugins.
 A, somehow, implicit assumption that dictated the behaviour of storages is that the Zenoh node loading them **has to add a timestamp to any received publication that did not have one**. This functionality is controlled by the `timestamping` configuration option.
 
 Until Zenoh 1.0.0 this assumption held true as only a router could load storage and the default configuration for a router enables `timestamping`. However, in Zenoh 1.0.0 nodes configured in `client` & `peer` mode can load storage and *their default configuration disables `timestamping`*.
+
+
+# Plugin Loading
+
+We added the ability to load compiled Plugins written in Rust, into a Zenoh application written in any language ! 
+
+Usage of this feature is achieved by simply enabling the `plugins_loading` section in config file with the members `enabled` set to true, and specifying the `search_dirs` for the plugins. 
+
+If no search directories were specified, then the default search directories are 
+`".:~/.zenoh/lib:/opt/homebrew/lib:/usr/local/lib:/usr/lib”` 
+
+```jsx
+ plugins_loading: {
+    // Enable plugins loading.
+    enabled: false,
+    /// Directories where plugins configured by name should be looked for. Plugins configured by __path__ are not subject to lookup.
+    /// If `enabled: true` and `search_dirs` is not specified then `search_dirs` falls back to the default value: ".:~/.zenoh/lib:/opt/homebrew/lib:/usr/local/lib:/usr/lib"
+    search_dirs: [],
+}
+// ... Rest of Config 
+```
