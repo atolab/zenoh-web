@@ -13,10 +13,15 @@ We now have a more stable API and intend to keep backward compatibility in the f
 This guide is here to ease the transition to Zenoh 1.0.0 for our users!
 
 ## Value is gone, long live ZBytes 
-We have replaced Value with `ZBytes` and `Encoding`, and added a number of conversion implementations such that user defined structs can be serialized into ZBytes, sent via Zenoh, and de-serialized from `ZBytes` with ease.
+We have replaced `Value` with `ZBytes` and `Encoding`.
+`Zbytes` is the type core to data representation in Zenoh. 
+All API's have be reworked to accept `ZBytes` or something that can be converted into a `ZBytes`.
 
-Each Language bindings will have their own specifics of Serializing and Deserializing.
+We have added a number of conversion implementations for language primitives as well as methods to seamlessly allow user defined structs to be serialized into `ZBytes`. 
+`Sample`'s payloads are now `ZBytes`, `Publishers`, `Queryables` and `Subscribers` now expect `ZBytes` for all their interfaces.
 
+
+Each Language bindings will have their own specifics of Serializing and Deserializing, but for the most part it will involve implementing a serialize / deserialize function for your datatype or make use of auto-generated conversations for composite types.
 
 ## Encoding
 
