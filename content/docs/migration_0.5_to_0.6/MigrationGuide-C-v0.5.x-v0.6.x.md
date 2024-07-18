@@ -3,7 +3,7 @@ title: "Migrating from Zenoh-C v0.5.x zenoh-net API to Zenoh-C v0.6.x zenoh API"
 weight : 5400
 menu:
   docs:
-    parent: migration
+    parent: migration_0.5_to_0.6
 ---
 
 ### Opening a session

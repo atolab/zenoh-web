@@ -28,7 +28,9 @@ menu:
     - identifier: "APIs"
       name: "API"
       weight: 4000
-    - identifier: "migration"
-      name: "Migration guides"
+    - identifier: "migration_0.5_to_0.6"
+      name: "Migration guides v0.5.x → v0.6.x"
       weight: 5000
- 
+    - identifier: "migration_1.0"
+      name: "Migration guides v0.11. → v1.0 "
+      weight: 6000

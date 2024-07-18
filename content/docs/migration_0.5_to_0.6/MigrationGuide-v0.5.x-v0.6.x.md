@@ -3,7 +3,7 @@ title: "Migrating from Zenoh v0.5.x to Zenoh v0.6.x"
 weight : 5200
 menu:
   docs:
-    parent: migration
+    parent: migration_0.5_to_0.6
 ---
 
 ## Key expressions
