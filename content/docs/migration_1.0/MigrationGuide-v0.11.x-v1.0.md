@@ -38,12 +38,20 @@ Across language bindings we encapsulate members of structs, and they can’t be 
 The only way to access struct values is to use the getter function associated with them.
 
 
-## Pull mode is no longer + Support RingChannel
-We no longer support Pull mode in Zenoh.
+# Pull Subscribers have been removed
 
-Besides using a callback to receive data, we can also receive the data from a default FIFO channel. 
+The concept of a pull subscriber no longer exists in Zenoh,
+However, sometimes we only care about the latest data and want to discard the oldest data. 
+We can use `RingChannel` to get this behaviour.
+You can take a look at the complete code in `examples/examples/z_pull.rs`
 
-However, sometimes we only care about the latest data and want to discard the oldest data, in this case we support the use of a RingChannel un
+# Timestamps
+
+We now tie generating a timestamp to a Zenoh session, with the timestamp inheriting the `ZenohID` of the session.
+
+This will affect user-created plugins and applications that need to generate timestamps in their Storage and sending of data. 
+⚠️ Note: Timestamps are important for Storage Alignment and Replication. Data stored in Data bases must include a Timestamp to be properly aligned across Data Stores by Zenoh. 
+The `timestamping` configuration option must also be enabled for this.
 
 # Storages
 The storage-manager will fail to launch if the timestamping configuration option is disabled.
