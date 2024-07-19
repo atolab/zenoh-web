@@ -6,10 +6,10 @@ menu:
     parent: migration_1.0
 ---
 
-The engineers at ZettaScale have been hard at work preparing an official version 1.0.0 of Zenoh! 
-This major release comes with several API changes, Quality of Life improvements and developer conveniences.
+The engineers at ZettaScale have been hard at work preparing an official version 1.0.0 of Zenoh!   
+This major release comes with several API changes, quality of life improvements and developer conveniences.
 
-We now have a more stable API and intend to keep backward compatibility in the future Zenoh revisions.
+We now have a more stable API and intend to keep backward compatibility in the future Zenoh revisions.  
 This guide is here to ease the transition to Zenoh 1.0.0 for our users!
 
 ## Value is gone, long live ZBytes 
