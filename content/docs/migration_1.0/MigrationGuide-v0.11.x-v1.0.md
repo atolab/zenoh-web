@@ -49,9 +49,11 @@ The only way to access struct values is to use the getter function associated wi
 
 ## Pull Subscribers have been removed
 
-The concept of a pull subscriber no longer exists in Zenoh, however, sometimes we only care about the latest data and want to discard the oldest data.  
+The concept of a pull subscriber no longer exists in Zenoh,
+However, when creating a `Subscriber`, it may be the case that developers only care about the latest data and want to discard the oldest data. 
 We can use `RingChannel` to get this behaviour.
-You can take a look at the complete code in `examples/examples/z_pull.rs`
+This contrasts a `FIFOChannel` which is the default channel type used internally in Subscribers
+You can take a look at examples of usage in any language’s examples/z_pull.x
 
 ## Timestamps
 
