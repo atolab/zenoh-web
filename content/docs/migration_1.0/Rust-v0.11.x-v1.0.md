@@ -274,6 +274,20 @@ while let Ok(reply) = replies.recv_async().await {
 }
 ```
 
+We have also added the ability to get underlying Handlers from `Queryables`, a
+
+```rust
+let queryable = session
+    .declare_queryable(&key_expr)
+    .await
+    .unwrap();
+
+let handler: &Receiver<Query> = queryable.handler();
+// or mutable handler
+let mut_handler:&mut Receiver<Query> = queryable.handler_mut();
+```
+
+
 # Use accessors to get private members
 
 We encapsulate members of structs, and they can’t be accessed directly now. 

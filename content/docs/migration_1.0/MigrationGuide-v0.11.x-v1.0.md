@@ -44,7 +44,7 @@ The `reply` function has been split into 3 separate functions variants depending
 We have added the ability to get the underlying `Handler` of a Queryable as well.
 
 ## Use accessors to get private members
-Across language bindings we encapsulate members of structs, and they can’t be accessed directly now.
+Across language bindings we encapsulate members of structs, and they can’t be accessed directly now.  
 The only way to access struct values is to use the getter function associated with them.
 
 
@@ -70,7 +70,7 @@ From Zenoh 1.0.0 user-applications can load plugins.
 A, somehow, implicit assumption that dictated the behaviour of storages is that the Zenoh node loading them **has to add a timestamp to any received publication that did not have one**. This functionality is controlled by the `timestamping` configuration option.  
 Until Zenoh 1.0.0 this assumption held true as only a router could load storage and the default configuration for a router enables `timestamping`. However, in Zenoh 1.0.0 nodes configured in `client` & `peer` mode can load storage and *their default configuration disables `timestamping`*.
 
-# Config Changes
+## Config Changes
 
 ### Plugin Loading
 
@@ -122,3 +122,5 @@ scouting: {
     },
 }
 ```
+
+Next step is to dive into the migration examples for your favourite language ! 
