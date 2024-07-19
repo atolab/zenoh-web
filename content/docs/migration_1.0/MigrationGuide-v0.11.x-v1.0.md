@@ -36,11 +36,12 @@ We also allow for composite types to be converted into `ZBytes`, meaning that us
 
 ## Query & Queryable
 
-Query and Queryable have been slightly reworked.  
+`Query` and `Queryable` have been slightly reworked.  
 For the API replying to a `Query` from a `Queryable` declared on a session: 
-The reply function has been split into 3 separate functions variants depending on the type of reply the user wants to send.  
-`reply` , `reply_del`, `reply_err`
+The `reply` function has been split into 3 separate functions variants depending on the type of reply the user wants to send.  
+`reply` , `reply_del`, `reply_err`  
 
+We have added the ability to get the underlying `Handler` of a Queryable as well.
 
 ## Use accessors to get private members
 Across language bindings we encapsulate members of structs, and they can’t be accessed directly now.
@@ -69,14 +70,18 @@ From Zenoh 1.0.0 user-applications can load plugins.
 A, somehow, implicit assumption that dictated the behaviour of storages is that the Zenoh node loading them **has to add a timestamp to any received publication that did not have one**. This functionality is controlled by the `timestamping` configuration option.  
 Until Zenoh 1.0.0 this assumption held true as only a router could load storage and the default configuration for a router enables `timestamping`. However, in Zenoh 1.0.0 nodes configured in `client` & `peer` mode can load storage and *their default configuration disables `timestamping`*.
 
+# Config Changes
 
-## Plugin Loading
+### Plugin Loading
 
-We added the ability to load compiled Plugins written in Rust, into a Zenoh application written in any language.  
-Usage of this feature is achieved by simply enabling the `plugins_loading` section in config file with the members `enabled` set to true, and specifying the `search_dirs` for the plugins.  
+We added the ability for user-applications to load compiled plugins written in Rust, regardless of  language ! 
+
+Usage of this feature is achieved by simply enabling the `plugins_loading` section in config file with the members `enabled` set to true, and specifying the `search_dirs` for the plugins. 
+
 If no search directories were specified, then the default search directories are 
-`".:~/.zenoh/lib:/opt/homebrew/lib:/usr/local/lib:/usr/lib”`  
-```json
+`".:~/.zenoh/lib:/opt/homebrew/lib:/usr/local/lib:/usr/lib”` 
+
+```jsx
  plugins_loading: {
     // Enable plugins loading.
     enabled: false,
@@ -89,3 +94,31 @@ If no search directories were specified, then the default search directories are
 
 ⚠️ Note : When loading a plugin, the Plugin must have been built with the same version of the Rust compiler as the bindings loading it. 
 This means that if the language bindings are using `rustc` version `1.75`, the plugin must be built with the same version.
+
+### Scouting
+ 
+We have implemented a small change in configuration syntax concerning the `scouting` section of config files.   
+Both `gossip` and `multicast`’s `autoconnect` section's have changed to accept lists of either 
+`"peer"`, `"client"` or `"router"`
+
+```jsx
+// Zenoh 0.11.0
+scouting: {
+  multicast: {
+    autoconnect: { router: "", peer: "router|peer" },
+  },
+  gossip: {
+    autoconnect: { router: "", peer: "router|peer" },
+  },
+},
+
+// Zenoh 1.0.0
+scouting: {
+    multicast: {
+      autoconnect: { router: [], peer: ["router", "peer"] },
+    },
+    gossip: {
+      autoconnect: { router: [], peer: ["router", "peer"] },
+    },
+}
+```
