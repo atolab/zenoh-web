@@ -1,5 +1,5 @@
 ---
-title: "Zenoh-Java API : v0.11.x → v1.0"
+title: "Zenoh-Kotlin API : v0.11.0 → v1.0"
 weight : 6800
 menu:
   docs:
