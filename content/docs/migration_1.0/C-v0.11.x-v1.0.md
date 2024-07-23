@@ -1,5 +1,5 @@
 ---
-title: "Zenoh-C API:  v0.11.0-> v1.0"
+title: "Zenoh-C API:  v0.11.0 → v1.0"
 weight : 6400
 menu:
   docs:
