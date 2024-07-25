@@ -1,5 +1,5 @@
 ---
-title: "Zenoh-Kotlin API : v0.11.0 → v1.0"
+title: "Kotlin"
 weight : 6800
 menu:
   docs:

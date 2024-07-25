@@ -1,18 +1,18 @@
 ---
-title: "Zenoh-Python API: v0.11.0 → v1.0"
+title: "Python"
 weight : 6500
 menu:
   docs:
     parent: migration_1.0
 ---
 
-# Highlights
+## Highlights
 
 The library has been fully rewritten to use only Rust. It should make no difference for users, except you may observe a significant performance improvement, up to x5.
 
 The API has also been reworked to feel more pythonic, using notably context managers.
 
-# Context managers and background execution
+## Context managers and background execution
 
 You *should* close the zenoh session after use and the recommended way is through context manager:
 
@@ -40,9 +40,9 @@ with zenoh.open(zenoh.Config()) as session:
     # `session.close()` will be called at the end of the block,    # and it will undeclare the subscriber
 ```
 
-# ZBytes, encoding, and (de)serialization
+## ZBytes, encoding, and (de)serialization
 
-## Encoding
+### Encoding
 
 `zenoh.Value` has been split in `zenoh.ZBytes` and `zenoh.Encoding`. Put and other operations now requires a `ZBytes` payload, and accept an optional `Encoding`; there is no more auto-encoding from the payload type.
 
@@ -58,7 +58,7 @@ publisher = session.declare_publisher("my/keyepxr", encoding=zenoh.Encoding.APPL
 publisher.put(json.dumps({"key", "value"}))  # default encoding from publisher `application/json`
 ```
 
-## (De)serialization
+### (De)serialization
 
 Arbitrary types can be serialized to and deserialized from `ZBytes`. Default (de)serializers are provided for builtin types; `list`/`dict` are **no more** serialized to JSON, they use instead zenoh builtin serializer, compatible with other zenoh bindings.
 
@@ -84,7 +84,7 @@ assert zenoh.ZBytes(color).deserialize(RGB) == color
 # types with a registered serializer can be used directly with `put`session.put("my/keyexpr", color)
 ```
 
-# Handlers
+## Handlers
 
 The library now directly exposes Rust-backed handlers in `zenoh.handlers`. When no handler is provided, `zenoh.handlers.DefaultHandler` is used.
 

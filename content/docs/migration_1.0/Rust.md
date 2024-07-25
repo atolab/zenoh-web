@@ -1,5 +1,5 @@
 ---
-title: "Zenoh-Rust API : v0.11.0 → v1.0"
+title: "Rust"
 weight : 6200
 menu:
   docs:
@@ -7,7 +7,7 @@ menu:
 ---
 
 
-# Module Restructure
+## Module Restructure
 
 We reorganized the module tree, so the path is not the same as before. The main difference is that everything should be imported via the root path `zenoh::`. It makes everything more consistent. Here are some examples, but you can look into `zenoh/src/lib.rs` for more detailed changes.
 
@@ -44,7 +44,7 @@ use zenoh::sample::{Locality, Sample};
 use zenoh::qos::{CongestionControl, Priority, QoSBuilderTrait};
 ```
 
-# The changes to sync and async
+## The changes to sync and async
 
 In the previous version of Zenoh, we needed to use different module paths for the synchronous and asynchronous API.
 
@@ -98,7 +98,7 @@ let publisher = session.declare_publisher(&key_expr).wait().unwrap();
 publisher.put(buf).wait().unwrap();
 ```
 
-# Value is gone, long live ZBytes
+## Value is gone, long live ZBytes
 
 We have replaced `Value` with `ZBytes` and `Encoding` , and added a number of conversion implementations such that user structs can be serialized into `ZBytes`, sent via Zenoh, and de-serialized from `ZBytes` with ease.
 
@@ -128,7 +128,7 @@ let zbytes: ZBytes = sample.payload();
 let the_string: String = zbytes.deserialize::<String>().unwrap();
 ```
 
-# Encoding
+## Encoding
 
 `Encoding` has been reworked. 
 Zenoh does not impose any encoding requirement on the user, nor does it operate on it. 
@@ -166,7 +166,7 @@ Users can also define their own encoding scheme that does not need to be based o
 let encoding = Encoding::from("pointcloud/LAS");
 ```
 
-# Attachment
+## Attachment
 
 In Zenoh 0.11.x, the `AttachmentBuilder` was required to create an attachment. 
 In Zenoh 1.0.0, we have removed `AttachmentBuilder`, and an attachment can be created from anything that implements `Into<ZBytes>`
@@ -201,7 +201,7 @@ publisher
     .unwrap();
 ```
 
-# API changes in Query & Queryable
+##  API changes in Query & Queryable
 
 Query and Queryable have been slightly reworked. 
 
@@ -288,7 +288,7 @@ let mut_handler:&mut Receiver<Query> = queryable.handler_mut();
 ```
 
 
-# Use accessors to get private members
+## Use accessors to get private members
 
 We encapsulate members of structs, and they can’t be accessed directly now. 
 The only way to access Struct values is to use the getter function associated with them. 
@@ -320,7 +320,7 @@ while let Ok(sample) = subscriber.recv_async().await {
 }
 ```
 
-# Support RingChannel to receive data
+## Support RingChannel to receive data
 
 Besides using a callback to receive data, we can also receive the data from a default FIFO channel. However, sometimes we only care about the latest data and want to discard the oldest data. 
 We can use `RingChannel` to get this behaviour.
@@ -338,7 +338,7 @@ let subscriber = session
 
 To get the same behavior of a Zenoh 0.11.0 `PullSubscriber`, please make use of a `RingChannel` an example of this is illustrated in `z_pull.rs`.
 
-# Timestamps
+## Timestamps
 
 We now tie generating a timestamp to a Zenoh session, with the timestamp inheriting the `ZenohID` of the session.
 
@@ -360,13 +360,13 @@ let timestamp: Option<Timestamp> = session::new_timestamp();
 
 This will affect user-created plugins and applications that need to generate timestamps.
 
-# Feature Flags
+## Feature Flags
 
 Removed:
 
 - `complete_n`: due to a Legacy code cleanup
 
-# Storages
+## Storages
 
 <aside>
 ⚠️ The `storage-manager` will fail to launch if the `timestamping` configuration option is disabled.

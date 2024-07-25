@@ -1,12 +1,12 @@
 ---
-title: "Migrating from Zenoh v0.11.0 to Zenoh v1.0"
+title: "Concepts"
 weight : 6100
 menu:
   docs:
     parent: migration_1.0
 ---
 
-The engineers at ZettaScale have been hard at work preparing an official version 1.0.0 of Zenoh!   
+The Zenoh team have been hard at work preparing an official version 1.0.0 of Zenoh!   
 This major release comes with several API changes, quality of life improvements and developer conveniences.
 
 We now have a more stable API and intend to keep backward compatibility in the future Zenoh revisions.  

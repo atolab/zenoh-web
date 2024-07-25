@@ -1,5 +1,5 @@
 ---
-title: "Zenoh-Java API : v0.11.0 → v1.0"
+title: "Java"
 weight : 6700
 menu:
   docs:
