@@ -16,15 +16,16 @@ This guide is here to ease the transition to Zenoh 1.0.0 for our users!
 We have replaced `Value` with `ZBytes` and `Encoding`.  
 `Zbytes` is the type core to data representation in Zenoh, all API's have be reworked to accept `ZBytes` or something that can be converted into a `ZBytes`.  
 We have added a number of conversion implementations for language primitives as well as methods to seamlessly allow user defined structs to be serialized into `ZBytes`.  
-`Sample`'s payloads are now `ZBytes`, `Publishers`, `Queryables` and `Subscribers` now expect `ZBytes` for all their interfaces.
+`Sample`'s payloads are now `ZBytes`, `Publishers`, `Queryables` and `Subscribers` now expect `ZBytes` for all their interfaces. The [Attachment](#attachment) API also now accepts a `ZBytes`
 
+<!-- [key expressions](#key-expression) -->
 Each Language bindings will have their own specifics of Serializing and Deserializing, but for the most part it will involve implementing a serialize / deserialize function for your datatype or make use of auto-generated conversations for composite types.
 
 ## Encoding
 
-`Encoding` has been reworked. 
-Zenoh does not impose any encoding requirement on the user, nor does it operate on it.  
-It can be thought of as optional metadata, carried over by Zenoh in such a way that the end user’s application may perform different operations based on encoding.  
+`Encoding` has been reworked, moving away from enumerables to now accepting strings.
+While Zenoh does not impose any `Encoding` requirement on the user, providing an `Encoding` can offer automatic wire-level optimization for known types.  
+For the user defined `Encoding`, it can be thought of as optional metadata, carried over by Zenoh in such a way that the end user’s application may perform different operations based on `Encoding`.  
 We have expanded our list of predefined encoding types from Zenoh 0.11.0 to include variants for numerous IANA standard encodings, including but not limited to  `video/x` , `application/x`, `text/x`, `image/x` and `audio/x` encoding families, as well as an encoding family specific to Zenoh defined by the prefix `zenoh/x` .   
 Users can also define their own encoding scheme that does not need to be based on the predefined IANA variants. Upon declaring a specific encoding, the users encoding scheme will be prefixed with `zenoh/bytes` for distinction.
 
@@ -38,7 +39,8 @@ We also allow for composite types to be converted into `ZBytes`, meaning that us
 
 `Query` and `Queryable` have been slightly reworked.  
 For the API replying to a `Query` from a `Queryable` declared on a session: 
-The `reply` function has been split into 3 separate functions variants depending on the type of reply the user wants to send.  
+The `reply` now behaves similar to put and del improving ergonomics compared to before.
+The function has been split into 3 separate functions variants depending on the type of reply the user wants to send.  
 `reply` , `reply_del`, `reply_err`  
 
 We have added the ability to get the underlying `Handler` of a Queryable as well.
@@ -52,31 +54,45 @@ The only way to access struct values is to use the getter function associated wi
 
 The concept of a pull subscriber no longer exists in Zenoh,
 However, when creating a `Subscriber`, it may be the case that developers only care about the latest data and want to discard the oldest data. 
-We can use `RingChannel` to get this behaviour.
+We can use `RingChannel` to get similar behaviour.
 This contrasts a `FIFOChannel` which is the default channel type used internally in Subscribers
 You can take a look at examples of usage in any language’s examples/z_pull.x
 
 ## Timestamps
-
-We now tie generating a timestamp to a Zenoh session, with the timestamp inheriting the `ZenohID` of the session.
+Previously we exposed a function to generate timestamps outside of a session.
+Due to our efforts in storage replication logic and, users will now have to generate timestamps from a session, 
+with the timestamp inheriting the `ZenohID` of the session.
 
 This will affect user-created plugins and applications that need to generate timestamps in their Storage and sending of data.  
 ⚠️ Note: Timestamps are important for Storage Alignment and Replication. Data stored in Data bases must include a Timestamp to be properly aligned across Data Stores by Zenoh. 
 The `timestamping` configuration option must also be enabled for this.
 
-## Storages
+## Plugins
+
+### Storages
 The storage-manager will fail to launch if the timestamping configuration option is disabled.  
 From Zenoh 1.0.0 user-applications can load plugins.  
 A, somehow, implicit assumption that dictated the behaviour of storages is that the Zenoh node loading them **has to add a timestamp to any received publication that did not have one**. This functionality is controlled by the `timestamping` configuration option.  
 Until Zenoh 1.0.0 this assumption held true as only a router could load storage and the default configuration for a router enables `timestamping`. However, in Zenoh 1.0.0 nodes configured in `client` & `peer` mode can load storage and *their default configuration disables `timestamping`*.
 
+### Plugin Loading
+
+We added the ability for user-applications to load compiled plugins written in Rust, regardless of which language bindings you are using ! 
+
+Usage of this feature is [Plugin Loading](#plugin-loading) 
+
+⚠️ Note : When loading a plugin, the Plugin must have been built with the same version of the Rust compiler as the bindings loading it, and the `Cargo.lock` of the plugin must be synced with the same commit of Zenoh.  
+This means that if the language bindings are using `rustc` version `1.75`, the plugin must:
+- Be built with the same toolchain version `1.75`
+- Be built with the same Zenoh Commit
+- The plugin `Cargo.lock` have had its packages synced with the Zenoh `Cargo.lock`
+
+
 ## Config Changes
 
 ### Plugin Loading
 
-We added the ability for user-applications to load compiled plugins written in Rust, regardless of  language ! 
-
-Usage of this feature is achieved by simply enabling the `plugins_loading` section in config file with the members `enabled` set to true, and specifying the `search_dirs` for the plugins. 
+Loading plugins is achieved by enabling the `plugins_loading` section in config file, with the members `enabled` set to true, and specifying the `search_dirs` for the plugins. 
 
 If no search directories were specified, then the default search directories are 
 `".:~/.zenoh/lib:/opt/homebrew/lib:/usr/local/lib:/usr/lib”` 
@@ -91,9 +107,6 @@ If no search directories were specified, then the default search directories are
 }
 // ... Rest of Config 
 ```
-
-⚠️ Note : When loading a plugin, the Plugin must have been built with the same version of the Rust compiler as the bindings loading it. 
-This means that if the language bindings are using `rustc` version `1.75`, the plugin must be built with the same version.
 
 ### Scouting
  
