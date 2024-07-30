@@ -9,7 +9,7 @@ menu:
 The Zenoh team have been hard at work preparing an official version 1.0.0 of Zenoh!   
 This major release comes with several API changes, quality of life improvements and developer conveniences.
 
-We now have a more stable API and intend to keep backward compatibility in the future Zenoh revisions.  
+We now have a more stable API and intend to keep backward compatibility in future Zenoh revisions.  
 This guide is here to ease the transition to Zenoh 1.0.0 for our users!
 
 ## Value is gone, long live ZBytes 
@@ -19,7 +19,7 @@ We have added a number of conversion implementations for language primitives as 
 `Sample`'s payloads are now `ZBytes`, `Publishers`, `Queryables` and `Subscribers` now expect `ZBytes` for all their interfaces. The [Attachment](#attachment) API also now accepts a `ZBytes`
 
 <!-- [key expressions](#key-expression) -->
-Each Language bindings will have their own specifics of Serializing and Deserializing, but for the most part it will involve implementing a serialize / deserialize function for your datatype or make use of auto-generated conversations for composite types.
+Each Language bindings will have their own specifics of Serializing and Deserializing, but for the most part it will involve implementing a serialize / deserialize function for your datatype or make use of auto-generated conversions for composite types.
 
 ## Encoding
 
@@ -33,15 +33,11 @@ Users can also define their own encoding scheme that does not need to be based o
 ## Attachment
 
 We have made attachment more flexible across API’s, essentially accepting anything that can be converted to a `ZBytes` as an optional extra to `put` , `delete` , on `Query`'s and Query `reply` s.  
-We also allow for composite types to be converted into `ZBytes`, meaning that using the Attachment API as metadata is more easy than ever.
+We also allow for composite types to be converted into `ZBytes`, meaning that using the Attachment API as metadata is easier than ever.
 
 ## Query & Queryable
 
-`Query` and `Queryable` have been slightly reworked.  
-For the API replying to a `Query` from a `Queryable` declared on a session: 
-The `reply` now behaves similar to put and del improving ergonomics compared to before.
-The function has been split into 3 separate functions variants depending on the type of reply the user wants to send.  
-`reply` , `reply_del`, `reply_err`  
+The `reply` method of a `Queryable` has gained two variants: `reply_del` and `reply_err` to respectively indicate that a deletion should be performed and that an error occurred. Additionally, the 3 variants behave similarly to `put` and `del`, hence providing improved ergonomics.
 
 We have added the ability to get the underlying `Handler` of a Queryable as well.
 
@@ -52,19 +48,18 @@ The only way to access struct values is to use the getter function associated wi
 
 ## Pull Subscribers have been removed
 
-The concept of a pull subscriber no longer exists in Zenoh,
+The concept of a pull subscriber no longer exists in Zenoh.
 However, when creating a `Subscriber`, it may be the case that developers only care about the latest data and want to discard the oldest data. 
-We can use `RingChannel` to get similar behaviour.
-This contrasts a `FIFOChannel` which is the default channel type used internally in Subscribers
+The `RingChannel` can be used to get a similar behaviour.
+This contrasts with the `FIFOChannel`, the default channel type used internally in Subscribers, which drops new message once its buffer is full.
 You can take a look at examples of usage in any language’s examples/z_pull.x
 
 ## Timestamps
 Previously we exposed a function to generate timestamps outside of a session.
-Due to our efforts in storage replication logic and, users will now have to generate timestamps from a session, 
-with the timestamp inheriting the `ZenohID` of the session.
+Due, in part, to our efforts to improve the storage replication logic, users will now have to generate timestamps from a session, with the timestamp inheriting the `ZenohID` of the session.
 
 This will affect user-created plugins and applications that need to generate timestamps in their Storage and sending of data.  
-⚠️ Note: Timestamps are important for Storage Alignment and Replication. Data stored in Data bases must include a Timestamp to be properly aligned across Data Stores by Zenoh. 
+⚠️ Note: Timestamps are important for Storage Alignment (a.k.a. Replication). Data stored in Data bases must include a Timestamp to be properly aligned across Data Stores by Zenoh. 
 The `timestamping` configuration option must also be enabled for this.
 
 ## Plugins
@@ -77,7 +72,7 @@ Until Zenoh 1.0.0 this assumption held true as only a router could load storage 
 
 ### Plugin Loading
 
-We added the ability for user-applications to load compiled plugins written in Rust, regardless of which language bindings you are using ! 
+We added the ability for user-applications to load compiled plugins written in Rust, regardless of which language bindings you are using! 
 
 Usage of this feature is [Plugin Loading](#plugin-loading) 
 
@@ -110,7 +105,7 @@ If no search directories were specified, then the default search directories are
 
 ### Scouting
  
-We have implemented a small change in configuration syntax concerning the `scouting` section of config files.   
+We have implemented a small change in the configuration syntax concerning the `scouting` section.   
 Both `gossip` and `multicast`’s `autoconnect` section's have changed to accept lists of either 
 `"peer"`, `"client"` or `"router"`
 
@@ -136,4 +131,4 @@ scouting: {
 }
 ```
 
-Next step is to dive into the migration examples for your favourite language ! 
+Next step is to dive into the migration examples for your favourite language!

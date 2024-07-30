@@ -9,20 +9,20 @@ menu:
 
 Zenoh 1.0.0 brings a number of changes to the API, with a concentrated effort to bring the C++ API to more closely resemble the Rust API in usage.
 
-The TLDR improvements we bring in this in this update include 
+The improvements we bring in this update include:
 
-- Simple organization of Zenoh classes abstracting away the notion of View and Closure.
-- Improved and more Flexible Error Handling through error codes and exceptions.
+- A simpler organization of the Zenoh classes, abstracting away the notion of View and Closure.
+- Improved and more flexible Error Handling through error codes and exceptions.
 - Support for serialization of common types like strings, numbers, vectors through Codecs.
-- Ability for users to define their own Codecs (for their own types or to overwrite the default one) !
+- Ability for users to define their own Codecs (for their own types or to overwrite the default one)!
 - Improved stream handlers and callback support.
 - Simpler attachment API.
 
-Now we have served you an *amuse bouche,*  let's get into the main course ! 
+Now that the *amuse bouche* is served,  let's get into the main course!
 
 ## Error Handling
 
-Prior to 1.0 all Zenoh call failures were handled in a uniform way: we were either returning a `bool` value indicating success or failure (and probably returning a error code) or returning an `std::variant<ReturnType, ErrorMessage>` :
+Prior to 1.0.0, all Zenoh call failures were handled by either returning a `bool` value indicating success or failure (and probably returning a error code) or returning an `std::variant<ReturnType, ErrorMessage>`. For instance:
 
 ```cpp
 std::variant<z::Config, ErrorMessage> config_client(const z::StrArrayView& peers);
@@ -31,13 +31,13 @@ bool put(const z::BytesView& payload, const z::PublisherPutOptions& options, Err
 
 ```
 
-In 1.0. all functions that can fail on Zenoh side now offer 2 options for error handling:
+In 1.0.0, all functions that can fail on the Zenoh side now offer 2 options for error handling:
 
 **A**. Exceptions
 
 **B**. Error Codes 
 
-Any function that can fail now accepts an optional parameter `ZError* err` pointer to the error code. If it is not provided (or set to `nullptr`), an instance of `ZException` will be thrown, otherwise a error code will be written into the `err` pointer. 
+Any function that can fail now accepts an optional parameter `ZError* err` pointer to the error code. If it is not provided (or set to `nullptr`), an instance of `ZException` will be thrown, otherwise the error code will be written into the `err` pointer. 
 
 ```cpp
 static Config client(const std::vector<std::string>& peers, ZError* err = nullptr);
@@ -47,7 +47,7 @@ This also applies to constructors. In case of failure that would either throw an
 
 ```cpp
 Config config = Config::create_default();
-// Receiving a error code
+// Receiving an error code
 Zerror err = Z_OK;
 auto session = Session::open(std::move(config), &err);
 if (err != Z_OK) { // or alternatively if (!session)
@@ -67,13 +67,13 @@ All returned and `std::move`'d-in objects are guaranteed to be left in an “emp
 
 ## Serialization  and Deserialization
 
-Prior to 1.0 it was only possible to send `std::string`/ `const char*` or `std::vector<uint8_t>` / `uint8_t*` using `BytesView` class:
+Prior to 1.0.0, it was only possible to send `std::string`/ `const char*` or `std::vector<uint8_t>` / `uint8_t*` using the `BytesView` class:
 
 ```cpp
 publisher.put("my_payload");
 ```
 
-In 1.0 `BytesView` is gone, and we introduced `Bytes` object representing a serialized payload which is now passed instead of raw bytes/strings to Zenoh calls:
+In 1.0.0, the `BytesView` class is gone and we introduced the `Bytes` object which represents a serialized payload.
 
  
 
@@ -92,7 +92,7 @@ void receive_data(const Sample &sample) {
 We added a default `ZenohCodec`, which provides default serialization / deserialization for common numerical types, strings, and containers:
 
 ```cpp
- 	// stream of bytes serialization
+  // stream of bytes serialization
   std::vector<uint8_t> data = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
   Bytes b = Bytes::serialize(data);
   assert(b.deserialize<std::vector<uint8_t>>() == data);
@@ -117,7 +117,7 @@ We added a default `ZenohCodec`, which provides default serialization / deserial
   assert(b.deserialize<decltype(m2)>() == m); 
 ```
 
-Please note that this serialization functionality is only provided for prototyping and demonstration purposes and as such might be less efficient than custom-written serialization methods.
+Please note that this serialization functionality is only provided for prototyping and demonstration purposes and, as such, might be less efficient than custom-written serialization methods.
 
 Users can easily define their own serialization/deserialization functions by providing a custom codec:
 
@@ -132,13 +132,13 @@ assert(b.deserialize<std::vector<MyType>>(my_codec) == my_data);
 
 For finer control on serialization / deserialization implementation `Bytes::Iterator`, `Bytes::Writer` and `Bytes::Reader` classes are also introduced.
 
-A full implemented example with custom-defined serialization/deserialization can be found here :
+A working example with custom-defined serialization / deserialization can be found here:
 
 https://github.com/eclipse-zenoh/zenoh-cpp/blob/dev/1.0.0/examples/simple/universal/z_simple.cxx
 
 ## Stream Handlers and Callbacks
 
-Prior to 1.0 stream handlers were only supported for `get`:
+Prior to 1.0.0, stream handlers were only supported for `get`:
 
 ```cpp
 // callback
@@ -169,10 +169,10 @@ for (bool call_success = recv(reply); !call_success || reply.check(); call_succe
 }
 ```
 
-In 1.0. `Subscriber`, `Queryable` and `get` now can use either a callable object or a stream handler. For now Zenoh provides 2 types of handlers: 
+In 1.0.0, `Subscriber`, `Queryable` and `get` can now use either a callable object or a stream handler. Currently, Zenoh provides 2 types of handlers:
 
-- `FifoHandler` - serving messages in Fifo order, when it is full, all new messages will be dropped.
-- `RingHandler` - serving messages in Fifo order, will remove older messages to make room for new ones when the buffer is full.
+- `FifoHandler` - serving messages in Fifo order, *dropping new messages* once full.
+- `RingHandler` - serving messages in Fifo order, *dropping older messages* once full to make room for new ones.
 
 ```cpp
 // callback
@@ -207,7 +207,7 @@ std::cout << std::endl;
   
 ```
 
-Same works for `Subscriber` and `Queryable` :
+The same works for `Subscriber` and `Queryable`:
 
 ```cpp
 // callback
@@ -229,7 +229,7 @@ while (true) {
 // stream handlers interface
 auto subscriber = session.declare_subscriber(keyexpr, channels::FifoChannel(16));
 const auto& messages = subscriber.handler();
-//blocking
+// blocking
 while (auto [sample, alive] = messages.recv(); alive; std::tie(reply, alive) = messages.recv()) {
 		// receive will block until there is at least one sample in the Fifo buffer
 		// it will return an empty sample and alive=false once subscriber gets disconnected
@@ -252,7 +252,7 @@ std::cout << std::endl;
 
 ## Attachment
 
-Prior to 1.0 it attachment could only represent a set of key-value pairs and had somewhat complicated interface:
+Prior to 1.0.0, an attachment could only represent a set of key-value pairs and had a somewhat complicated interface:
 
 ```cpp
 // publish message with attachment
@@ -287,4 +287,4 @@ data_handler(const Sample &sample) {
 };
 ```
 
-In 1.0. attachment handling was greatly simplified. It is now represented as `Bytes` (i.e. the same class we use to represent serialized data). So it can now contain data in any format (and not only be restricted to key-value pairs).
+In 1.0.0, attachment handling was greatly simplified. It is now represented as `Bytes` (i.e. the same class we use to represent serialized data) and can thus contain data in any format.

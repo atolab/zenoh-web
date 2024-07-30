@@ -9,7 +9,7 @@ menu:
 
 ## Module Restructure
 
-We reorganized the module tree, so the path is not the same as before. The main difference is that everything should be imported via the root path `zenoh::`. It makes everything more consistent. Here are some examples, but you can look into `zenoh/src/lib.rs` for more detailed changes.
+We reorganized the module tree, so import paths are not the same as before. The main difference is that everything should be imported via the root path `zenoh::`. Here are some examples, but you can look into `zenoh/src/lib.rs` for the complete list of changes.
 
 ```rust
 // common use

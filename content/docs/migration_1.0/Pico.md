@@ -12,9 +12,9 @@ We have reworked the type naming to clarify how they should be interacted with.
 
 ### Owned types
 
-Owned types are allocated by the user and they are responsible to drop it using `z_drop` (or `z_close` for sessions).
+Owned types are allocated by the user and it is their responsibility to drop them using `z_drop` (or `z_close` for sessions).
 
-Previously, we were returning Zenoh structures by value. Now you must pass a reference to memory. This allows to initialize user allocated structures and frees return value for error codes.
+Previously, we were returning Zenoh structures by value. In Zenoh 1.0.0, a reference to memory must be provided. This allows initializing user allocated structures and frees return value for error codes.
 
 Here is a quick example of this change:
 
@@ -40,14 +40,14 @@ z_close(z_move(session))
 
 The owned objects have a “null” state.
 
-- If constructor function (e.g. `z_open`) fails it sets owned object to null state.
-- The `z_drop` releases resources of owned object and sets it to null state to avoid double drop. Call of `z_drop` on object in null state is safe and does nothing.
+- If the constructor function (e.g. `z_open`) fails, the owned object will be set to its null state.
+- The `z_drop` releases the resources of the owned object and sets it to the null state to avoid double drop. Calling `z_drop` on an object in a null state is safe and does nothing.
 
 (TODO) Owned types support move semantics, which will consume the owned object and turn it into a moved object, see next section.
 
 ### Moved types
 
-Moved types are obtained when using `z_move` on an owned type object. They are consumed on use when passed to relevant functions. Any non-constructor function accepting a moved object (i.e. an object passed by owned pointer) becomes responsible for calling drop on it. The object is guaranteed to be in the null state upon function return, even if it fails.
+Moved types are obtained when using `z_move` on an owned type object. They are consumed on use when passed to relevant functions. Any non-constructor function accepting a moved object (i.e. an object passed by an owned pointer) becomes responsible for calling drop on it. The object is guaranteed to be in the null state when the function returns, even if it fails.
 
 ### Loaned types
 
@@ -55,7 +55,7 @@ Each owned type now has a corresponding `z_loaned_xxx_t` type, which is obtained
 
  `z_loan` or `z_loan_mut` on it, or eventually received from Zenoh functions / callbacks. 
 
-It is no longer possible to access owned object fields directly, instead one should use accessor functions on loaned objects.
+It is no longer possible to directly access the fields of an owned object, the accessor functions on the loaned objects should instead be used.
 
  Here is a quick example:
 
@@ -83,7 +83,7 @@ void reply_handler(const z_loaned_reply_t *reply, void *ctx) {
 }
 ```
 
-Certain loaned types can be copied into owned, using `z_clone` function:
+Certain loaned types can be copied into owned, using the `z_clone` function:
 
 ```c
 void reply_handler(const z_loaned_reply_t *reply, void *ctx) {
@@ -93,7 +93,7 @@ void reply_handler(const z_loaned_reply_t *reply, void *ctx) {
 }
 ```
 
-In the case of our callback, this allows the data from the loaned type to be used in another thread context. Although this other thread should not forget to `z_drop` its instance of reply to avoid memory leak!
+In the case of our callback, this allows the data from the loaned type to be used in another thread context. Note that this other thread should not forget to call `z_drop` to avoid a memory leak!
 
 ### View types
 
@@ -201,7 +201,7 @@ if (z_put(z_loan(session), z_loan(ke), z_move(payload), &options) < 0) {
 
 How encoding is handled has been reworked:  While before you would use an enum id and a value, now you simply need to register your encoding metadata from a string with `z_encoding_from_str`. 
 
-We have a set of constants to do some wire-level optimization. To use this, you need your string should follow the format: "<constant>;<optional additional data>"
+We have a set of constants to do some wire-level optimization. To leverage this, your string needs to follow the format: "<constant>;<optional additional data>"
 
 - Zenoh 0.11.x
 
@@ -253,11 +253,11 @@ z_publisher_put(z_loan(pub), z_move(payload), &options);
 
 ## Pull subscribers / channels
 
-Pull subscribers were removed and is replaced by FIFO or ring buffers
+Pull subscribers were removed and are replaced by FIFO or ring buffers.
 
 ## Interests
 
 We have added interests to the protocol. This allows a few things:
 
-- Replay missed pubs to a late-joining node
+- Replay missed pubs to a late-joining node.
 - Activate writer-side filtering: a pub is not sent on the network if there is no corresponding sub.
