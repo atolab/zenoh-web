@@ -274,7 +274,7 @@ while let Ok(reply) = replies.recv_async().await {
 }
 ```
 
-We have also added the ability to get underlying Handlers from `Queryables`, a
+We have also added the ability to get underlying Handlers from `Queryables`, so that users have direct acces to the receiver of the data channel. 
 
 ```rust
 let queryable = session
@@ -286,7 +286,6 @@ let handler: &Receiver<Query> = queryable.handler();
 // or mutable handler
 let mut_handler:&mut Receiver<Query> = queryable.handler_mut();
 ```
-
 
 ## Use accessors to get private members
 
@@ -368,13 +367,10 @@ Removed:
 
 ## Storages
 
-<aside>
-⚠️ The `storage-manager` will fail to launch if the `timestamping` configuration option is disabled.
-
-</aside>
-
 Zenoh 1.0.0 introduced the possibility for Zenoh nodes configured in a mode other than `router` to load plugins.
 
 A, somehow, implicit assumption that dictated the behaviour of storages is that the Zenoh node loading them **has to add a timestamp to any received publication that did not have one**. This functionality is controlled by the `timestamping` configuration option.
 
 Until Zenoh 1.0.0 this assumption held true as only a router could load storage and the default configuration for a router enables `timestamping`. However, in Zenoh 1.0.0 nodes configured in `client` & `peer` mode can load storage and *their default configuration disables `timestamping`*.
+
+⚠️ The `storage-manager` will fail to launch if the `timestamping` configuration option is disabled.
