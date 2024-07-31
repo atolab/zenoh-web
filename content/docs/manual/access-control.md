@@ -13,7 +13,7 @@ The configuration of access control policies is done via a [configuration file](
 ---------
 ## ACL configuration
 
-ACL configuration mainly consists of three components: `rules`, `subjects` and `policies`.
+ACL configuration mainly consists of three components: `rules`, `subjects` and `policies`, to which is added the `default_permission` (`allow` or `deny`) to be applied on messages that do not match the configured policies.
 
 ### rules
 
