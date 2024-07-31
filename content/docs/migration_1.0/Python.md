@@ -40,6 +40,8 @@ with zenoh.open(zenoh.Config()) as session:
     # `session.close()` will be called at the end of the block, and it will undeclare the subscriber
 ```
 
+*In previous versions, it was necessary to keep a variable in the scope for declared subscribers/queryables/etc. This restriction no longer exists, as objects not bound to a variable will still run in "background" mode, until the session is closed.*
+
 ## ZBytes, encoding, and (de)serialization
 
 ### Encoding
