@@ -8,7 +8,7 @@ menu:
 
 ## General API changes
 
-We have reworked the type naming to clarify how they should be interacted with.
+We have reworked the type naming to clarify how types should be interacted with.
 
 ### Owned types
 
@@ -122,7 +122,7 @@ if (z_declare_subscriber(&sub, z_loan(session), z_loan(ke), z_move(callback), NU
 }
 ```
 
-## Payloads and serialization
+## Payload and Serialization
 
 We changed how payloads are handled. Before you would pass the pointer and the size of your data and now everything must be serialized into `z_owned_bytes_t`. 
 
