@@ -193,6 +193,7 @@ For more details on decision priority, please refer to the [*Priority* section o
 When possible, avoid using wildcards and DSL (eg: `"**"`, `"example/*"`, `"example/t$*"`) and prefer keys (eg: `example/test`) which are much faster to match.
 - Look out for supersets and partial overlap between rule key expressions and message key, which are not considered valid matches and therefore will not apply said ACL rule on said message.
 For more details on this regard, please refer to the [*Key-Expression Matching* section of the Access Control Rules RFC](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Access%20Control%20Rules.md#key-expression-matching).
+- When filtering queryable messages, keep in mind that a `reply` does not necessarily have the same key expression as its associated `query`.
 - Bare in mind that the effectiveness of ACL policies is highly dependent of your Zenoh network topology and how much control you have over it. The topology can evolve in unpredictable ways in certain scenarios when combined with configuration options like `scouting` and `gossip`, which is complicated further when factoring the mobility of Zenoh clients in certain use-cases.
 
 ---------
