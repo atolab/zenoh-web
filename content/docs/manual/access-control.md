@@ -15,7 +15,15 @@ depending on certain characteristics of individual messages and their respective
 which are used to match the instances with their roles in the ACL policies and apply the rules accordingly on the exhanged messages.
 
 The configuration of access control policies is done via a [configuration file](../configuration).
-Below is the template config we will be analyzing in this documentation.
+
+---------
+## ACL configuration
+
+ACL configuration mainly consists of three components: `rules`, `subjects` and `policies`, to which is added the `default_permission` (`allow` or `deny`) to be applied on messages that do not match the configured policies.
+
+The `enabled` boolean field allows to enable and disable ACL. Note that ACL config cannot be updated at runtime, and requires a restart of the instance to reflect the changes.
+
+Below is the example config we will be analyzing in this documentation.
 
 ```json
 {
@@ -69,13 +77,6 @@ Below is the template config we will be analyzing in this documentation.
   }
 }
 ```
-
----------
-## ACL configuration
-
-ACL configuration mainly consists of three components: `rules`, `subjects` and `policies`, to which is added the `default_permission` (`allow` or `deny`) to be applied on messages that do not match the configured policies.
-
-The `enabled` boolean field allows to enable and disable ACL. Note that ACL config cannot be updated at runtime, and requires a restart of the instance to reflect the changes.
 
 ### rules
 
