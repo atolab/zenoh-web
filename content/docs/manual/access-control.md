@@ -6,6 +6,9 @@ menu:
     parent: manual
 ---
 
+*NOTE: This documentation covers the Zenoh 1.0 ACL config. For Zenoh 0.11 ACL config,
+please refer to the [Access Control Rules RFC](https://github.com/eclipse-zenoh/roadmap/blob/ca841fe219890bf73289089b520271d70ded89b6/rfcs/ALL/Access%20Control%20Rules.md)*
+
 *Access control* enables Zenoh instances to filter (allow or deny) messages,
 depending on certain characteristics of individual messages and their respective source or destination.
 *Authentication* on the other hand allows Zenoh instances to identify certain characteristics in other instances they connect to,
