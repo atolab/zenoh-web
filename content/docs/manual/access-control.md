@@ -12,7 +12,7 @@ please refer to the [Access Control Rules RFC](https://github.com/eclipse-zenoh/
 *Access control* enables Zenoh instances to filter (allow or deny) messages,
 depending on certain characteristics of individual messages and their respective source or destination.
 *Authentication* on the other hand allows Zenoh instances to identify certain characteristics in other instances they connect to,
-which are used to match the instances with their roles in the ACL policies and apply the rules accordingly on the exhanged messages.
+which are used to match the instances with configured subjects in the ACL policies and apply the rules accordingly on the exhanged messages.
 
 The configuration of access control policies is done via a [configuration file](../configuration).
 
