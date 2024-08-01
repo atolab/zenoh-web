@@ -91,3 +91,60 @@ Note that any of the three lists presented above can be ommited, and will be int
 }
 ```
 
+### policies
+
+The `policies` list associates configured rules to configured subjects based on their unique `id`s. For example, the config below creates the `deny pub/sub` rule and the `example subject` subject then associates them in a policy.
+
+```
+{
+  access_control: {
+    "enabled": true,
+    "default_permission": "allow",
+    "rules": [
+      {
+        "id": "deny pub/sub",
+        "permission": "deny",
+        "flows": ["ingress", "egress"],
+        "messages": [
+          "declare_subscriber",
+          "put",
+          "delete",
+        ],
+        "key_exprs": [
+          "demo/example/**",
+        ],
+      }
+    ],
+    "subjects": [
+      {
+        "id": "example subject",
+        "interfaces": [
+          "lo0",
+          "en0",
+        ],
+        "cert_common_names": [
+          "example.zenoh.io"
+        ],
+        "usernames": [
+          "zenoh-example1",
+          "zenoh-example2",
+        ],
+      }
+    ],
+    "policies": [
+      {
+        "rules": [
+          "deny pub/sub"
+        ],
+        "subjects": [
+          "example subject"
+        ],
+      },
+    ]
+  }
+}
+```
+
+---------
+
+For a more technical analysis of the ACL feature, please refer to the [Access Control Rules RFC](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Access%20Control%20Rules.md).
