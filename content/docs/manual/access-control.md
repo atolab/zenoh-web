@@ -35,7 +35,7 @@ Matched messages are filtered based on the rule's `permission`: `allow` or `deny
 
 For instance, the following rule denies all incoming and outgoing subscriptions, publications and deletions on key expressions matching `demo/example/**`:
 
-```
+```json
 {
   "id": "deny pub/sub",
   "permission": "deny",
@@ -61,7 +61,7 @@ Each subject configuration is identified by a unique `id` string. Subject config
 
 To produce all possible combinations that characterize a subject configuration, the cartesian product of the `interfaces`, `cert_common_names` and `usernames` lists is calculated. Below is an example of a subject and its internal representation.
 
-```
+```json
 {
   "id": "example subject",
   "interfaces": [
@@ -85,7 +85,7 @@ To produce all possible combinations that characterize a subject configuration, 
 
 Note that any of the three lists presented above can be ommited, and will be interpreted as a wildcard (i.e matches with all possible values of that authentication method). This implies that the empty subject below is a wildcard that will match any zenoh instance.
 
-```
+```json
 {
   "id": "subject that matches all zenoh instances",
 }
@@ -95,7 +95,7 @@ Note that any of the three lists presented above can be ommited, and will be int
 
 The `policies` list associates configured rules to configured subjects based on their unique `id`s. For example, the config below creates the `deny pub/sub` rule and the `example subject` subject then associates them in a policy.
 
-```
+```json
 {
   access_control: {
     "enabled": true,
