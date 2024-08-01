@@ -147,4 +147,31 @@ The `policies` list associates configured rules to configured subjects based on 
 
 ---------
 
+## Guidelines for configuring ACL
+
+Designing ACL policies can be quite the challenge, especially when considering the potential impact that a subomptimal configuration can have on performance.
+For you convenience, we've compiled below some guidelines and common mistakes to look out for when configuring ACL.
+
+- The first step to consider is which of the two ACL models to use: set `"default_permission": "deny"` and define `allow` rules, or the opposite.
+This choice can have an impact on performance if the number of rules to verify per message is too high.
+Therefore, it is considered best practice in most cases to pick the model that yields the least amount of rules, with regards to your application and desired filters.
+- When defining subjects and applying rules on them, avoid having two different subjects that can match the same instance and have the same rule apply on them, as this could lead to a double verification of said rule in this case, which yields a loss in performance.
+- Defining rules that apply on both `ingress` and `egress` flows can cause a double verification of messages, which leads to performance loss.
+Avoid defining rules that respectively apply on both flows, unless the affected messages are *generated* or *consumed* by the instance, and do not pass through it. Consider the following examples:
+  - A router receives `put` messages and routes them, which applies both of its matching `ingress` and `egress` rules on them.
+  - A client running a subscriber receives and *consumes* `put` messages, only applying its matching `ingress` rules on them.
+  - A client publisher *generates* `put` messages and so only applies its matching `egress` rules on them.
+  - A client running both a publisher and a subscriber *generates* and *consumes* `put` messages,
+  but only applies either of its matching `ingress` or `egress` rules on each individual message.
+- Depending on your rules, conflicting decisions on the same message can occur (`allow` and `deny` from different rules).
+In this case, it is important to know decision priority to predict the outcome: **explicit deny rule** > **explicit allow rule** > **default_permission rule**.
+For more details on decision priority, please refer to the [*Priority* section of the Access Control Rules RFC](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Access%20Control%20Rules.md#priority).
+- Key expression matching when applying rules on messages can have a substantial impact on performance, depending on how the rules are constructed.
+When possible, avoid using wildcards and DSL (eg: `"**"`, `"example/*"`, `"example/t$*"`) and prefer keys (eg: `example/test`) which are much faster to match.
+- Look out for supersets and partial overlap between rule key expressions and message key, which are not considered valid matches and therefore will not apply said ACL rule on said message.
+For more details on this regard, please refer to the [*Key-Expression Matching* section of the Access Control Rules RFC](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Access%20Control%20Rules.md#key-expression-matching).
+- Bare in mind that the effectiveness of ACL policies is highly dependent of your Zenoh network topology and how much control you have over it. The topology can evolve in unpredictable ways in certain scenarios when combined with configuration options like `scouting` and `gossip`, which is complicated further when factoring the mobility of Zenoh clients in certain use-cases.
+
+---------
+
 For a more technical analysis of the ACL feature, please refer to the [Access Control Rules RFC](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Access%20Control%20Rules.md).
