@@ -90,7 +90,7 @@ Each rule within the `rules` list is identified by a unique `id` string. Rules a
   - Query (`query`)
   - Reply (`reply`)
 - `flows`: applies rule on incoming messages (`ingress`), outgoing messages (`egress`), or both directions. If this field is not provided in the config, the rule will apply to both directions by default.
-- `key_exprs`: the rule applies on messages for which the key matches one of the given key expressions. For more details on key expression matching, see [Key Expressions](http://localhost:1313/docs/manual/abstractions/#key-expression).
+- `key_exprs`: the rule applies on messages for which the key matches one of the given key expressions. For more details on key expression matching, see [Key Expressions](https://zenoh.io/docs/manual/abstractions/#key-expression).
 
 Matched messages are filtered based on the rule's `permission`: `allow` or `deny`.
 
