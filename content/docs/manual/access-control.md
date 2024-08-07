@@ -121,7 +121,7 @@ Each subject configuration is identified by a unique `id` string. Subject config
 - `usernames`: list of usernames to be matched with the authentication config of remote instances. Refer to [User-Password authentication](../user-password) for how to setup this authentication mechanism.
 
 To produce all possible combinations that characterize a subject configuration, the Cartesian product of the `interfaces`, `cert_common_names` and `usernames` lists is calculated. This allows for items within the same list to be considered a logical `OR`, and items across different lists to be considered a logical `AND`.
-To demonstrate these logical combinations, below is an example of a subject configurations and its internal representation.
+To demonstrate these logical combinations, below is an example of a subject configuration and its internal representation.
 
 ```json5
 {
