@@ -92,7 +92,11 @@ More on this topic at here : [Rust:Type-Layout](https://doc.rust-lang.org/refere
 
 Loading plugins is achieved by enabling the `plugins_loading` section in config file, with the members `enabled` set to true, and specifying the `search_dirs` for the plugins. 
 
-If no search directories were specified, then the default search directories are 
+Directories are specified as object with fields `kind` and `value` is accepted.  
+1. If `kind` is `current_exe_parent`, then the parent of the current executable's directory is searched and `value` should be `null`.
+    In Bash notation, `{ "kind": "current_exe_parent" }` equals `$(dirname $(which zenohd))` while `"."` equals `$PWD`.
+2. If `kind` is `path`, then `value` is interpreted as a filesystem path. Simply supplying a string instead of a object is equivalent to this.  
+If `enabled: true` and `search_dirs` is not specified then `search_dirs` falls back to the default value of: 
 `".:~/.zenoh/lib:/opt/homebrew/lib:/usr/local/lib:/usr/lib”` 
 
 ```jsx
@@ -101,7 +105,7 @@ If no search directories were specified, then the default search directories are
     enabled: false,
     /// Directories where plugins configured by name should be looked for. Plugins configured by __path__ are not subject to lookup.
     /// If `enabled: true` and `search_dirs` is not specified then `search_dirs` falls back to the default value: ".:~/.zenoh/lib:/opt/homebrew/lib:/usr/local/lib:/usr/lib"
-    search_dirs: [],
+    search_dirs: [{ "kind": "current_exe_parent" }, ".", "~/.zenoh/lib", "/opt/homebrew/lib", "/usr/local/lib", "/usr/lib"],
 }
 // ... Rest of Config 
 ```
