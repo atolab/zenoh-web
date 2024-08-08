@@ -42,6 +42,7 @@ The owned objects have a “null” state.
 
 - If the constructor function (e.g. `z_open`) fails, the owned object will be set to its null state.
 - The `z_drop` releases the resources of the owned object and sets it to the null state to avoid double drop. Calling `z_drop` on an object in a null state is safe and does nothing.
+- Calling z_drop on an uninitialized object is invalid.
 
 (TODO) Owned types support move semantics, which will consume the owned object and turn it into a moved object, see next section.
 
@@ -124,9 +125,9 @@ if (z_declare_subscriber(&sub, z_loan(session), z_loan(ke), z_move(callback), NU
 
 ## Payload and Serialization
 
-We changed how payloads are handled. Before you would pass the pointer and the size of your data and now everything must be serialized into `z_owned_bytes_t`. 
+Zenoh 1.0.0 handles payload differently. Before one would pass the pointer to the buffer and its length and now everything must be serialized into z_owned_bytes_t. 
 
-We have added a number of serialization functions from primitive types to and from `z_owned_bytes_t` to simplify this.
+To simplify serialization/deserialization we provide support for some primitive types like uint8_t* + length, (null-)terminated strings and arithmetic types.
 
 - Zenoh 0.11.x
 
@@ -150,12 +151,13 @@ if (z_put(z_loan(session), z_loan(ke), z_move(payload), NULL) < 0) {
 }
 ```
 
-To implement custom (de-)serialization functions Zenoh 1.0.0 provides `z_bytes_iterator_t`, `z_bytes_reader_t` and `z_owned_bytes_wrtiter_t` types and corresponding functions. Alternatively it is always possible to perform serialization separately and only send/receive `uint8_t` arrays, by only calling trivial `z_bytes_serialize_from_slice` and `z_bytes_deserialize_into_slice` functions:
+To implement custom (de-)serialization functions Zenoh 1.0.0 provides `z_bytes_iterator_t`, `z_bytes_reader_t` and `z_owned_bytes_wrtiter_t` types and corresponding functions.   
+Alternatively it is always possible to perform serialization separately and only send/receive `uint8_t` arrays, by only calling trivial `z_bytes_serialize_from_slice` and `z_bytes_deserialize_into_slice` functions:
 
-```cpp
+```c
 void send_data(const z_loaned_publisher_t* pub, const uint8_t *data, size_t len) {
 	z_owned_bytes_t payload;
-  z_bytes_serialize_from_slice(&payload, data, len);
+  z_bytes_serialize_from_buf(&payload, data, len);
   z_publisher_put(pub, z_move(payload), NULL);
   // no need to drop the payload, since it is consumed by z_publisher_put
 }	
@@ -173,9 +175,10 @@ void receive_data(const z_loaned_bytes_t* payload) {
 }
 ```
 
-Note that it is no longer possible to access the underlying payload data pointer directly, since Zenoh cannot guarantee that the data is delivered as a single fragment. So in order to get access to raw payload data one must use `z_bytes_reader_t` and related functions:
+Note that it is no longer possible to access the underlying payload data pointer directly, since Zenoh cannot guarantee that the data is delivered as a single fragment.   
+So in order to get access to raw payload data one must use `z_bytes_reader_t` and related functions:
 
-```cpp
+```c
 z_bytes_reader_t reader = z_bytes_get_reader(z_loan(payload));
 uint8_t data1[10] = {0};
 uint8_t data2[20] = {0};
@@ -184,16 +187,62 @@ z_bytes_reader_read(&reader, data1, 10); // copy first 10 payload bytes to data1
 z_bytes_reader_read(&reader, data2, 20); // copy next 20 payload bytes to data2
 ```
 
-## Stream Handlers and Callbacks
+Note that all z_bytes_serialize_from… functions involve copying the data.  
+On the other hand, it is also possible to allow Zenoh to consume your data directly, which avoid the need to make an extra copy using z_bytes_from_buf or z_bytes_from_str.  
+The user would need to provide a delete function to be called on data, when Zenoh finishes its processing:
 
-Prior to 1.0.0 stream handlers were only supported for `z_get`and `z_owned_queryable_t`:
+```c
+void my_custom_delete_function(void *data, void* context) {
+	// perform delete of data by optionally using extra information in the context
+	free(data);
+}
 
-```cpp
+void send_move_data(const z_loaned_publisher_t *publisher) {
+	uint8_t *my_data = malloc(10);
+	// fill my_data as necessary
+	z_owned_bytes_t b;
+	z_bytes_from_buf(&b, my_data, 10, my_custom_delete_function, NULL);
+	z_publisher_put(publisher, z_move(b));
+}
+
+// an example of sending a data with more complex destructor
+// a case of std::vector<uint8_t> from c++ stl library
+
+void delete_vector(void *data, void* context) {
+	std::vector<uint8_t> *v = (std::vector<uint8_t> *)context;
+	delete v;
+	// in this case data pointer is not used for destruction
+}
+
+void send_move_vector(std::vector<uint8_t> *v, const z_loaned_publisher_t *publisher) {
+	z_owned_bytes_t b;
+	z_bytes_from_buf(&b, v.data(), v.size(), delete_vector, (void*)v);
+	z_publisher_put(publisher, z_move(b));
+}
+```
+
+The third alternative consists in sending the statically allocated constant data without, that does not require to be deleted, without making an extra copy. This can be achieved by using z_serialize_from_static_buf or z_serialize_from_static_str functions:
+
+```c
+const char *my_constant_string = "my string";
+
+void send_static_data(const z_loaned_publisher_t *publisher) {
+	z_owned_bytes_t b;
+	z_bytes_from_static_str(&b, my_constant_string);
+	z_publisher_put(publisher, z_move(b));
+}
+```
+
+## Channel Handlers and Callbacks
+
+Prior to 1.0.0 Channel handlers were only supported for `z_get`and `z_owned_queryable_t`:
+
+```c
 // callback
 z_owned_closure_reply_t callback = z_closure(reply_handler);
 z_get(z_loan(session), z_keyexpr(keyexpr), "", z_move(callback), &opts);
 
-// stream handlers interface
+// Channel handlers interface
 // blocking
 z_owned_reply_channel_t channel = zc_reply_fifo_new(16);
 z_get(z_loan(session), z_keyexpr(keyexpr), "", z_move(channel.send), &opts);
@@ -231,10 +280,10 @@ z_drop(z_move(channel));
 
 In 1.0.0 `z_owned_subscriber_t`, `z_owned_queryable_t` and `z_get` can use either a callable object or a stream handler. In addition the same handler type now provides both blocking and non-blocking interface. For the time being Zenoh provides 2 types of handlers: 
 
-- `FifoHandler` - serving messages in Fifo order, when it is full, receiving will be blocked until messages in the queue are consumed and space is freed up.
+- FifoHandler - serving messages in Fifo order, when it is full, it will block until some messages are consumed to free the space (meaning that all network tasks will also block). It’s worth noting that it will drop the new message If the queue is full and the default multi-thread feature is disabled.
 - `RingHandler` - serving messages in Fifo order, will remove older messages to make room for new ones when the buffer is full.
 
-```cpp
+```c
 // callback
 z_owned_closure_reply_t callback = z_closure(reply_handler);
 z_get(z_loan(session), z_keyexpr(keyexpr), "", z_move(callback), &opts);
@@ -247,7 +296,7 @@ z_get(z_loan(s), z_loan(keyexpr), "", z_move(closure), z_move(opts));
 z_owned_reply_t reply;
 
 // blocking
-for (bool is_alive = z_recv(z_loan(handler), &reply); is_alive; is_alive = z_recv(z_loan(handler), &reply)) {
+while (z_recv(z_loan(handler), &reply) == Z_OK) {
     // z_recv will block until there is at least one sample in the Fifo buffer
     if (z_reply_is_ok(z_loan(reply))) {
         const z_loaned_sample_t *sample = z_reply_ok(z_loan(reply));
@@ -259,24 +308,30 @@ for (bool is_alive = z_recv(z_loan(handler), &reply); is_alive; is_alive = z_rec
 }
 
 // non-blocking
-for (bool is_alive = z_try_recv(z_loan(handler), &reply); is_alive; is_alive = z_try_recv(z_loan(handler), &reply)) {
-    if (!z_check(reply)) {
-	    continue; // z_try_recv is non-blocking call, so will fail to return a reply if the Fifo buffer is empty
-    }
-    if (z_reply_is_ok(z_loan(reply))) {
-        const z_loaned_sample_t *sample = z_reply_ok(z_loan(reply));
-        // do something with sample
-    } else {
-        printf("Received an error\n");
-    }
-    z_drop(z_move(reply));
+while (true) { 
+		z_result_t res = z_try_recv(z_loan(handler), &reply);
+    if (res == Z_CHANNEL_NODATA) {
+	    // z_try_recv is non-blocking call, so will fail to return a reply if the Fifo buffer is empty
+	    // do some other work or just sleep
+    } else if (res == Z_OK) {
+	    if (z_reply_is_ok(z_loan(reply))) {
+	        const z_loaned_sample_t *sample = z_reply_ok(z_loan(reply));
+	        // do something with sample
+	    } else {
+	        printf("Received an error\n");
+	    }
+	    z_drop(z_move(reply));
+	   } else { // res == Z_CHANNEL_DISCONNECTED
+		   break; // channel is closed - no more replies will arrive
+	   }
 }
   
 ```
 
 Same works for `Subscriber` and `Queryable` :
 
-```cpp
+```c
+// callback
 // callback
 void data_handler(const z_loaned_sample_t *sample, void *context) {
 	// do something with sample
@@ -302,7 +357,7 @@ if (z_declare_subscriber(&sub, z_loan(session), z_loan(keyexpr), z_move(closure)
 
 z_owned_sample_t sample;
 // blocking
-for (bool is_alive = z_recv(z_loan(handler), &sample); is_alive; is_alive = z_recv(z_loan(handler), &sample)) {
+while (z_recv(z_loan(handler), &sample) == Z_OK) {
     // z_recv will block until there is at least one sample in the Fifo buffer
 		// it will return an empty sample and is_alive=false once subscriber gets disconnected
     
@@ -311,16 +366,22 @@ for (bool is_alive = z_recv(z_loan(handler), &sample); is_alive; is_alive = z_re
 }
 
 // non-blocking
-for (bool is_alive = z_try_recv(z_loan(handler), &sample); is_alive; is_alive = z_try_recv(z_loan(handler), &sample)) {
-    if (!z_check(sample)) { // z_try_recv is non-blocking call, so will fail to return a sample if the Fifo buffer is empty
-	    continue;
-    }
-		// do something with sample
-    z_drop(z_move(sample));
+while (true) {
+		z_result_t res = z_try_recv(z_loan(handler), &sample);
+    if (res == Z_CHANNEL_NODATA) {
+	    // z_try_recv is non-blocking call, so will fail to return a sample if the Fifo buffer is empty
+	    // do some other work or just sleep
+    } else if (res == Z_OK) {
+			// do something with sample
+	    z_drop(z_move(sample));
+	  } else { // res == Z_CHANNEL_DISCONNECTED
+		  break; // channel is closed - no more samples will be received
+	  }
 }
 ```
 
 The `z_owned_pull_subscriber_t` was removed, given that `RingHandler` can provide similar functionality with ordinary `z_owned_subscriber_t.`
+Since the callback in 1.0.0. carries a loaned sample whenever it is triggered, we can save an explicit drop on the sample now.
 
 ## Attachment
 
@@ -504,4 +565,81 @@ z_timestamp_t ts;
 z_timestamp_new(&ts, z_loan(s));
 options.timestamp = &ts;
 z_publisher_put(z_loan(pub), z_move(payload), &options);
+```
+
+
+## Error Handling
+
+In 1.0 we unify the return type of zenoh functions as `z_result_t`. For example,
+
+- Zenoh 0.11.x
+```c
+int8_t z_put(struct z_session_t session,
+             struct z_keyexpr_t keyexpr,
+             const uint8_t *payload,
+             size_t len,
+             const struct z_put_options_t *opts);
+
+```
+
+- Zenoh 1.0.0
+
+```c
+z_result_t z_put(const struct z_loaned_session_t *session,
+                 const struct z_loaned_keyexpr_t *key_expr,
+                 struct z_owned_bytes_t *payload,
+                 struct z_put_options_t *options);
+
+```
+
+## KeyExpr / String Conversion
+
+In 1.0 we have reworked coversaion between key expressions and strings, illustrated below.
+
+- Zenoh 0.11.x
+
+```c
+// keyexpr => string
+z_owned_str_t keystr = z_keyexpr_to_string(z_loan(z_owned_keyexpr_t));
+
+// keyexpr => const char *
+z_loan(keystr)
+
+// const chat* => keystr
+z_owned_keyexpr_t keyexpr = z_keyexpr_new(const char*)
+
+```
+
+- Zenoh 1.0.0
+
+```c
+// keyexpr => string
+z_view_string_t keystr;
+z_keyexpr_as_view_string(z_loan(z_owned_keyexpr_t), &keystr);
+
+// z_view_string_t  => const char*
+z_string_data(z_loan(keystr))
+
+// const chat* => keystr
+z_owned_keyexpr_t keyexpr;
+z_error_t res = z_keyexpr_from_string(&keyexpr, const char *);
+
+```
+
+NOTE: Based on the efficiency considerations, the char pointer of `z_string_data` might not be null-terminated in zenoh-c. To read the string data, we need to pair it with the length `z_string_len`,
+
+```c
+z_view_str_t keystr;
+z_keyexpr_as_view_string(z_loan(keyexpr), &keystr);
+printf("%.*s", (int)z_string_len(z_loan(keystr)), z_string_data(z_loan(keystr)));
+```
+
+And to compare the string with `strncmp` instead of `strcmp`.
+
+```c
+z_view_str_t keystr;
+z_keyexpr_as_view_string(z_loan(keyexpr), &keystr);
+const char* target = "string";
+strncmp(target, z_string_data(z_loan(keystr)), z_string_len(z_loan(keystr)));
+
 ```
