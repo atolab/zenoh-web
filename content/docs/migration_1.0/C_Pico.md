@@ -1,5 +1,5 @@
 ---
-title: "C"
+title: "C / Pico"
 weight : 6400
 menu:
   docs:
@@ -229,9 +229,9 @@ for (bool call_success = z_call(channel.recv, &reply); !call_success || z_check(
 z_drop(z_move(channel));
 ```
 
-In 1.0.0 `z_owned_subscriber_t`, `z_owned_queryable_t` and `z_get`  can use either a callable object or a stream handler. In addition the same handler type now provides both blocking and non-blocking interface. For the time being Zenoh provides 2 types of handlers: 
+In 1.0.0 `z_owned_subscriber_t`, `z_owned_queryable_t` and `z_get` can use either a callable object or a stream handler. In addition the same handler type now provides both blocking and non-blocking interface. For the time being Zenoh provides 2 types of handlers: 
 
-- `FifoHandler` - serving messages in Fifo order, when it is full, all new messages will be dropped.
+- `FifoHandler` - serving messages in Fifo order, when it is full, receiving will be blocked until messages in the queue are consumed and space is freed up.
 - `RingHandler` - serving messages in Fifo order, will remove older messages to make room for new ones when the buffer is full.
 
 ```cpp
@@ -505,10 +505,3 @@ z_timestamp_new(&ts, z_loan(s));
 options.timestamp = &ts;
 z_publisher_put(z_loan(pub), z_move(payload), &options);
 ```
-
-## Interests
-
-We have added interests to the protocol. This allows a few things:
-
-- Replay missed pubs to a late-joining node
-- Activate writer-side filtering: a pub is not sent on the network if there is no corresponding sub.
