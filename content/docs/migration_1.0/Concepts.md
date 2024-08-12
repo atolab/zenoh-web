@@ -110,6 +110,23 @@ If `enabled: true` and `search_dirs` is not specified then `search_dirs` falls b
 // ... Rest of Config 
 ```
 
+### Mode Dependent endpoints
+
+Configuration now supports a different list of endpoints depending on the mode zenohd is launched with.
+The old behaviour of a single List of endpoints is still supported, applying to `router`, `peer` and `client`, however users can now set endpoints per mode:
+
+```jsx
+  connect: {
+    /// The list of endpoints to connect to.
+    /// Accepts a single list (e.g. endpoints: ["tcp/10.10.10.10:7447", "tcp/11.11.11.11:7447"])
+    /// or different lists for router, peer and client 
+    endpoints: { router: ["tcp/10.10.10.10:7447"], peer: ["tcp/11.11.11.11:7447"], client: ["tcp/somewhere1::7447", "udp/somewhere2:7447"]  }
+},
+```
+
+⚠️ Note: in `client` mode, `zenohd` will try connect to each endpoint in order until one is successful, then stop subsequent endpoint connection attempts. 
+
+
 ### Scouting
  
 We have implemented a small change in the configuration syntax concerning the `scouting` section.   
