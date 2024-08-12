@@ -124,7 +124,7 @@ The old behaviour of a single List of endpoints is still supported, applying to 
 },
 ```
 
-⚠️ Note: in `client` mode, `zenohd` will try connect to each endpoint in order until one is successful, then stop subsequent endpoint connection attempts. 
+⚠️ Note: in `client` mode, `zenohd` will try connect to each endpoint in order until one is successful, then stop subsequent endpoint connection attempts. `client`'s only connect to a single endpoint. 
 
 
 ### Scouting
