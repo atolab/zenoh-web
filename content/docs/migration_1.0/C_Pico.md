@@ -33,7 +33,7 @@ z_close(z_move(session));
 ```c
 z_owned_session_t session;
 if (z_open(&sesion, z_move(config), &opts) < 0) {
-	return -1;
+  return -1;
 }
 z_close(z_move(session))
 ```
@@ -52,9 +52,9 @@ Moved types are obtained when using `z_move` on an owned type object. They are c
 
 ### Loaned types
 
-Each owned type now has a corresponding `z_loaned_xxx_t` type, which is obtained by calling 
+Each owned type now has a corresponding `z_loaned_xxx_t` type, which is obtained by calling
 
- `z_loan` or `z_loan_mut` on it, or eventually received from Zenoh functions / callbacks. 
+ `z_loan` or `z_loan_mut` on it, or eventually received from Zenoh functions / callbacks.
 
 It is no longer possible to directly access the fields of an owned object, the accessor functions on the loaned objects should instead be used.
 
@@ -125,7 +125,7 @@ if (z_declare_subscriber(&sub, z_loan(session), z_loan(ke), z_move(callback), NU
 
 ## Payload and Serialization
 
-Zenoh 1.0.0 handles payload differently. Before one would pass the pointer to the buffer and its length and now everything must be serialized into z_owned_bytes_t. 
+Zenoh 1.0.0 handles payload differently. Before one would pass the pointer to the buffer and its length and now everything must be serialized into z_owned_bytes_t.
 
 To simplify serialization/deserialization we provide support for some primitive types like uint8_t* + length, (null-)terminated strings and arithmetic types.
 
@@ -151,31 +151,31 @@ if (z_put(z_loan(session), z_loan(ke), z_move(payload), NULL) < 0) {
 }
 ```
 
-To implement custom (de-)serialization functions Zenoh 1.0.0 provides `z_bytes_iterator_t`, `z_bytes_reader_t` and `z_owned_bytes_wrtiter_t` types and corresponding functions.   
+To implement custom (de-)serialization functions Zenoh 1.0.0 provides `z_bytes_iterator_t`, `z_bytes_reader_t` and `z_owned_bytes_wrtiter_t` types and corresponding functions.
 Alternatively it is always possible to perform serialization separately and only send/receive `uint8_t` arrays, by only calling trivial `z_bytes_serialize_from_slice` and `z_bytes_deserialize_into_slice` functions:
 
 ```c
 void send_data(const z_loaned_publisher_t* pub, const uint8_t *data, size_t len) {
-	z_owned_bytes_t payload;
+  z_owned_bytes_t payload;
   z_bytes_serialize_from_buf(&payload, data, len);
   z_publisher_put(pub, z_move(payload), NULL);
   // no need to drop the payload, since it is consumed by z_publisher_put
-}	
+}
 
 void receive_data(const z_loaned_bytes_t* payload) {
-	z_owned_slice_t slice;
-	z_bytes_deserialize_into_slice(payload, &slice);
-	
-	// do something with serialized data
-	// raw ptr can be accessed via z_slice_data(z_loan(slice))
-	// data length can be accessed via z_slice_len(z_loan(slice))
-	
-	// in the end slice should be dropped since it contains a copy of the payload data
-	z_drop(z_move(slice)); 
+  z_owned_slice_t slice;
+  z_bytes_deserialize_into_slice(payload, &slice);
+
+  // do something with serialized data
+  // raw ptr can be accessed via z_slice_data(z_loan(slice))
+  // data length can be accessed via z_slice_len(z_loan(slice))
+
+  // in the end slice should be dropped since it contains a copy of the payload data
+  z_drop(z_move(slice));
 }
 ```
 
-Note that it is no longer possible to access the underlying payload data pointer directly, since Zenoh cannot guarantee that the data is delivered as a single fragment.   
+Note that it is no longer possible to access the underlying payload data pointer directly, since Zenoh cannot guarantee that the data is delivered as a single fragment.
 So in order to get access to raw payload data one must use `z_bytes_reader_t` and related functions:
 
 ```c
@@ -187,37 +187,37 @@ z_bytes_reader_read(&reader, data1, 10); // copy first 10 payload bytes to data1
 z_bytes_reader_read(&reader, data2, 20); // copy next 20 payload bytes to data2
 ```
 
-Note that all z_bytes_serialize_from… functions involve copying the data.  
-On the other hand, it is also possible to allow Zenoh to consume your data directly, which avoid the need to make an extra copy using z_bytes_from_buf or z_bytes_from_str.  
+Note that all z_bytes_serialize_from… functions involve copying the data.
+On the other hand, it is also possible to allow Zenoh to consume your data directly, which avoid the need to make an extra copy using z_bytes_from_buf or z_bytes_from_str.
 The user would need to provide a delete function to be called on data, when Zenoh finishes its processing:
 
 ```c
 void my_custom_delete_function(void *data, void* context) {
-	// perform delete of data by optionally using extra information in the context
-	free(data);
+  // perform delete of data by optionally using extra information in the context
+  free(data);
 }
 
 void send_move_data(const z_loaned_publisher_t *publisher) {
-	uint8_t *my_data = malloc(10);
-	// fill my_data as necessary
-	z_owned_bytes_t b;
-	z_bytes_from_buf(&b, my_data, 10, my_custom_delete_function, NULL);
-	z_publisher_put(publisher, z_move(b));
+  uint8_t *my_data = malloc(10);
+  // fill my_data as necessary
+  z_owned_bytes_t b;
+  z_bytes_from_buf(&b, my_data, 10, my_custom_delete_function, NULL);
+  z_publisher_put(publisher, z_move(b));
 }
 
 // an example of sending a data with more complex destructor
 // a case of std::vector<uint8_t> from c++ stl library
 
 void delete_vector(void *data, void* context) {
-	std::vector<uint8_t> *v = (std::vector<uint8_t> *)context;
-	delete v;
-	// in this case data pointer is not used for destruction
+  std::vector<uint8_t> *v = (std::vector<uint8_t> *)context;
+  delete v;
+  // in this case data pointer is not used for destruction
 }
 
 void send_move_vector(std::vector<uint8_t> *v, const z_loaned_publisher_t *publisher) {
-	z_owned_bytes_t b;
-	z_bytes_from_buf(&b, v.data(), v.size(), delete_vector, (void*)v);
-	z_publisher_put(publisher, z_move(b));
+  z_owned_bytes_t b;
+  z_bytes_from_buf(&b, v.data(), v.size(), delete_vector, (void*)v);
+  z_publisher_put(publisher, z_move(b));
 }
 ```
 
@@ -227,9 +227,9 @@ The third alternative consists in sending the statically allocated constant data
 const char *my_constant_string = "my string";
 
 void send_static_data(const z_loaned_publisher_t *publisher) {
-	z_owned_bytes_t b;
-	z_bytes_from_static_str(&b, my_constant_string);
-	z_publisher_put(publisher, z_move(b));
+  z_owned_bytes_t b;
+  z_bytes_from_static_str(&b, my_constant_string);
+  z_publisher_put(publisher, z_move(b));
 }
 ```
 
@@ -249,11 +249,11 @@ z_get(z_loan(session), z_keyexpr(keyexpr), "", z_move(channel.send), &opts);
 z_owned_reply_t reply = z_reply_null();
 for (z_call(channel.recv, &reply); z_check(reply); z_call(channel.recv, &reply)) {
     if (z_reply_is_ok(&reply)) {
-	    z_sample_t sample = z_reply_ok(&reply);
-	    // do something with sample and keystr
-		} else {
-			printf("Received an error\n");
-		}
+      z_sample_t sample = z_reply_ok(&reply);
+      // do something with sample and keystr
+    } else {
+      printf("Received an error\n");
+    }
     z_drop(z_move(reply));
 }
 z_drop(z_move(channel));
@@ -268,17 +268,17 @@ for (bool call_success = z_call(channel.recv, &reply); !call_success || z_check(
         continue;
     }
     if (z_reply_is_ok(z_loan(reply))) {
-	    z_sample_t sample = z_reply_ok(&reply);	    
-			// do something with sample
-		} else {
-			printf("Received an error\n");
-		}
-		z_drop(z_move(reply));
+      z_sample_t sample = z_reply_ok(&reply);
+      // do something with sample
+    } else {
+      printf("Received an error\n");
+    }
+    z_drop(z_move(reply));
 }
 z_drop(z_move(channel));
 ```
 
-In 1.0.0 `z_owned_subscriber_t`, `z_owned_queryable_t` and `z_get` can use either a callable object or a stream handler. In addition the same handler type now provides both blocking and non-blocking interface. For the time being Zenoh provides 2 types of handlers: 
+In 1.0.0 `z_owned_subscriber_t`, `z_owned_queryable_t` and `z_get` can use either a callable object or a stream handler. In addition the same handler type now provides both blocking and non-blocking interface. For the time being Zenoh provides 2 types of handlers:
 
 - FifoHandler - serving messages in Fifo order, when it is full, it will block until some messages are consumed to free the space (meaning that all network tasks will also block). It’s worth noting that it will drop the new message If the queue is full and the default multi-thread feature is disabled.
 - `RingHandler` - serving messages in Fifo order, will remove older messages to make room for new ones when the buffer is full.
@@ -308,24 +308,24 @@ while (z_recv(z_loan(handler), &reply) == Z_OK) {
 }
 
 // non-blocking
-while (true) { 
-		z_result_t res = z_try_recv(z_loan(handler), &reply);
+while (true) {
+    z_result_t res = z_try_recv(z_loan(handler), &reply);
     if (res == Z_CHANNEL_NODATA) {
-	    // z_try_recv is non-blocking call, so will fail to return a reply if the Fifo buffer is empty
-	    // do some other work or just sleep
+      // z_try_recv is non-blocking call, so will fail to return a reply if the Fifo buffer is empty
+      // do some other work or just sleep
     } else if (res == Z_OK) {
-	    if (z_reply_is_ok(z_loan(reply))) {
-	        const z_loaned_sample_t *sample = z_reply_ok(z_loan(reply));
-	        // do something with sample
-	    } else {
-	        printf("Received an error\n");
-	    }
-	    z_drop(z_move(reply));
-	   } else { // res == Z_CHANNEL_DISCONNECTED
-		   break; // channel is closed - no more replies will arrive
-	   }
+      if (z_reply_is_ok(z_loan(reply))) {
+          const z_loaned_sample_t *sample = z_reply_ok(z_loan(reply));
+          // do something with sample
+      } else {
+          printf("Received an error\n");
+      }
+      z_drop(z_move(reply));
+     } else { // res == Z_CHANNEL_DISCONNECTED
+       break; // channel is closed - no more replies will arrive
+     }
 }
-  
+
 ```
 
 Same works for `Subscriber` and `Queryable` :
@@ -334,7 +334,7 @@ Same works for `Subscriber` and `Queryable` :
 // callback
 // callback
 void data_handler(const z_loaned_sample_t *sample, void *context) {
-	// do something with sample
+  // do something with sample
 }
 
 z_owned_closure_sample_t callback;
@@ -359,24 +359,24 @@ z_owned_sample_t sample;
 // blocking
 while (z_recv(z_loan(handler), &sample) == Z_OK) {
     // z_recv will block until there is at least one sample in the Fifo buffer
-		// it will return an empty sample and is_alive=false once subscriber gets disconnected
-    
+    // it will return an empty sample and is_alive=false once subscriber gets disconnected
+
     // do something with sample
     z_drop(z_move(sample));
 }
 
 // non-blocking
 while (true) {
-		z_result_t res = z_try_recv(z_loan(handler), &sample);
+    z_result_t res = z_try_recv(z_loan(handler), &sample);
     if (res == Z_CHANNEL_NODATA) {
-	    // z_try_recv is non-blocking call, so will fail to return a sample if the Fifo buffer is empty
-	    // do some other work or just sleep
+      // z_try_recv is non-blocking call, so will fail to return a sample if the Fifo buffer is empty
+      // do some other work or just sleep
     } else if (res == Z_OK) {
-			// do something with sample
-	    z_drop(z_move(sample));
-	  } else { // res == Z_CHANNEL_DISCONNECTED
-		  break; // channel is closed - no more samples will be received
-	  }
+      // do something with sample
+      z_drop(z_move(sample));
+    } else { // res == Z_CHANNEL_DISCONNECTED
+      break; // channel is closed - no more samples will be received
+    }
 }
 ```
 
@@ -426,13 +426,13 @@ void data_handler(const z_sample_t* sample, void* arg) {
 
 ```
 
-In 1.0.0 attachment handling was greatly simplified. It is now represented as `z_..._bytes_t` (i.e. the same type we use to represent serialized data). So it can now contain data in any format (and not only be restricted to key-value pairs). 
+In 1.0.0 attachment handling was greatly simplified. It is now represented as `z_..._bytes_t` (i.e. the same type we use to represent serialized data). So it can now contain data in any format (and not only be restricted to key-value pairs).
 
 ```c
 // publish attachment
 typedef struct {
-	char* key;
-	char* value;
+  char* key;
+  char* value;
 } kv_pair_t;
 
 typedef struct kv_it {
@@ -442,7 +442,7 @@ typedef struct kv_it {
 
 bool create_attachment_iter(z_owned_bytes_t* kv_pair, void* context) {
   kv_it* it = (kv_it*)(context);
-  if (it->current == it->end) { 
+  if (it->current == it->end) {
     return false;
   }
   z_owned_bytes_t k, v;
@@ -457,8 +457,8 @@ bool create_attachment_iter(z_owned_bytes_t* kv_pair, void* context) {
 ...
 
 kv_pair_t attachment_kvs[2] = {;
-	(kv_pair_t){.key = "index", .value = "1"},
-	(kv_pair_t){.key = "source", .value = "C"}
+  (kv_pair_t){.key = "index", .value = "1"},
+  (kv_pair_t){.key = "source", .value = "C"}
 }
 kv_it it = { .begin = attachment_kvs, .end = attachment_kvs + 2 };
 
@@ -479,17 +479,17 @@ void data_handler(const z_loaned_sample_t *sample, void *arg) {
   z_owned_string_t payload_string;
   z_bytes_deserialize_into_string(z_sample_payload(sample), &payload_string);
 
-	printf(">> [Subscriber] Received %s ('%.*s': '%.*s')\n", kind_to_str(z_sample_kind(sample)),
+  printf(">> [Subscriber] Received %s ('%.*s': '%.*s')\n", kind_to_str(z_sample_kind(sample)),
    (int)z_string_len(z_loan(key_string)), z_string_data(z_loan(key_string)),
    (int)z_string_len(z_loan(payload_string)), z_string_data(z_loan(payload_string)));
-	z_drop(z_move(payload_string));
-	
+  z_drop(z_move(payload_string));
+
   const z_loaned_bytes_t *attachment = z_sample_attachment(sample);
   // checks if attachment exists
   if (attachment == NULL) {
     return;
-	}
-	
+  }
+
   // read attachment key-value pairs using bytes_iterator
   z_bytes_iterator_t iter = z_bytes_get_iterator(attachment);
   z_owned_bytes_t kv;
@@ -515,7 +515,7 @@ void data_handler(const z_loaned_sample_t *sample, void *arg) {
 
 ## Encoding
 
-Encoding handling has been reworked:  before one would use an enum id and a string suffix value, now it is needed only to register the encoding metadata from a string with `z_encoding_from_str`. 
+Encoding handling has been reworked:  before one would use an enum id and a string suffix value, now it is needed only to register the encoding metadata from a string with `z_encoding_from_str`.
 
 There is a set of predefined constant encodings subject to some wire-level optimization. To benefit from this, the your string should follow the format: "<predefined constant>;<optional additional data>"
 
@@ -566,7 +566,6 @@ z_timestamp_new(&ts, z_loan(s));
 options.timestamp = &ts;
 z_publisher_put(z_loan(pub), z_move(payload), &options);
 ```
-
 
 ## Error Handling
 
@@ -641,5 +640,163 @@ z_view_str_t keystr;
 z_keyexpr_as_view_string(z_loan(keyexpr), &keystr);
 const char* target = "string";
 strncmp(target, z_string_data(z_loan(keystr)), z_string_len(z_loan(keystr)));
+```
 
+## Accessor Pattern
+
+In 1.0.0, we want to make our API more consistent and convenient. We use opaque types to wrap the raw Zenoh data from the Rust library in zenoh-c. With this change, we introduce the accessor pattern to read the field of a struct.
+
+For instance, to get the attachment of a sample in zenoh-c,
+
+- 0.11.0
+
+```c
+typedef struct z_sample_t {
+  struct z_keyexpr_t keyexpr;
+  struct z_bytes_t payload;
+  struct z_encoding_t encoding;
+  const void *_zc_buf;
+  enum z_sample_kind_t kind;
+  struct z_timestamp_t timestamp;
+  struct z_qos_t qos;
+  struct z_attachment_t attachment;
+} z_sample_t;
+```
+
+- 1.0.0
+
+Opaque type of `z_sample`
+
+```rust
+/// An owned Zenoh sample.
+///
+/// This is a read only type that can only be constructed by cloning a `z_loaned_sample_t`.
+/// Like all owned types, it should be freed using z_drop or z_sample_drop.
+#[derive(Copy, Clone)]
+#[repr(C, align(8))]
+pub struct z_owned_sample_t {
+    _0: [u8; 224],
+}
+/// A loaned Zenoh sample.
+#[derive(Copy, Clone)]
+#[repr(C, align(8))]
+pub struct z_loaned_sample_t {
+    _0: [u8; 224],
+}
+```
+
+Get attachment
+
+```c
+const struct z_loaned_bytes_t *z_sample_attachment(const struct z_loaned_sample_t *this_);
+```
+
+In zenoh-pico, we recommend users follow the accessor pattern even though the struct `z_sample_t` is explicitly defined in the library.
+
+## Usage of `z_bytes_clone`
+
+In short, `z_bytes_t` is made of reference-counted data slices. In 1.0.0, we align the implementation of `z_bytes_clone` and
+make it perform a shallow copy for improved efficiency.
+
+- Zenoh 0.11.x
+
+```c
+ZENOHC_API struct zc_owned_payload_t zc_sample_payload_rcinc(const struct z_sample_t *sample);
+```
+
+- Zenoh 1.0.0
+
+```c
+ZENOHC_API void z_bytes_clone(struct z_owned_bytes_t *dst, const struct z_loaned_bytes_t *this_);
+```
+
+NOTE: We don't offer a deep copy API. However, users can create a deep copy by deserializing the `z_bytes_t` into a zenoh object. For example, use `z_bytes_deserialize_into_slice` to deserialize it into a `z_owned_slice_t` and then call `z_slice_data` to obtain a pointer to `uint8_t` data.
+
+## Zenoh-C Specific
+
+### Shared Memory
+
+Shared Memory subsystem is heavily reworked and improved. The key functionality changes:
+
+- Buffer reference counting is now robust across abnormal process termination
+- Support plugging of user-defined SHM implementations
+- Dynamic SHM transport negotiation: Sessions are interoperable with any combination of SHM configuration and physical location
+- Support aligned allocations
+- Manual buffer invalidation
+- Buffer write access
+- Rich buffer allocation interface
+
+Please note that SHM API is still unstable and will be improved in the future.
+
+**SharedMemoryManager → SHMProvider + SHMProviderBackend**
+
+- Zenoh 0.11.x
+
+```c
+// size to dedicate to SHM manager
+const size_t size = 1024 * 1024;
+// construct session id string
+const z_id_t id = z_info_zid(z_loan(s));
+char idstr[33];
+for (int i = 0; i < 16; i++) {
+    sprintf(idstr + 2 * i, "%02x", id.id[i]);
+}
+idstr[32] = 0;
+// create SHM manager
+zc_owned_shm_manager_t manager = zc_shm_manager_new(z_loan(s), idstr, size);
+```
+
+- Zenoh 1.0.0
+
+```c
+// size to dedicate to SHM provider
+const size_t total_size = 1024 * 1024;
+
+// Difference: now SHM provider respects alignment
+z_alloc_alignment_t alignment = {0};
+z_owned_memory_layout_t layout;
+z_memory_layout_new(&layout, total_size, alignment);
+
+// create SHM provider
+z_owned_shm_provider_t provider;
+z_posix_shm_provider_new(&provider, z_loan(layout));
+```
+
+**Buffer allocation**
+
+- Zenoh 0.11.x
+
+```c
+// buffer size
+const size_t alloc_size = 1024;
+
+// allocate SHM buffer
+zc_owned_shmbuf_t shmbuf = zc_shm_alloc(&manager, alloc_size);
+if (!z_check(shmbuf)) {
+    zc_shm_gc(&manager);
+    shmbuf = zc_shm_alloc(&manager, alloc_size);
+    if (!z_check(shmbuf)) {
+        printf("Failed to allocate an SHM buffer, even after GCing\n");
+        exit(-1);
+    }
+}
+```
+
+- Zenoh 1.0.0
+
+```c
+// buffer size and alignment
+const size_t alloc_size = 1024;
+// Diffrence: now allocation respects alignment
+z_alloc_alignment_t alignment = {0};
+
+// allocate SHM buffer
+z_buf_layout_alloc_result_t alloc;
+// Difference: there is a rich set of policies available to control
+// allocation behavior and handle allocation failures automatically
+z_shm_provider_alloc_gc(&alloc, z_loan(provider), alloc_size, alignment);
+if (!z_check(alloc.buf)) {
+    printf("Failed to allocate an SHM buffer, even after GCing\n");
+    exit(-1);
+}
 ```
