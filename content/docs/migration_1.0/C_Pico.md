@@ -268,7 +268,7 @@ for (bool call_success = z_call(channel.recv, &reply); !call_success || z_check(
         continue;
     }
     if (z_reply_is_ok(z_loan(reply))) {
-      z_sample_t sample = z_reply_ok(&reply);
+      const z_loaned_sample_t *sample = z_reply_ok(&reply);
       // do something with sample
     } else {
       printf("Received an error\n");
