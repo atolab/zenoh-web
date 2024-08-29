@@ -43,7 +43,7 @@ Any function that can fail now accepts an optional parameter `ZError* err` point
 static Config client(const std::vector<std::string>& peers, ZError* err = nullptr);
 ```
 
-This also applies to constructors. In case of failure that would either throw an exception or write error code, returning an object in “empty” state (for which bool conversion returns false). I.e.
+This also applies to constructors: if a failure occurs, either an exception is thrown or the error code is written to the provided pointer. In the latter case, the returned object will be in an "empty" state (i.e. converting it to a boolean returns `false`).
 
 ```cpp
 Config config = Config::create_default();

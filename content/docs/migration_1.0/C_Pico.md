@@ -32,7 +32,7 @@ z_close(z_move(session));
 
 ```c
 z_owned_session_t session;
-if (z_open(&sesion, z_move(config), &opts) < 0) {
+if (z_open(&session, z_move(config), &opts) < 0) {
   return -1;
 }
 z_close(z_move(session))

@@ -29,7 +29,7 @@ with session.declare_subscriber("my/keyexpr") as subscriber:
     # `subscriber.undeclare()` will be called at the end of the block`
 ```
 
-However, these objects can also be used without context manager, and without calling `undeclare`. In that case, they will run in “background” mode, meaning that their lifetime will be bound to the session’s.
+However, these objects can also be used without a context manager, and without calling `undeclare`. In that case, they will run in “background” mode, meaning that their lifetime will be bound to the session’s.
 
 ```python
 import zenoh
@@ -46,7 +46,7 @@ with zenoh.open(zenoh.Config()) as session:
 
 ### Encoding
 
-`zenoh.Value` has been split in `zenoh.ZBytes` and `zenoh.Encoding`. Put and other operations now require a `ZBytes` payload, and accept an optional `Encoding`; there is no more auto-encoding from the payload type.
+`zenoh.Value` has been split into `zenoh.ZBytes` and `zenoh.Encoding`. Put and other operations now require a `ZBytes` payload, and accept an optional `Encoding`; the encoding is no longer automatically deduced from the payload type.
 
 ```python
 session.put("my/keyexpr", 42) # default encoding `zenoh/bytes`session.put("my/keyexpr", 42, encoding=zenoh.Encoding.ZENOH_INT64)
