@@ -29,7 +29,7 @@ with session.declare_subscriber("my/keyexpr") as subscriber:
     # `subscriber.undeclare()` will be called at the end of the block`
 ```
 
-However, these objects can also be used without context manager, and without calling `undeclare`. In that case, they will run in “background” mode, meaning that their lifetime will be bound to the session’s.
+However, these objects can also be used without a context manager, and without calling `undeclare`. In that case, they will run in “background” mode, meaning that their lifetime will be bound to the session’s.
 
 ```python
 import zenoh
