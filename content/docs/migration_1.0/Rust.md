@@ -7,7 +7,7 @@ menu:
 ---
 
 
-## Module Restructure
+## Module reorganization
 
 We reorganized the module tree, so import paths are not the same as before. The main difference is that everything should be imported via the root path `zenoh::`. Here are some examples, but you can look into `zenoh/src/lib.rs` for the complete list of changes.
 
@@ -48,7 +48,7 @@ use zenoh::qos::{CongestionControl, Priority, QoSBuilderTrait};
 
 In the previous version of Zenoh, we needed to use different module paths for the synchronous and asynchronous API.
 
-Now both API’s are exposed behind  `use zenoh::prelude::*` 
+Now both API are exposed behind `use zenoh::prelude::*`:
 
 - Zenoh 0.11.x
 
@@ -109,9 +109,7 @@ We provide implementations of Zenoh’s aforementioned `Deserialize` and `Serial
 
 You can look at a full set of examples in `examples/examples/z_bytes.rs`.
 
-Note:
-
-- `ZSerde` is not the only serializer/deserializer users can make use of, nor a limitation to the types supported by Zenoh. Users are free to use whichever serializer/deserializer they wish!
+NOTE: ⚠️ `ZSerde` is not the only serializer/deserializer users can make use of, nor a limitation to the types supported by Zenoh. Users are free to use whichever serializer/deserializer they wish!
 - Zenoh 0.11.x
 
 ```rust

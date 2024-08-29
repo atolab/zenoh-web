@@ -125,9 +125,9 @@ if (z_declare_subscriber(&sub, z_loan(session), z_loan(ke), z_move(callback), NU
 
 ## Payload and Serialization
 
-Zenoh 1.0.0 handles payload differently. Before one would pass the pointer to the buffer and its length and now everything must be serialized into z_owned_bytes_t.
+Zenoh 1.0.0 handles payload differently. Before one would pass the pointer to the buffer and its length, now everything must be serialized into `z_owned_bytes_t`.
 
-To simplify serialization/deserialization we provide support for some primitive types like uint8_t* + length, (null-)terminated strings and arithmetic types.
+To simplify serialization/deserialization we provide support for some primitive types like `uint8_t*` + length, (null-)terminated strings and arithmetic types.
 
 - Zenoh 0.11.x
 
@@ -151,8 +151,8 @@ if (z_put(z_loan(session), z_loan(ke), z_move(payload), NULL) < 0) {
 }
 ```
 
-To implement custom (de-)serialization functions Zenoh 1.0.0 provides `z_bytes_iterator_t`, `z_bytes_reader_t` and `z_owned_bytes_wrtiter_t` types and corresponding functions.
-Alternatively it is always possible to perform serialization separately and only send/receive `uint8_t` arrays, by only calling trivial `z_bytes_serialize_from_slice` and `z_bytes_deserialize_into_slice` functions:
+To implement custom (de-)serialization functions, Zenoh 1.0.0 provides `z_bytes_iterator_t`, `z_bytes_reader_t` and `z_owned_bytes_wrtiter_t` types and corresponding functions.
+Alternatively, it is always possible to perform serialization separately and only send/receive `uint8_t` arrays, by only calling trivial `z_bytes_serialize_from_slice` and `z_bytes_deserialize_into_slice` functions:
 
 ```c
 void send_data(const z_loaned_publisher_t* pub, const uint8_t *data, size_t len) {
@@ -187,8 +187,8 @@ z_bytes_reader_read(&reader, data1, 10); // copy first 10 payload bytes to data1
 z_bytes_reader_read(&reader, data2, 20); // copy next 20 payload bytes to data2
 ```
 
-Note that all z_bytes_serialize_from… functions involve copying the data.
-On the other hand, it is also possible to allow Zenoh to consume your data directly, which avoid the need to make an extra copy using z_bytes_from_buf or z_bytes_from_str.
+Note that all `z_bytes_serialize_from…` functions involve copying the data.
+On the other hand, it is also possible to allow Zenoh to consume your data directly (which avoids the need to make an extra copy) using `z_bytes_from_buf` or `z_bytes_from_str`.
 The user would need to provide a delete function to be called on data, when Zenoh finishes its processing:
 
 ```c
@@ -221,7 +221,7 @@ void send_move_vector(std::vector<uint8_t> *v, const z_loaned_publisher_t *publi
 }
 ```
 
-The third alternative consists in sending the statically allocated constant data without, that does not require to be deleted, without making an extra copy. This can be achieved by using z_serialize_from_static_buf or z_serialize_from_static_str functions:
+Yet another alternative is to send the statically allocated constant data (hence that does not require to be deleted) without making an extra copy. This can be achieved using the `z_serialize_from_static_buf` or `z_serialize_from_static_str` functions:
 
 ```c
 const char *my_constant_string = "my string";
@@ -278,10 +278,10 @@ for (bool call_success = z_call(channel.recv, &reply); !call_success || z_check(
 z_drop(z_move(channel));
 ```
 
-In 1.0.0 `z_owned_subscriber_t`, `z_owned_queryable_t` and `z_get` can use either a callable object or a stream handler. In addition the same handler type now provides both blocking and non-blocking interface. For the time being Zenoh provides 2 types of handlers:
+In 1.0.0, `z_owned_subscriber_t`, `z_owned_queryable_t` and `z_get` can use either a callable object or a stream handler. In addition, the same handler type now provides both a blocking and non-blocking interface. For the time being Zenoh provides 2 types of handlers:
 
-- FifoHandler - serving messages in Fifo order, when it is full, it will block until some messages are consumed to free the space (meaning that all network tasks will also block). It’s worth noting that it will drop the new message If the queue is full and the default multi-thread feature is disabled.
-- `RingHandler` - serving messages in Fifo order, will remove older messages to make room for new ones when the buffer is full.
+- `FifoHandler` - serving messages in Fifo order, *dropping new messages* once full. It is worth noting that it will drop new messages only if the queue is full and the default multi-thread feature is disabled.
+- `RingHandler` - serving messages in Fifo order, *dropping older messages* once full to make room for new ones.
 
 ```c
 // callback
@@ -328,7 +328,7 @@ while (true) {
 
 ```
 
-Same works for `Subscriber` and `Queryable` :
+The same now also works for `Subscriber` and `Queryable` :
 
 ```c
 // callback
@@ -385,7 +385,7 @@ Since the callback in 1.0.0. carries a loaned sample whenever it is triggered, w
 
 ## Attachment
 
-Prior to 1.0.0 it attachment could only represent a set of key-value pairs and was represented by a separate type:
+Prior to 1.0.0, attachments were a separate type and could only be a set of key-value pairs:
 
 ```c
 // publish message with attachment
@@ -426,7 +426,7 @@ void data_handler(const z_sample_t* sample, void* arg) {
 
 ```
 
-In 1.0.0 attachment handling was greatly simplified. It is now represented as `z_..._bytes_t` (i.e. the same type we use to represent serialized data). So it can now contain data in any format (and not only be restricted to key-value pairs).
+In 1.0.0, attachments were greatly simplified. They are now represented as `z_..._bytes_t` (i.e. the same type we use to represent serialized data) and can thus contain data in any format.
 
 ```c
 // publish attachment
@@ -515,9 +515,9 @@ void data_handler(const z_loaned_sample_t *sample, void *arg) {
 
 ## Encoding
 
-Encoding handling has been reworked:  before one would use an enum id and a string suffix value, now it is needed only to register the encoding metadata from a string with `z_encoding_from_str`.
+Encoding handling has been reworked: before one would use an enum id and a string suffix value, now only the encoding metadata needs to be registered using `z_encoding_from_str`.
 
-There is a set of predefined constant encodings subject to some wire-level optimization. To benefit from this, the your string should follow the format: "<predefined constant>;<optional additional data>"
+There is a set of predefined constant encodings subject to some wire-level optimization. To benefit from this, the provided encoding should follow the format: `"<predefined constant>;<optional additional data>"`
 
 - Zenoh 0.11.x
 
@@ -550,7 +550,7 @@ if (z_put(z_loan(session), z_loan(ke), z_move(payload), &options) < 0) {
 
 ## Timestamps
 
-We now introduce timestamp generation tied to a Zenoh session, with the timestamp inheriting the `ZenohID` of the session.
+The generation of timestamps is now tied to a Zenoh session, with the timestamp inheriting the `ZenohID` of the session.
 
 - Zenoh 0.11.x
 
@@ -569,7 +569,7 @@ z_publisher_put(z_loan(pub), z_move(payload), &options);
 
 ## Error Handling
 
-In 1.0 we unify the return type of zenoh functions as `z_result_t`. For example,
+In 1.0.0, we unified the return type of Zenoh functions as `z_result_t`. For example,
 
 - Zenoh 0.11.x
 ```c
@@ -593,7 +593,7 @@ z_result_t z_put(const struct z_loaned_session_t *session,
 
 ## KeyExpr / String Conversion
 
-In 1.0 we have reworked coversaion between key expressions and strings, illustrated below.
+In 1.0.0, we have reworked the conversion between key expressions and strings, illustrated below.
 
 - Zenoh 0.11.x
 
@@ -625,7 +625,7 @@ z_error_t res = z_keyexpr_from_string(&keyexpr, const char *);
 
 ```
 
-NOTE: Based on the efficiency considerations, the char pointer of `z_string_data` might not be null-terminated in zenoh-c. To read the string data, we need to pair it with the length `z_string_len`,
+NOTE: Based on efficiency considerations, the char pointer of `z_string_data` might not be null-terminated in zenoh-c. To read the string data, we need to pair it with the length `z_string_len`.
 
 ```c
 z_view_str_t keystr;
@@ -646,7 +646,7 @@ strncmp(target, z_string_data(z_loan(keystr)), z_string_len(z_loan(keystr)));
 
 In 1.0.0, we have made our API more convenient and consistent to use across languages. We use opaque types to wrap the raw Zenoh data from the Rust library in zenoh-c. With this change, we introduce the accessor pattern to read the field of a struct.
 
-For instance, to get the attachment of a sample in zenoh-c,
+For instance, to get the attachment of a sample in zenoh-c:
 
 - 0.11.0
 
@@ -695,8 +695,7 @@ In zenoh-pico, we recommend users follow the accessor pattern even though the st
 
 ## Usage of `z_bytes_clone`
 
-In short, `z_bytes_t` is made of reference-counted data slices. In 1.0.0, we align the implementation of `z_bytes_clone` and
-make it perform a shallow copy for improved efficiency.
+In short, `z_bytes_t` is made of reference-counted data slices. In 1.0.0, we aligned the implementation of `z_bytes_clone` and made it perform a shallow copy for improved efficiency.
 
 - Zenoh 0.11.x
 
