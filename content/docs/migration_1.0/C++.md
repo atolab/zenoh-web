@@ -115,6 +115,10 @@ We added a default `ZenohCodec`, which provides default serialization / deserial
 
   b = Bytes::serialize(m);
   assert(b.deserialize<decltype(m2)>() == m); 
+
+  // alternatively serialize via move 
+  // the string keys will not be copied in this case, but rather move into Bytes
+  b_move = Bytes::serialize(std::move(m));
 ```
 
 Please note that this serialization functionality is only provided for prototyping and demonstration purposes and, as such, might be less efficient than custom-written serialization methods.
@@ -138,7 +142,7 @@ https://github.com/eclipse-zenoh/zenoh-cpp/blob/dev/1.0.0/examples/simple/univer
 
 ## Stream Handlers and Callbacks
 
-Prior to 1.0.0, stream handlers were only supported for `get`:
+Prior to 1.0.0, stream handlers were only supported for `get` :
 
 ```cpp
 // callback
@@ -187,21 +191,26 @@ auto replies = session.get(
   {.target = QueryTarget::Z_QUERY_TARGET_ALL}
 );
 // blocking
-for (auto [reply, alive] = replies.recv(); alive; std::tie(reply, alive) = replies.recv()) {
-  const auto& sample = reply.get_ok();
+for (auto res = replies.recv(); std::has_alternative<Reply>(res); res = replies.recv()) {
+  const auto& sample = std::get<Reply>(res).get_ok();
   std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
             << sample.get_payload().deserialize<std::string>() << "')\n";
 }
 // non-blocking
-for (auto [reply, alive] = replies.try_recv(); alive; std::tie(reply, alive) = replies.try_recv()) {
-  if (!reply) { // try_recv is non-blocking call, so may fail to return a reply if the Fifo buffer is empty
-    std::cout << ".";
+while (true) {
+  auto res = replies.try_recv();
+  if (std::has_alternative<Reply>(res)) {
+    const auto& sample = std::get<Reply>(res).get_ok();
+	  std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
+            << sample.get_payload().deserialize<std::string>() << "')\n";
+  } else if (std::get<channels::RecvError>(res) == channels::RecvError::Z_NODATA) {
+	  // try_recv is non-blocking call, so may fail to return a reply if the Fifo buffer is empty
+	  std::cout << ".";
     std::this_thread::sleep_for(1s);
     continue;
+  } else { // std::get<channels::RecvError>(res) == channels::RecvError::Z_DISCONNECTED
+	  break; // no more replies will arrive
   }
-  const auto& sample = reply.get_ok();
-  std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
-            << sample.get_payload().deserialize<std::string>() << "')\n";
 }
 std::cout << std::endl;
   
@@ -226,25 +235,32 @@ while (true) {
   std::this_thread::sleep_for(1s);
 }
 
+
 // stream handlers interface
 auto subscriber = session.declare_subscriber(keyexpr, channels::FifoChannel(16));
 const auto& messages = subscriber.handler();
-// blocking
-while (auto [sample, alive] = messages.recv(); alive; std::tie(reply, alive) = messages.recv()) {
-		// receive will block until there is at least one sample in the Fifo buffer
+//blocking
+for (auto res = messages.recv(); std::has_alternative<Sample>(res); res = messages.recv()) {
+		// recv will block until there is at least one sample in the Fifo buffer
 		// it will return an empty sample and alive=false once subscriber gets disconnected
+		const Sample& sample = std::get<Sample>(res);
     std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
               << sample.get_payload().deserialize<std::string>() << "')\n";
 }
 // non-blocking
-while (auto [sample, alive] = messages.try_recv(); alive; std::tie(reply, alive) = messages.try_recv()) {
-    if (!sample) { // try_recv is non-blocking call, so may fail to return a sample if the Fifo buffer is empty
-        std::cout << ".";
-        std::this_thread::sleep_for(1s);
-        continue;
-    }
-    std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
-              << sample.get_payload().deserialize<std::string>() << "')\n";
+while (true) {
+  auto res = messages.try_recv();
+  if (std::has_alternative<Sample>(res)) {
+    const auto& sample = std::get<Sample>(res);
+	  std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
+            << sample.get_payload().deserialize<std::string>() << "')\n";
+  } else if (std::get<channels::RecvError>(res) == channels::RecvError::Z_NODATA) {
+	  // try_recv is non-blocking call, so may fail to return a sample if the Fifo buffer is empty
+	  std::cout << ".";
+    std::this_thread::sleep_for(1s);
+  } else { // std::get<channels::RecvError>(res) == channels::RecvError::Z_DISCONNECTED
+	  break; // no more samples will arrive
+  }
 }
 std::cout << std::endl;
 
@@ -288,3 +304,60 @@ data_handler(const Sample &sample) {
 ```
 
 In 1.0.0, attachment handling was greatly simplified. It is now represented as `Bytes` (i.e. the same class we use to represent serialized data) and can thus contain data in any format.
+
+
+```c++
+// publish a message with attachment
+auto session = Session::open(std::move(config));
+auto pub = session.declare_publisher(KeyExpr(keyexpr));
+// send some key-value pairs as attachment
+// allocate attachment map
+std::unordered_map<std::string, std::string> attachment_map = {
+  {"source", "C++"},
+  {"index", "0"}
+};    
+pub.put(
+  Bytes::serialize("my_payload"), 
+  {.encoding = Encoding("text/plain"), .attachment = std::move(attachment_map)}
+);
+
+
+// subscriber callback function receiving a message with attachment
+void data_handler(const Sample &sample) {
+  std::cout << ">> [Subscriber] Received ('"
+            << sample.get_keyexpr().as_string_view() 
+            << "' : '" 
+            << sample.get_payload().deserialize<std::string>()
+            << "')\n";
+  auto attachment = sample.get_attachment();
+  if (!attachment.has_value()) return;
+  // we expect attachment in the form of key-value pairs
+  auto attachment_deserialized = attachment->get().deserialize<std::unordered_map<std::string, std::string>>();
+  for (auto&& [key, value]: attachment) {
+    std::cout << "   attachment: " << key << ": '" << value << "'\n";
+  }
+};
+```
+
+
+# Optional Parameters
+
+Handling for optional parameters for Zenoh functions was simplified. There are no more getters/setters and all fields of option structures are public. Also option arguments are automatically set to their default values, and if your compiler has support for designated initializers, it is sufficient to only set the fields that are needed to be different from default ones.
+
+Prior to 1.0.0:
+
+```cpp
+GetOptions opts;
+opts.set_target(Z_QUERY_TARGET_ALL);
+opts.set_value(value);
+
+...
+
+session.get(keyexpr, "", {on_reply, on_done}, opts);
+```
+
+In 1.0.0:
+
+```cpp
+session.get(keyexpr, "", on_reply, on_done, {.target = Z_QUERY_TARGET_ALL, .payload = Bytes::serialize(value)});
+```
