@@ -46,7 +46,7 @@ with zenoh.open(zenoh.Config()) as session:
 
 ### Encoding
 
-`zenoh.Value` has been split in `zenoh.ZBytes` and `zenoh.Encoding`. Put and other operations now require a `ZBytes` payload, and accept an optional `Encoding`; there is no more auto-encoding from the payload type.
+`zenoh.Value` has been split into `zenoh.ZBytes` and `zenoh.Encoding`. Put and other operations now require a `ZBytes` payload, and accept an optional `Encoding`; the encoding is no longer automatically deduced from the payload type.
 
 ```python
 session.put("my/keyexpr", 42) # default encoding `zenoh/bytes`session.put("my/keyexpr", 42, encoding=zenoh.Encoding.ZENOH_INT64)
