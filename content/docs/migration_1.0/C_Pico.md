@@ -644,7 +644,7 @@ strncmp(target, z_string_data(z_loan(keystr)), z_string_len(z_loan(keystr)));
 
 ## Accessor Pattern
 
-In 1.0.0, we want to make our API more consistent and convenient. We use opaque types to wrap the raw Zenoh data from the Rust library in zenoh-c. With this change, we introduce the accessor pattern to read the field of a struct.
+In 1.0.0, we have made our API more convenient and consistent to use across languages. We use opaque types to wrap the raw Zenoh data from the Rust library in zenoh-c. With this change, we introduce the accessor pattern to read the field of a struct.
 
 For instance, to get the attachment of a sample in zenoh-c,
 
@@ -716,7 +716,7 @@ NOTE: We don't offer a deep copy API. However, users can create a deep copy by d
 
 ### Shared Memory
 
-Shared Memory subsystem is heavily reworked and improved. The key functionality changes:
+Shared Memory subsystem has been heavily reworked and improved. The key functionality changes are:
 
 - Buffer reference counting is now robust across abnormal process termination
 - Support plugging of user-defined SHM implementations
@@ -726,7 +726,7 @@ Shared Memory subsystem is heavily reworked and improved. The key functionality 
 - Buffer write access
 - Rich buffer allocation interface
 
-Please note that SHM API is still unstable and will be improved in the future.
+⚠️ Please note that SHM API is still unstable and will be improved in the future.
 
 **SharedMemoryManager → SHMProvider + SHMProviderBackend**
 
@@ -752,7 +752,7 @@ zc_owned_shm_manager_t manager = zc_shm_manager_new(z_loan(s), idstr, size);
 // size to dedicate to SHM provider
 const size_t total_size = 1024 * 1024;
 
-// Difference: now SHM provider respects alignment
+// Difference: SHM provider now respects alignment
 z_alloc_alignment_t alignment = {0};
 z_owned_memory_layout_t layout;
 z_memory_layout_new(&layout, total_size, alignment);
@@ -787,7 +787,7 @@ if (!z_check(shmbuf)) {
 ```c
 // buffer size and alignment
 const size_t alloc_size = 1024;
-// Diffrence: now allocation respects alignment
+// Diffrence: allocation now respects alignment
 z_alloc_alignment_t alignment = {0};
 
 // allocate SHM buffer
