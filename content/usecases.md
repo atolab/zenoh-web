@@ -1,5 +1,5 @@
 ---
-title: "Zenoh Use cases"
+title: "Zenoh Use Cases"
 menu: 
   usecases
 ---
@@ -10,7 +10,7 @@ menu:
         <h3>
         Controlling a robot using Zenoh
         </h3>
-        <iframe src="https://drive.google.com/file/d/1u4fj1D1qd6MoAK0Ht9oCs2TrZEXWqXYG/preview" width="320" height="240" allow="autoplay"></iframe>
+        <iframe src="../img/blog-dragonbot/DragonBotOne.gif" width="320" height="240" allow="autoplay"></iframe>
     </div>
     <div class="col">
         <h3>
