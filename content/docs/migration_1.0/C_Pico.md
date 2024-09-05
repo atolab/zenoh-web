@@ -519,7 +519,7 @@ Encoding handling has been reworked: before one would use an enum id and a strin
 
 There is a set of predefined constant encodings subject to some wire-level optimization. To benefit from this, the provided encoding should follow the format: `"<predefined constant>;<optional additional data>"`
 
-All predefined constants provided can be found in here [Encoding Variants](https://github.com/eclipse-zenoh/zenoh-pico/blob/main/src/api/api.c#L218-L285)
+All predefined constants provided can be found in here [Encoding Variants](https://github.com/eclipse-zenoh/zenoh-pico/blob/10ddde219be41fc0b43bad4d19f571625a27c161/src/api/api.c#L218-L285)
 
 
 - Zenoh 0.11.x
