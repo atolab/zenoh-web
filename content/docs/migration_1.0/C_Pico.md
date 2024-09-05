@@ -44,7 +44,7 @@ The owned objects have a “null” state.
 - The `z_drop` releases the resources of the owned object and sets it to the null state to avoid double drop. Calling `z_drop` on an object in a null state is safe and does nothing.
 - Calling z_drop on an uninitialized object is invalid.
 
-(TODO) Owned types support move semantics, which will consume the owned object and turn it into a moved object, see next section.
+Owned types support move semantics, which will consume the owned object and turn it into a moved object, see next section.
 
 ### Moved types
 
