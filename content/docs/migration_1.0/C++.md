@@ -175,7 +175,7 @@ for (bool call_success = recv(reply); !call_success || reply.check(); call_succe
 
 In 1.0.0, `Subscriber`, `Queryable` and `get` can now use either a callable object or a stream handler. Currently, Zenoh provides 2 types of handlers:
 
-- `FifoHandler` - serving messages in Fifo order, *dropping new messages* once full.
+- `FifoHandler` - serving messages in Fifo order, *blocking* once full.
 - `RingHandler` - serving messages in Fifo order, *dropping older messages* once full to make room for new ones.
 
 ```cpp
