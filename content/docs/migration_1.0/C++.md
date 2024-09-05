@@ -22,7 +22,7 @@ Now that the *amuse bouche* is served,  let's get into the main course!
 
 ## Error Handling
 
-In version 0.11.0 all Zenoh call failures were handled by either returning a `bool` value indicating success or failure (and probably returning a error code) or returning an `std::variant<ReturnType, ErrorMessage>`. For instance:
+In version 0.11.0 all Zenoh call failures were handled by either returning a `bool` value indicating success or failure (and probably returning an error code) or returning an `std::variant<ReturnType, ErrorMessage>`. For instance:
 
 ```cpp
 std::variant<z::Config, ErrorMessage> config_client(const z::StrArrayView& peers);
