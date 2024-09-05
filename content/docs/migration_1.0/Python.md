@@ -8,7 +8,7 @@ menu:
 
 ## Highlights
 
-The library has been fully rewritten to use only Rust. It should make no difference for users, except for a significant performance improvement, of up to x5.
+The library has been fully rewritten to use only Rust. It should make no difference for users, except for a significant performance improvement.
 
 The API has also been reworked to feel more pythonic, using notably context managers.
 

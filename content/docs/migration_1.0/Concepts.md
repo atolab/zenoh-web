@@ -83,7 +83,7 @@ This means that if the language bindings are using `rustc` version `1.75`, the p
 - Be built with the same Zenoh Commit
 - The plugin `Cargo.lock` have had its packages synced with the Zenoh `Cargo.lock`  
 
-The reason behind this strict set of requirements is due to Rust making no gaurentees regarding data layout in memory.  
+The reason behind this strict set of requirements is due to Rust making no guarantees regarding data layout in memory.  
 This means between compiler versions, the representation may change based on optimizations.  
 More on this topic at here : [Rust:Type-Layout](https://doc.rust-lang.org/reference/type-layout.html#representations)
 
