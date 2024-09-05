@@ -14,9 +14,9 @@ This guide is here to ease the transition to Zenoh 1.0.0 for our users!
 
 ## Value is gone, long live ZBytes 
 We have replaced `Value` with `ZBytes` and `Encoding`.  
-`ZBytes` is the type core to data representation in Zenoh, all API's have be reworked to accept `ZBytes` or something that can be converted into a `ZBytes`.  
+`ZBytes` is the type core to data representation in Zenoh, all API's have been reworked to accept `ZBytes` or something that can be converted into a `ZBytes`.  
 We have added a number of conversion implementations for language primitives as well as methods to seamlessly allow user defined structs to be serialized into `ZBytes`.  
-`Sample`'s payloads are now `ZBytes`.  `Publisher`, `Queryable` and `Subscriber` now expect `ZBytes` for all their interfaces. The [Attachment](#attachment) API also now accepts a `ZBytes`.
+`Sample`'s payloads are now `ZBytes`.  `Publisher`, `Queryable` and `Subscriber` now expect `ZBytes` for all their interfaces. The [Attachment](#attachment) API also now accepts `ZBytes`.
 
 <!-- [key expressions](#key-expression) -->
 Each Language bindings will have their own specifics of Serializing and Deserializing, but for the most part it will involve implementing a serialize / deserialize function for your datatype or make use of auto-generated conversions for composite types.
@@ -52,12 +52,12 @@ The only way to access struct values is to use the getter function associated wi
 The concept of a pull subscriber no longer exists in Zenoh.
 However, when creating a `Subscriber`, it may be the case that developers only care about the latest data and want to discard the oldest data. 
 The `RingChannel` can be used to get a similar behaviour. [Rust Example](https://github.com/eclipse-zenoh/zenoh/blob/main/examples/examples/z_pull.rs)
-This contrasts with the `FIFOChannel`, the default channel type used internally in Subscribers, which drops new message once its buffer is full.
+This contrasts with the `FIFOChannel`, the default channel type used internally in Subscribers, which drops new messages once its buffer is full.
 You can take a look at examples of usage in any language’s examples/z_pull.x
 
 ## Timestamps
 Previously we exposed a function to generate timestamps outside of a session.
-Due, in part, to our efforts to improve the storage replication logic, users will now have to generate timestamps from a session, with the timestamp inheriting the `ZenohID` of the session.
+Due to our efforts to improve the storage replication logic, users will now have to generate timestamps from a session, with the timestamp inheriting the `ZenohID` of the session.
 
 This will affect user-created plugins and applications that need to generate timestamps in their Storage and sending of data.  
 ⚠️ Note: Timestamps are important for Storage Alignment (a.k.a. Replication). Data stored in Data bases must include a Timestamp to be properly aligned across Data Stores by Zenoh. 
