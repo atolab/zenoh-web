@@ -51,7 +51,7 @@ The only way to access struct values is to use the getter function associated wi
 
 The concept of a pull subscriber no longer exists in Zenoh.
 However, when creating a `Subscriber`, it may be the case that developers only care about the latest data and want to discard the oldest data. 
-The `RingChannel` can be used to get a similar behaviour.
+The `RingChannel` can be used to get a similar behaviour. [Rust Example](https://github.com/eclipse-zenoh/zenoh/blob/main/examples/examples/z_pull.rs)
 This contrasts with the `FIFOChannel`, the default channel type used internally in Subscribers, which drops new message once its buffer is full.
 You can take a look at examples of usage in any language’s examples/z_pull.x
 

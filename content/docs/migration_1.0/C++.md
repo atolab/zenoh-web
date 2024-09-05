@@ -22,7 +22,7 @@ Now that the *amuse bouche* is served,  let's get into the main course!
 
 ## Error Handling
 
-Prior to 1.0.0, all Zenoh call failures were handled by either returning a `bool` value indicating success or failure (and probably returning a error code) or returning an `std::variant<ReturnType, ErrorMessage>`. For instance:
+In version 0.11.0 all Zenoh call failures were handled by either returning a `bool` value indicating success or failure (and probably returning a error code) or returning an `std::variant<ReturnType, ErrorMessage>`. For instance:
 
 ```cpp
 std::variant<z::Config, ErrorMessage> config_client(const z::StrArrayView& peers);
@@ -67,7 +67,7 @@ All returned and `std::move`'d-in objects are guaranteed to be left in an “emp
 
 ## Serialization  and Deserialization
 
-Prior to 1.0.0, it was only possible to send `std::string`/ `const char*` or `std::vector<uint8_t>` / `uint8_t*` using the `BytesView` class:
+In version 0.11.0 it was only possible to send `std::string`/ `const char*` or `std::vector<uint8_t>` / `uint8_t*` using the `BytesView` class:
 
 ```cpp
 publisher.put("my_payload");
@@ -142,7 +142,7 @@ https://github.com/eclipse-zenoh/zenoh-cpp/blob/dev/1.0.0/examples/simple/univer
 
 ## Stream Handlers and Callbacks
 
-Prior to 1.0.0, stream handlers were only supported for `get` :
+In version 0.11.0 stream handlers were only supported for `get` :
 
 ```cpp
 // callback
@@ -268,7 +268,7 @@ std::cout << std::endl;
 
 ## Attachment
 
-Prior to 1.0.0, an attachment could only represent a set of key-value pairs and had a somewhat complicated interface:
+In version 0.11.0 an attachment could only represent a set of key-value pairs and had a somewhat complicated interface:
 
 ```cpp
 // publish message with attachment
@@ -344,7 +344,7 @@ void data_handler(const Sample &sample) {
 
 Handling for optional parameters for Zenoh functions was simplified. There are no more getters/setters and all fields of option structures are public. Also option arguments are automatically set to their default values, and if your compiler has support for designated initializers, it is sufficient to only set the fields that are needed to be different from default ones.
 
-Prior to 1.0.0:
+In version 0.11.0:
 
 ```cpp
 GetOptions opts;

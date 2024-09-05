@@ -235,7 +235,7 @@ void send_static_data(const z_loaned_publisher_t *publisher) {
 
 ## Channel Handlers and Callbacks
 
-Prior to 1.0.0 Channel handlers were only supported for `z_get`and `z_owned_queryable_t`:
+In version 0.11.0 Channel handlers were only supported for `z_get`and `z_owned_queryable_t`:
 
 ```c
 // callback
@@ -385,7 +385,7 @@ Since the callback in 1.0.0. carries a loaned sample whenever it is triggered, w
 
 ## Attachment
 
-Prior to 1.0.0, attachments were a separate type and could only be a set of key-value pairs:
+In 0.11.0, attachments were a separate type and could only be a set of key-value pairs:
 
 ```c
 // publish message with attachment
