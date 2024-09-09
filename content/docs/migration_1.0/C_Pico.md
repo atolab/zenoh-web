@@ -84,7 +84,9 @@ void reply_handler(const z_loaned_reply_t *reply, void *ctx) {
 }
 ```
 
-Certain loaned types can be copied into owned, using the `z_clone` function:
+Certain loaned types can be copied into owned, using the `z_clone` function.
+All objects that can be cloned will have a function with the signature `z_xxx_clone`. 
+Please consult the docs of each type to determine if it can be copied into owned
 
 ```c
 void reply_handler(const z_loaned_reply_t *reply, void *ctx) {
