@@ -6,4 +6,4 @@ menu:
     parent: migration_1.0
 ---
 
-# TODO
+The Java API is still a work in progress. This migration guide will be updated as soon as the new Zenoh-Java API is released! 
