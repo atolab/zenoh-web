@@ -609,7 +609,7 @@ z_owned_str_t keystr = z_keyexpr_to_string(z_loan(z_owned_keyexpr_t));
 // keyexpr => const char *
 z_loan(keystr)
 
-// const chat* => keystr
+// const char* => keystr
 z_owned_keyexpr_t keyexpr = z_keyexpr_new(const char*)
 
 ```
@@ -624,7 +624,7 @@ z_keyexpr_as_view_string(z_loan(z_owned_keyexpr_t), &keystr);
 // z_view_string_t  => const char*
 z_string_data(z_loan(keystr))
 
-// const chat* => keystr
+// const char* => keystr
 z_owned_keyexpr_t keyexpr;
 z_error_t res = z_keyexpr_from_string(&keyexpr, const char *);
 
