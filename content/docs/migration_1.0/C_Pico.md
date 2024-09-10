@@ -56,7 +56,7 @@ Each owned type now has a corresponding `z_loaned_xxx_t` type, which is obtained
 
  `z_loan` or `z_loan_mut` on it, or eventually received from Zenoh functions / callbacks.
 
-It is no longer possible to directly access the fields of an owned object, the accessor functions on the loaned objects should instead be used.
+It is no longer possible to directly access the fields of an owned object that has been loaned, the accessor functions on the loaned objects should instead be used.
 
  Here is a quick example:
 
