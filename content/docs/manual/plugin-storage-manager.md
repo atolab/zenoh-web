@@ -24,7 +24,7 @@ When defining volumes, there are multiple ways to inform it of which backend it 
 - With the `__path__` option, you may specify a list of absolute paths. The storage manager will then load the first file to be found at one of these paths. Specifying this option disables name-based lookup completely.
 - Using neither of these options will result in the same name-based lookup as with the `backend` option, using the volume's name.
 
-This name-based lookup consists in searching the configured `backends_search_dirs` for a `zbackend_<name>` dynamic library file; the exact searched filenames are platform-specific:
+This name-based lookup consists in searching the configured `backend_search_dirs` for a `zbackend_<name>` dynamic library file; the exact searched filenames are platform-specific:
  - on Unix/Linux: `libzbackend_<name>.so`
  - on macOS: `libzbackend_<name>.dylib`
  - on Windows: `zbackend_<name>.dll`
@@ -38,7 +38,7 @@ The main schema is as follows:
 ```typescript
 {
   // Search directories when backends are requested by name
-  backends_search_dirs?: string | string[], 
+  backend_search_dirs?: string | string[], 
   // The list of volumes that must be created
   volumes: {
     // All volumes on a Zenoh node must have unique names
