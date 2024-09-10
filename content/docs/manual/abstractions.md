@@ -179,8 +179,8 @@ Since there exist many ways to implement the storing part of the process, the `s
 
 ## Admin space
 
-The key space of Zenoh dedicate to administer a Zenoh router and its plugins.
-It is accessible via regular get/put on Zenoh, under the `@/router/<router-id>` prefix, where
+The key space of Zenoh dedicated to administering a Zenoh router and its plugins.
+It is accessible via regular GET/PUT on Zenoh, under the `@/router/<router-id>` prefix, where
 **`<router-id>`** is the UUID of a Zenoh router.
 
 When using the REST API, you can replace the `<router-id>` with the **`local`** keyword,
