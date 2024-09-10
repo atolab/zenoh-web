@@ -70,7 +70,7 @@ val encoding = Encoding(id = 123, suffix = "example suffix")
 ```
 ## Session-managed declarations
 
-Up until 0.11.0, it was up to the user to keep track of their variable declarations to keep them alive, because once the variable declarations were garbage collected, the declarations was closed. This was because each Kotlin variable declaration is associated with a native Rust instance, and in order to avoid leaking the memory of that Rust instance, it was necessary to free it upon dropping the declaration instance. However, this behavior could be counterintuitive, as users were expecting the declaration to keep running despite losing track of the reference to it.
+Up until 0.11.0, it was up to the user to keep track of their variable declarations to keep them alive, because once the variable declarations were garbage collected, the declarations were closed. This was because each Kotlin variable declaration is associated with a native Rust instance, and in order to avoid leaking the memory of that Rust instance, it was necessary to free it upon dropping the declaration instance. However, this behavior could be counterintuitive, as users were expecting the declaration to keep running despite losing track of the reference to it.
 
 In this release we introduce a change in which any session declaration is internally associated to the session from which it was declared. Users may want to keep a reference to the declaration in case they want to undeclare it earlier before the session is closed, otherwise, the declaration is kept alive.
 
@@ -90,7 +90,6 @@ Therfore, when receiving a 'hello' message on `A/**` we would still see:
 >> Receiving sample on 'A/B/C': hello
 >> Receiving sample on 'A/C/D': hello
 ```
-
 since both declarations are still alive.
 
 Now the question is, for how long? What happens first, either when:
@@ -101,10 +100,10 @@ Now the question is, for how long? What happens first, either when:
 
 KeyExpr instances are not bound to a native key expression anymore, unless they are declared from a session. It is safe to drop the reference to the key expression instance, but the memory management associated to a key expression will differ:  
 - If the KeyExpr was not declared from a session, then the garbage collector simply claims back the memory.   
-- If it was declared from a session, then the session keeps track of it and frees the native memory upon closing the session.
+- If it was declared from a session, then the session keeps track of it and frees the native memory upon closing the session.  
 
-What's the difference between declaring or not a key expression?
-Declaring a key expression allows better performance, since the session is informed we intend to use a key expression repeatedly. We also associate a native key expression to a Kotlin key expression instance, avoiding copies.
+Declaring a KeyExpr on a session results in better performance, since the session is informed that we intend to use a key expression repeatedly.
+We also associate a native key expression to a Kotlin key expression instance, avoiding copies.
 
 ## Config loading
 
