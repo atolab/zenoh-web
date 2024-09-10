@@ -8,7 +8,7 @@ menu:
 
 # Kotlin API migration guide for 1.0.0
 
-The api has been extensively modified with the following goals in mind:
+The API has been extensively modified with the following goals in mind:
 - Enhancing the API to be more idiomatic to Kotlin.
 - Match the API rework done through the Rust Zenoh API.
 - Abstracting users from the underlying native mechanisms
@@ -17,7 +17,7 @@ The api has been extensively modified with the following goals in mind:
 
 Throughout the 0.11.0 API we were exposing builders, however we decided to replace all of them with the more Kotlin-idiomatic way of the default arguments.
 
-For instance:
+For instance in 0.11.0:
 
 ```kotlin
 session.put(keyExpr, value)
@@ -26,7 +26,7 @@ session.put(keyExpr, value)
   .res()
 ```
 
-would now turn into:
+Becomes the following in 1.0.0:
 ```kotlin
 session.put(keyExpr, 
   value, 
@@ -35,45 +35,42 @@ session.put(keyExpr,
 )
 ```
 
-_Notice that the `.res()` function is gone, now the functions behavior is more imperative, that is, when doing `session.put(...)` the put is launched immediately._ 
+_Notice that the `.res()` function has been removed. Now functions exposed by the API execute imediately, without the need of `.res()`. i.e. When doing `session.put(...)` the put is run immediately._ 
 
-This applies to all the builders being present on 0.11.0. Generally [^1] all the parameters present on each builder have now their corresponding argument available in the functions.
-
-[^1]: Some parameters have been either moved (e.g. `Reliability`) or removed (e.g. `SampleKind`).
+This applies to all the builders that were in 0.11.0. Generally all the parameters on each builder now have their corresponding argument available in the functions.
 
 ## Encoding rework
 
-The `Encoding` class has been modified. It previously had the signature
+The `Encoding` class has been modified. In 0.11.0. it had the signature
 ```kotlin
 class Encoding(val knownEncoding: KnownEncoding, val suffix: String = "")
 ```
-
 where `KnownEncoding` was an enum.
 
-When creating an instance, we'd have done:
+In 0.11.0. an encoding instance would be created as follows:
 ```kotlin
 val encoding = Encoding(knownEncoding = KnownEncoding.TEXT_JSON)
 ```
 
-Instead, on 1.0.0, we have provided the following changes:
+In 1.0.0. we have implemented the following changes:
 - `KnownEncoding` enum is removed, instead we provide static `Encoding` instances containing an ID and a description.
 - Custom encodings can be created
-- Also the list of provided encodings has been expanded.
+- The list of pre-defined encodings has been expanded.
 
-Therefore, the previous example would instead be now:
+In 1.0.0. the previous example would instead now become:
 
 ```kotlin
 val encoding = Encoding.TEXT_JSON
 ```
 
-Custom encodings can be created with
+Custom encodings can be created by specifying an `id` and `suffix` string:
 
 ```kotlin
 val encoding = Encoding(id = 123, suffix = "example suffix")
 ```
 ## Session-managed declarations
 
-Up until 0.11.0, it was up to the user to keep track of their declarations to keep them alive, since when they were garbage collected, the declaration was closed. This had a reason to be, since each declaration is associated to a native instance, in order to avoid a native memory leak, it was necessary to free it upon dropping of the declaration instance. However, this behavior could be counterintuitive, sometimes, users were expecting the declaration to keep running despite loosing track of the reference to it.
+Up until 0.11.0, it was up to the user to keep track of their variable declarations to keep them alive, because once the variable declarations were garbage collected, the declarations was closed. This was because each Kotlin variable declaration is associated with a native Rust instance, and in order to avoid leaking the memory of that Rust instance, it was necessary to free it upon dropping the declaration instance. However, this behavior could be counterintuitive, as users were expecting the declaration to keep running despite losing track of the reference to it.
 
 In this release we introduce a change in which any session declaration is internally associated to the session from which it was declared. Users may want to keep a reference to the declaration in case they want to undeclare it earlier before the session is closed, otherwise, the declaration is kept alive.
 
@@ -87,7 +84,7 @@ session.declareSubscriber("A/C/D".intoKeyExpr(),
   callback = { sample -> println("Receiving sample on 'A/C/D': ${sample.payload}") }) // No variable is associated to the declared session, on 0.11.0 it would have been instantanely dropped
 ```
 
-Therfore, when doing a receiving a 'hello' message on `A/**` we'd still see:
+Therfore, when receiving a 'hello' message on `A/**` we would still see:
 
 ```
 >> Receiving sample on 'A/B/C': hello
@@ -100,13 +97,14 @@ Now the question is, for how long? What happens first, either when:
 - you call `undeclare()` or `close()` to the declaration 
 - the session is closed, then all the associated declarations are automatically undeclared.
 
-## KeyExpr rework
+## Key Expression rework
 
-KeyExpr instances are not bound to a native key expression anymore, unless they are declared from a session. In any case, it's safe to drop the reference to the key expression instance, but the memory management associated to a key expression will differ: if it's not been declared from a session, then the garbage collector simply claims back the memory. If it was declared, then the session keeps track of it and frees the native memory upon closing the session.
+KeyExpr instances are not bound to a native key expression anymore, unless they are declared from a session. It is safe to drop the reference to the key expression instance, but the memory management associated to a key expression will differ:  
+- If the KeyExpr was not declared from a session, then the garbage collector simply claims back the memory.   
+- If it was declared from a session, then the session keeps track of it and frees the native memory upon closing the session.
 
 What's the difference between declaring or not a key expression?
 Declaring a key expression allows better performance, since the session is informed we intend to use a key expression repeatedly. We also associate a native key expression to a Kotlin key expression instance, avoiding copies.
-
 
 ## Config loading
 
@@ -119,7 +117,7 @@ Session.open(config).onSuccess {
 }
 ```
 
-For this, the `Config` class has been modified
+The `Config` class has been modified
 
 - `Config.default()`: returns the default config
 - `Config.fromFile(file: File): Result<Config>`: allows to load a config file.
@@ -133,32 +131,32 @@ In case of failure loading the config, a `Result.Error` is returned.
 
 ## Reliability
 
-The `Reliability` config parameter used on when declaring a subscriber, has been moved. It now must be specified when declaring a `Publisher` or when performing a `Put` or a `Delete` operaton.
+The `Reliability` config parameter used when declaring a `Subscriber` has been moved. It now must be specified when declaring a `Publisher` or when performing a `Put` or a `Delete` operaton.
 
 ## ZBytes serialization / deserialization & replacement of Value
 
 We have created a new abstraction with the name of `ZBytes`. This class represents the bytes received through the Zenoh network. This new approach has the following implications:
 
-- `Attachment` class replacement.
-- `Value` removal (instead use `ZBytes` and `Encoding`).
+- `Attachment` class is replaced by `ZBytes`.
+- `Value` is replaced by the combination of `ZBytes` and `Encoding`.
 - Replacing `ByteArray` to represent payloads
 
-Also, along with the `ZBytes` class, commes along the concepts of Serialization and Deserialization.
+With `ZBytes` we have also introduced a Serialization and Deserialization for conveinent conversion between `ZBytes` and Kotlin types.
 
 ### Serialization
 
-We can serialize certain types into a ZBytes instance, that is, converting the data into bytes processed by the zenoh network:
+We can serialize primitive types into a `ZBytes` instance, that is, converting the data into bytes processed by the zenoh network:
 
-#### Raw types
+#### Primitive types
 
-The following raw types support serialization:
+The following types support serialization:
 
- * Numeric: Byte, Short, Int, Long, Float and Double.
- * String
- * ByteArray
+ * Numeric: `Byte`, `Short`, `Int`, `Long`, `Float` and `Double`.
+ * `String`
+ * `ByteArray`
 
- For the raw types, there are basically three ways to serialize them into a ZBytes, for instance let's suppose
- we want to serialize an `Int`, we could achieve it by:
+ For the primitive types, there are three ways to serialize them into a `ZBytes`, for instance let's suppose
+ we want to serialize an `Int`:
 
  * using the `into()` syntax:
   ```kotlin
@@ -177,14 +175,15 @@ The following raw types support serialization:
  val exampleInt: Int = 256
  val zbytes: ZBytes = ZBytes.serialize<Int>(exampleInt).getOrThrow()
  ```
- This approach works as well for the other mentioned types.
+ This approach works as well for the other aforementioned types.
 
- The difference using `into()` or `from()`, from using `serialize`, is that `serialize` returns a Result, meaning `into()` and `from()` guarantee the successful result.
+ Using `into()` or `from()` guarantees successful serialization for implemented types.  
+ Using `serialize` requires a generic parameter, and returns a Result, i.e. it can fail based in the type passed in and contents of the input parameter.
 
  #### Lists
 
  Lists are supported, but they must be either:
- - List of `Number` (Byte, Short, Int, Long, Float or Double)
+ - List of `Number` : (`Byte`, `Short`, `Int`, `Long`, `Float`, `Double`)
  - List of `String`
  - List of `ByteArray`
  - List of `IntoZBytes`
@@ -197,7 +196,7 @@ The following raw types support serialization:
 
  #### Maps
 
- Maps are supported as well, with the restriction that their inner types must be either:
+ Maps are supported as well, with the restriction that their inner types must supported primitives:
  - `Number`
  - `String`
  - `ByteArray`
@@ -210,7 +209,7 @@ The following raw types support serialization:
 
  ### Deserialization
 
- #### Raw types
+ #### Primitive types
 
  * Numeric: `Byte`, `Short`, `Int`, `Long`, `Float` and `Double`
  * `String`
@@ -218,7 +217,7 @@ The following raw types support serialization:
 
  Example:
 
- For these raw types, you can use the functions `to<Type>`, that is
+ For these primitive types, you can use the functions `to<Type>`, that is
  - `toByte`
  - `toShort`
  - `toInt`
@@ -243,12 +242,12 @@ The following raw types support serialization:
 
  #### Lists
 
- Lists are supported, but they must be deserialized either into a:
- - List of `Number` (Byte, Short, Int, Long, Float or Double)
+ Lists are supported, but they must be deserialized into inner primitive types:
+ - List of `Number` (`Byte`, `Short`, `Int`, `Long`, `Float` or `Double`)
  - List of `String`
  - List of `ByteArray`
 
- To deserialize into a list, we need to use the deserialize syntax as follows:
+ To deserialize into a list, use the deserialize syntax as follows:
  ```kotlin
  val inputList = listOf("sample1", "sample2", "sample3")
  payload = ZBytes.serialize(inputList).getOrThrow()
@@ -257,7 +256,7 @@ The following raw types support serialization:
 
  #### Maps
 
- Maps are supported as well, with the restriction that their inner types must be either:
+ Maps are supported as well, with the restriction that their inner types must be one of the following:
  - `Number`
  - `String`
  - `ByteArray`
@@ -273,7 +272,7 @@ The following raw types support serialization:
 
  #### Serialization
 
- For custom serialization, classes to be serialized need to implement the `IntoZBytes` interface.
+ For a user defined class, the class must implement the `IntoZBytes` interface.
  For instance:
 
  ```kotlin
@@ -290,8 +289,7 @@ The following raw types support serialization:
  val serialization = ZBytes.serialize<Foo>(foo).getOrThrow()
  ```
 
- Implementing the `IntoZBytes` interface on a class enables the possibility of serializing lists and maps
- of that type, for instance:
+ Implementing the `IntoZBytes` interface on a class allows serializing lists and maps of that type, for instance:  
  ```kotlin
  val list = listOf(Foo("bar"), Foo("buz"), Foo("fizz"))
  val zbytes = ZBytes.serialize<List<Foo>>(list)
@@ -325,10 +323,9 @@ The following raw types support serialization:
  ##### Deserialization functions:
 
  As an alternative, the `deserialize` function admits an argument which by default is an emptyMap, consisting
- of a `Map<KType, KFunction1<ZBytes, Any>>` map. This allows to specify types in a map, associating
- functions for deserialization for each of the types in the map.
+ of a `Map<KType, KFunction1<ZBytes, Any>>` map.  
 
- For instance, let's stick to the previous implementation of our example Foo class.
+ For instance, the previous implementation of our example Foo class.
  We could provide directly the deserialization function as follows:
 
  ```kotlin
@@ -348,7 +345,7 @@ Previously on 0.11.0 we were exposing the following classes:
 - `Reply.Success`
 - `Reply.Error`
 
-We were having this interface (using the default channel receiver):
+In 0.11.0 executing a `get` on a session was done in the following way. 
 
 ```kotlin
 session.get(selector).res()
@@ -364,7 +361,7 @@ session.get(selector).res()
   }
 ```
 
-Now, the `Reply` instances contain a `result` attribute, which is of type `Result<Sample>`. Therefore, the updated code would be:
+Now, in 1.0.0, the `Reply` instances contain a `result` attribute, which is of type `Result<Sample>`. 
 
 ```kotlin
 session.get(selector, channel = Channel())
