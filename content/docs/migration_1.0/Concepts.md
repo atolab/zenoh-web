@@ -93,10 +93,11 @@ More on this topic at here : [Rust:Type-Layout](https://doc.rust-lang.org/refere
 
 Loading plugins is achieved by enabling the `plugins_loading` section in config file, with the members `enabled` set to true, and specifying the `search_dirs` for the plugins. 
 
-Directories are specified as object with fields `kind` and `value` is accepted.  
+Directories are specified as an object with fields `kind` and `value`.  
 1. If `kind` is `current_exe_parent`, then the parent of the current executable's directory is searched and `value` should be `null`.
     In Bash notation, `{ "kind": "current_exe_parent" }` equals `$(dirname $(which zenohd))` while `"."` equals `$PWD`.
-2. If `kind` is `path`, then `value` is interpreted as a filesystem path. Simply supplying a string instead of a object is equivalent to this.  
+2. If `kind` is `"path"`, then `value` is interpreted as a filesystem path, i.e. `{ "kind": "path" , "value": "path/to/plugin/dir"}`.  
+Simply supplying a string instead of an object is equivalent to this.  
 If `enabled: true` and `search_dirs` is not specified then `search_dirs` falls back to the default value of: 
 `".:~/.zenoh/lib:/opt/homebrew/lib:/usr/local/lib:/usr/lib”` 
 
