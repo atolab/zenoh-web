@@ -36,13 +36,13 @@ If a plugin is added to the configuration during runtime (for example through th
 
 The configuration has 2 fields that is related to plugins:
 * `plugins`, where you may specify which plugins you require, as well as provide configuration for them.
-* `plugin_search_dirs`, where you may specify a list of directories where `zenohd` should look for the specified plugins.
+* `plugins_search_dirs`, where you may specify a list of directories where `zenohd` should look for the specified plugins.
 
 <!-- Plugins can no longer add CLI arguments to those of `zenohd`. Instead, they are expected to obtain the information they need to run through the new configuration infrastructure.  
 The `--plugin...` arguments have also seen their purpose slightly changed:
 * `--plugin-nolookup` no longer exists, as this is now the normal behaviour of `zenohd`.
 * `--plugin-search-dir` now replaces the search directories specified through configuration.
-* `--plugin [VALUE]` now inserts a plugin into the configuration. If VALUE is a path, it will be requested by path. Otherwise, it will be requested by name. When a plugin is requested by `<name>`, `zenohd` will look for the system-appropriate `zplugin_<name>` dynamic library file within the `plugin_search_dirs`. -->
+* `--plugin [VALUE]` now inserts a plugin into the configuration. If VALUE is a path, it will be requested by path. Otherwise, it will be requested by name. When a plugin is requested by `<name>`, `zenohd` will look for the system-appropriate `zplugin_<name>` dynamic library file within the `plugins_search_dirs`. -->
 
 ### The `plugins` configuration field
 This field may contain a dictionary, where each key is the configured plugin's name, and the associated value is a dictionary holding its configuration.
