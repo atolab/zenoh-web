@@ -3,7 +3,7 @@ title: "Migrating from Zenoh-Pico v0.5.x to Zenoh-Pico v0.6.x"
 weight : 5600
 menu:
   docs:
-    parent: migration
+    parent: migration_0.5_to_0.6
 ---
 
 ## General considerations about the new Zenoh-Pico v0.6.x API

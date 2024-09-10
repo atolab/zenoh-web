@@ -3,7 +3,7 @@ title: "Migrating from Zenoh-C to Zenoh-Pico (and vice-versa)"
 weight : 5700
 menu:
   docs:
-    parent: migration
+    parent: migration_0.5_to_0.6
 ---
 
 Both Zenoh-C and Zenoh-Pico APIs offer a C client API for the zenoh protocol, thus this release took an extra step to make Zenoh-C code to be compatible with Zenoh-Pico code (and vice-versa). Such approach aids users to easily migrate its Zenoh-based code to microcontrollers and embedded systems.
