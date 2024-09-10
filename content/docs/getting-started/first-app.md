@@ -48,8 +48,8 @@ Now we need a subscriber, `z_subscriber.py` that can receive the measurements:
 import zenoh, time
 
 def listener(sample):
-    print(f"Received {sample.kind} ('{sample.key_expr}': '{sample.payload.decode('utf-8')}')")
-
+    print(f"Received {sample.kind} ('{sample.key_expr}': '{sample.payload.deserialize(str)}')")
+    
 if __name__ == "__main__":
     session = zenoh.open()
     sub = session.declare_subscriber('myhome/kitchen/temp', listener)
@@ -108,14 +108,15 @@ import zenoh
 
 if __name__ == "__main__":
     session = zenoh.open()
-    replies = session.get('myhome/kitchen/temp', zenoh.ListCollector())
-    for reply in replies():
+    replies = session.get('myhome/kitchen/temp')
+    for reply in replies:
         try:
             print("Received ('{}': '{}')"
-                .format(reply.ok.key_expr, reply.ok.payload.decode("utf-8")))
+                .format(reply.ok.key_expr, reply.ok.payload.deserialize(str)))
         except:
             print("Received (ERROR: '{}')"
-                .format(reply.err.payload.decode("utf-8")))
+                .format(reply.err.payload.decode(str)))
+
 session.close()
 ```
 ## Other examples

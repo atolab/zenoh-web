@@ -91,68 +91,52 @@ $ zenohd --help
 You should see the following output on your console:
 
 ```text
-The Zenoh router v0.6.0-beta.X
+2024-08-12T13:27:29.724708Z  INFO main ThreadId(01) zenohd: zenohd v0.11.0-dev-965-g764be602d built with rustc 1.75.0 (82e1608df 2023-12-21)
+The zenoh router
 
-USAGE:
-    zenohd [OPTIONS]
+Usage: zenohd [OPTIONS]
 
-OPTIONS:
-    -c, --config [<FILE>...]
-            The configuration file. Currently, this file must be a valid JSON5 or YAML file.
+Options:
+  -c, --config <PATH>
+          The configuration file. Currently, this file must be a valid JSON5 or YAML file
 
-        --cfg <KEY:VALUE>
-            Allows arbitrary configuration changes as column-separated KEY:VALUE pairs, where:
-              - KEY must be a valid config path.
-              - VALUE must be a valid JSON5 string that can be deserialized to the expected type for
-            the KEY field.
-            Examples:
-            --cfg='startup/subscribe:["demo/**"]'
-            --cfg='plugins/storage_manager/storages/demo:{key_expr:"demo/example/**",volume:"memory"}'
+  -l, --listen <ENDPOINT>
+          Locators on which this router will listen for incoming sessions. Repeat this option to open several listeners
 
-    -e, --connect [<ENDPOINT>...]
-            A peer locator this router will try to connect to.
-            Repeat this option to connect to several peers.
+  -e, --connect <ENDPOINT>
+          A peer locator this router will try to connect to. Repeat this option to connect to several peers
 
-    -h, --help
-            Print help information
+  -i, --id <ID>
+          The identifier (as an hexadecimal string, with odd number of chars - e.g.: A0B23...) that zenohd must use. If not set, a random unsigned 128bit integer will be used. WARNING: this identifier must be unique in the system and must be 16 bytes maximum (32 chars)!
 
-    -i, --id [<HEX_STRING>]
-            The identifier (as an hexadecimal string, with odd number of chars - e.g.: 0A0B23...)
-            that zenohd must use. If not set, a random UUIDv4 will be used.
-            WARNING: this identifier must be unique in the system and must be 16 bytes maximum (32
-            chars)!
+  -P, --plugin <PLUGIN>
+          A plugin that MUST be loaded. You can give just the name of the plugin, zenohd will search for a library named 'libzenoh_plugin_\<name\>.so' (exact name depending the OS). Or you can give such a string: "\<plugin_name\>:\<library_path\>" Repeat this option to load several plugins. If loading failed, zenohd will exit
 
-    -l, --listen [<ENDPOINT>...]
-            A locator on which this router will listen for incoming sessions.
-            Repeat this option to open several listeners.
+      --plugin-search-dir <PATH>
+          Directory where to search for plugins libraries to load. Repeat this option to specify several search directories
 
-        --no-multicast-scouting
-            By default zenohd replies to multicast scouting messages for being discovered by peers
-            and clients. This option disables this feature.
+      --no-timestamp
+          By default zenohd adds a HLC-generated Timestamp to each routed Data if there isn't already one. This option disables this feature
 
-        --no-timestamp
-            By default zenohd adds a HLC-generated Timestamp to each routed Data if there isn't
-            already one. This option disables this feature.
+      --no-multicast-scouting
+          By default zenohd replies to multicast scouting messages for being discovered by peers and clients. This option disables this feature
 
-    -P, --plugin [<PLUGIN>...]
-            A plugin that MUST be loaded. You can give just the name of the plugin, zenohd will
-            search for a library named 'libzplugin_<name>.so' (exact name depending the OS). Or you
-            can give such a string: "<plugin_name>:<library_path>".
-            Repeat this option to load several plugins. If loading failed, zenohd will exit.
+      --rest-http-port <SOCKET>
+          Configures HTTP interface for the REST API (enabled by default on port 8000). Accepted values: - a port number - a string with format `<local_ip>:<port_number>` (to bind the HTTP server to a specific interface) - `none` to disable the REST API
 
-        --plugin-search-dir [<DIRECTORY>...]
-            A directory where to search for plugins libraries to load.
-            Repeat this option to specify several search directories.
+      --cfg <CFG>
+          Allows arbitrary configuration changes as column-separated KEY:VALUE pairs, where: - KEY must be a valid config path. - VALUE must be a valid JSON5 string that can be deserialized to the expected type for the KEY field.
+          
+          Examples: - `--cfg='startup/subscribe:["demo/**"]'` - `--cfg='plugins/storage_manager/storages/demo:{key_expr:"demo/example/**",volume:"memory"}'`
 
-        --rest-http-port [<SOCKET>]
-            Configures HTTP interface for the REST API (enabled by default). Accepted values:
-              - a port number
-              - a string with format `<local_ip>:<port_number>` (to bind the HTTP server to a
-            specific interface)
-              - `none` to disable the REST API
-             [default: 8000]
+      --adminspace-permissions <[r|w|rw|none]>
+          Configure the read and/or write permissions on the admin space. Default is read only
 
-    -V, --version
-            Print version information
+  -h, --help
+          Print help (see a summary with '-h')
+
+  -V, --version
+          Print version
+
 ```
 
