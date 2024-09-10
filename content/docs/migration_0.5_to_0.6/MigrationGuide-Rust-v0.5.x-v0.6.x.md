@@ -3,7 +3,7 @@ title: "Migrating from Zenoh v0.5.x Rust API to Zenoh v0.6.x Rust API"
 weight : 5300
 menu:
   docs:
-    parent: migration
+    parent: migration_0.5_to_0.6
 ---
 
 In zenoh version 0.6.0, zenoh and zenoh-net APIs have been merged into a single API.

@@ -3,7 +3,7 @@ title: "Migrating from Zenoh v0.5.x Python API to Zenoh v0.6.x Python API"
 weight : 5500
 menu:
   docs:
-    parent: migration
+    parent: migration_0.5_to_0.6
 ---
 
 ## Explorability

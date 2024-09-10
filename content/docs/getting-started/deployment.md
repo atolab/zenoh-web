@@ -40,7 +40,7 @@ Zenoh applications in `peer` mode join multicast group `224.0.0.224` on UDP port
       enabled: true,
       address: "224.0.0.224:7446",
       interface: "auto",
-      autoconnect: { peer: "router|peer" },
+      autoconnect: { router: [], peer: ["router", "peer"] }, 
       listen: true,
     },
   },
@@ -49,7 +49,7 @@ Zenoh applications in `peer` mode join multicast group `224.0.0.224` on UDP port
 
 **Gossip scouting**
 
-Zenoh applications in `peer` mode forward all local applications and routers they have already discovered to newly scouted applications. This is useful when multicast communications are not available. But applications need to connect to a first entry point to discover the rest of the system. This entry point is typically one or several Zenoh routers but can also be one or several other peers. Those entry points are configured through the `connect` section of the configuration.
+Zenoh applications in `peer` mode forward all local applications and routers that they already discovered to newly scouted applications. This is useful when multicast communications are not available. But applications need to connect first to an entry point to discover the rest of the system. This entry point is typically one or several Zenoh routers but can also be one or several other peers. Those entry points are configured through the `connect` section of the configuration.
 
 **Configuration**
 ```
@@ -62,7 +62,7 @@ Zenoh applications in `peer` mode forward all local applications and routers the
     gossip: {
       enabled: true,
       multihop: false,
-      autoconnect: { peer: "router|peer" },
+      autoconnect: { router: [], peer: ["router", "peer"] }, 
     },
   },
 }

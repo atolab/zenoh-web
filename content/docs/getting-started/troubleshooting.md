@@ -32,7 +32,8 @@ To check this look for such logs:
 [2022-03-28T15:23:36Z INFO  zenohd] Successfully started plugin storage_manager from "/Users/test/.zenoh/lib/libzplugin_storage_manager.dylib"
 [2022-03-28T15:23:36Z INFO  zenohd] Successfully started plugin webserver from "/Users/test/.zenoh/lib/libzplugin_webserver.dylib"
 ```
-Here you can see all the plugins libraries that have been loaded by `zenohd` at startup. You must check if each of those are using the same Zenoh version as dependency than `zenohd`.  
+Here you can see all the plugins libraries that have been loaded by `zenohd` at startup. 
+You must check if each of the plugins are using the same Zenoh version as dependency than `zenohd` and Rust compiler version as the `zenohd` instance.  
 To assess which one is causing troubles, you can also move or rename all the libraries but one and test if `zenohd` is correctly loading this one. Then repeat the process for each library.
 
 
