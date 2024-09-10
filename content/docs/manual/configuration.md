@@ -66,7 +66,7 @@ The configuration of a Zenoh router can be changed at runtime via its admin spac
 ```
  - either via the `zenohd` command line option: `--adminspace-permissions <[r|w|rw|none]>`
 
-Then you can change elements of it's configuration once it's started, by sending put messages to its [admin space](../abstractions#admin-space).
+Then you can change elements of it's configuration once it's started, by sending PUT messages to its [admin space](../abstractions#admin-space).
 
 If one of the `zenohd` instances uses the REST plugin to expose Zenoh to HTTP requests, this can be done simply by sending such requests with tools such as `curl`.  
 To do this, use commands such as 
