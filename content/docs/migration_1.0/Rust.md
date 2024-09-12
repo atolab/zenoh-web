@@ -112,7 +112,7 @@ subscriber_task.await.unwrap()
 Session entities, e.g. subscribers, declared with callbacks are no longer undeclared when they are dropped; there is no longer need to keep a reference to an entity when the intent is to have it run until the session is closed.
 
 ```rust
-let session = zenoh::open(zenoh::config::peer()).await. unwrap();
+let session = zenoh::open(zenoh::config::default()).await.unwrap();
 session
     .declare_subscriber("key/ expression")
     .callback(|sample| { println!("Received: {} {:?}", sample. key_expr(), sample. payload()) })
@@ -125,7 +125,7 @@ session
 If you still want the entity to be undeclared when dropped, you can simply use `with` instead of `callback`; it may just require you to annotate the callback, as type inference is not as good as with `callback` method.
 
 ```rust
-let session = zenoh::open(zenoh::config::peer()).await. unwrap();
+let session = zenoh::open(zenoh::config::default()).await.unwrap();
 let subscriber = session
     .declare_subscriber("key/ expression")
     // annotation needed
@@ -135,7 +135,8 @@ let subscriber = session
 // subscriber is undeclared when dropped
 ```
 
-*Going into details, a new method `undeclare_on_drop(bool)` – default to `true`, has been added to the builders, and `callback(cb)` is now simply a shortcut to `with(cb).undeclare_on_drop(false)`. You should rarely need to call this method directly however.*
+*Going into details, a new method `undeclare_on_drop(bool)` – default to `true`, has been added to the builders, and `callback(cb)` is now simply a shortcut to `with(cb).undeclare_on_drop(false)`. 
+However, the normal user would rarely need to call this method directly.*
 
 ## Value is gone, long live ZBytes
 
