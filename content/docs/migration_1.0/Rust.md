@@ -44,40 +44,20 @@ use zenoh::sample::{Locality, Sample};
 use zenoh::qos::{CongestionControl, Priority, QoSBuilderTrait};
 ```
 
-## The changes to sync and async
+## Removal of the sync and async preludes
 
-In the previous version of Zenoh, we needed to use different module paths for the synchronous and asynchronous API.
-
-Now both API are exposed behind `use zenoh::prelude::*`:
-
-- Zenoh 0.11.x
-
-```rust
-// async
-use zenoh::prelude::r#async::*;
-// sync
-use zenoh::prelude::sync::*;
-```
-
-- Zenoh 1.0.0
-
-```rust
-use zenoh::prelude::*;
-```
-
-Another big difference is that we have removed the need for `res()` in our asynchronous API.  
-More inline with Rust naming, `wait()` is used for synchronous API, 
-and `await` is used for the Asynchronous API. 
+Zenoh preludes has been deprecated and are no more used in the API. The API has also been made asynchronous first: all operations like put/get/etc. can be awaited directly.
+Making synchronous calls now requires to import `zenoh::Wait`, and use `wait()` method, replacing the old `res()` method.
 To make the migration easier, there is a deprecation prompt if you use the old API convention.
-
-- Zenoh 0.11.x
 
 ```rust
 // (deprecated) async
+use zenoh::prelude::r#async::*;
 let session = zenoh::open(config).res().await.unwrap();
 let publisher = session.declare_publisher(&key_expr).res().await.unwrap();
 put.res().await.unwrap();
 // (deprecated) sync
+use zenoh::prelude::sync::*;
 let session = zenoh::open(config).res().unwrap();
 let publisher = session.declare_publisher(&key_expr).res().unwrap();
 put.res().unwrap();
@@ -93,9 +73,38 @@ let publisher = session.declare_publisher(&key_expr).await.unwrap();
 publisher.put(buf).await.unwrap();
 // sync
 // Difference 2: use wait() for synchronous API
+use zenoh::Wait;
 let session = zenoh::open(config).wait().unwrap();
 let publisher = session.declare_publisher(&key_expr).wait().unwrap();
 publisher.put(buf).wait().unwrap();
+```
+
+## `Session` is now clonable and can be closed easily
+
+`Session` implements `Clone` now, so there is no more need to wrap it into an `Arc<Session>`, and `Session::into_arc` has been deprecated. All the session methods, except `Session::close`, works like before, so only the session type will would to be changed.
+
+The session is now closed automatically when the last `Session` instance is dropped, **even if publishers/subscribers/etc. are still alive**. Session can also be manually closed using `Session::close`, which now takes an immutable reference, so it can be called anytime, even if publishers/subscribers/etc. are still alive.
+<br>
+Subscriber and queryable of a closed session will no longer receive data; trying to call `Session::get`, `Session::put` or `Publisher::put` will result in an error. Closing session on the fly may save bandwidth on the wire, as it avoids propagating the undeclaration of remaining entities like subscribers/queryables/etc.  
+
+```rust
+let session = zenoh::open(zenoh::config::peer()).await.unwrap();
+let subscriber = session
+    .declare_subscriber("key/expression")
+    .await
+    .unwrap();
+let subscriber_task = tokio::spawn(async move {
+    while let Ok(sample) = subscriber.recv_async().await {
+        println!("Received: {} {:?}", sample.key_expr(), sample.payload());
+    }
+});
+// session can be closed while subscriber is still running, preventing it
+// receiving more data
+session.close().await.unwrap();
+// subscriber task will end as `subscriber.recv_async()` will return `Err`
+// **when all remaining data has been processed**.
+// subscriber undeclaration has not been sent on the wire
+subscriber_task.await.unwrap()
 ```
 
 ## Value is gone, long live ZBytes

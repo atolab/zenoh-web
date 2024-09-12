@@ -12,7 +12,7 @@ The library has been fully rewritten to use only Rust. It should make no differe
 
 The API has also been reworked to feel more pythonic, using notably context managers.
 
-## Context managers and background execution
+## Context managers and background callbacks
 
 You *should* close the zenoh session after use and the recommended way is through context manager:
 
@@ -29,18 +29,15 @@ with session.declare_subscriber("my/keyexpr") as subscriber:
     # `subscriber.undeclare()` will be called at the end of the block`
 ```
 
-However, these objects can also be used without a context manager, and without calling `undeclare`. In that case, they will run in “background” mode, meaning that their lifetime will be bound to the session’s.
+In previous version, it was necessary to keep a variable in the scope for a subscriber/queryable declared with a callback. This constraint has been lifted, and it's now possible to declare and forget an entity with a callback; in that case, the entity will keep living in background, until the session is closed. 
 
 ```python
 import zenoh
 with zenoh.open(zenoh.Config()) as session:
-    subscriber = session.declare_subscriber("my/keyepxr")
-    for sample in subscriber:
-        ...
+    session.declare_subscriber("my/keyepxr", lambda s: print(s))
+    sleep(10) # subscriber stays in background and its callback can be called
     # `session.close()` will be called at the end of the block, and it will undeclare the subscriber
-```
-
-*In previous versions, it was necessary to keep a variable in the scope for declared subscribers/queryables/etc. This restriction no longer exists, as objects not bound to a variable will still run in "background" mode, until the session is closed.*
+```¬
 
 ## ZBytes, encoding, and (de)serialization
 
