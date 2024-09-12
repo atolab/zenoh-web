@@ -109,7 +109,7 @@ subscriber_task.await.unwrap()
 
 ## Callbacks run in background until session is closed
 
-Session entities, e.g. subscribers, declared with callbacks are no more undeclared when they are dropped; there is no more need to keep a variable around when the intent is to have it run until the session is closed.
+Session entities, e.g. subscribers, declared with callbacks are no longer undeclared when they are dropped; there is no longer need to keep a reference to an entity when the intent is to have it run until the session is closed.
 
 ```rust
 let session = zenoh::open(zenoh::config::peer()).await. unwrap();
