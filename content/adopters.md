@@ -114,6 +114,11 @@ Below is a list of companies, research institutes and foundations that adopted, 
             <img align="center" src="/img/adopters/eco_mobility_logo_goood-01.png" alt="EcoMobility" width="200"/>
         </a>
     </div>
+    <div class="p-2">
+        <a href="https://www.neobotix-robots.com/" target=="_blank">
+            <img align="center" src="/img/adopters/Neobotix.png" alt="Neobotix" width="200"/>
+        </a>
+    </div>
 </div>
 <p></p>
 {{< /rawhtml >}}
