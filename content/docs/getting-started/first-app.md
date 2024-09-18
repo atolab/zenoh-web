@@ -20,7 +20,7 @@ Let's get started!
 
 ## Pub/sub in Zenoh
 
-First, let's write an application, `z_sensor.py` that will produce temperature measurements at each second:
+First, let's make sure we have the python library installed with `pip3 install eclipse-zenoh`. Now, let's write an application, `z_sensor.py` that will produce temperature measurements at each second:
 
 ```python
 import zenoh, random, time
@@ -48,7 +48,7 @@ Now we need a subscriber, `z_subscriber.py` that can receive the measurements:
 import zenoh, time
 
 def listener(sample):
-    print(f"Received {sample.kind} ('{sample.key_expr}': '{sample.payload.deserialize(str)}')")
+    print(f"Received {sample.kind} ('{sample.key_expr}': '{sample.payload.decode('utf-8')}')")
     
 if __name__ == "__main__":
     session = zenoh.open()
