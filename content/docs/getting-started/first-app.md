@@ -20,7 +20,13 @@ Let's get started!
 
 ## Pub/sub in Zenoh
 
-First, let's write an application, `z_sensor.py` that will produce temperature measurements at each second:
+First thing first, we need to install the [zenoh Python library](https://github.com/eclipse-zenoh/zenoh-python).
+```bash
+pip install eclipse-zenoh==1.0.0b2
+```
+*The examples are updated to use the 1.0 version currently in beta, which is why version must be specified in the installation command. You can find more information about the 1.0 changes in the [migration guides](https://zenoh.io/docs/migration_1.0/concepts/).*
+
+Then, let's write an application, `z_sensor.py` that will produce temperature measurements at each second:
 
 ```python
 import zenoh, random, time
@@ -56,11 +62,12 @@ if __name__ == "__main__":
     time.sleep(60)
 ```
 
-[Install](https://github.com/eclipse-zenoh/zenoh-python) the library and start the subscriber
+Start the subscriber:
 ```bash
 python3 z_subscriber.py
 ```
-The subscriber waits for an update on `myhome/kitchen/temp`. 
+The subscriber waits for an update on `myhome/kitchen/temp`.
+ 
 Now start `z_sensor.py` as follows
 ```bash
 python3 z_sensor.py
