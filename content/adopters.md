@@ -12,6 +12,81 @@ Below is a list of companies, research institutes and foundations that adopted, 
 {{< rawhtml >}}
 <div class="d-flex flex-wrap align-items-center justify-content-between">
     <div class="p-2">
+        <a href="https://www.bosch.com/" target=="_blank">
+            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-bosch.svg" alt="BOSCH" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://www.gm.com/" target=="_blank">
+            <img align="center" src="/img/adopters/GM_Brandmark_Wordmark_Lockup_Blue_Vertical_RGB.jpg" alt="Neobotix" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://www.volocopter.com/" target=="_blank">
+            <img align="center" src="/img/adopters/volocopter.png" alt="Neobotix" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://www.foxconn.com/en-us/" target=="_blank">
+            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-foxconn.png" alt="FOXCONN" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+            <a href="https://www.futurewei.com" target=="_blank">
+            <img align="center" src="/img/adopters/futurewei-logo.png" alt="FutureWei" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://www.farobottech.com/" target=="_blank">
+            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-farobot.png" alt="FARobot" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://www.adlinktech.com" target=="_blank">
+            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-adlink.svg" alt="ADLINK" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://www.tractonomy.com/" target=="_blank">
+            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-tractonomy-robotics.png" alt="Tractonomy" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://flecs-technologies.com" target=="_blank">
+            <img align="center" src="/img/adopters/flecs-logo_rgb_color.svg" alt="FLECS" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://filics.eu/" target=="_blank">
+            <img align="center" src="/img/adopters/Filics_Logo_grun.svg" alt="Filics" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://www.neobotix-robots.com/" target=="_blank">
+            <img align="center" src="/img/adopters/Neobotix.png" alt="Neobotix" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://amperecomputing.com/" target=="_blank">
+            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-amperecomputing.png" alt="Ampere" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://f1tenth.org/" target=="_blank">
+            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-f1tenth.png" alt="F1-Tenth" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://openadx.eclipse.org/" target=="_blank">
+            <img align="center" align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-openadx.png" alt="OpenADX" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
+        <a href="https://www.irt-systemx.fr" target=="_blank">
+            <img align="center" src="/img/adopters/systemx-logo.png" alt="SystemX" width="200"/>
+        </a>
+    </div>
+    <div class="p-2">
         <a href="https://www.5gcity.eu/" target=="_blank">
             <img align="center" src="/img/adopters/5GCityLogo.png" alt="5GCity" width="200"/>
         </a>
@@ -35,68 +110,8 @@ Below is a list of companies, research institutes and foundations that adopted, 
         </a>
     </div>
     <div class="p-2">
-        <a href="https://www.adlinktech.com" target=="_blank">
-            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-adlink.svg" alt="ADLINK" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
-        <a href="https://amperecomputing.com/" target=="_blank">
-            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-amperecomputing.png" alt="Ampere" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
-        <a href="https://www.bosch.com/" target=="_blank">
-            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-bosch.svg" alt="BOSCH" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
         <a href="https://www.l2s.centralesupelec.fr/en/" target=="_blank">
             <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-centralesupelec.png" alt="CentraleSupelec" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
-        <a href="https://f1tenth.org/" target=="_blank">
-            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-f1tenth.png" alt="F1-Tenth" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
-        <a href="https://www.farobottech.com/" target=="_blank">
-            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-farobot.png" alt="FARobot" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
-        <a href="https://www.foxconn.com/en-us/" target=="_blank">
-            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-foxconn.png" alt="FOXCONN" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
-            <a href="https://www.futurewei.com" target=="_blank">
-            <img align="center" src="/img/adopters/futurewei-logo.png" alt="FutureWei" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
-        <a href="https://openadx.eclipse.org/" target=="_blank">
-            <img align="center" align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-openadx.png" alt="OpenADX" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
-        <a href="https://www.irt-systemx.fr" target=="_blank">
-            <img align="center" src="/img/adopters/systemx-logo.png" alt="SystemX" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
-        <a href="https://www.tractonomy.com/" target=="_blank">
-            <img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-tractonomy-robotics.png" alt="Tractonomy" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
-        <a href="https://flecs-technologies.com" target=="_blank">
-            <img align="center" src="/img/adopters/flecs-logo_rgb_color.svg" alt="FLECS" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
-        <a href="https://filics.eu/" target=="_blank">
-            <img align="center" src="/img/adopters/Filics_Logo_grun.svg" alt="Filics" width="200"/>
         </a>
     </div>
     <div class="p-2">
@@ -112,11 +127,6 @@ Below is a list of companies, research institutes and foundations that adopted, 
     <div class="p-2">
         <a href="https://www.ecomobility-project.eu/" target=="_blank">
             <img align="center" src="/img/adopters/eco_mobility_logo_goood-01.png" alt="EcoMobility" width="200"/>
-        </a>
-    </div>
-    <div class="p-2">
-        <a href="https://www.neobotix-robots.com/" target=="_blank">
-            <img align="center" src="/img/adopters/Neobotix.png" alt="Neobotix" width="200"/>
         </a>
     </div>
 </div>
