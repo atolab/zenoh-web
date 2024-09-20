@@ -37,7 +37,7 @@ def read_temp():
     return random.randint(15, 30)
 
 if __name__ == "__main__":
-    session = zenoh.open()
+    session = zenoh.open(zenoh.Config())
     key = 'myhome/kitchen/temp'
     pub = session.declare_publisher(key)
     while True:
@@ -57,7 +57,7 @@ def listener(sample):
     print(f"Received {sample.kind} ('{sample.key_expr}': '{sample.payload.deserialize(str)}')")
     
 if __name__ == "__main__":
-    session = zenoh.open()
+    session = zenoh.open(zenoh.Config())
     sub = session.declare_subscriber('myhome/kitchen/temp', listener)
     time.sleep(60)
 ```
