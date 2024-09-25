@@ -66,7 +66,7 @@ The main schema is as follows:
   }
 }
 ```
-The example configuration provided [here](https://github.com/eclipse-zenoh/zenoh/blob/master/DEFAULT_CONFIG.json5) has concrete examples of backend and storage configuration.
+The example configuration provided [here](https://github.com/eclipse-zenoh/zenoh/blob/main/DEFAULT_CONFIG.json5) has concrete examples of backend and storage configuration.
 
 ## Backends list
 Here is a list of the available backends:

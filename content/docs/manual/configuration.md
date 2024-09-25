@@ -22,8 +22,8 @@ If no path is specified, `zenohd` will use a default configuration instead.
 
 Currently, [JSON5](https://json5.org) and YAML are the primary configuration format (as opposed to v0.5's flat key-value files), but we may add support for other serialization formats in the future.
 
-An example configuration can be read [here](https://github.com/eclipse-zenoh/zenoh/blob/master/DEFAULT_CONFIG.json5), apart from the `plugins` section, we make an effort to keep the values aligned with the defaults.  
-The exact schema for the configuration is the `Config` structure, which can be found in [this file](https://github.com/eclipse-zenoh/zenoh/blob/master/commons/zenoh-config/src/lib.rs).
+An example configuration can be read [here](https://github.com/eclipse-zenoh/zenoh/blob/main/DEFAULT_CONFIG.json5), apart from the `plugins` section, we make an effort to keep the values aligned with the defaults.
+The exact schema for the configuration is the `Config` structure, which can be found in [this file](https://github.com/eclipse-zenoh/zenoh/blob/main/commons/zenoh-config/src/lib.rs).
 
 Don't be alarmed, all of these fields are optional. Only configure the parts that are of interest to you.
 

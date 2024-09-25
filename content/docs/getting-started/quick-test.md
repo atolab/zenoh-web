@@ -101,5 +101,5 @@ Now you can see how to [build your first Zenoh application in Python](../first-a
 ## Pick your programming language
 
 If you prefer, you could also have a look to the `examples/zenoh` directory we provide in each Zenoh API:
-- [Rust examples](https://github.com/eclipse-zenoh/zenoh/tree/master/examples)
-- [Python examples](https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples)
+- [Rust examples](https://github.com/eclipse-zenoh/zenoh/tree/main/examples)
+- [Python examples](https://github.com/eclipse-zenoh/zenoh-python/tree/main/examples)
