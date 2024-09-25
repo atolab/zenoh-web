@@ -242,6 +242,6 @@ if (!z_check(qable)) {
 
 More examples are available here: 
 
-[*zenoh v0.6.0*](https://github.com/eclipse-zenoh/zenoh-c/tree/main/examples)
+[*zenoh v0.6.0*](https://github.com/eclipse-zenoh/zenoh-c/tree/0.6.0-beta.1/examples)
 
 [*zenoh-net v0.5.0-beta9*](https://github.com/eclipse-zenoh/zenoh-c/tree/0.5.0-beta.9)

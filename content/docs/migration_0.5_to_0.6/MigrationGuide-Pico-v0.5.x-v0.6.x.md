@@ -427,8 +427,8 @@ zp_send_join(z_session_loan(&s), NULL);
 
 More examples are available here: 
 
-[*zenoh v0.6.0 (C11)*](https://github.com/eclipse-zenoh/zenoh-pico/tree/main/examples/unix/c11)
+[*zenoh v0.6.0 (C11)*](https://github.com/eclipse-zenoh/zenoh-pico/tree/0.6.0-beta.1/examples/unix/c11)
 
-[*zenoh v0.6.0 (C99)*](https://github.com/eclipse-zenoh/zenoh-pico/tree/main/examples/unix/c99)
+[*zenoh v0.6.0 (C99)*](https://github.com/eclipse-zenoh/zenoh-pico/tree/0.6.0-beta.1/examples/unix/c99)
 
 [*zenoh-net v0.5.0-beta9*](https://github.com/eclipse-zenoh/zenoh-pico/tree/0.5.0-beta.9)
