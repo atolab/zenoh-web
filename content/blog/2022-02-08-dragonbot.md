@@ -42,7 +42,7 @@ Still, we had to move some rocks along the way:
 
 Finally, DragonBotOne made it all the way to hatch.
 
-All source-code and step-by-step guides can be found in our [GitHub repositories](https://github.com/eclipse-zenoh/zenoh-demos/tree/master/zenoh-dragonbot).
+All source-code and step-by-step guides can be found in our [GitHub repositories](https://github.com/eclipse-zenoh/zenoh-demos/tree/main/zenoh-dragonbot).
 
 
 ## Remote Controller: ESP32 with a MPU-6050 accelerometer and gyroscope module

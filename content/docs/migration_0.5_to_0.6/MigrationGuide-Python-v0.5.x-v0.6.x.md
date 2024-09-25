@@ -116,7 +116,7 @@ More examples are available there :
 
 [*zenoh v0.5.0-beta9*](https://github.com/eclipse-zenoh/zenoh/tree/70d7b22f539a6f88dc54d4949114cef6ffdd1df9/zenoh/examples/zenoh)
 
-[*zenoh v0.6.0*](https://github.com/eclipse-zenoh/zenoh/tree/master/examples/examples)
+[*zenoh v0.6.0*](https://github.com/eclipse-zenoh/zenoh/tree/main/examples/examples)
 
 
 ## What about Zenoh Net?

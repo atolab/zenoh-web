@@ -170,7 +170,7 @@ void loop()
     zn_write(s, *reskey, (const uint8_t *)buf, twist_serialized_size);
 }
 ```
-**Note:** auxiliary structs and serialization functions are missing in the previous snippet. For the full code, including the adaptations for the turtlesim, please check the code under https://github.com/eclipse-zenoh/zenoh-demos/tree/master/ROS2/zenoh-pico-teleop-gyro
+**Note:** auxiliary structs and serialization functions are missing in the previous snippet. For the full code, including the adaptations for the turtlesim, please check the code under https://github.com/eclipse-zenoh/zenoh-demos/tree/main/ROS2/zenoh-pico-teleop-gyro
 
 ## 3. Setting up the infrastructure and the turtlebot / turtlesim
 In order to set up the infrastructure and the turtlebot / turtle in different configurations, follow the steps described in our [previous blog](https://zenoh.io/blog/2021-04-28-ros2-integration/). However, note that Zenoh-pico currently supports client mode only (a lightweight peer mode is coming soon). As such, you might need to deploy at least one Zenoh router to which your microcontroller application will need to connect to. The minimum steps are shown below:
