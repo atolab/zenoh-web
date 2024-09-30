@@ -51,7 +51,7 @@ To begin with, the 0.10.0-rc Zenoh-Kotlin release target was limited to JVM. But
 
 Additionally, we now provide packaging, which is key to ease the importing of Zenoh on Kotlin projects. Find them out here on [Github Packages](https://github.com/orgs/eclipse-zenoh/packages?repo_name=zenoh-kotlin), for both JVM and Android targets!
 
-The third important item is that Java joined the party! Indeed, we have forked the Kotlin bindings, making the necessary adjustments to make the bindings fully Java compatible. Checkout the examples! [https://github.com/eclipse-zenoh/zenoh-java/tree/master/examples](https://github.com/eclipse-zenoh/zenoh-java/tree/master/examples)
+The third important item is that Java joined the party! Indeed, we have forked the Kotlin bindings, making the necessary adjustments to make the bindings fully Java compatible. Checkout the examples! [https://github.com/eclipse-zenoh/zenoh-java/tree/main/examples](https://github.com/eclipse-zenoh/zenoh-java/tree/main/examples)
 
 Because Zenoh-Kotlin (and now Zenoh-Java) relies on the Zenoh-JNI native library, we need to take into consideration the platforms on top of which the library is going to run.
 
@@ -70,7 +70,7 @@ While for JVM we support:
 - aarch64-apple-darwin
 - x86_64-pc-windows-msvc
 
-Take a look at the [Zenoh demo app](https://github.com/eclipse-zenoh/zenoh-demos/tree/master/zenoh-android/ZenohApp) we have published to see how to use the package:
+Take a look at the [Zenoh demo app](https://github.com/eclipse-zenoh/zenoh-demos/tree/main/zenoh-android/ZenohApp) we have published to see how to use the package:
 
 {{< rawhtml >}}
 

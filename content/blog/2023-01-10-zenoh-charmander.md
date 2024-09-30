@@ -39,7 +39,7 @@ You can [check here](https://zenoh.io/docs/manual/tls/#mutual-authentication-mtl
 ----
 # MQTT plugin
 A [new plugin](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt) is coming into the dragon nest that enables integrating Zenoh with MQTT. 
-This is a fresh addition to the already existing [DDS plugin](https://github.com/eclipse-zenoh/zenoh-plugin-dds), [REST plugin](https://github.com/eclipse-zenoh/zenoh/tree/master/plugins/zenoh-plugin-rest), and [web server plugin](https://github.com/eclipse-zenoh/zenoh-plugin-webserver). 
+This is a fresh addition to the already existing [DDS plugin](https://github.com/eclipse-zenoh/zenoh-plugin-dds), [REST plugin](https://github.com/eclipse-zenoh/zenoh/tree/main/plugins/zenoh-plugin-rest), and [web server plugin](https://github.com/eclipse-zenoh/zenoh-plugin-webserver). 
 The [Zenoh MQTT plugin](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt) converts a Zenoh router into a full-fledged MQTT broker supporting MQTT V3 and V5 clients. 
 This allows to exploit all the Zenoh routing and storage capabilities from your MQTT client, but also to make Zenoh clients and peers talk with MQTT clients as shown in the figure below! 
 To test it out just follow the [README](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt).
@@ -102,7 +102,7 @@ while True:
     time.sleep(1)
 ```
 
-Don’t forget to check out all the other examples for [Rust](https://github.com/eclipse-zenoh/zenoh/tree/master/examples), [Python](https://github.com/eclipse-zenoh/zenoh-python/tree/master/examples), and [C](https://github.com/eclipse-zenoh/zenoh-c/tree/master/examples).
+Don’t forget to check out all the other examples for [Rust](https://github.com/eclipse-zenoh/zenoh/tree/main/examples), [Python](https://github.com/eclipse-zenoh/zenoh-python/tree/main/examples), and [C](https://github.com/eclipse-zenoh/zenoh-c/tree/main/examples).
 
 ----
 # C++ bindings
@@ -187,7 +187,7 @@ This is the very first release of the C++ bindings so the Zenoh team will highly
 This will help in greatly improving its maturity and robustness.
 
 In the future, we are planning to bring C++ bindings also on [Zenoh-Pico](https://github.com/eclipse-zenoh/zenoh-pico) to natively integrate with C++ embedded systems like Arduino. 
-At the moment you can use [Zenoh-Pico](https://github.com/eclipse-zenoh/zenoh-pico) with the C API on various embedded systems, see [some examples](https://github.com/eclipse-zenoh/zenoh-pico/tree/master/examples/arduino). 
+At the moment you can use [Zenoh-Pico](https://github.com/eclipse-zenoh/zenoh-pico) with the C API on various embedded systems, see [some examples](https://github.com/eclipse-zenoh/zenoh-pico/tree/main/examples/arduino). 
 
 ----
 # Zenoh-Pico and MISRA-C

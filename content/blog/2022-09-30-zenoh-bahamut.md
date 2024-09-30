@@ -41,7 +41,7 @@ Last but not least, future extensibility was the third objective for the new API
 If you are curious about the philosophy of the new API, you can find the full discussion [here](https://github.com/eclipse-zenoh/roadmap/discussions/23).
 
 ## Rust
-*Subscriber* -- Full working example available [here](https://github.com/eclipse-zenoh/zenoh/blob/master/examples/examples/z_sub.rs).
+*Subscriber* -- Full working example available [here](https://github.com/eclipse-zenoh/zenoh/blob/main/examples/examples/z_sub.rs).
 
 ```Rust
 let session = zenoh::open(config).res().await.unwrap();
@@ -51,7 +51,7 @@ while let Ok(sample) = subscriber.recv_async().await {
 }
 ```
 
-*Publisher* -- Full working example available [here](https://github.com/eclipse-zenoh/zenoh/blob/master/examples/examples/z_pub.rs).
+*Publisher* -- Full working example available [here](https://github.com/eclipse-zenoh/zenoh/blob/main/examples/examples/z_pub.rs).
 
 ```Rust
 let session = zenoh::open(config).res().await.unwrap();
@@ -63,7 +63,7 @@ loop {
 ```
 
 ## Python
-*Subscriber* -- Full working example available [here](https://github.com/eclipse-zenoh/zenoh-python/blob/master/examples/z_sub.py).
+*Subscriber* -- Full working example available [here](https://github.com/eclipse-zenoh/zenoh-python/blob/main/examples/z_sub.py).
 
 ```Python
 def listener(sample: Sample):
@@ -75,7 +75,7 @@ while True:
     time.sleep(1.0)
 ```
 
-*Publisher* -- Full working example available [here](https://github.com/eclipse-zenoh/zenoh-python/blob/master/examples/z_pub.py).
+*Publisher* -- Full working example available [here](https://github.com/eclipse-zenoh/zenoh-python/blob/main/examples/z_pub.py).
 
 ```Python
 session = zenoh.open(conf)
@@ -86,7 +86,7 @@ while True:
 ```
 
 ## C
-*Subscriber* -- Full working example available [here](https://github.com/eclipse-zenoh/zenoh-c/blob/master/examples/z_sub.c).
+*Subscriber* -- Full working example available [here](https://github.com/eclipse-zenoh/zenoh-c/blob/main/examples/z_sub.c).
 
 ```C
 void data_handler(const z_sample_t *sample, const void *arg) {
@@ -114,7 +114,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-*Publisher* -- Full working example available [here](https://github.com/eclipse-zenoh/zenoh-c/blob/master/examples/z_pub.c).
+*Publisher* -- Full working example available [here](https://github.com/eclipse-zenoh/zenoh-c/blob/main/examples/z_pub.c).
 
 ```C
 int main(int argc, char **argv) {
@@ -175,7 +175,7 @@ For a more in-depth reading on key expressions, please refer to this [RFC](https
 ----
 # A new configuration file format
 
-A new json5/yaml-based configuration file has been added. This allows configuring various aspects of Zenoh via a simple yet comprehensive file that can be extended as needed in the future. A snippet of the configuration file can be found below while the full configuration file can be found [here](https://github.com/eclipse-zenoh/zenoh/blob/master/DEFAULT_CONFIG.json5).
+A new json5/yaml-based configuration file has been added. This allows configuring various aspects of Zenoh via a simple yet comprehensive file that can be extended as needed in the future. A snippet of the configuration file can be found below while the full configuration file can be found [here](https://github.com/eclipse-zenoh/zenoh/blob/main/DEFAULT_CONFIG.json5).
 
 ```Json
 {
