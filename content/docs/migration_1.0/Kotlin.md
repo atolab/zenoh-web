@@ -37,7 +37,14 @@ session.put(keyExpr,
 
 _Notice that the `.res()` function has been removed. Now functions exposed by the API execute imediately, without the need of `.res()`. i.e. When doing `session.put(...)` the put is run immediately._ 
 
-This applies to all the builders that were in 0.11.0. Generally all the parameters on each builder now have their corresponding argument available in the functions.
+This applies to all the builders being present on 0.11.0. Generally [^1] all the parameters present on each builder have now their corresponding argument available in the functions.
+
+[^1]: Some parameters have been either moved (e.g. `Reliability`) or removed (e.g. `SampleKind`).
+
+
+## Session opening
+
+`Session.open(config: Config)` has now been replaced with `Zenoh.open(config: Config)`. 
 
 ## Encoding rework
 
@@ -68,6 +75,7 @@ Custom encodings can be created by specifying an `id` and `suffix` string:
 ```kotlin
 val encoding = Encoding(id = 123, suffix = "example suffix")
 ```
+
 ## Session-managed declarations
 
 Up until 0.11.0, it was up to the user to keep track of their variable declarations to keep them alive, because once the variable declarations were garbage collected, the declarations were closed. This was because each Kotlin variable declaration is associated with a native Rust instance, and in order to avoid leaking the memory of that Rust instance, it was necessary to free it upon dropping the declaration instance. However, this behavior could be counterintuitive, as users were expecting the declaration to keep running despite losing track of the reference to it.
@@ -110,7 +118,7 @@ We also associate a native key expression to a Kotlin key expression instance, a
 When opening a session, it's now mandatory to provide a configuration to the session, even for a default config:
 ```kotlin
 val config = Config.default()
-Session.open(config).onSuccess {
+Zenoh.open(config).onSuccess {
   // ...
 
 }
@@ -128,9 +136,63 @@ The `Config` class has been modified
 
 In case of failure loading the config, a `Result.Error` is returned.
 
+## Packages rework
+
+The package structure of the API is now aligned with Zenoh Rust package structure.
+
+Changes:
+
+- Removing the "prelude" package
+- QoS package now contains:
+  - `CongestionCOntrol`
+  - `Priority`
+  - `Reliability`
+  - `QoS`
+- Bytes package is created with:
+  - `ZBytes`, `IntoZBytes`, `Encoding`
+- Config package:
+  - `Config`, `ZenohId`
+- Session package:
+  - `SessionInfo`
+- Query package:
+  - contains `Query` and `Queryable`
+  - removing queryable package
+
 ## Reliability
 
-The `Reliability` config parameter used when declaring a `Subscriber` has been moved. It now must be specified when declaring a `Publisher` or when performing a `Put` or a `Delete` operaton.
+The `Reliability` config parameter used on when declaring a subscriber, has been moved. It now must be specified when declaring a `Publisher` or when performing a `Put` or a `Delete` operaton.
+
+
+## Logging
+
+There are two main changes regarding logging, the interface and the mechanism.
+
+Lets look at the following example, where we want to run the ZPub example with debug logging. On 1.0.0 we'll do:
+
+```
+RUST_LOG=debug gradle ZPub
+```
+
+If we wanted to enable debug logging and tracing for some specific package, for instance `zenoh::net::routing`, we'd do:
+
+```
+RUST_LOG=debug,zenoh::net::routing=trace gradle ZPub
+```
+
+However, this is not enabled by default.
+In order to enable logging, one of these newly provided functions must be called:
+
+```kotlin
+Zenoh.tryInitLogFromEnv()
+```
+
+and 
+
+```kotlin
+Zenoh.initLogFromEnvOr(fallbackFilter: String): Result<Unit>
+```
+
+This last function allows to programmatically specify the logs configuration if not provided as an environment variable.
 
 ## ZBytes serialization / deserialization & replacement of Value
 
