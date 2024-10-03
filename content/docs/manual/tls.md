@@ -49,7 +49,7 @@ Let's assume the above configuration is then saved with the name _client.json5_.
 
 ## Router configuration
 
-The required **tls** fields for configuring a _TLS certificate_ for a router are **server_private_key** and **server_certificate**.
+The required **tls** fields for configuring a _TLS certificate_ for a router are **listen_private_key** and **listen_certificate**.
 
 A configuration file for a _router_ would be:
 
@@ -63,21 +63,21 @@ A configuration file for a _router_ would be:
   "transport": {
     "link": {
       "tls": {
-        "server_private_key": "/home/user/tls/localhost/key.pem",
-        "server_certificate": "/home/user/tls/localhost/cert.pem"
+        "listen_private_key": "/home/user/tls/localhost/key.pem",
+        "listen_certificate": "/home/user/tls/localhost/cert.pem"
       }
     }
   }
 }
 ```
 
-When using such configuration, the router will use the provided **server_private_key** and **server_certificate** for establishing a TLS session with any client.
+When using such configuration, the router will use the provided **listen_private_key** and **listen_certificate** for establishing a TLS session with any client.
 
 Let's assume that the above configurations are then saved with the name _server.json5_.
 
 ## Peer configuration
 
-The required **tls** fields for configuring a _TLS certificate_ for a peer are **root_ca_certificate**, **server_private_key** and **server_certificate**.
+The required **tls** fields for configuring a _TLS certificate_ for a peer are **root_ca_certificate**, **listen_private_key** and **listen_certificate**.
 
 A configuration file for a _peer_ would be:
 
@@ -89,8 +89,8 @@ A configuration file for a _peer_ would be:
     "link": {
       "tls": {
         "root_ca_certificate": "/home/user/tls/minica.pem",
-        "server_private_key": "/home/user/tls/localhost/key.pem",
-        "server_certificate": "/home/user/tls/localhost/cert.pem"
+        "listen_private_key": "/home/user/tls/localhost/key.pem",
+        "listen_certificate": "/home/user/tls/localhost/cert.pem"
       }
     }
   }
@@ -98,7 +98,7 @@ A configuration file for a _peer_ would be:
 ```
 
 When using such configuration, the peer will use the provided **root_ca_certificate** to authenticate the _TLS certificate_ of the _peer_ it is connecting to.
-At the same time, the peer will use the provided **server_private_key** and **server_certificate** for initiating incoming TLS sessions from other peers.
+At the same time, the peer will use the provided **listen_private_key** and **listen_certificate** for initiating incoming TLS sessions from other peers.
 
 Let's assume that the above configurations are then saved with the name _peer.json5_.
 
@@ -149,7 +149,7 @@ user
 
 ### Router configuration
 
-The filed `client_auth` needs to be set to `true` and we must provide the router (acting as server) the certificate authority to validate the client's keys and certificates under the field `root_ca_certificate`. The `server_private_key` and `server_certificate` fields are also required in order to authenticate the router in front of the client.
+The filed `enable_mtls` needs to be set to `true` and we must provide the router (acting as server) the certificate authority to validate the client's keys and certificates under the field `root_ca_certificate`. The `listen_private_key` and `listen_certificate` fields are also required in order to authenticate the router in front of the client.
 
 ```json
 {
@@ -161,9 +161,9 @@ The filed `client_auth` needs to be set to `true` and we must provide the router
     "link": {
       "tls": {
         "root_ca_certificate": "/home/user/client/minica.pem",
-        "client_auth": true,
-        "server_private_key": "/home/user/server/localhost/key.pem",
-        "server_certificate": "/home/user/server/localhost/cert.pem"
+        "enable_mtls": true,
+        "listen_private_key": "/home/user/server/localhost/key.pem",
+        "listen_certificate": "/home/user/server/localhost/cert.pem"
       }
     }
   }
@@ -172,7 +172,7 @@ The filed `client_auth` needs to be set to `true` and we must provide the router
 
 ### Client configuration
 
-Again, the field `client_auth` needs to be set to `true` and we must provide the certificate authority to validate the server keys and certificates. Similarly, we need to provide the client keys and certificates for the server to authenticate our connection.
+Again, the field `enable_mtls` needs to be set to `true` and we must provide the certificate authority to validate the server keys and certificates. Similarly, we need to provide the client keys and certificates for the server to authenticate our connection.
 
 ```json
 {
@@ -184,9 +184,9 @@ Again, the field `client_auth` needs to be set to `true` and we must provide the
     "link": {
       "tls": {
         "root_ca_certificate": "/home/user/server/minica.pem",
-        "client_auth": true,
-        "client_private_key": "/home/user/client/localhost/key.pem",
-        "client_certificate": "/home/user/client/localhost/cert.pem"
+        "enable_mtls": true,
+        "connect_private_key": "/home/user/client/localhost/key.pem",
+        "connect_certificate": "/home/user/client/localhost/cert.pem"
       }
     }
   }
@@ -304,8 +304,8 @@ Then on the Zenoh configuration file we'll be able to set up the TLS configurati
   "transport": {
     "link": {
       "tls": {
-        "server_private_key": "/home/user/server/127.0.0.1/key.pem",
-        "server_certificate": "/home/user/server/127.0.0.1/cert.pem"
+        "listen_private_key": "/home/user/server/127.0.0.1/key.pem",
+        "listen_certificate": "/home/user/server/127.0.0.1/cert.pem"
       }
     }
   }
