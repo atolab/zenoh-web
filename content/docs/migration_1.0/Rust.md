@@ -142,22 +142,16 @@ However, the normal user would rarely need to call this method directly.*
 
 ## Value is gone, long live ZBytes
 
-We have replaced `Value` with `ZBytes` and `Encoding` , and added a number of conversion implementations such that user structs can be serialized into `ZBytes`, sent via Zenoh, and de-serialized from `ZBytes` with ease.
+`Value` has been split into `ZBytes` and `Encoding`. `put` and other operations now requires a `ZBytes` payload, and builders accept an optional `Encoding` parameter. The encoding is no longer automatically deduced from the payload type.
 
-This is facilitated through the `ZSerde` struct, and implementations of the traits
-`zenoh::bytes::Deserialize` and `zenoh::bytes::Serialize`.
+`ZBytes` is a raw bytes container, which can also contain non-contiguous region of memory. It can be created directly from raw bytes/strings using `ZBytes::from`. Then bytes can be retrieved using `ZBytes::to_bytes`, which returns a `Cow<[u8]>`, as a copy may have to be done if the underlying bytes are not contiguous.
 
-We provide implementations of Zenoh’s aforementioned `Deserialize` and `Serialize` traits for primitive Rust types, Rust’s `Vec`, the `Value` type exposed by `Serde`'s various libraries as well as an example of `Protobuf` ’s `prost::Message` type. 
-
-You can look at a full set of examples in `examples/examples/z_bytes.rs`.
-
-NOTE: ⚠️ `ZSerde` is not the only serializer/deserializer users can make use of, nor a limitation to the types supported by Zenoh. Users are free to use whichever serializer/deserializer they wish!
 - Zenoh 0.11.x
 
 ```rust
 let sample = subscriber.recv_async().await.unwrap();
 let value: Value = sample.value;
-let the_string: String = value.try_into().unwrap();
+let raw_bytes: Vec<u8> = value.try_into().unwrap();
 ```
 
 - Zenoh 1.0.0
@@ -165,8 +159,24 @@ let the_string: String = value.try_into().unwrap();
 ```rust
 let sample = subscriber.recv_async().await.unwrap();
 let zbytes: ZBytes = sample.payload();
-let the_string: String = zbytes.deserialize::<String>().unwrap();
+let raw_bytes: Cow<[u8]> = zbytes.as_bytes();
 ```
+
+You can look at a full set of examples in `examples/examples/z_bytes.rs`.
+
+### Serialization
+
+Zenoh does provide serialization for convenience as an extension in `zenoh-ext`. Serialization is implemented for a bunch of standard types like integers, floats, `Vec`, `HashMap`, etc. and is used through functions `z_serialize`/`z_deserialize`.
+
+```rust
+let input: Vec<f32> = vec![0.0, 1.5, 42.0];
+let payload: ZBytes = z_serialize(&input);
+let output: Vec<f32> = z_deserialize(&payload).unwrap();
+```
+
+`zenoh-ext` serialization doesn't pretend to cover every use cases, as it is just one available choice among other serialization format like JSON, Protobuf, CBOR, etc. In the end, Zenoh will just send and receive payload raw bytes independently of the serialization used.  
+
+NOTE: ⚠️ Serialization of `Vec<u8>` is not the same as creating a `ZBytes` from a `Vec<u8>`: the resulting `ZBytes` are different, and serialization doesn't take ownership of the bytes.
 
 ## Encoding
 
@@ -204,6 +214,14 @@ Users can also define their own encoding scheme that does not need to be based o
 
 ```rust
 let encoding = Encoding::from("pointcloud/LAS");
+```
+
+Because encoding is now optional for `put`, `Publisher` can be declared with a default encoding, which will be used in every `Publisher::put`.
+
+```rust
+let publisher = session.declare_publisher("my/keyepxr").encoding(Encoding::APPLICATION_JSON).await.unwrap();
+// default encoding from publisher `application/json`
+publisher.put(serde_json::to_vec(json!({"key", "value"})).unwrap()).await.unwrap();
 ```
 
 ## Attachment
