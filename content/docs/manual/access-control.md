@@ -27,7 +27,7 @@ Below is the example config we will be analyzing in this documentation.
 
 ```json
 {
-  access_control: {
+  "access_control": {
     "enabled": true,
     "default_permission": "allow",
   
