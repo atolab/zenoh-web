@@ -16,7 +16,7 @@ Suppose we generated the certificate using <a href=#appendix-tls-certificates-cr
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>When using such configuration, the client will use the provided <code>minica.pem</code> certificate to authenticate the <em>TLS server certificate</em>.</p><p>Let&rsquo;s assume the above configuration is then saved with the name <em>client.json5</em>.</p><h2 id=router-configuration>Router configuration</h2><p>The required <strong>tls</strong> fields for configuring a <em>TLS certificate</em> for a router are <strong>server_private_key</strong> and <strong>server_certificate</strong>.</p><p>A configuration file for a <em>router</em> would be:</p><div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span></code></pre></div><p>When using such configuration, the client will use the provided <code>minica.pem</code> certificate to authenticate the <em>TLS server certificate</em>.</p><p>Let&rsquo;s assume the above configuration is then saved with the name <em>client.json5</em>.</p><h2 id=router-configuration>Router configuration</h2><p>The required <strong>tls</strong> fields for configuring a <em>TLS certificate</em> for a router are <strong>listen_private_key</strong> and <strong>listen_certificate</strong>.</p><p>A configuration file for a <em>router</em> would be:</p><div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
 </span></span><span style=display:flex><span>  <span style=color:#09f;font-style:italic>/// The node&#39;s mode (router, peer or client)
 </span></span></span><span style=display:flex><span><span style=color:#09f;font-style:italic></span>  <span style=color:#309;font-weight:700>&#34;mode&#34;</span>: <span style=color:#c30>&#34;router&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#309;font-weight:700>&#34;listen&#34;</span>: {
@@ -25,27 +25,27 @@ Suppose we generated the certificate using <a href=#appendix-tls-certificates-cr
 </span></span><span style=display:flex><span>  <span style=color:#309;font-weight:700>&#34;transport&#34;</span>: {
 </span></span><span style=display:flex><span>    <span style=color:#309;font-weight:700>&#34;link&#34;</span>: {
 </span></span><span style=display:flex><span>      <span style=color:#309;font-weight:700>&#34;tls&#34;</span>: {
-</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;server_private_key&#34;</span>: <span style=color:#c30>&#34;/home/user/tls/localhost/key.pem&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;server_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/tls/localhost/cert.pem&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;listen_private_key&#34;</span>: <span style=color:#c30>&#34;/home/user/tls/localhost/key.pem&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;listen_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/tls/localhost/cert.pem&#34;</span>
 </span></span><span style=display:flex><span>      }
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>When using such configuration, the router will use the provided <strong>server_private_key</strong> and <strong>server_certificate</strong> for establishing a TLS session with any client.</p><p>Let&rsquo;s assume that the above configurations are then saved with the name <em>server.json5</em>.</p><h2 id=peer-configuration>Peer configuration</h2><p>The required <strong>tls</strong> fields for configuring a <em>TLS certificate</em> for a peer are <strong>root_ca_certificate</strong>, <strong>server_private_key</strong> and <strong>server_certificate</strong>.</p><p>A configuration file for a <em>peer</em> would be:</p><div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span></code></pre></div><p>When using such configuration, the router will use the provided <strong>listen_private_key</strong> and <strong>listen_certificate</strong> for establishing a TLS session with any client.</p><p>Let&rsquo;s assume that the above configurations are then saved with the name <em>server.json5</em>.</p><h2 id=peer-configuration>Peer configuration</h2><p>The required <strong>tls</strong> fields for configuring a <em>TLS certificate</em> for a peer are <strong>root_ca_certificate</strong>, <strong>listen_private_key</strong> and <strong>listen_certificate</strong>.</p><p>A configuration file for a <em>peer</em> would be:</p><div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
 </span></span><span style=display:flex><span>  <span style=color:#09f;font-style:italic>/// The node&#39;s mode (router, peer or client)
 </span></span></span><span style=display:flex><span><span style=color:#09f;font-style:italic></span>  <span style=color:#309;font-weight:700>&#34;mode&#34;</span>: <span style=color:#c30>&#34;peer&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#309;font-weight:700>&#34;transport&#34;</span>: {
 </span></span><span style=display:flex><span>    <span style=color:#309;font-weight:700>&#34;link&#34;</span>: {
 </span></span><span style=display:flex><span>      <span style=color:#309;font-weight:700>&#34;tls&#34;</span>: {
 </span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;root_ca_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/tls/minica.pem&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;server_private_key&#34;</span>: <span style=color:#c30>&#34;/home/user/tls/localhost/key.pem&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;server_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/tls/localhost/cert.pem&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;listen_private_key&#34;</span>: <span style=color:#c30>&#34;/home/user/tls/localhost/key.pem&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;listen_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/tls/localhost/cert.pem&#34;</span>
 </span></span><span style=display:flex><span>      }
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>When using such configuration, the peer will use the provided <strong>root_ca_certificate</strong> to authenticate the <em>TLS certificate</em> of the <em>peer</em> it is connecting to.
-At the same time, the peer will use the provided <strong>server_private_key</strong> and <strong>server_certificate</strong> for initiating incoming TLS sessions from other peers.</p><p>Let&rsquo;s assume that the above configurations are then saved with the name <em>peer.json5</em>.</p><hr><h2 id=tls-with-scouting->TLS with Scouting ⚠️</h2><p>Zenoh provides a <a href=../../getting-started/deployment/#scouting>scouting mechanism</a> that allows peers to discover other neighboring peers automatically.</p><p>By default, this feature is enabled and attempts to establish connections with other peers <strong>using all Zenoh-supported protocols</strong> (not just TLS).</p><p>To ensure that all connections are established using TLS, you can configure the protocols filter as shown below:</p><div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
+At the same time, the peer will use the provided <strong>listen_private_key</strong> and <strong>listen_certificate</strong> for initiating incoming TLS sessions from other peers.</p><p>Let&rsquo;s assume that the above configurations are then saved with the name <em>peer.json5</em>.</p><hr><h2 id=tls-with-scouting->TLS with Scouting ⚠️</h2><p>Zenoh provides a <a href=../../getting-started/deployment/#scouting>scouting mechanism</a> that allows peers to discover other neighboring peers automatically.</p><p>By default, this feature is enabled and attempts to establish connections with other peers <strong>using all Zenoh-supported protocols</strong> (not just TLS).</p><p>To ensure that all connections are established using TLS, you can configure the protocols filter as shown below:</p><div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
 </span></span><span style=display:flex><span>  <span style=color:#309;font-weight:700>&#34;transport&#34;</span>: {
 </span></span><span style=display:flex><span>    <span style=color:#309;font-weight:700>&#34;link&#34;</span>: {
 </span></span><span style=display:flex><span>      <span style=color:#309;font-weight:700>&#34;protocols&#34;</span>: [<span style=color:#c30>&#34;tls&#34;</span>]
@@ -66,7 +66,7 @@ Let&rsquo;s suppose we are storing them under <code>$home/user/</code> with the 
 </span></span><span style=display:flex><span>    │   └── key.pem
 </span></span><span style=display:flex><span>    ├── minica-key.pem
 </span></span><span style=display:flex><span>    └── minica.pem
-</span></span></code></pre></div><h3 id=router-configuration-1>Router configuration</h3><p>The filed <code>client_auth</code> needs to be set to <code>true</code> and we must provide the router (acting as server) the certificate authority to validate the client&rsquo;s keys and certificates under the field <code>root_ca_certificate</code>. The <code>server_private_key</code> and <code>server_certificate</code> fields are also required in order to authenticate the router in front of the client.</p><div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span></code></pre></div><h3 id=router-configuration-1>Router configuration</h3><p>The filed <code>enable_mtls</code> needs to be set to <code>true</code> and we must provide the router (acting as server) the certificate authority to validate the client&rsquo;s keys and certificates under the field <code>root_ca_certificate</code>. The <code>listen_private_key</code> and <code>listen_certificate</code> fields are also required in order to authenticate the router in front of the client.</p><div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
 </span></span><span style=display:flex><span>  <span style=color:#309;font-weight:700>&#34;mode&#34;</span>: <span style=color:#c30>&#34;router&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#309;font-weight:700>&#34;listen&#34;</span>: {
 </span></span><span style=display:flex><span>    <span style=color:#309;font-weight:700>&#34;endpoints&#34;</span>: [<span style=color:#c30>&#34;tls/localhost:7447&#34;</span>]
@@ -75,14 +75,14 @@ Let&rsquo;s suppose we are storing them under <code>$home/user/</code> with the 
 </span></span><span style=display:flex><span>    <span style=color:#309;font-weight:700>&#34;link&#34;</span>: {
 </span></span><span style=display:flex><span>      <span style=color:#309;font-weight:700>&#34;tls&#34;</span>: {
 </span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;root_ca_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/client/minica.pem&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;client_auth&#34;</span>: <span style=color:#069;font-weight:700>true</span>,
-</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;server_private_key&#34;</span>: <span style=color:#c30>&#34;/home/user/server/localhost/key.pem&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;server_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/server/localhost/cert.pem&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;enable_mtls&#34;</span>: <span style=color:#069;font-weight:700>true</span>,
+</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;listen_private_key&#34;</span>: <span style=color:#c30>&#34;/home/user/server/localhost/key.pem&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;listen_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/server/localhost/cert.pem&#34;</span>
 </span></span><span style=display:flex><span>      }
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><h3 id=client-configuration-1>Client configuration</h3><p>Again, the field <code>client_auth</code> needs to be set to <code>true</code> and we must provide the certificate authority to validate the server keys and certificates. Similarly, we need to provide the client keys and certificates for the server to authenticate our connection.</p><div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span></code></pre></div><h3 id=client-configuration-1>Client configuration</h3><p>Again, the field <code>enable_mtls</code> needs to be set to <code>true</code> and we must provide the certificate authority to validate the server keys and certificates. Similarly, we need to provide the client keys and certificates for the server to authenticate our connection.</p><div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
 </span></span><span style=display:flex><span>  <span style=color:#309;font-weight:700>&#34;mode&#34;</span>: <span style=color:#c30>&#34;client&#34;</span>,
 </span></span><span style=display:flex><span>  <span style=color:#309;font-weight:700>&#34;connect&#34;</span>: {
 </span></span><span style=display:flex><span>    <span style=color:#309;font-weight:700>&#34;endpoints&#34;</span>: [<span style=color:#c30>&#34;tls/localhost:7447&#34;</span>]
@@ -91,9 +91,9 @@ Let&rsquo;s suppose we are storing them under <code>$home/user/</code> with the 
 </span></span><span style=display:flex><span>    <span style=color:#309;font-weight:700>&#34;link&#34;</span>: {
 </span></span><span style=display:flex><span>      <span style=color:#309;font-weight:700>&#34;tls&#34;</span>: {
 </span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;root_ca_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/server/minica.pem&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;client_auth&#34;</span>: <span style=color:#069;font-weight:700>true</span>,
-</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;client_private_key&#34;</span>: <span style=color:#c30>&#34;/home/user/client/localhost/key.pem&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;client_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/client/localhost/cert.pem&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;enable_mtls&#34;</span>: <span style=color:#069;font-weight:700>true</span>,
+</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;connect_private_key&#34;</span>: <span style=color:#c30>&#34;/home/user/client/localhost/key.pem&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;connect_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/client/localhost/cert.pem&#34;</span>
 </span></span><span style=display:flex><span>      }
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  }
@@ -127,8 +127,8 @@ The server certificate <em>cert.pem</em> and private key <em>key.pem</em> can be
 </span></span><span style=display:flex><span>  <span style=color:#309;font-weight:700>&#34;transport&#34;</span>: {
 </span></span><span style=display:flex><span>    <span style=color:#309;font-weight:700>&#34;link&#34;</span>: {
 </span></span><span style=display:flex><span>      <span style=color:#309;font-weight:700>&#34;tls&#34;</span>: {
-</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;server_private_key&#34;</span>: <span style=color:#c30>&#34;/home/user/server/127.0.0.1/key.pem&#34;</span>,
-</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;server_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/server/127.0.0.1/cert.pem&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;listen_private_key&#34;</span>: <span style=color:#c30>&#34;/home/user/server/127.0.0.1/key.pem&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#309;font-weight:700>&#34;listen_certificate&#34;</span>: <span style=color:#c30>&#34;/home/user/server/127.0.0.1/cert.pem&#34;</span>
 </span></span><span style=display:flex><span>      }
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  }
