@@ -25,7 +25,7 @@ The `enabled` boolean field allows to enable and disable ACL. Note that ACL conf
 
 Below is the example config we will be analyzing in this documentation.
 
-```json5
+```json
 {
   access_control: {
     "enabled": true,
@@ -96,7 +96,7 @@ Matched messages are filtered based on the rule's `permission`: `allow` or `deny
 
 For instance, the following rule denies all incoming and outgoing subscriptions, publications and deletions on key expressions matching `demo/example/**`:
 
-```json5
+```json
 {
   "id": "deny pub/sub",
   "permission": "deny",
@@ -123,7 +123,7 @@ Each subject configuration is identified by a unique `id` string. Subject config
 To produce all possible combinations that characterize a subject configuration, the Cartesian product of the `interfaces`, `cert_common_names` and `usernames` lists is calculated. This allows for items within the same list to be considered a logical `OR`, and items across different lists to be considered a logical `AND`.
 To demonstrate these logical combinations, below is an example of a subject configuration and its internal representation.
 
-```json5
+```json
 {
   "id": "example subject",
   "interfaces": [
@@ -147,7 +147,7 @@ To demonstrate these logical combinations, below is an example of a subject conf
 
 Note that any of the three lists presented above can be ommited, and will be interpreted as a wildcard (i.e matches with all possible values of that authentication method). This implies that the empty subject below is a wildcard that will match any Zenoh instance.
 
-```json5
+```json
 {
   "id": "subject that matches all zenoh instances",
 }
@@ -157,7 +157,7 @@ Note that any of the three lists presented above can be ommited, and will be int
 
 The `policies` list associates configured rules to configured subjects based on their unique `id`s. For example, the policy below applies the `deny pub/sub` rule on the `example subject` subject declared above. Note that in a policy object, `rules` and `subjects` are lists, which conveniently allows to apply multiple rules to multiple subjects within the same policy object.
 
-```json5
+```json
 {
   "rules": [
     "deny pub/sub"
