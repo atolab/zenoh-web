@@ -48,7 +48,7 @@ Owned types support move semantics, which will consume the owned object and turn
 
 ### Moved types
 
-Moved types are obtained when using `z_move` on an owned type object. They are consumed on use when passed to relevant functions. Any non-constructor function accepting a moved object (i.e. an object passed by owned pointer) becomes responsible for calling drop on it. The object is guaranteed to be in the null state upon such function return, even if it fails.
+Moved types are obtained when using `z_move` on an owned type object. They are consumed on use when passed to relevant functions. Any non-constructor function accepting a moved object (i.e. an object passed by moved pointer) becomes responsible for calling drop on it. The object is guaranteed to be in the null state upon such function return, even if it fails.
 
 ### Loaned types
 
@@ -127,58 +127,154 @@ if (z_declare_subscriber(&sub, z_loan(session), z_loan(ke), z_move(callback), NU
 
 ## Payload and Serialization
 
-Zenoh 1.0.0 handles payload differently. Before one would pass the pointer to the buffer and its length, now everything must be serialized into `z_owned_bytes_t`.
+Zenoh 1.0.0 handles payload differently. Before one would pass the pointer to the buffer and its length, now everything must be converted/serialized into `z_owned_bytes_t`.
 
-To simplify serialization/deserialization we provide support for some primitive types like `uint8_t*` + length, (null-)terminated strings and arithmetic types.
+Raw data in the form null-terminated strings or buffers (i.e. `uint8_t*` + length) can be converted directly into `z_owned_bytes_t`
+by (optionaly) avoiding a copy as follows:
 
 - Zenoh 0.11.x
 
 ```c
-char *value = "Some data to publish on Zenoh";
+int8_t send_string() {
+  char *value = "Some data to publish on Zenoh";
 
-if (z_put(z_loan(session), z_keyexpr(ke), (const uint8_t *)value, strlen(value), NULL) < 0) {
-    return -1;
+  if (z_put(z_loan(session), z_keyexpr(ke), (const uint8_t *)value, strlen(value), NULL) < 0) {
+      return -1;
+  }
+  return 0;
+}
+
+int8_t send_buf() {
+  uint8_t *buf = (uint8_t*)z_malloc(16);
+  // fill the buf
+  if (z_put(z_loan(session), z_keyexpr(ke), buf, 16, NULL) < 0) {
+      return -1;
+  }
+  return 0;
 }
 ```
 
 - Zenoh 1.0.0
 
 ```c
-char *value = "Some data to publish on Zenoh";
-z_owned_bytes_t payload;
-z_bytes_serialize_from_str(&payload, value);
-
-if (z_put(z_loan(session), z_loan(ke), z_move(payload), NULL) < 0) {
-  return -1;
-}
-```
-
-To implement custom (de-)serialization functions, Zenoh 1.0.0 provides `z_bytes_iterator_t`, `z_bytes_reader_t` and `z_owned_bytes_wrtiter_t` types and corresponding functions.
-Alternatively, it is always possible to perform serialization separately and only send/receive `uint8_t` arrays, by only calling trivial `z_bytes_serialize_from_slice` and `z_bytes_deserialize_into_slice` functions:
-
-```c
-void send_data(const z_loaned_publisher_t* pub, const uint8_t *data, size_t len) {
+int8_t send_string() {
+  char *value = "Some data to publish on Zenoh";
   z_owned_bytes_t payload;
-  z_bytes_serialize_from_buf(&payload, data, len);
-  z_publisher_put(pub, z_move(payload), NULL);
-  // no need to drop the payload, since it is consumed by z_publisher_put
+  z_bytes_copy_from_str(&payload, value); // this copeies value to the payload
+
+  if (z_put(z_loan(session), z_loan(ke), z_move(payload), NULL) < 0) {
+    return -1;
+  }
+  // z_bytes_to_string can be used to convert received z_loaned_bytes_t into z_owned_string_t
+  return 0;
 }
 
-void receive_data(const z_loaned_bytes_t* payload) {
-  z_owned_slice_t slice;
-  z_bytes_deserialize_into_slice(payload, &slice);
+void receive_string(const z_loaned_bytes_t* payload) {
+  z_owned_string_t s;
+  z_bytes_to_string(payload, &s);
 
-  // do something with serialized data
-  // raw ptr can be accessed via z_slice_data(z_loan(slice))
-  // data length can be accessed via z_slice_len(z_loan(slice))
+  // do something with the string
+  // raw ptr can be accessed via z_string_data(z_loan(s))
+  // data length can be accessed via z_string_len(z_loan(s))
 
-  // in the end slice should be dropped since it contains a copy of the payload data
-  z_drop(z_move(slice));
+  // in the end string should be dropped since it contains a copy of the payload data
+  z_drop(z_move(s));
 }
+
+
+int8_t void send_buf() {
+  uint8_t *buf = (uint8_t*)z_malloc(16);
+  // fill the buf
+  z_bytes_from_buf(&payload, buf, 16, my_custom_delete_function, NULL); // this moves buf into the payload
+  // my_custom_delete_function will be called to free the buf, once the corresponding data is send
+  // alternatively z_bytes_copy_from_buf(&payload, buf, 16) can be used, if coying the buf is required.
+  if (z_put(z_loan(session), z_loan(ke), z_move(payload), NULL) < 0) {
+    return -1;
+  }
+  // z_bytes_to_slice can be used to convert received z_loaned_bytes_t into z_owned_slice_t
+  return 0;
+}
+
+/// possible my_custom_delete_function implementation
+void my_custom_delete_function(void *data, void* context) {
+  // perform delete of data by optionally using extra information in the context
+  free(data);
+}
+
+void receive_buf(const z_loaned_bytes_t* payload) {
+  z_owned_slice_t s;
+  z_bytes_to_slice(payload, &s);
+
+  // do something with the string
+  // raw ptr can be accessed via z_slice_data(z_loan(s))
+  // data length can be accessed via z_slice_len(z_loan(s))
+
+  // in the end string should be dropped since it contains a copy of the payload data
+  z_drop(z_move(s));
+}
+
 ```
+
+The structured data can be serialized into `z_owned_bytes_t` by using provided serialization functionality. Zenoh provides
+support for serializing arithmetic types, strings, sequences and tuples.
+
+
+More comprehensive serialization/deserialization examples are provided in
+https://github.com/eclipse-zenoh/zenoh-c/blob/main/examples/z_bytes.c and https://github.com/eclipse-zenoh/zenoh-pico/blob/main/examples/unix/c11/z_bytes.c.
+
+To simplify serialization/deserialization we provide support for some primitive types like `uint8_t*` + length, null-terminated strings and arithmetic types.
+Primitive types can be serialized directly into `z_owned_bytes_t`:
+```c
+  // Serialization
+  uint32_t input_u32 = 1234;
+  ze_serialize_uint32(&payload, input_u32);
+
+  // Deserialization
+  uint32_t output_u32 = 0;
+  ze_deserialize_uint32(z_loan(payload), &output_u32);
+  // now output_u32 = 1234
+  z_drop(z_move(payload));
+
+```
+while tuples and/or arrays require usage of `ze_owned_serializer_t` and `ze_deserializer_t`:
+```c
+  typedef struct my_struct_t {
+    float f;
+    int32_t n;
+  } my_struct_t;
+
+  ...
+
+  // Serialization
+  my_struct_t input_vec[] = {{1.5f, 1}, {2.4f, 2}, {-3.1f, 3}, {4.2f, 4}};
+  ze_owned_serializer_t serializer;
+  ze_serializer_empty(&serializer);
+  ze_serializer_serialize_sequence_length(z_loan_mut(serializer), 4);
+  for (size_t i = 0; i < 4; ++i) {
+    ze_serializer_serialize_float(z_loan_mut(serializer), input_vec[i].f);
+    ze_serializer_serialize_int32(z_loan_mut(serializer), input_vec[i].n);
+  }
+  ze_serializer_finish(z_move(serializer), &payload);
+
+  // Deserialization
+  my_struct_t output_vec[4] = {0};
+  ze_deserializer_t deserializer = ze_deserializer_from_bytes(z_loan(payload));
+  size_t num_elements = 0;
+  ze_deserializer_deserialize_sequence_length(&deserializer, &num_elements);
+  assert(num_elements == 4);
+  for (size_t i = 0; i < num_elements; ++i) {
+    ze_deserializer_deserialize_float(&deserializer, &output_vec[i].f);
+    ze_deserializer_deserialize_int32(&deserializer, &output_vec[i].n);
+  }
+  // now output_vec = {{1.5f, 1}, {2.4f, 2}, {-3.1f, 3}, {4.2f, 4}}
+  z_drop(z_move(payload));
+```
+
+
+To implement custom (de-)serialization functions, Zenoh 1.0.0 provides `ze_owned_bytes_serializer`, `ze_bytes_deserializer_t` or lower-level `z_owned_bytes_wrtiter_t` and `ze_bytes_reader_t` types and corresponding functions.
 
 Note that it is no longer possible to access the underlying payload data pointer directly, since Zenoh cannot guarantee that the data is delivered as a single fragment.
-So in order to get access to raw payload data one must use `z_bytes_reader_t` and related functions:
+So in order to get access to raw payload data one must use either `z_bytes_reader_t` or alternatively `z_bytes_slice_iterator_t` and their related functions:
 
 ```c
 z_bytes_reader_t reader = z_bytes_get_reader(z_loan(payload));
@@ -187,51 +283,13 @@ uint8_t data2[20] = {0};
 
 z_bytes_reader_read(&reader, data1, 10); // copy first 10 payload bytes to data1
 z_bytes_reader_read(&reader, data2, 20); // copy next 20 payload bytes to data2
-```
 
-Note that all `z_bytes_serialize_from…` functions involve copying the data.
-On the other hand, it is also possible to allow Zenoh to consume your data directly (which avoids the need to make an extra copy) using `z_bytes_from_buf` or `z_bytes_from_str`.
-The user would need to provide a delete function to be called on data, when Zenoh finishes its processing:
-
-```c
-void my_custom_delete_function(void *data, void* context) {
-  // perform delete of data by optionally using extra information in the context
-  free(data);
-}
-
-void send_move_data(const z_loaned_publisher_t *publisher) {
-  uint8_t *my_data = malloc(10);
-  // fill my_data as necessary
-  z_owned_bytes_t b;
-  z_bytes_from_buf(&b, my_data, 10, my_custom_delete_function, NULL);
-  z_publisher_put(publisher, z_move(b));
-}
-
-// an example of sending a data with more complex destructor
-// a case of std::vector<uint8_t> from c++ stl library
-
-void delete_vector(void *data, void* context) {
-  std::vector<uint8_t> *v = (std::vector<uint8_t> *)context;
-  delete v;
-  // in this case data pointer is not used for destruction
-}
-
-void send_move_vector(std::vector<uint8_t> *v, const z_loaned_publisher_t *publisher) {
-  z_owned_bytes_t b;
-  z_bytes_from_buf(&b, v.data(), v.size(), delete_vector, (void*)v);
-  z_publisher_put(publisher, z_move(b));
-}
-```
-
-Yet another alternative is to send the statically allocated constant data (hence that does not require to be deleted) without making an extra copy. This can be achieved using the `z_serialize_from_static_buf` or `z_serialize_from_static_str` functions:
-
-```c
-const char *my_constant_string = "my string";
-
-void send_static_data(const z_loaned_publisher_t *publisher) {
-  z_owned_bytes_t b;
-  z_bytes_from_static_str(&b, my_constant_string);
-  z_publisher_put(publisher, z_move(b));
+// or
+z_bytes_slice_iterator_t slice_iter = z_bytes_get_slice_iterator(z_bytes_loan(&payload));
+z_view_slice_t curr_slice;
+while (z_bytes_slice_iterator_next(&slice_iter, &curr_slice)) {
+    // curr_slice provides a view on the corresponding fragment bytes.
+    // Note that there is no guarantee regarding each individual slice size
 }
 ```
 
@@ -428,7 +486,7 @@ void data_handler(const z_sample_t* sample, void* arg) {
 
 ```
 
-In 1.0.0, attachments were greatly simplified. They are now represented as `z_..._bytes_t` (i.e. the same type we use to represent serialized data) and can thus contain data in any format.
+In 1.0.0, attachments were greatly simplified. They are now represented as `z_..._bytes_t` (i.e. the same type we use to represent payload data) and can thus contain data in any format.
 
 ```c
 // publish attachment
@@ -437,39 +495,27 @@ typedef struct {
   char* value;
 } kv_pair_t;
 
-typedef struct kv_it {
-    kv_pair_t *current;
-    kv_pair_t *end;
-} kv_it;
-
-bool create_attachment_iter(z_owned_bytes_t* kv_pair, void* context) {
-  kv_it* it = (kv_it*)(context);
-  if (it->current == it->end) {
-    return false;
-  }
-  z_owned_bytes_t k, v;
-  // serialize as key-value pair
-  z_bytes_serialize_from_str(&k, it->current->key);
-  z_bytes_serialize_from_str(&v, it->current->value);
-  z_bytes_serialize_from_pair(kv_pair, z_move(k), z_move(v));
-  it->current++;
-  return true;
-};
-
 ...
 
 kv_pair_t attachment_kvs[2] = {;
   (kv_pair_t){.key = "index", .value = "1"},
   (kv_pair_t){.key = "source", .value = "C"}
 }
-kv_it it = { .begin = attachment_kvs, .end = attachment_kvs + 2 };
 
 z_owned_bytes_t payload, attachment;
-// serialzie key value pairs as attachment using z_bytes_serialize_from_iter
-z_bytes_serialize_from_iter(&attachment, create_attachment_iter, (void*)&it);
+// serialzie key value pairs as attachment
+
+ze_owned_serializer_t serializer;
+ze_serializer_empty(&serializer);
+ze_serializer_serialize_sequence_length(z_loan_mut(serializer), 2);
+for (size_t i = 0; i < 2; ++i) {
+    ze_serializer_serialize_str(z_loan_mut(serializer), attachment_kvs[i].key);
+    ze_serializer_serialize_str(z_loan_mut(serializer), attachment_kvs[i].value);
+}
+ze_serializer_finish(z_move(serializer), &payload);
 options.attachment = &attachment;
 
-z_bytes_serialize_from_str(&payload, "payload");
+z_bytes_copy_from_str(&payload, "payload");
 z_publisher_put(z_loan(pub), z_move(payload), &options);
 
 // receive sample with attachment
@@ -493,22 +539,16 @@ void data_handler(const z_loaned_sample_t *sample, void *arg) {
   }
 
   // read attachment key-value pairs using bytes_iterator
-  z_bytes_iterator_t iter = z_bytes_get_iterator(attachment);
-  z_owned_bytes_t kv;
-  while (z_bytes_iterator_next(&iter, &kv)) {
-      z_owned_bytes_t k, v;
-      z_owned_string_t key, value;
-      z_bytes_deserialize_into_pair(z_loan(kv), &k, &v);
-
-      z_bytes_deserialize_into_string(z_loan(k), &key);
-      z_bytes_deserialize_into_string(z_loan(v), &value);
-
+  ze_deserializer_t deserializer = ze_deserializer_from_bytes(z_loan(payload));
+  size_t num_elements = 0;
+  ze_deserializer_deserialize_sequence_length(&deserializer, &num_elements);
+  z_owned_string_t key, value;
+  for (size_t i = 0; i < num_elements; ++i) {
+      ze_deserializer_deserialize_string(&deserializer, &key);
+      ze_deserializer_deserialize_string(&deserializer, &value);
       printf("   attachment: %.*s: '%.*s'\n",
         (int)z_string_len(z_loan(key)), z_string_data(z_loan(key)),
         (int)z_string_len(z_loan(value)), z_string_data(z_loan(value)));
-      z_drop(z_move(kv));
-      z_drop(z_move(k));
-      z_drop(z_move(v));
       z_drop(z_move(key));
       z_drop(z_move(value));
   }
@@ -700,7 +740,7 @@ In zenoh-pico, we recommend users follow the accessor pattern even though the st
 
 ## Usage of `z_bytes_clone`
 
-In short, `z_bytes_t` is made of reference-counted data slices. In 1.0.0, we aligned the implementation of `z_bytes_clone` and made it perform a shallow copy for improved efficiency.
+In short, `z_owned_bytes_t` is made of reference-counted data slices. In 1.0.0, we aligned the implementation of `z_bytes_clone` and made it perform a shallow copy for improved efficiency.
 
 - Zenoh 0.11.x
 
