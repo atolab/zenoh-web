@@ -65,7 +65,7 @@ try {
 
 All returned and `std::move`'d-in objects are guaranteed to be left in an “empty” state in case of function call failure.
 
-## Serialization  and Deserialization
+## Payload
 
 In version 0.11.0 it was only possible to send `std::string`/ `const char*` or `std::vector<uint8_t>` / `uint8_t*` using the `BytesView` class:
 
@@ -73,72 +73,87 @@ In version 0.11.0 it was only possible to send `std::string`/ `const char*` or `
 publisher.put("my_payload");
 ```
 
-In 1.0.0, the `BytesView` class is gone and we introduced the `Bytes` object which represents a serialized payload.
-
- 
+In 1.0.0, the `BytesView` class is gone and we introduced the `Bytes` object which represents a (serialized) payload.
+Similarly to 0.11.0 it can be used to store raw bytes or strings:
 
 ```cpp
-void publish_data(const Publisher& publisher, const MyData& data) {
-	publisher.put(Bytes<MyCodec>::serialize(data));
+void publish_string(const Publisher& publisher, const std::string& data) {
+	publisher.put(Bytes(data));
 }
 
-void receive_data(const Sample &sample) {
+void publish_string_without_copy(const Publisher& publisher, std::string&& data) {
+	publisher.put(Bytes(data));
+}
+
+void receive_string(const Sample &sample) {
   std::cout <<"Received: " 
-					  << sample.get_payload().deserialize<MyData, MyCodec>() 
+					  << sample.get_payload().as_string() 
             << "\n";
+};
+
+void publish_bytes(const Publisher& publisher, const std::vector<uint8_t>& data) {
+	publisher.put(Bytes(data));
+}
+
+void publish_bytes_without_copy(const Publisher& publisher, std::vector<uint8_t>&& data) {
+	publisher.put(Bytes(data));
+}
+
+void receive_bytes(const Sample &sample) {
+  std::vector<uint8_t> = sample.get_payload().as_vector();
 };
 ```
 
-We added a default `ZenohCodec`, which provides default serialization / deserialization for common numerical types, strings, and containers:
+Additionaly `zenoh::ext` namespace provides support for serialization/deserialziation of typed data to/into `Bytes`:
 
 ```cpp
-  // stream of bytes serialization
-  std::vector<uint8_t> data = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-  Bytes b = Bytes::serialize(data);
-  assert(b.deserialize<std::vector<uint8_t>>() == data);
-  
-  // arithmetic type serialization
+  // arithmetic types
   double pi = 3.1415926;
-  Bytes b = Bytes::serialize(pi);
-  assert(b.deserialize<TYPE>() == pi);
+  Bytes b = ext::serialize(pi);
+  assert(ext::deserialize<doulbe>(b) == pi);
   
-  // Composite types serialization
-  std::vector<float> v = {0.1f, .2f, 0.3f};
-  auto b = Bytes::serialize(v);
-  assert(b.deserialize<decltype(v)>() == v);
+  // Composite types
+  std::vector<float> v = {0.1f, 0.2f, 0.3f};
+  b = ext::serialize(v);
+  assert(ext::deserialize<decltype(v)>(b) == v);
   
-  std::map<std::string, std::deque<double>> m = {
+  std::unordered_map<std::string, std::deque<double>> m = {
     {"a", {0.5, 0.2}},
     {"b", {-123.45, 0.4}},
     {"abc", {3.1415926, -1.0} }
   };
 
-  b = Bytes::serialize(m);
-  assert(b.deserialize<decltype(m2)>() == m); 
-
-  // alternatively serialize via move 
-  // the string keys will not be copied in this case, but rather move into Bytes
-  b_move = Bytes::serialize(std::move(m));
+  b = ext::serialize(m);
+  assert(ext::deserialize<decltype(m)>(b) == m); 
 ```
 
-Please note that this serialization functionality is only provided for prototyping and demonstration purposes and, as such, might be less efficient than custom-written serialization methods.
-
-Users can easily define their own serialization/deserialization functions by providing a custom codec:
+Users can easily define serialization/deserialization for their own custom types by using `ext::Serializer` and `ext::Deserializer` classes.
 
 ```cpp
-MyType my_data(...);
-MyCodec my_codec(...);
-Bytes b = Bytes::serialize(my_data, my_codec);
-// or Bytes::serialize<MyCodec>(my_data) if MyCodec is a stateless codec with an empty constructor 
-assert(b.deserialize<std::vector<MyType>>(my_codec) == my_data);
-// or assert(b.deserialize<std::vector<MyType, MyCodec>>() == my_data); if MyCodec is a stateless with an empty constructor
+struct CustomStruct {
+    std::vector<double> vd;
+    int32_t i;
+    std::string s;
+};
+
+// One needs to implement __zenoh_serialize_with_serializer in the same namespace as CustomStruct
+void __zenoh_serialize_with_serializer(ext::Serializer& serializer, const CustomStruct& s) {
+    serializer.serialize(s.vd);
+    serializer.serialize(s.i);
+    serializer.serialize(s.s);
+}
+
+void serialize_custom() {
+    CustomStruct s = {{0.1, 0.2, -1000.55}, 32, "test"};
+    Bytes b = ext::serialize(s);
+    CustomStruct s_out = ext::deserialize<CustomStruct>(b);
+    assert(s.vd == s_out.vd);
+    assert(s.i == s_out.i);
+    assert(s.s == s_out.s);
+}
 ```
 
-For finer control on serialization / deserialization implementation `Bytes::Iterator`, `Bytes::Writer` and `Bytes::Reader` classes are also introduced.
-
-A working example with custom-defined serialization / deserialization can be found here:
-
-https://github.com/eclipse-zenoh/zenoh-cpp/blob/dev/1.0.0/examples/simple/universal/z_simple.cxx
+For lower level access to the `Bytes` content `Bytes::Reader`, `Bytes::Writer` and `Bytes::SliceIterator` classes can be used.
 
 ## Stream Handlers and Callbacks
 
@@ -157,7 +172,7 @@ Reply reply(nullptr);
 for (recv(reply); reply.check(); recv(reply)) {
     auto sample = expect<Sample>(reply.get());
     std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
-              << sample.get_payload().as_string_view() << "')\n";
+              << sample.get_payload().as_string() << "')\n";
 }
 
 // non-blocking
@@ -169,7 +184,7 @@ for (bool call_success = recv(reply); !call_success || reply.check(); call_succe
   }
   auto sample = expect<Sample>(reply.get());
   std::cout << "\nReceived ('" << sample.get_keyexpr().as_string_view() << "' : '"
-            << sample.get_payload().as_string_view() << "')";
+            << sample.get_payload().as_string() << "')";
 }
 ```
 
@@ -194,7 +209,7 @@ auto replies = session.get(
 for (auto res = replies.recv(); std::has_alternative<Reply>(res); res = replies.recv()) {
   const auto& sample = std::get<Reply>(res).get_ok();
   std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
-            << sample.get_payload().deserialize<std::string>() << "')\n";
+            << sample.get_payload().as_string() << "')\n";
 }
 // non-blocking
 while (true) {
@@ -202,7 +217,7 @@ while (true) {
   if (std::has_alternative<Reply>(res)) {
     const auto& sample = std::get<Reply>(res).get_ok();
 	  std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
-            << sample.get_payload().deserialize<std::string>() << "')\n";
+            << sample.get_payload().as_string() << "')\n";
   } else if (std::get<channels::RecvError>(res) == channels::RecvError::Z_NODATA) {
 	  // try_recv is non-blocking call, so may fail to return a reply if the Fifo buffer is empty
 	  std::cout << ".";
@@ -223,7 +238,7 @@ The same works for `Subscriber` and `Queryable`:
 auto data_callback = [](const Sample &sample) {
   std::cout << ">> [Subscriber] Received ('"
             << sample.get_keyexpr().as_string_view() 
-            << "' : '" << sample.get_payload().deserialize<std::string>() 
+            << "' : '" << sample.get_payload().as_string() 
             << "')\n";
 };
 
@@ -245,7 +260,7 @@ for (auto res = messages.recv(); std::has_alternative<Sample>(res); res = messag
 		// it will return an empty sample and alive=false once subscriber gets disconnected
 		const Sample& sample = std::get<Sample>(res);
     std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
-              << sample.get_payload().deserialize<std::string>() << "')\n";
+              << sample.get_payload().as_string() << "')\n";
 }
 // non-blocking
 while (true) {
@@ -253,7 +268,7 @@ while (true) {
   if (std::has_alternative<Sample>(res)) {
     const auto& sample = std::get<Sample>(res);
 	  std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
-            << sample.get_payload().deserialize<std::string>() << "')\n";
+            << sample.get_payload().as_string() << "')\n";
   } else if (std::get<channels::RecvError>(res) == channels::RecvError::Z_NODATA) {
 	  // try_recv is non-blocking call, so may fail to return a sample if the Fifo buffer is empty
 	  std::cout << ".";
@@ -281,8 +296,8 @@ options.set_attachment(attachment_map);
 pub.put(s, options);
 
 // subscriber callback function receiving message with attachment
-data_handler(const Sample &sample) {
-  std::cout << ">> [Subscriber] Received " ('"
+void data_handler(const Sample &sample) {
+  std::cout << ">> [Subscriber] Received \" ('"
             << sample.get_keyexpr().as_string_view() 
             << "' : '" 
             << sample.get_payload().as_string_view()
@@ -317,8 +332,8 @@ std::unordered_map<std::string, std::string> attachment_map = {
   {"index", "0"}
 };    
 pub.put(
-  Bytes::serialize("my_payload"), 
-  {.encoding = Encoding("text/plain"), .attachment = std::move(attachment_map)}
+  Bytes("my_payload"), 
+  {.encoding = Encoding("text/plain"), .attachment = ext::serialize(attachment_map)}
 );
 
 
@@ -327,13 +342,13 @@ void data_handler(const Sample &sample) {
   std::cout << ">> [Subscriber] Received ('"
             << sample.get_keyexpr().as_string_view() 
             << "' : '" 
-            << sample.get_payload().deserialize<std::string>()
+            << sample.get_payload().as_string()
             << "')\n";
   auto attachment = sample.get_attachment();
   if (!attachment.has_value()) return;
   // we expect attachment in the form of key-value pairs
-  auto attachment_deserialized = attachment->get().deserialize<std::unordered_map<std::string, std::string>>();
-  for (auto&& [key, value]: attachment) {
+  auto attachment_deserialized = ext::deserialize<std::unordered_map<std::string, std::string>>(attachment->get());
+  for (auto&& [key, value]: attachment_deserialized) {
     std::cout << "   attachment: " << key << ": '" << value << "'\n";
   }
 };
@@ -359,5 +374,5 @@ session.get(keyexpr, "", {on_reply, on_done}, opts);
 In 1.0.0:
 
 ```cpp
-session.get(keyexpr, "", on_reply, on_done, {.target = Z_QUERY_TARGET_ALL, .payload = Bytes::serialize(value)});
+session.get(keyexpr, "", on_reply, on_done, {.target = Z_QUERY_TARGET_ALL, .payload = ext::serialize(value)});
 ```
