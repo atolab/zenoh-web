@@ -127,33 +127,33 @@ Additionaly `zenoh::ext` namespace provides support for serialization/deserialzi
   assert(ext::deserialize<decltype(m)>(b) == m); 
 ```
 
-Users can easily define serialization/deserialization for their own custom types by using `ext::Serializer` and `ext::Deserializer` classes.
+Users can easily define serialization/deserialization for their own custom types by using `ext::Serializer` and `ext::Deserializer` classes:
 
 ```cpp
 struct CustomStruct {
-    std::vector<double> vd;
-    int32_t i;
-    std::string s;
+  std::vector<double> vd;
+  int32_t i;
+  std::string s;
 };
 
 // One needs to implement __zenoh_serialize_with_serializer in the same namespace as CustomStruct
 void __zenoh_serialize_with_serializer(ext::Serializer& serializer, const CustomStruct& s) {
-    serializer.serialize(s.vd);
-    serializer.serialize(s.i);
-    serializer.serialize(s.s);
+  serializer.serialize(s.vd);
+  serializer.serialize(s.i);
+  serializer.serialize(s.s);
 }
 
 void serialize_custom() {
-    CustomStruct s = {{0.1, 0.2, -1000.55}, 32, "test"};
-    Bytes b = ext::serialize(s);
-    CustomStruct s_out = ext::deserialize<CustomStruct>(b);
-    assert(s.vd == s_out.vd);
-    assert(s.i == s_out.i);
-    assert(s.s == s_out.s);
+  CustomStruct s = {{0.1, 0.2, -1000.55}, 32, "test"};
+  Bytes b = ext::serialize(s);
+  CustomStruct s_out = ext::deserialize<CustomStruct>(b);
+  assert(s.vd == s_out.vd);
+  assert(s.i == s_out.i);
+  assert(s.s == s_out.s);
 }
 ```
 
-For lower level access to the `Bytes` content `Bytes::Reader`, `Bytes::Writer` and `Bytes::SliceIterator` classes can be used.
+For lower-level access to the `Bytes` content `Bytes::Reader`, `Bytes::Writer` and `Bytes::SliceIterator` classes can be used.
 
 ## Stream Handlers and Callbacks
 
@@ -170,9 +170,9 @@ session.get(keyexpr, "", std::move(send), opts);
 Reply reply(nullptr);
 // blocking
 for (recv(reply); reply.check(); recv(reply)) {
-    auto sample = expect<Sample>(reply.get());
-    std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
-              << sample.get_payload().as_string() << "')\n";
+  auto sample = expect<Sample>(reply.get());
+  std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
+            << sample.get_payload().as_string() << "')\n";
 }
 
 // non-blocking
@@ -256,11 +256,11 @@ auto subscriber = session.declare_subscriber(keyexpr, channels::FifoChannel(16))
 const auto& messages = subscriber.handler();
 //blocking
 for (auto res = messages.recv(); std::has_alternative<Sample>(res); res = messages.recv()) {
-		// recv will block until there is at least one sample in the Fifo buffer
-		// it will return an empty sample and alive=false once subscriber gets disconnected
-		const Sample& sample = std::get<Sample>(res);
-    std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
-              << sample.get_payload().as_string() << "')\n";
+  // recv will block until there is at least one sample in the Fifo buffer
+  // it will return an empty sample and alive=false once subscriber gets disconnected
+  const Sample& sample = std::get<Sample>(res);
+  std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
+            << sample.get_payload().as_string() << "')\n";
 }
 // non-blocking
 while (true) {
@@ -303,17 +303,17 @@ void data_handler(const Sample &sample) {
             << sample.get_payload().as_string_view()
 		        << "')\n";
   if (sample.get_attachment().check()) {
-      // reads full attachment
-      sample.get_attachment().iterate([](const BytesView &key, const BytesView &value) -> bool {
-          std::cout << "   attachment: " << key.as_string_view() << ": '" << value.as_string_view() << "'\n";
-          return true;
-      });
+    // reads full attachment
+    sample.get_attachment().iterate([](const BytesView &key, const BytesView &value) -> bool {
+      std::cout << "   attachment: " << key.as_string_view() << ": '" << value.as_string_view() << "'\n";
+      return true;
+    });
 
-      // or read particular attachment item
-      auto index = sample.get_attachment().get("index");
-      if (index != "") {
-          std::cout << "   message number: " << index.as_string_view() << std::endl;
-      }
+    // or read particular attachment item
+    auto index = sample.get_attachment().get("index");
+    if (index != "") {
+      std::cout << "   message number: " << index.as_string_view() << std::endl;
+    }
   }
 };
 ```

@@ -129,8 +129,8 @@ if (z_declare_subscriber(&sub, z_loan(session), z_loan(ke), z_move(callback), NU
 
 Zenoh 1.0.0 handles payload differently. Before one would pass the pointer to the buffer and its length, now everything must be converted/serialized into `z_owned_bytes_t`.
 
-Raw data in the form null-terminated strings or buffers (i.e. `uint8_t*` + length) can be converted directly into `z_owned_bytes_t`
-by (optionaly) avoiding a copy as follows:
+Raw data in the form of null-terminated strings or buffers (i.e. `uint8_t*` + length) can be converted directly into `z_owned_bytes_t`
+as follows:
 
 - Zenoh 0.11.x
 
@@ -225,49 +225,49 @@ https://github.com/eclipse-zenoh/zenoh-c/blob/main/examples/z_bytes.c and https:
 To simplify serialization/deserialization we provide support for some primitive types like `uint8_t*` + length, null-terminated strings and arithmetic types.
 Primitive types can be serialized directly into `z_owned_bytes_t`:
 ```c
-  // Serialization
-  uint32_t input_u32 = 1234;
-  ze_serialize_uint32(&payload, input_u32);
+// Serialization
+uint32_t input_u32 = 1234;
+ze_serialize_uint32(&payload, input_u32);
 
-  // Deserialization
-  uint32_t output_u32 = 0;
-  ze_deserialize_uint32(z_loan(payload), &output_u32);
-  // now output_u32 = 1234
-  z_drop(z_move(payload));
+// Deserialization
+uint32_t output_u32 = 0;
+ze_deserialize_uint32(z_loan(payload), &output_u32);
+// now output_u32 = 1234
+z_drop(z_move(payload));
 
 ```
 while tuples and/or arrays require usage of `ze_owned_serializer_t` and `ze_deserializer_t`:
 ```c
-  typedef struct my_struct_t {
-    float f;
-    int32_t n;
-  } my_struct_t;
+typedef struct my_struct_t {
+  float f;
+  int32_t n;
+} my_struct_t;
 
-  ...
+...
 
-  // Serialization
-  my_struct_t input_vec[] = {{1.5f, 1}, {2.4f, 2}, {-3.1f, 3}, {4.2f, 4}};
-  ze_owned_serializer_t serializer;
-  ze_serializer_empty(&serializer);
-  ze_serializer_serialize_sequence_length(z_loan_mut(serializer), 4);
-  for (size_t i = 0; i < 4; ++i) {
-    ze_serializer_serialize_float(z_loan_mut(serializer), input_vec[i].f);
-    ze_serializer_serialize_int32(z_loan_mut(serializer), input_vec[i].n);
-  }
-  ze_serializer_finish(z_move(serializer), &payload);
+// Serialization
+my_struct_t input_vec[] = {{1.5f, 1}, {2.4f, 2}, {-3.1f, 3}, {4.2f, 4}};
+ze_owned_serializer_t serializer;
+ze_serializer_empty(&serializer);
+ze_serializer_serialize_sequence_length(z_loan_mut(serializer), 4);
+for (size_t i = 0; i < 4; ++i) {
+  ze_serializer_serialize_float(z_loan_mut(serializer), input_vec[i].f);
+  ze_serializer_serialize_int32(z_loan_mut(serializer), input_vec[i].n);
+}
+ze_serializer_finish(z_move(serializer), &payload);
 
-  // Deserialization
-  my_struct_t output_vec[4] = {0};
-  ze_deserializer_t deserializer = ze_deserializer_from_bytes(z_loan(payload));
-  size_t num_elements = 0;
-  ze_deserializer_deserialize_sequence_length(&deserializer, &num_elements);
-  assert(num_elements == 4);
-  for (size_t i = 0; i < num_elements; ++i) {
-    ze_deserializer_deserialize_float(&deserializer, &output_vec[i].f);
-    ze_deserializer_deserialize_int32(&deserializer, &output_vec[i].n);
-  }
-  // now output_vec = {{1.5f, 1}, {2.4f, 2}, {-3.1f, 3}, {4.2f, 4}}
-  z_drop(z_move(payload));
+// Deserialization
+my_struct_t output_vec[4] = {0};
+ze_deserializer_t deserializer = ze_deserializer_from_bytes(z_loan(payload));
+size_t num_elements = 0;
+ze_deserializer_deserialize_sequence_length(&deserializer, &num_elements);
+assert(num_elements == 4);
+for (size_t i = 0; i < num_elements; ++i) {
+  ze_deserializer_deserialize_float(&deserializer, &output_vec[i].f);
+  ze_deserializer_deserialize_int32(&deserializer, &output_vec[i].n);
+}
+// now output_vec = {{1.5f, 1}, {2.4f, 2}, {-3.1f, 3}, {4.2f, 4}}
+z_drop(z_move(payload));
 ```
 
 
@@ -288,8 +288,8 @@ z_bytes_reader_read(&reader, data2, 20); // copy next 20 payload bytes to data2
 z_bytes_slice_iterator_t slice_iter = z_bytes_get_slice_iterator(z_bytes_loan(&payload));
 z_view_slice_t curr_slice;
 while (z_bytes_slice_iterator_next(&slice_iter, &curr_slice)) {
-    // curr_slice provides a view on the corresponding fragment bytes.
-    // Note that there is no guarantee regarding each individual slice size
+  // curr_slice provides a view on the corresponding fragment bytes.
+  // Note that there is no guarantee regarding each individual slice size
 }
 ```
 
@@ -308,13 +308,13 @@ z_owned_reply_channel_t channel = zc_reply_fifo_new(16);
 z_get(z_loan(session), z_keyexpr(keyexpr), "", z_move(channel.send), &opts);
 z_owned_reply_t reply = z_reply_null();
 for (z_call(channel.recv, &reply); z_check(reply); z_call(channel.recv, &reply)) {
-    if (z_reply_is_ok(&reply)) {
-      z_sample_t sample = z_reply_ok(&reply);
-      // do something with sample and keystr
-    } else {
-      printf("Received an error\n");
-    }
-    z_drop(z_move(reply));
+  if (z_reply_is_ok(&reply)) {
+    z_sample_t sample = z_reply_ok(&reply);
+    // do something with sample and keystr
+  } else {
+    printf("Received an error\n");
+  }
+  z_drop(z_move(reply));
 }
 z_drop(z_move(channel));
 
@@ -323,17 +323,17 @@ z_owned_reply_channel_t channel = zc_reply_non_blocking_fifo_new(16);
 z_get(z_loan(s), keyexpr, "", z_move(channel.send), &opts);
 z_owned_reply_t reply = z_reply_null();
 for (bool call_success = z_call(channel.recv, &reply); !call_success || z_check(reply);
-    call_success = z_call(channel.recv, &reply)) {
-    if (!call_success) {
-        continue;
-    }
-    if (z_reply_is_ok(z_loan(reply))) {
-      const z_loaned_sample_t *sample = z_reply_ok(&reply);
-      // do something with sample
-    } else {
-      printf("Received an error\n");
-    }
-    z_drop(z_move(reply));
+  call_success = z_call(channel.recv, &reply)) {
+  if (!call_success) {
+    continue;
+  }
+  if (z_reply_is_ok(z_loan(reply))) {
+    const z_loaned_sample_t *sample = z_reply_ok(&reply);
+    // do something with sample
+  } else {
+    printf("Received an error\n");
+  }
+  z_drop(z_move(reply));
 }
 z_drop(z_move(channel));
 ```
@@ -357,33 +357,33 @@ z_owned_reply_t reply;
 
 // blocking
 while (z_recv(z_loan(handler), &reply) == Z_OK) {
-    // z_recv will block until there is at least one sample in the Fifo buffer
-    if (z_reply_is_ok(z_loan(reply))) {
-        const z_loaned_sample_t *sample = z_reply_ok(z_loan(reply));
-        // do something with sample
-    } else {
-        printf("Received an error\n");
-    }
-    z_drop(z_move(reply));
+  // z_recv will block until there is at least one sample in the Fifo buffer
+  if (z_reply_is_ok(z_loan(reply))) {
+    const z_loaned_sample_t *sample = z_reply_ok(z_loan(reply));
+    // do something with sample
+  } else {
+    printf("Received an error\n");
+  }
+  z_drop(z_move(reply));
 }
 
 // non-blocking
 while (true) {
-    z_result_t res = z_try_recv(z_loan(handler), &reply);
-    if (res == Z_CHANNEL_NODATA) {
-      // z_try_recv is non-blocking call, so will fail to return a reply if the Fifo buffer is empty
-      // do some other work or just sleep
-    } else if (res == Z_OK) {
-      if (z_reply_is_ok(z_loan(reply))) {
-          const z_loaned_sample_t *sample = z_reply_ok(z_loan(reply));
-          // do something with sample
-      } else {
-          printf("Received an error\n");
-      }
-      z_drop(z_move(reply));
-     } else { // res == Z_CHANNEL_DISCONNECTED
-       break; // channel is closed - no more replies will arrive
-     }
+  z_result_t res = z_try_recv(z_loan(handler), &reply);
+  if (res == Z_CHANNEL_NODATA) {
+    // z_try_recv is non-blocking call, so will fail to return a reply if the Fifo buffer is empty
+    // do some other work or just sleep
+  } else if (res == Z_OK) {
+    if (z_reply_is_ok(z_loan(reply))) {
+      const z_loaned_sample_t *sample = z_reply_ok(z_loan(reply));
+      // do something with sample
+    } else {
+      printf("Received an error\n");
+    }
+    z_drop(z_move(reply));
+  } else { // res == Z_CHANNEL_DISCONNECTED
+    break; // channel is closed - no more replies will arrive
+  }
 }
 
 ```
@@ -427,16 +427,16 @@ while (z_recv(z_loan(handler), &sample) == Z_OK) {
 
 // non-blocking
 while (true) {
-    z_result_t res = z_try_recv(z_loan(handler), &sample);
-    if (res == Z_CHANNEL_NODATA) {
-      // z_try_recv is non-blocking call, so will fail to return a sample if the Fifo buffer is empty
-      // do some other work or just sleep
-    } else if (res == Z_OK) {
-      // do something with sample
-      z_drop(z_move(sample));
-    } else { // res == Z_CHANNEL_DISCONNECTED
-      break; // channel is closed - no more samples will be received
-    }
+  z_result_t res = z_try_recv(z_loan(handler), &sample);
+  if (res == Z_CHANNEL_NODATA) {
+    // z_try_recv is non-blocking call, so will fail to return a sample if the Fifo buffer is empty
+    // do some other work or just sleep
+  } else if (res == Z_OK) {
+    // do something with sample
+    z_drop(z_move(sample));
+  } else { // res == Z_CHANNEL_DISCONNECTED
+    break; // channel is closed - no more samples will be received
+  }
 }
 ```
 
@@ -457,7 +457,7 @@ z_bytes_map_insert_by_alias(&map, _z_bytes_wrap((uint8_t *)"test", 2), _z_bytes_
 options.attachment = z_bytes_map_as_attachment(&map);
 
 if (z_put(z_loan(s), z_keyexpr(keyexpr), (const uint8_t *)value, strlen(value), &options) < 0) {
-    return -1;
+  return -1;
 }
 
 z_bytes_map_drop(&map);
@@ -465,23 +465,23 @@ z_bytes_map_drop(&map);
 // receive sample with attachment
 
 int8_t attachment_reader(z_bytes_t key, z_bytes_t val, void* ctx) {
-    printf("   attachment: %.*s: '%.*s'\n", (int)key.len, key.start, (int)val.len, val.start);
-    return 0;
+  printf("   attachment: %.*s: '%.*s'\n", (int)key.len, key.start, (int)val.len, val.start);
+  return 0;
 }
 
 void data_handler(const z_sample_t* sample, void* arg) {
-    // checks if attachment exists
-    if (z_check(sample->attachment)) {
-        // reads full attachment
-        z_attachment_iterate(sample->attachment, attachment_reader, NULL);
+  // checks if attachment exists
+  if (z_check(sample->attachment)) {
+    // reads full attachment
+    z_attachment_iterate(sample->attachment, attachment_reader, NULL);
 
-        // reads particular attachment item
-        z_bytes_t index = z_attachment_get(sample->attachment, z_bytes_from_str("index"));
-        if (z_check(index)) {
-            printf("   message number: %.*s\n", (int)index.len, index.start);
-        }
+    // reads particular attachment item
+    z_bytes_t index = z_attachment_get(sample->attachment, z_bytes_from_str("index"));
+    if (z_check(index)) {
+      printf("   message number: %.*s\n", (int)index.len, index.start);
     }
-    z_drop(z_move(keystr));
+  }
+  z_drop(z_move(keystr));
 }
 
 ```
@@ -544,13 +544,13 @@ void data_handler(const z_loaned_sample_t *sample, void *arg) {
   ze_deserializer_deserialize_sequence_length(&deserializer, &num_elements);
   z_owned_string_t key, value;
   for (size_t i = 0; i < num_elements; ++i) {
-      ze_deserializer_deserialize_string(&deserializer, &key);
-      ze_deserializer_deserialize_string(&deserializer, &value);
-      printf("   attachment: %.*s: '%.*s'\n",
-        (int)z_string_len(z_loan(key)), z_string_data(z_loan(key)),
-        (int)z_string_len(z_loan(value)), z_string_data(z_loan(value)));
-      z_drop(z_move(key));
-      z_drop(z_move(value));
+    ze_deserializer_deserialize_string(&deserializer, &key);
+    ze_deserializer_deserialize_string(&deserializer, &value);
+    printf("   attachment: %.*s: '%.*s'\n",
+      (int)z_string_len(z_loan(key)), z_string_data(z_loan(key)),
+      (int)z_string_len(z_loan(value)), z_string_data(z_loan(value)));
+    z_drop(z_move(key));
+    z_drop(z_move(value));
   }
 }
 ```
@@ -783,7 +783,7 @@ const size_t size = 1024 * 1024;
 const z_id_t id = z_info_zid(z_loan(s));
 char idstr[33];
 for (int i = 0; i < 16; i++) {
-    sprintf(idstr + 2 * i, "%02x", id.id[i]);
+  sprintf(idstr + 2 * i, "%02x", id.id[i]);
 }
 idstr[32] = 0;
 // create SHM manager
@@ -840,7 +840,7 @@ z_buf_layout_alloc_result_t alloc;
 // allocation behavior and handle allocation failures automatically
 z_shm_provider_alloc_gc(&alloc, z_loan(provider), alloc_size, alignment);
 if (!z_check(alloc.buf)) {
-    printf("Failed to allocate an SHM buffer, even after GCing\n");
-    exit(-1);
+  printf("Failed to allocate an SHM buffer, even after GCing\n");
+  exit(-1);
 }
 ```
