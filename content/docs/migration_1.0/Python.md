@@ -71,7 +71,7 @@ payload = ZBytes(input)
 output = payload.to_bytes()
 ```
 
-`zenoh.ext` serialization doesn't pretend to cover every use cases, as it is just one available choice among other serialization format like JSON, Protobuf, CBOR, etc. In the end, Zenoh will just send and receive payload raw bytes independently of the serialization used.  
+`zenoh.ext` serialization doesn't pretend to cover all use cases, as it is just one available choice among other serialization formats like JSON, Protobuf, CBOR, etc. In the end, Zenoh will just send and receive payload raw bytes independently of the serialization used.  
 
 NOTE: ⚠️ Serialization of `bytes` is not the same as passing `bytes` to `ZBytes` constructor.
 
