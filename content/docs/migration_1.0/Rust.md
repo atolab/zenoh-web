@@ -174,7 +174,7 @@ let payload: ZBytes = z_serialize(&input);
 let output: Vec<f32> = z_deserialize(&payload).unwrap();
 ```
 
-`zenoh-ext` serialization doesn't pretend to cover every use cases, as it is just one available choice among other serialization format like JSON, Protobuf, CBOR, etc. In the end, Zenoh will just send and receive payload raw bytes independently of the serialization used.  
+`zenoh-ext` serialization doesn't pretend to cover all use cases, as it is just one available choice among other serialization formats like JSON, Protobuf, CBOR, etc. In the end, Zenoh will just send and receive payload raw bytes independently of the serialization used.  
 
 NOTE: ⚠️ Serialization of `Vec<u8>` is not the same as creating a `ZBytes` from a `Vec<u8>`: the resulting `ZBytes` are different, and serialization doesn't take ownership of the bytes.
 
