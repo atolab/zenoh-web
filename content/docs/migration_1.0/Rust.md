@@ -142,7 +142,7 @@ However, the normal user would rarely need to call this method directly.*
 
 ## Value is gone, long live ZBytes
 
-`Value` has been split into `ZBytes` and `Encoding`. `put` and other operations now requires a `ZBytes` payload, and builders accept an optional `Encoding` parameter. The encoding is no longer automatically deduced from the payload type.
+`Value` has been split into `ZBytes` and `Encoding`. `put` and other operations now require a `ZBytes` payload, and builders accept an optional `Encoding` parameter. The encoding is no longer automatically deduced from the payload type.
 
 `ZBytes` is a raw bytes container, which can also contain non-contiguous region of memory. It can be created directly from raw bytes/strings using `ZBytes::from`. Then bytes can be retrieved using `ZBytes::to_bytes`, which returns a `Cow<[u8]>`, as a copy may have to be done if the underlying bytes are not contiguous.
 
