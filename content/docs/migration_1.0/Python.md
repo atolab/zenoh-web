@@ -41,7 +41,7 @@ with zenoh.open(zenoh.Config()) as session:
 
 ## Value is gone, long live ZBytes
 
-`Value` has been split into `ZBytes` and `Encoding`. `put` and other operations now requires a `ZBytes` payload, and builders accept an optional `Encoding` parameter. 
+`Value` has been split into `ZBytes` and `Encoding`. `put` and other operations now require a `ZBytes` payload, and builders accept an optional `Encoding` parameter. 
 
 `ZBytes` is a raw bytes container. It can be created directly from raw bytes/strings using `ZBytes` constructor. Then bytes can be retrieved using `ZBytes.to_bytes` or `ZBytes.to_string`. Sample payload is now a `ZBytes` instead of `bytes`.
 
