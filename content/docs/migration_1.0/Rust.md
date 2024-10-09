@@ -166,7 +166,7 @@ You can look at a full set of examples in `examples/examples/z_bytes.rs`.
 
 ### Serialization
 
-Zenoh does provide serialization for convenience as an extension in `zenoh-ext`. Serialization is implemented for a bunch of standard types like integers, floats, `Vec`, `HashMap`, etc. and is used through functions `z_serialize`/`z_deserialize`.
+Zenoh does provide serialization for convenience as an extension in the `zenoh-ext` crate. Serialization is implemented for a bunch of standard types like integers, floats, `Vec`, `HashMap`, etc. and is used through functions `z_serialize`/`z_deserialize`.
 
 ```rust
 let input: Vec<f32> = vec![0.0, 1.5, 42.0];
