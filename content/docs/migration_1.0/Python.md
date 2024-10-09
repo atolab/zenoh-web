@@ -61,7 +61,7 @@ my_string = sample.payload.to_string()
 
 You can look at a full set of examples in `examples/z_bytes.py`.
 
-### Serialization
+## Serialization
 
 Zenoh does provide serialization for convenience as an extension in `zenoh.ext` module. Serialization is implemented for a bunch of standard types like `int`, `float`, `list`, `dict`, `tuple`, etc. and is used through functions `z_serialize`/`z_deserialize`.
 
