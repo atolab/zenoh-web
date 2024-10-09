@@ -162,7 +162,7 @@ let zbytes: ZBytes = sample.payload();
 let raw_bytes: Cow<[u8]> = zbytes.as_bytes();
 ```
 
-You can look at a full set of examples in `examples/examples/z_bytes.rs`.
+You can look at a full set of examples in [`examples/examples/z_bytes.rs`](https://github.com/eclipse-zenoh/zenoh/blob/1.0.0-beta.4/examples/examples/z_bytes.rs).
 
 ## Serialization
 

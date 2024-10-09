@@ -59,7 +59,7 @@ sample = subscriber.recv()
 my_string = sample.payload.to_string()
 ```
 
-You can look at a full set of examples in `examples/z_bytes.py`.
+You can look at a full set of examples in [`examples/z_bytes.py`](https://github.com/eclipse-zenoh/zenoh-python/blob/1.0.0-beta.4/examples/z_bytes.py).
 
 ## Serialization
 
