@@ -104,7 +104,7 @@ void receive_bytes(const Sample &sample) {
 };
 ```
 
-Additionaly `zenoh::ext` namespace provides support for serialization/deserialziation of typed data to/into `Bytes`:
+Additionally `zenoh::ext` namespace provides support for serialization/deserialziation of typed data to/into `Bytes`:
 
 ```cpp
   // arithmetic types
@@ -115,7 +115,7 @@ Additionaly `zenoh::ext` namespace provides support for serialization/deserialzi
   // Composite types
   std::vector<float> v = {0.1f, 0.2f, 0.3f};
   b = ext::serialize(v);
-  assert(ext::deserialize<decltype(v)>(b) == v);
+  assert(ext::deserialize<std::vector<float>>(b) == v);
   
   std::unordered_map<std::string, std::deque<double>> m = {
     {"a", {0.5, 0.2}},
@@ -124,7 +124,7 @@ Additionaly `zenoh::ext` namespace provides support for serialization/deserialzi
   };
 
   b = ext::serialize(m);
-  assert(ext::deserialize<decltype(m)>(b) == m); 
+  assert(ext::deserialize<std::unordered_map<std::string, std::deque<double>>>(b) == m); 
 ```
 
 Users can easily define serialization/deserialization for their own custom types by using `ext::Serializer` and `ext::Deserializer` classes:

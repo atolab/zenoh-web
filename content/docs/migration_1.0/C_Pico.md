@@ -271,7 +271,7 @@ z_drop(z_move(payload));
 ```
 
 
-To implement custom (de-)serialization functions, Zenoh 1.0.0 provides `ze_owned_bytes_serializer`, `ze_bytes_deserializer_t` or lower-level `z_owned_bytes_wrtiter_t` and `ze_bytes_reader_t` types and corresponding functions.
+To implement custom (de-)serialization, Zenoh 1.0.0 provides `ze_owned_bytes_serializer`, `ze_bytes_deserializer_t` or lower-level `z_owned_bytes_wrtiter_t` and `z_bytes_reader_t` types and corresponding functions.
 
 Note that it is no longer possible to access the underlying payload data pointer directly, since Zenoh cannot guarantee that the data is delivered as a single fragment.
 So in order to get access to raw payload data one must use either `z_bytes_reader_t` or alternatively `z_bytes_slice_iterator_t` and their related functions:
