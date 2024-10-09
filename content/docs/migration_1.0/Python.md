@@ -37,50 +37,68 @@ with zenoh.open(zenoh.Config()) as session:
     session.declare_subscriber("my/keyepxr", lambda s: print(s))
     sleep(10) # subscriber stays in background and its callback can be called
     # `session.close()` will be called at the end of the block, and it will undeclare the subscriber
-```¬
-
-## ZBytes, encoding, and (de)serialization
-
-### Encoding
-
-`zenoh.Value` has been split into `zenoh.ZBytes` and `zenoh.Encoding`. Put and other operations now require a `ZBytes` payload, and accept an optional `Encoding`; the encoding is no longer automatically deduced from the payload type.
-
-```python
-session.put("my/keyexpr", 42) # default encoding `zenoh/bytes`session.put("my/keyexpr", 42, encoding=zenoh.Encoding.ZENOH_INT64)
 ```
 
-Publishers can be declared with a default encoding, which will be used for each put operation.
+## Value is gone, long live ZBytes
 
-```python
-import json
-publisher = session.declare_publisher("my/keyepxr", encoding=zenoh.Encoding.APPLICATION_JSON)
-publisher.put(json.dumps({"key", "value"}))  # default encoding from publisher `application/json`
+`Value` has been split into `ZBytes` and `Encoding`. `put` and other operations now require a `ZBytes` payload, and builders accept an optional `Encoding` parameter. 
+
+`ZBytes` is a raw bytes container. It can be created directly from raw bytes/strings using `ZBytes` constructor. Then bytes can be retrieved using `ZBytes.to_bytes` or `ZBytes.to_string`. Sample payload is now a `ZBytes` instead of `bytes`.
+
+- Zenoh 0.11.x
+
+```rust
+sample = subscriber.recv()
+my_string = sample.payload.decode("utf-8")
 ```
 
-### (De)serialization
+- Zenoh 1.0.0
 
-Arbitrary types can be serialized to and deserialized from `ZBytes`. Default (de)serializers are provided for builtin types; `list`/`dict` are **no longer** serialized to JSON, they use instead the builtin serializer of Zenoh, which is compatible with other Zenoh bindings.
-
-```python
-payload = zenoh.ZBytes(42)
-assert payload.deserialize(int) == 42# `ZBytes.deserialize` accepts generic `list`/`dict` typepayload = zenoh.ZBytes([0.5, 37.1])
-assert payload.deserialize(list[float]) == [0.5, 37.1]
+```rust
+sample = subscriber.recv()
+my_string = sample.payload.to_string()
 ```
 
-(De)serializers can be registered for custom types:
+You can look at a full set of examples in [`examples/z_bytes.py`](https://github.com/eclipse-zenoh/zenoh-python/blob/1.0.0-beta.4/examples/z_bytes.py).
+
+## Serialization
+
+Zenoh does provide serialization for convenience as an extension in `zenoh.ext` module. Serialization is implemented for a bunch of standard types like `int`, `float`, `list`, `dict`, `tuple`, etc. and is used through functions `z_serialize`/`z_deserialize`.
 
 ```python
-from dataclasses import dataclass
-import zenoh
-@dataclassclass RGB:
-    red: int    green: int    blue: int@zenoh.serializerdef serialize_rgb(rgb: RGB) -> zenoh.ZBytes:
-    return zenoh.ZBytes(rgb.red | (rgb.green << 8) | (rgb.blue << 16))
-@zenoh.deserializerdef deserialize_rgb(payload: zenoh.ZBytes) -> RGB:
-    compact = payload.deserialize(int)
-    return RGB(compact & 255, (compact >> 8) & 255, (compact >> 16) & 255)
-color = RGB(61, 67, 97)
-assert zenoh.ZBytes(color).deserialize(RGB) == color
-# types with a registered serializer can be used directly with `put`session.put("my/keyexpr", color)
+input = b"raw bytes"
+payload = ZBytes(input)
+output = payload.to_bytes()
+```
+
+`zenoh.ext` serialization doesn't pretend to cover all use cases, as it is just one available choice among other serialization formats like JSON, Protobuf, CBOR, etc. In the end, Zenoh will just send and receive payload raw bytes independently of the serialization used.  
+
+NOTE: ⚠️ Serialization of `bytes` is not the same as passing `bytes` to `ZBytes` constructor.
+
+## Encoding
+
+`Encoding` has been reworked. 
+Zenoh does not impose any encoding requirement on the user, nor does it operate on it. 
+It can be thought of as optional metadata, carried over by Zenoh in such a way that the end user’s application may perform different operations based on encoding.
+
+NOTE: ⚠️ The encoding is no longer automatically deduced from the payload type.
+
+```python
+session.put(json.dumps({"key", "value"}), encoding=Encoding.APPLICATION_JSON)
+```
+
+Users can also define their own encoding scheme that does not need to be based on the pre-defined variants.
+
+```python
+encoding = Encoding("pointcloud/LAS")
+```
+
+Because encoding is now optional for `put`, `Publisher` can be declared with a default encoding, which will be used in every `Publisher.put`.
+
+```python
+publisher = session.declare_publisher("my/keyepxr", encoding=Encoding.APPLICATION_JSON)
+// default encoding from publisher `application/json`
+publisher.put(json.dumps({"key", "value"}))
 ```
 
 ## Handlers
