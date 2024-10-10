@@ -29,12 +29,13 @@ with session.declare_subscriber("my/keyexpr") as subscriber:
     # `subscriber.undeclare()` will be called at the end of the block`
 ```
 
-In previous version, it was necessary to keep a variable in the scope for a subscriber/queryable declared with a callback. This constraint has been lifted, and it's now possible to declare and forget an entity with a callback; in that case, the entity will keep living in background, until the session is closed. 
+In previous version, it was necessary to keep a variable in the scope for a subscriber/queryable declared with a callback. This constraint has been lifted, and it's now possible to declare a "background" entity; this entity will keep living in background, having its callback executed until the session is closed. 
 
 ```python
 import zenoh
 with zenoh.open(zenoh.Config()) as session:
-    session.declare_subscriber("my/keyepxr", lambda s: print(s))
+    # no need to declare a variable
+    session.declare_subscriber("my/keyepxr", lambda s: print(s), background=True)
     sleep(10) # subscriber stays in background and its callback can be called
     # `session.close()` will be called at the end of the block, and it will undeclare the subscriber
 ```
@@ -81,7 +82,7 @@ NOTE: ⚠️ Serialization of `bytes` is not the same as passing `bytes` to `ZBy
 Zenoh does not impose any encoding requirement on the user, nor does it operate on it. 
 It can be thought of as optional metadata, carried over by Zenoh in such a way that the end user’s application may perform different operations based on encoding.
 
-NOTE: ⚠️ The encoding is no longer automatically deduced from the payload type.
+NOTE: ⚠️ The encoding is no longer automatically inferred from the payload type.
 
 ```python
 session.put(json.dumps({"key", "value"}), encoding=Encoding.APPLICATION_JSON)
