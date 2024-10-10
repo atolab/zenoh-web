@@ -90,7 +90,7 @@ The session is now closed automatically when the last `Session` instance is drop
 Subscriber and queryable of a closed session will no longer receive data; trying to call `Session::get`, `Session::put` or `Publisher::put` will result in an error. Closing session on the fly may save bandwidth on the wire, as it avoids propagating the undeclaration of remaining entities like subscribers/queryables/etc.  
 
 ```rust
-let session = zenoh::open(zenoh::config::peer()).await.unwrap();
+let session = zenoh::open(config).await.unwrap();
 let subscriber = session
     .declare_subscriber("key/expression")
     .await
@@ -111,38 +111,23 @@ subscriber_task.await.unwrap()
 
 ## Callbacks run in background until session is closed
 
-Session entities, e.g. subscribers, declared with callbacks are no longer undeclared when they are dropped; there is no longer need to keep a reference to an entity when the intent is to have it run until the session is closed.
+It is now possible to declare "background" entity, e.g. subscribers, which have their callback called until the session is closed. So it is no longer needed to keep a dummy variable in scope when the intent is to have an entity living for the rest of the program.
 
 ```rust
-let session = zenoh::open(zenoh::config::default()).await.unwrap();
+let session = zenoh::open(config).await.unwrap();
 session
     .declare_subscriber("key/ expression")
     .callback(|sample| { println!("Received: {} {:?}", sample. key_expr(), sample. payload()) })
+    .background() // declare the subscriber in background
     .await
     .unwrap();
 // subscriber run in background until the session is closed
 // no need to keep a variable around
 ```
 
-If you still want the entity to be undeclared when dropped, you can simply use `with` instead of `callback`; it may just require you to annotate the callback, as type inference is not as good as with `callback` method.
-
-```rust
-let session = zenoh::open(zenoh::config::default()).await.unwrap();
-let subscriber = session
-    .declare_subscriber("key/ expression")
-    // annotation needed
-    .with(|sample: Sample| { println!("Received: {} {:?}", sample. key_expr(), sample. payload()) })
-    .await
-    .unwrap();
-// subscriber is undeclared when dropped
-```
-
-*Going into details, a new method `undeclare_on_drop(bool)` – default to `true`, has been added to the builders, and `callback(cb)` is now simply a shortcut to `with(cb).undeclare_on_drop(false)`. 
-However, the normal user would rarely need to call this method directly.*
-
 ## Value is gone, long live ZBytes
 
-`Value` has been split into `ZBytes` and `Encoding`. `put` and other operations now require a `ZBytes` payload, and builders accept an optional `Encoding` parameter. The encoding is no longer automatically deduced from the payload type.
+`Value` has been split into `ZBytes` and `Encoding`. `put` and other operations now require a `ZBytes` payload, and builders accept an optional `Encoding` parameter. The encoding is no longer automatically inferred from the payload type.
 
 `ZBytes` is a raw bytes container, which can also contain non-contiguous regions of memory. It can be created directly from raw bytes/strings using `ZBytes::from`. The bytes can be retrieved using `ZBytes::to_bytes`, which returns a `Cow<[u8]>`, as a copy may have to be done if the underlying bytes are not contiguous.
 
@@ -391,7 +376,7 @@ let subscriber = session
     .unwrap();
 ```
 
-⚠️ Note:  We **no longer** support **Pull** mode in Zenoh
+⚠️ Note:  We **no longer** support **Pull** mode in Zenoh
 
 To get the same behavior of a Zenoh 0.11.0 `PullSubscriber`, please make use of a `RingChannel` an example of this is illustrated in `z_pull.rs`.
 
@@ -410,7 +395,7 @@ let timestamp : Timestamp =  zenoh::time::new_reception_timestamp();
 - Zenoh 1.0.0
 
 ```rust
-let session: Session = zenoh::open();
+let session: Session = zenoh::open(config);
 // If the `timestamping` configuration is disabled, this call will return `None`.
 let timestamp: Option<Timestamp> = session::new_timestamp();
 ```
