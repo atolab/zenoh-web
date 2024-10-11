@@ -111,7 +111,7 @@ subscriber_task.await.unwrap()
 
 ## Callbacks run in background until session is closed
 
-It is now possible to declare "background" entity, e.g. subscribers, which have their callback called until the session is closed. So it is no longer needed to keep a dummy variable in scope when the intent is to have an entity living for the rest of the program.
+It is now possible to declare "background" entities, e.g. subscribers, which have their callback called until the session is closed. So it is no longer needed to keep a dummy variable in scope when the intent is to have an entity living for the rest of the program.
 
 ```rust
 let session = zenoh::open(config).await.unwrap();
