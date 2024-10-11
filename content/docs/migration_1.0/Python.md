@@ -37,7 +37,8 @@ with zenoh.open(zenoh.Config()) as session:
     # no need to declare a variable
     session.declare_subscriber("my/keyepxr", lambda s: print(s), background=True)
     sleep(10) # subscriber stays in background and its callback can be called
-    # `session.close()` will be called at the end of the block, and it will undeclare the subscriber
+    # `session.close()` will be called at the end of the block,
+    # and it will undeclare the subscriber
 ```
 
 ## Value is gone, long live ZBytes
