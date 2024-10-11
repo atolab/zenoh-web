@@ -121,7 +121,7 @@ session
     .background() // declare the subscriber in background
     .await
     .unwrap();
-// subscriber run in background until the session is closed
+// subscriber runs in background until the session is closed
 // no need to keep a variable around
 ```
 
