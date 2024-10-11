@@ -120,7 +120,7 @@ const char *keyexpr = "example/demo/*";
 z_owned_subscriber_t sub;
 z_view_keyexpr_t ke;
 z_view_keyexpr_from_str(&ke, keyexpr);
-if (z_declare_subscriber(&sub, z_loan(session), z_loan(ke), z_move(callback), NULL) < 0) {
+if (z_declare_subscriber(z_loan(session), &sub, z_loan(ke), z_move(callback), NULL) < 0) {
     return -1;
 }
 ```
@@ -392,7 +392,6 @@ The same now also works for `Subscriber` and `Queryable` :
 
 ```c
 // callback
-// callback
 void data_handler(const z_loaned_sample_t *sample, void *context) {
   // do something with sample
 }
@@ -400,7 +399,7 @@ void data_handler(const z_loaned_sample_t *sample, void *context) {
 z_owned_closure_sample_t callback;
 z_closure(&callback, data_handler, NULL, NULL);
 z_owned_subscriber_t sub;
-if (z_declare_subscriber(&sub, z_loan(session), z_loan(keyexpr), z_move(callback), NULL) < 0) {
+if (z_declare_subscriber(z_loan(session), &sub, z_loan(keyexpr), z_move(callback), NULL) < 0) {
   printf("Unable to declare subscriber.\n");
   exit(-1);
 }
@@ -410,7 +409,7 @@ z_owned_fifo_handler_sample_t handler;
 z_owned_closure_sample_t closure;
 z_fifo_channel_reply_new(&closure, &handler, 16);
 z_owned_subscriber_t sub;
-if (z_declare_subscriber(&sub, z_loan(session), z_loan(keyexpr), z_move(closure), NULL) < 0) {
+if (z_declare_subscriber(z_loan(session), &sub, z_loan(keyexpr), z_move(closure), NULL) < 0) {
   printf("Unable to declare subscriber.\n");
   exit(-1);
 }
