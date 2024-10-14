@@ -12,7 +12,7 @@ encodings (string, JSON, raw bytes buffer&mldr;).</p><p>Let&rsquo;s get started!
 </span></span><span style=display:flex><span>    <span style=color:#069;font-weight:700>return</span> random<span style=color:#555>.</span>randint(<span style=color:#f60>15</span>, <span style=color:#f60>30</span>)
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#069;font-weight:700>if</span> __name__ <span style=color:#555>==</span> <span style=color:#c30>&#34;__main__&#34;</span>:
-</span></span><span style=display:flex><span>    session <span style=color:#555>=</span> zenoh<span style=color:#555>.</span>open()
+</span></span><span style=display:flex><span>    session <span style=color:#555>=</span> zenoh<span style=color:#555>.</span>open(zenoh<span style=color:#555>.</span>Config())
 </span></span><span style=display:flex><span>    key <span style=color:#555>=</span> <span style=color:#c30>&#39;myhome/kitchen/temp&#39;</span>
 </span></span><span style=display:flex><span>    pub <span style=color:#555>=</span> session<span style=color:#555>.</span>declare_publisher(key)
 </span></span><span style=display:flex><span>    <span style=color:#069;font-weight:700>while</span> <span style=color:#069;font-weight:700>True</span>:
@@ -27,7 +27,7 @@ encodings (string, JSON, raw bytes buffer&mldr;).</p><p>Let&rsquo;s get started!
 </span></span><span style=display:flex><span>    <span style=color:#366>print</span>(<span style=color:#c30>f</span><span style=color:#c30>&#34;Received </span><span style=color:#a00>{</span>sample<span style=color:#555>.</span>kind<span style=color:#a00>}</span><span style=color:#c30> (&#39;</span><span style=color:#a00>{</span>sample<span style=color:#555>.</span>key_expr<span style=color:#a00>}</span><span style=color:#c30>&#39;: &#39;</span><span style=color:#a00>{</span>sample<span style=color:#555>.</span>payload<span style=color:#555>.</span>deserialize(<span style=color:#366>str</span>)<span style=color:#a00>}</span><span style=color:#c30>&#39;)&#34;</span>)
 </span></span><span style=display:flex><span>    
 </span></span><span style=display:flex><span><span style=color:#069;font-weight:700>if</span> __name__ <span style=color:#555>==</span> <span style=color:#c30>&#34;__main__&#34;</span>:
-</span></span><span style=display:flex><span>    session <span style=color:#555>=</span> zenoh<span style=color:#555>.</span>open()
+</span></span><span style=display:flex><span>    session <span style=color:#555>=</span> zenoh<span style=color:#555>.</span>open(zenoh<span style=color:#555>.</span>Config())
 </span></span><span style=display:flex><span>    sub <span style=color:#555>=</span> session<span style=color:#555>.</span>declare_subscriber(<span style=color:#c30>&#39;myhome/kitchen/temp&#39;</span>, listener)
 </span></span><span style=display:flex><span>    time<span style=color:#555>.</span>sleep(<span style=color:#f60>60</span>)
 </span></span></code></pre></div><p>Start the subscriber:</p><div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>python3 z_subscriber.py
