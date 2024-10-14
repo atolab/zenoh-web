@@ -408,7 +408,9 @@ Removed:
 
 - `complete_n`: due to a Legacy code cleanup
 
-## Storages
+## Storage
+
+### Required option: `timestamping` enabled
 
 Zenoh 1.0.0 introduced the possibility for Zenoh nodes configured in a mode other than `router` to load plugins.
 
@@ -417,3 +419,50 @@ A, somehow, implicit assumption that dictated the behaviour of storages is that 
 Until Zenoh 1.0.0 this assumption held true as only a router could load storage and the default configuration for a router enables `timestamping`. However, in Zenoh 1.0.0 nodes configured in `client` & `peer` mode can load storage and *their default configuration disables `timestamping`*.
 
 ⚠️ The `storage-manager` will fail to launch if the `timestamping` configuration option is disabled.
+
+### Rewrite of the Replication
+
+We have completely rewritten the Replication functionality in Zenoh 1.0.0. The core of the algorithm did not change, hence if you are interested in its inner workings, [our blog post unveiling this functionality](https://zenoh.io/blog/2022-11-29-zenoh-alignment/) still provides an accurate overview.
+
+This rewrite was an opportunity to integrate many of the improvements we introduced in Zenoh since this feature was first developed. In particular, the older version was not leveraging Queryable as, at the time, they did not allow carrying attachments or payloads.
+
+We also used this rewrite to slightly rework the configuration thus, if you were using this functionality before Zenoh 1.0.0, you will have to update the configuration of all your replicated Storage. The following configuration summarises the changes:
+
+```json5
+"plugins": {
+  "storage_manager": {
+    "storages": {
+      "replication-test": {
+        "volume": "memory",
+        "key_expr": "test/replication/*",
+        
+        // ⚠️ This field must be identical for all Replicated Storage.
+        "strip_prefix": "test/replication",
+
+        // ⚠️ This field was previously called `replica_config`.
+        "replication": {
+
+          // ⚠️ This field was previously called `publication_interval`.
+          "interval": 10,
+
+          // ⚠️ This field replaces `delta`.
+          "sub_intervals": 5,
+
+          // This field did not change.
+          "propagation_delay": 250,
+
+          // ⚠️ These fields are new.
+          "hot": 6,
+          "warm": 30,
+        }
+      }
+    }
+  }
+}
+```
+
+The new `hot` and `warm` fields expose parts of the Replication algorithm. They express how many intervals are included in the Hot and Warm Eras respectively. These values control how much information is included in the Replication Digest: the higher these values are, the more information are included in the Digest (consuming more bandwidth for each Digest) but, at the same time, a misalignment will be detected and resolved faster (consuming less bandwidth when aligning).
+
+Finally, in 1.0.0, only Replicas configured with **exactly** the same parameters will interact. This is to avoid burdening the network for no reason: if two Storage, active on the same key expression, have different replication configuration then every time they exchange their Digest, they will have to retrieve all the metadata in order to assess if they are aligned or not. Indeed, they do not "sort" their data in the same buckets (i.e. intervals and sub-intervals) and thus cannot compare the associated "fingerprints".
+
+Note that configuring Storage differently is equivalent to creating Replication groups: only Replicas with exactly the same configuration belong to the same group.
