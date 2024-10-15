@@ -786,7 +786,7 @@ This is done in the Zenoh Transport layer when two Zenoh nodes are operating in 
 In Zenoh 0.11.x, the Link selection implementation picks any Link that matches the Reliability of the transmitted message.
 In Zenoh 1.0.0, Links can be tagged with Reliability and Priority range information through Endpoint metadata:
 
-```json5
+```json
 { listen: { endpoints: ["tcp/localhost:7447?prio=0-3;rel=1"] } }
 ```
 
@@ -794,7 +794,7 @@ Thus Link selection takes in account both Reliability and Priority of the transm
 
 E.g., let's consider the following configuration:
 
-```json5
+```json
 { listen: { endpoints: ["tcp/localhost:7447?rel=0", "tcp/localhost:7448?rel=1"] } }
 ```
 
@@ -808,7 +808,7 @@ In Zenoh 1.0.0 we have completely rewritten the *storage replication* feature to
 Users leveraging this functionality will have to update their configuration as this release includes non-backward compatible changes.
 The following configuration illustrates the changes:
 
-```json5
+```json
 "plugins": {
     "storage_manager": {
         "storages": {
@@ -851,15 +851,23 @@ Zenoh-Pico implementes now the new [C API](#c-api) as well the new [interest pro
 Therefore, Zenoh-Pico publishers will now start sending messages on the network only once at least one subscriber is detected, saving energy and bandwidth in case of nodody is interested in the actual data.
 The interest feature will be implemented also for peer mode in the future.
 
-# Bugfixes
+---
 
-- ...
+## Changelog
 
-And more. Checkout the [release changelog](... TO BE DONE ...) to check all the new features and bug fixes with their associated PR’s!
+The effort behind Zenoh 1.0.0 resulted in a large number of bugfixes and improvements.
+For sake of space, we will not include the changelog in this blog post.
+If you are interested in the full changelog for every Zenoh repository, you can acces them from the following links: [Rust](https://github.com/eclipse-zenoh/zenoh/releases), [C](https://github.com/eclipse-zenoh/zenoh-c/releases), [C++](https://github.com/eclipse-zenoh/zenoh-cpp/releases), [Python](https://github.com/eclipse-zenoh/zenoh-python/releases), [Kotlin](https://github.com/eclipse-zenoh/zenoh-kotlin/releases), [Pico](https://github.com/eclipse-zenoh/zenoh-pico/releases), [DDS plugin](https://github.com/eclipse-zenoh/zenoh-plugin-dds/releases), [ROS2 plugin](https://github.com/eclipse-zenoh/zenoh-plugin-ros2/releases), [MQTT plugin](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases), [WebServer plugin](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases), [Filesystem backend](https://github.com/eclipse-zenoh/zenoh-backend-filesystem/releases), [RocksDB backend](https://github.com/eclipse-zenoh/zenoh-backend-rocksdb/releases), [S3 backend](https://github.com/eclipse-zenoh/zenoh-backend-s3/releases), [InfluxDB backend](https://github.com/eclipse-zenoh/zenoh-backend-influxdb/releases).
 
 ---
 
 # What’s next?
+
+This has been quite a long blog post but the amount of new features introduced in Zenoh 1.0.0 deserved some space! And now what could you expect from Zenoh in the future? 
+- We will keep working on the API to stabilize those functions that today are marked as unstable: they work as expected but some changes may still land. 
+- We are planning to extend more API functionalities to all the bindings, e.g. today some API is available only in Rust and we want to make it available as well in Python, C, and C++.
+- We will keep working on performance and scalability of all the zenoh ecosystem.
+- And many other cool things…
 
 Happy Hacking,
 
