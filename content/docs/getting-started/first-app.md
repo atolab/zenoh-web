@@ -22,9 +22,9 @@ Let's get started!
 
 First thing first, we need to install the [zenoh Python library](https://github.com/eclipse-zenoh/zenoh-python).
 ```bash
-pip install eclipse-zenoh==1.0.0b2
+pip install eclipse-zenoh==1.0.0rc1
 ```
-*The examples are updated to use the 1.0 version currently in beta, which is why version must be specified in the installation command. You can find more information about the 1.0 changes in the [migration guides](https://zenoh.io/docs/migration_1.0/concepts/).*
+*The examples are updated to use the 1.0 version currently in rc, which is why version must be specified in the installation command. You can find more information about the 1.0 changes in the [migration guides](https://zenoh.io/docs/migration_1.0/concepts/).*
 
 Then, let's write an application, `z_sensor.py` that will produce temperature measurements at each second:
 
