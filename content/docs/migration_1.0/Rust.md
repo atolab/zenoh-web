@@ -468,3 +468,88 @@ To be precise, if an interval is in the Hot Era, at most 64 bits + 128 bits × `
 Finally, in 1.0.0, only Replicas configured with **exactly** the same parameters will interact. This is to avoid burdening the network for no reason: if two Storage, active on the same key expression, have different replication configuration then every time they exchange their Digest, they will have to retrieve all the metadata in order to assess if they are aligned or not. Indeed, they do not "sort" their data in the same buckets (i.e. intervals and sub-intervals) and thus cannot compare the associated "fingerprints".
 
 Note that configuring Storage slightly differently is equivalent to creating Replication groups: only Replicas with exactly the same configuration belong to the same group.
+
+
+
+## Shared Memory
+
+Shared Memory subsystem is heavily reworked and improved. The key functionality changes:
+
+- Buffer reference counting is now robust across abnormal process termination
+- Support plugging of user-defined SHM implementations
+- Dynamic SHM transport negotiation: Sessions are interoperable with any combination of SHM configuration and physical location
+- Support aligned allocations
+- Manual buffer invalidation
+- Buffer write access
+- Rich buffer allocation interface
+
+⚠️ Please note that SHM API is still unstable and will be improved in the future.
+
+### SharedMemoryManager → ShmProvider + ShmProviderBackend
+
+- Zenoh 0.11.x
+
+```rust
+let id = session.zid().to_string();
+let shmem_size = 1024*1024;
+let mut manager = SharedMemoryManager::make(id, shmem_size).unwrap();
+```
+
+- Zenoh 1.0.0
+
+```rust
+// Create an SHM backend...
+let shmem_size = 1024*1024;
+// Difference: each SHM Provider needs a backend that defines it's implementation
+// details, like SHM system API used and allocation startegy
+let backend = PosixShmProviderBackend::builder()
+    .with_size(shmem_size)
+    .unwrap()
+    .res()
+    .unwrap();
+// ...and an SHM provider
+let provider = ShmProviderBuilder::builder()
+    .protocol_id::<POSIX_PROTOCOL_ID>()
+    .backend(backend)
+    .res();
+// Difference: SHMProvider is not pinned to particular Session ID and it's
+// buffers are OK to be published in different Sessions
+```
+
+⚠️ Backend implements `ShmProviderBackend` trait and user is free to create custom backends.
+
+### Buffer allocation
+
+- Zenoh 0.11.x
+
+```rust
+// Allocate SHM buffer
+let mut sbuf = match manager.alloc(1024) {
+    Ok(buf) => buf,
+    Err(_) => {
+        tokio::time::sleep(Duration::from_millis(100)).await;
+        println!(
+            "After failing allocation the GC collected: {} bytes -- retrying",
+            manager.garbage_collect()
+        );
+        println!(
+            "Trying to de-fragment memory... De-fragmented {} bytes",
+            manager.defragment()
+        );
+        manager.alloc(1024).unwrap()
+    }
+};
+```
+
+- Zenoh 1.0.0
+
+```rust
+// Allocate SHM buffer
+let mut sbuf = provider
+    .alloc(1024)
+    // Difference: there is a rich set of policies available to control
+    // allocation behavior and handle allocation failures automatically
+    .with_policy::<BlockOn<Defragment<GarbageCollect>>>()
+    .wait()
+    .unwrap();
+```
