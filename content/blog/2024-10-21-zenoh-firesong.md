@@ -1,6 +1,6 @@
 ---
 date: "2024-10-01"
-title: 'Ladies and gentlemen: habemus Zenoh 1.0.0 "Firesong"!'
+title: 'Zenoh 1.0.0 Firesong: ready to rock!'
 description: "21st October 2024"
 menu: "blog"
 weight: 20241021
@@ -8,7 +8,7 @@ weight: 20241021
 
 As a result of an incredible effort from the whole Zenoh team and Zenoh community, we can finally announce that Zenoh 1.0.0 *Firesong* is out! 
 
-This release comes with a lot of features and improvements:
+This release marks an incredible milestone for Zenoh and comes with a lot of features and improvements:
 - API stabilization. Great attention has been given to the API, its revision and rework to provide the necessary level of stability and future extensibility.
 - The very first alpha version of the new TypeScript API.
 - A full rework of the Shared Memory subsystem in Zenoh, with a new API and more supported topologies.
@@ -866,6 +866,7 @@ If you are interested in the full changelog for every Zenoh repository, you can 
 This has been quite a long blog post but the amount of new features introduced in Zenoh 1.0.0 deserved some space! And now what could you expect from Zenoh in the future? 
 - We will keep working on the API to stabilize those functions that today are marked as unstable: they work as expected but some changes may still land. 
 - We are planning to extend more API functionalities to all the bindings, e.g. today some API is available only in Rust and we want to make it available as well in Python, C, and C++.
+- Liveliness support is planned to be added in Zenoh-Pico.
 - We will keep working on performance and scalability of all the zenoh ecosystem.
 - And many other cool things…
 
