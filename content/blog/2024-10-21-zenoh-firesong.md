@@ -1,6 +1,6 @@
 ---
 date: "2024-10-01"
-title: 'Zenoh 1.0.0 Firesong: ready to rock!'
+title: 'Zenoh 1.0.0 "Firesong" is ready to rock!'
 description: "21st October 2024"
 menu: "blog"
 weight: 20241021
@@ -914,8 +914,7 @@ The interest feature will be implemented also for peer mode in the future.
 ## Changelog
 
 The effort behind Zenoh 1.0.0 resulted in a large number of bugfixes and improvements.
-For sake of space, we will not include the changelog in this blog post.
-If you are interested in the full changelog for every Zenoh repository, you can acces them from the following links: [Rust](https://github.com/eclipse-zenoh/zenoh/releases), [C](https://github.com/eclipse-zenoh/zenoh-c/releases), [C++](https://github.com/eclipse-zenoh/zenoh-cpp/releases), [Python](https://github.com/eclipse-zenoh/zenoh-python/releases), [Kotlin](https://github.com/eclipse-zenoh/zenoh-kotlin/releases), [Pico](https://github.com/eclipse-zenoh/zenoh-pico/releases), [DDS plugin](https://github.com/eclipse-zenoh/zenoh-plugin-dds/releases), [ROS2 plugin](https://github.com/eclipse-zenoh/zenoh-plugin-ros2/releases), [MQTT plugin](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases), [WebServer plugin](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases), [Filesystem backend](https://github.com/eclipse-zenoh/zenoh-backend-filesystem/releases), [RocksDB backend](https://github.com/eclipse-zenoh/zenoh-backend-rocksdb/releases), [S3 backend](https://github.com/eclipse-zenoh/zenoh-backend-s3/releases), [InfluxDB backend](https://github.com/eclipse-zenoh/zenoh-backend-influxdb/releases).
+The full changelog for every Zenoh repository is available at the following links: [Rust](https://github.com/eclipse-zenoh/zenoh/releases), [C](https://github.com/eclipse-zenoh/zenoh-c/releases), [C++](https://github.com/eclipse-zenoh/zenoh-cpp/releases), [Python](https://github.com/eclipse-zenoh/zenoh-python/releases), [Kotlin](https://github.com/eclipse-zenoh/zenoh-kotlin/releases), [Pico](https://github.com/eclipse-zenoh/zenoh-pico/releases), [DDS plugin](https://github.com/eclipse-zenoh/zenoh-plugin-dds/releases), [ROS2 plugin](https://github.com/eclipse-zenoh/zenoh-plugin-ros2/releases), [MQTT plugin](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases), [WebServer plugin](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases), [Filesystem backend](https://github.com/eclipse-zenoh/zenoh-backend-filesystem/releases), [RocksDB backend](https://github.com/eclipse-zenoh/zenoh-backend-rocksdb/releases), [S3 backend](https://github.com/eclipse-zenoh/zenoh-backend-s3/releases), [InfluxDB backend](https://github.com/eclipse-zenoh/zenoh-backend-influxdb/releases).
 
 ---
 
