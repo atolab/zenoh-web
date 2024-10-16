@@ -883,7 +883,7 @@ If you are interested in the full changelog for every Zenoh repository, you can 
 
 ---
 
-# What’s next?
+## What’s next?
 
 This has been quite a long blog post but the amount of new features introduced in Zenoh 1.0.0 deserved some space! And now what could you expect from Zenoh in the future? 
 - We will keep working on the API to stabilize those functions that today are marked as unstable: they work as expected but some changes may still land. 
