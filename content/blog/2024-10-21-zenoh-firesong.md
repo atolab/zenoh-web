@@ -8,6 +8,28 @@ weight: 20241021
 
 As a result of an incredible effort from the whole Zenoh team and Zenoh community, we can finally announce that Zenoh 1.0.0 *Firesong* is out! 
 
+{{< figure-inline
+    src="../../img/20241021-blog-zenoh-firesong/comic-october-2024.png"
+    class="responsive-figure figure-inline"
+    alt="Zenoh comic October 2024"
+    width="100%" >}}
+
+{{< rawhtml >}}
+
+<style>
+.responsive-figure {
+    display: flex;
+    justify-content: center;
+}
+
+.responsive-figure img {
+    max-width: 720px;
+    height: auto;
+}
+</style>
+
+{{< /rawhtml >}}
+
 This release marks an incredible milestone for Zenoh and comes with a lot of features and improvements:
 - API stabilization. Great attention has been given to the API, its revision and rework to provide the necessary level of stability and future extensibility.
 - The very first alpha version of the new TypeScript API.
@@ -15,11 +37,11 @@ This release marks an incredible milestone for Zenoh and comes with a lot of fea
 - Improved batching and jitter performance for high frequency publications.
 - Improved protocol for write-side filtering.
 
-Let us take a closer look at what Zenoh 1.0.0 brings to the table. 
+Let us take a closer look at what Zenoh 1.0.0 brings to the table.
 
 ---
 
-## API improvement
+## Improved API approach
 
 Zenoh's API has been improved in terms of ergonomics, clarity, and composability for future extensibility! 
 The following sections highlight the main changes of the API in the various language bindings. 
