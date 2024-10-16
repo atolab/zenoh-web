@@ -771,7 +771,7 @@ Shared Memory subsystem has been heavily reworked and improved. The key function
 
 ⚠️ Please note that SHM API is still unstable and will be improved in the future.
 
-**SharedMemoryManager → SHMProvider + SHMProviderBackend**
+### SharedMemoryManager → ShmProvider + ShmProviderBackend
 
 - Zenoh 0.11.x
 
@@ -805,7 +805,7 @@ z_owned_shm_provider_t provider;
 z_posix_shm_provider_new(&provider, z_loan(layout));
 ```
 
-**Buffer allocation**
+### Buffer allocation
 
 - Zenoh 0.11.x
 
