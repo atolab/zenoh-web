@@ -867,6 +867,42 @@ The rationale is to avoid comparing information that, in fact, cannot be compare
 
 ---
 
+# TLS/mTLS/QUIC Configuration
+
+In Zenoh 1.0.0 we have changed the configuration parameters for TLS/mTLS/QUIC to faciliate the configuration.
+
+The following configuration illustrates the changes:
+
+```json
+
+"transport": {
+    "link": {
+      "tls": {
+        "root_ca_certificate": "/home/user/tls/minica.pem",
+        "enable_mtls": true,
+        "listen_private_key": "/home/user/tls/localhost/key.pem",
+        "listen_certificate": "/home/user/tls/localhost/cert.pem",
+        "connect_private_key": "/home/user/client/localhost/key.pem",
+        "connect_certificate": "/home/user/client/localhost/cert.pem",
+        "verify_name_on_connect":false,
+      }
+    }
+  }
+```
+
+For users already using a TLS configuration, it is sufficient to change the configuration parametes accoring to the following table:
+
+|  Old | New  | 
+|---|---|
+| client_auth  | enable_mtls   |
+| server_name_verification  | verify_name_on_connect   |
+|  server_private_key |  listen_private_key |
+|  server_certificate |  listen_certificate |
+|  client_private_key |  connect_private_key |
+|  client_certificate |  connect_certificate |
+
+---
+
 ## Zenoh-Pico
 
 Zenoh-Pico implementes now the new [C API](#c-api) as well the new [interest protocol](#interest-protocol) when operating in client mode.
