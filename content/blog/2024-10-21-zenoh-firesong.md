@@ -867,7 +867,7 @@ The rationale is to avoid comparing information that, in fact, cannot be compare
 
 ---
 
-# TLS/mTLS/QUIC Configuration
+## TLS/mTLS/QUIC Configuration
 
 In Zenoh 1.0.0 we have changed the configuration parameters for TLS/mTLS/QUIC to faciliate the configuration.
 
