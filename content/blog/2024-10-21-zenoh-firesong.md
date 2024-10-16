@@ -745,7 +745,7 @@ let mut sbuf = async {
 .await;
 ```
 
-For more information, please see the migration guide (TBD... migration guide missing).
+For more information, please see the [migration guide](https://zenoh.io/docs/migration_1.0/rust/#shared-memory).
 
 ---
 
