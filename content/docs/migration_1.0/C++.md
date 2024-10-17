@@ -107,24 +107,24 @@ void receive_bytes(const Sample &sample) {
 Additionally `zenoh::ext` namespace provides support for serialization/deserialziation of typed data to/into `Bytes`:
 
 ```cpp
-  // arithmetic types
-  double pi = 3.1415926;
-  Bytes b = ext::serialize(pi);
-  assert(ext::deserialize<doulbe>(b) == pi);
-  
-  // Composite types
-  std::vector<float> v = {0.1f, 0.2f, 0.3f};
-  b = ext::serialize(v);
-  assert(ext::deserialize<std::vector<float>>(b) == v);
-  
-  std::unordered_map<std::string, std::deque<double>> m = {
-    {"a", {0.5, 0.2}},
-    {"b", {-123.45, 0.4}},
-    {"abc", {3.1415926, -1.0} }
-  };
+// arithmetic types
+double pi = 3.1415926;
+Bytes b = ext::serialize(pi);
+assert(ext::deserialize<doulbe>(b) == pi);
 
-  b = ext::serialize(m);
-  assert(ext::deserialize<std::unordered_map<std::string, std::deque<double>>>(b) == m); 
+// Composite types
+std::vector<float> v = {0.1f, 0.2f, 0.3f};
+b = ext::serialize(v);
+assert(ext::deserialize<std::vector<float>>(b) == v);
+
+std::unordered_map<std::string, std::deque<double>> m = {
+  {"a", {0.5, 0.2}},
+  {"b", {-123.45, 0.4}},
+  {"abc", {3.1415926, -1.0} }
+};
+
+b = ext::serialize(m);
+assert(ext::deserialize<std::unordered_map<std::string, std::deque<double>>>(b) == m); 
 ```
 
 Users can easily define serialization/deserialization for their own custom types by using `ext::Serializer` and `ext::Deserializer` classes:
@@ -136,11 +136,20 @@ struct CustomStruct {
   std::string s;
 };
 
-// One needs to implement __zenoh_serialize_with_serializer in the same namespace as CustomStruct
-void __zenoh_serialize_with_serializer(ext::Serializer& serializer, const CustomStruct& s) {
-  serializer.serialize(s.vd);
-  serializer.serialize(s.i);
-  serializer.serialize(s.s);
+// One needs to implement __zenoh_serialize_with_serializer and __zenoh_deserialize_with_deserializer
+// in the same namespace, where CustomStruct is defined.
+// To simplify implementation users are allowed to use
+// serialize_with_serializer and deserialize_with_deserializer functions defined in zenoh::ext::detail namespace.
+bool __zenoh_serialize_with_serializer(zenoh::ext::Serializer& serializer, const CustomStruct& s, ZResult* err) {
+  return zenoh::ext::detail::serialize_with_serializer(serializer, s.vd, err) &&
+         zenoh::ext::detail::serialize_with_serializer(serializer, s.i, err) &&
+         zenoh::ext::detail::serialize_with_serializer(serializer, s.s, err);
+}
+
+bool __zenoh_deserialize_with_deserializer(zenoh::ext::Deserializer& deserializer, CustomStruct& s, ZResult* err) {
+  return zenoh::ext::detail::deserialize_with_deserializer(deserializer, s.vd, err) &&
+         zenoh::ext::detail::deserialize_with_deserializer(deserializer, s.i, err) &&
+         zenoh::ext::detail::deserialize_with_deserializer(deserializer, s.s, err);
 }
 
 void serialize_custom() {
