@@ -137,7 +137,7 @@ struct CustomStruct {
 };
 
 // One needs to implement __zenoh_serialize_with_serializer and __zenoh_deserialize_with_deserializer
-// in the same namespace where CustomStruct is defined.
+// in the same namespace, where CustomStruct is defined.
 // To simplify implementation users are allowed to use
 // serialize_with_serializer and deserialize_with_deserializer functions defined in zenoh::ext::detail namespace.
 bool __zenoh_serialize_with_serializer(zenoh::ext::Serializer& serializer, const CustomStruct& s, ZResult* err) {
@@ -226,7 +226,7 @@ while (true) {
   if (std::has_alternative<Reply>(res)) {
     const auto& sample = std::get<Reply>(res).get_ok();
 	  std::cout << "Received ('" << sample.get_keyexpr().as_string_view() << "' : '"
-              << sample.get_payload().as_string() << "')\n";
+            << sample.get_payload().as_string() << "')\n";
   } else if (std::get<channels::RecvError>(res) == channels::RecvError::Z_NODATA) {
 	  // try_recv is non-blocking call, so may fail to return a reply if the Fifo buffer is empty
 	  std::cout << ".";
