@@ -41,6 +41,30 @@ with zenoh.open(zenoh.Config()) as session:
     # and it will undeclare the subscriber
 ```
 
+## Drop-callback has to be wrapped in `handlers.Callback`
+
+In previous version, it was possible to pass a drop-callback with the main callback in a tuple for operations like `Session.declare_subscriber`. However, it was also possible to pass a tuple with a "receiver" (renamed "handler" in 1.0) as second member, and that could be confusing
+<br>
+The API has been changed and now requires the drop-callback to be wrapped in `handlers.Callback`. 
+
+- Zenoh 0.11.x
+
+```python
+def on_sample(sample: zenoh.Sample): ...
+def on_done(): ...
+session.declare_subscriber((on_sample, on_done))
+```
+
+- Zenoh 1.0.0
+
+```python
+def on_sample(sample: zenoh.Sample): ...
+def on_done(): ...
+session.declare_subscriber(zenoh.handlers.Callback(on_sample, on_done))
+```
+
+NOTE: ⚠️ Passing drop-callback in a tuple will no more work as expected, as the drop callback will never be executed. To ease migration and avoid surprises, a warning will be displayed in this case.
+
 ## Value is gone, long live ZBytes
 
 `Value` has been split into `ZBytes` and `Encoding`. `put` and other operations now require a `ZBytes` payload, and builders accept an optional `Encoding` parameter. 
@@ -49,14 +73,14 @@ with zenoh.open(zenoh.Config()) as session:
 
 - Zenoh 0.11.x
 
-```rust
+```python
 sample = subscriber.recv()
 my_string = sample.payload.decode("utf-8")
 ```
 
 - Zenoh 1.0.0
 
-```rust
+```python
 sample = subscriber.recv()
 my_string = sample.payload.to_string()
 ```
