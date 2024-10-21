@@ -781,7 +781,7 @@ Writer side filtering can be reactivated for publications on some key expression
 ## Access Control
 
 For Zenoh 1.0.0, we are happy to share that we have added support for TLS and user/password authentication methods as means to identify access control subjects, as relying solely on interface names to identify subjects quickly reaches its limits. 
-This addition introduced the need for a way to describe subjects as combinations of multiple attributes of different types (interface, certificate, common name and/or username). 
+This addition introduced the need for a way to describe subjects as combinations of multiple attributes of different types (interface, certificate common name, and/or username). 
 We have addressed this need by reworking the ACL configuration format, making it modular by isolating the `rules` from the `subjects`. 
 This allows the combination of subject attributes, while also avoiding the need to duplicate subject or rule configurations by adding the `policies` list.
 
