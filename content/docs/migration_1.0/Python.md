@@ -63,7 +63,7 @@ def on_done(): ...
 session.declare_subscriber(zenoh.handlers.Callback(on_sample, on_done))
 ```
 
-NOTE: ⚠️ Passing drop-callback in a tuple will no more work as expected, as the drop callback will never be executed. To ease migration and avoid surprises, a warning will be displayed in this case.
+NOTE: ⚠️ Passing drop-callback in a tuple will no longer work as expected, as the drop callback will never be executed. To ease migration and avoid surprises, a warning will be displayed in this case.
 
 ## Value is gone, long live ZBytes
 
