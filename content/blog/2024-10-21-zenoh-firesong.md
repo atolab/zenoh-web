@@ -582,7 +582,7 @@ It is advised for users to account for the general performance characteristics o
 
 Below is an example of a *subscriber* taking a callback:
 ```ts
-const session = await Session.open(Config.new("ws/127.0.0.1:10000"));
+const session = await Session.open(new Config("ws/127.0.0.1:10000"));
   const callback = async function (sample: Sample): Promise<void> {
     console.log!(
       ">> [Subscriber] Received " +
@@ -603,15 +603,17 @@ const session = await Session.open(Config.new("ws/127.0.0.1:10000"));
 
 Below is an example of a *publisher*:
 ```ts
-  const session = await Session.open(Config.new("ws/127.0.0.1:10000"));
-  let key_expr = KeyExpr.new("demo/example/zenoh-ts-pub");
+  const session = await Session.open(new Config("ws/127.0.0.1:10000"));
+  let key_expr = new KeyExpr("demo/example/zenoh-ts-pub");
   let publisher: Publisher = session.declare_publisher(
 	key_expr,
-	Encoding.default(),
-	CongestionControl.BLOCK,
-	Priority.DATA,
-	true,
-	Reliability.RELIABLE
+    {
+      encoding: Encoding.default(),
+      congestion_control: CongestionControl.BLOCK,
+      priority: Priority.DATA,
+      express: true,
+      reliability: Reliability.RELIABLE
+    }
   );
   const payload = [122, 101, 110, 111, 104];
 
