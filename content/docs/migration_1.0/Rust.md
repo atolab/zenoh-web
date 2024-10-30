@@ -428,7 +428,7 @@ This rewrite was an opportunity to integrate many of the improvements we introdu
 
 We also used this rewrite to slightly rework the configuration thus, if you were using this functionality before Zenoh 1.0.0, you will have to update the configuration of all your replicated Storage. The following configuration summarises the changes:
 
-```json5
+```json
 "plugins": {
   "storage_manager": {
     "storages": {
