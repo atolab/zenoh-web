@@ -461,14 +461,13 @@ We also used this rewrite to slightly rework the configuration thus, if you were
 }
 ```
 
-The new `hot` and `warm` fields expose parts of the Replication algorithm. They express how many intervals are included in the Eras with the same name. These values control how much information is included in the Replication Digest: the higher these values are, the more information are included in the Digest and thus the more bandwidth is consumed.
+The new `hot` and `warm` fields expose parts of the Replication algorithm. They express how many intervals are included in the Hot and Warm Eras respectively. These values control how much information is included in the Replication Digest: the higher these values are, the more information are included in the Digest (consuming more bandwidth for each Digest) but, at the same time, a misalignment will be detected and resolved faster (consuming less bandwidth when aligning).
 
-To be precise, if an interval is in the Hot Era, at most 64 bits + 128 bits × `sub_intervals` will be sent (empty sub-intervals are ignored) for that interval. Hence, if the Hot Era contains 10 intervals, then, at most, 10 × `sub_intervals` × 128 bits + 64 bits will be sent with each Digest. Similarly, a non-empty interval in the Warm Era will occupy 128 bits in the Digest (empty intervals are ignored).
+Finally, in 1.0.0, only Replicas configured with **exactly the same parameters** will interact. This is to avoid burdening the network for no reason: if Replicas with a different configuration were to interact, they would always assume they are misaligned as, because of their different configuration, they would compute different Digests --- even when they are aligned.
 
-Finally, in 1.0.0, only Replicas configured with **exactly** the same parameters will interact. This is to avoid burdening the network for no reason: if two Storage, active on the same key expression, have different replication configuration then every time they exchange their Digest, they will have to retrieve all the metadata in order to assess if they are aligned or not. Indeed, they do not "sort" their data in the same buckets (i.e. intervals and sub-intervals) and thus cannot compare the associated "fingerprints".
+The parameters that must be identical are: `key_expr`, `strip_prefix` and all the fields in `replication` (i.e. `interval`, `sub_intervals`, `propagation_delay`, `hot` and `warm`).
 
-Note that configuring Storage slightly differently is equivalent to creating Replication groups: only Replicas with exactly the same configuration belong to the same group.
-
+Note that configuring Replicas differently is equivalent to creating Replication groups: only Replicas with exactly the same configuration belong to the same group.
 
 
 ## Shared Memory
