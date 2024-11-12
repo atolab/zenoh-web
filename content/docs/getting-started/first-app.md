@@ -54,7 +54,7 @@ Now we need a subscriber, `z_subscriber.py` that can receive the measurements:
 import zenoh, time
 
 def listener(sample):
-    print(f"Received {sample.kind} ('{sample.key_expr}': '{sample.payload.deserialize(str)}')")
+    print(f"Received {sample.kind} ('{sample.key_expr}': '{sample.payload.to_string()}')")
     
 if __name__ == "__main__":
     session = zenoh.open(zenoh.Config())
