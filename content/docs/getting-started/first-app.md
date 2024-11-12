@@ -119,10 +119,10 @@ if __name__ == "__main__":
     for reply in replies:
         try:
             print("Received ('{}': '{}')"
-                .format(reply.ok.key_expr, reply.ok.payload.deserialize(str)))
+                .format(reply.ok.key_expr, reply.ok.payload.to_string()))
         except:
             print("Received (ERROR: '{}')"
-                .format(reply.err.payload.decode(str)))
+                .format(reply.err.payload.to_string()))
 
 session.close()
 ```
