@@ -83,12 +83,18 @@ Below is the example config we will be analyzing in this documentation.
 Each rule within the `rules` list is identified by a unique `id` string. Rules apply on matched messages based on their individual characteristics:
 
 - `messages`: types of messages to apply the rule on. Supported message types are the following:
-  - Declare Subscriber (`declare_subscriber`)
-  - Publication (`put`)
-  - Delete (`delete`)
-  - Declare Queryable (`declare_queryable`)
-  - Query (`query`)
-  - Reply (`reply`)
+  - Pub/Sub messages:
+    - Declare Subscriber (`declare_subscriber`)
+    - Publication (`put`)
+    - Delete (`delete`)
+  - Queryable messages:
+    - Declare Queryable (`declare_queryable`)
+    - Query (`query`)
+    - Reply (`reply`)
+  - Liveliness messages (as of Zenoh v1.0.3):
+    - Liveliness Token (`liveliness_token`)
+    - Declare Liveliness Subscriber (`declare_liveliness_subscriber`)
+    - Liveliness Query (`liveliness_query`): note that its associated replies are **Liveliness Token** messages.
 - `flows`: applies rule on incoming messages (`ingress`), outgoing messages (`egress`), or both directions. If this field is not provided in the config, the rule will apply to both directions by default.
 - `key_exprs`: the rule applies on messages for which the key matches one of the given key expressions. For more details on key expression matching, see [Key Expressions](https://zenoh.io/docs/manual/abstractions/#key-expression).
 
@@ -194,6 +200,7 @@ When possible, avoid using wildcards and DSL (eg: `"**"`, `"example/*"`, `"examp
 - Look out for supersets and partial overlap between rule key expressions and message key, which are not considered valid matches and therefore will not apply said ACL rule on said message.
 For more details on this regard, please refer to the [*Key-Expression Matching* section of the Access Control Rules RFC](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Access%20Control%20Rules.md#key-expression-matching).
 - When filtering queryable messages, keep in mind that a `reply` does not necessarily have the same key expression as its associated `query`.
+- As mentioned in message types above, a `liveliness_query` message will have `liveliness_token` messages as its associated replies, therefore it is important to set the rules applying to `liveliness_token` accordingly.
 - Bare in mind that the effectiveness of ACL policies is highly dependent of your Zenoh network topology and how much control you have over it. The topology can evolve in unpredictable ways in certain scenarios when combined with configuration options like `scouting` and `gossip`, which is complicated further when factoring the mobility of Zenoh clients in certain use-cases.
 
 ---------
