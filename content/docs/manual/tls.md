@@ -197,7 +197,7 @@ Again, the field `enable_mtls` needs to be set to `true` and we must provide the
 
 ## Close on certificate expiration
 
-Starting with Zenoh v1.0.3, TLS and Quic links can be closed when the remote certificate chain expires: the configured local instance will monitor the expiration time of the first expiring certificate in the remote instance's certificate chain, and will disconnect the link when said time is reached.
+Starting with Zenoh v1.0.3, TLS and QUIC links can be closed when the remote certificate chain expires: the configured local instance will monitor the expiration time of the first expiring certificate in the remote instance's certificate chain, and will disconnect the link when said time is reached.
 
 This behavior can be enabled via the zenoh config file, by setting the field `close_link_on_expiration` to `true`. This is valid for both TLS clients and servers.
 
