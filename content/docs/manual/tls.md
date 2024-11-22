@@ -195,6 +195,59 @@ Again, the field `enable_mtls` needs to be set to `true` and we must provide the
 
 ---
 
+## Close on certificate expiration
+
+Starting with Zenoh v1.0.3, TLS and QUIC links can be closed when the remote certificate chain expires: the configured local instance will monitor the expiration time of the first expiring certificate in the remote instance's certificate chain, and will disconnect the link when said time is reached.
+
+This behavior can be enabled via the zenoh config file, by setting the field `close_link_on_expiration` to `true`. This is valid for both TLS clients and servers.
+
+### Client configuration
+
+Below is an example config for a TLS client with certificate expiration monitoring. `mTLS`-related config fields can also be added if required.
+
+```json
+{
+  "mode": "client",
+  "connect": {
+    "endpoints": ["tls/localhost:7447"]
+  },
+  "transport": {
+    "link": {
+      "tls": {
+        "root_ca_certificate": "/home/user/server/minica.pem",
+        "close_link_on_expiration": true
+      }
+    }
+  }
+}
+```
+
+### Listener configuration
+
+Note that certificate expiration can only be monitored by a TLS listener when `mTLS` is enabled, since without `mTLS` a client does not need certificates to connect. Below is an example config for a router acting as TLS server with certificate expiration monitoring.
+
+```json
+{
+  "mode": "router",
+  "listen": {
+    "endpoints": ["tls/localhost:7447"]
+  },
+  "transport": {
+    "link": {
+      "tls": {
+        "root_ca_certificate": "/home/user/client/minica.pem",
+        "listen_private_key": "/home/user/server/localhost/key.pem",
+        "listen_certificate": "/home/user/server/localhost/cert.pem",
+        "enable_mtls": true,
+        "close_link_on_expiration": true
+      }
+    }
+  }
+}
+```
+
+---
+
 ## Testing the TLS transport
 
 Let's assume a scenario with one Zenoh router and two clients connected to it: one publisher and one subscriber.
