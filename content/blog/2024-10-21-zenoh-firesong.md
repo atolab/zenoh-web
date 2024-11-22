@@ -788,7 +788,7 @@ We have addressed this need by reworking the ACL configuration format, making it
 This allows the combination of subject attributes, while also avoiding the need to duplicate subject or rule configurations by adding the `policies` list.
 
 On another note, we have shifted the focus of ACL from `actions` to `messages` to make it easier for users to associate the ACL rules to their respective operations exposed via the Zenoh API. 
-The `get` action has been replaced by the `Query` message, and we completed the array of supported message types in ACL with the addition of publisher `Delete` and queryable `Reply` messages.
+The `get` action has been replaced by the `Query` message, and we completed the array of supported message types in ACL with the addition of publisher `Delete` and queryable `Reply` messages. Filters for liveliness messages are added later on in Zenoh v1.0.3.
 
 Following this release, a guide on how to configure ACL is available on the [Zenoh reference manual](https://zenoh.io/docs/manual/access-control/), and the [Access Control Rules RFC](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Access%20Control%20Rules.md) has been updated.
 
