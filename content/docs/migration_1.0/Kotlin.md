@@ -194,7 +194,7 @@ Zenoh.initLogFromEnvOr(fallbackFilter: String): Result<Unit>
 
 This last function allows to programmatically specify the logs configuration if not provided as an environment variable.
 
-## ZBytes serialization / deserialization & replacement of Value
+## ZBytes (de)serialization & replacement of Value
 
 We have created a new abstraction with the name of `ZBytes`. This class represents the bytes received through the Zenoh network. This new approach has the following implications:
 
@@ -204,200 +204,55 @@ We have created a new abstraction with the name of `ZBytes`. This class represen
 
 With `ZBytes` we have also introduced a Serialization and Deserialization for conveinent conversion between `ZBytes` and Kotlin types.
 
-### Serialization
+### (DE)Serialization
 
-We can serialize primitive types into a `ZBytes` instance, that is, converting the data into bytes processed by the zenoh network:
+ZBytes can be serialized and deserialized into/from a combination of the following types:
+- Boolean
+- Byte
+- Short
+- Int
+- Long
+- Float
+- Double
+- UByte
+- UShort
+- UInt
+- ULong
+- List
+- String
+- ByteArray
+- Map
+- Pair
+- Triple
 
-#### Primitive types
+For `List`, `Pair` and `Triple`, the inner types can be a combination of the above types, including themselves.
+These serialization and deserialization utilities can be used across the Zenoh ecosystem with Zenoh
+versions based on other supported languages such as Rust, Python, C and C++.
+This works when the types are equivalent (a `Byte` corresponds to an `i8` in Rust, a `Short` to an `i16`, etc).
 
-The following types support serialization:
+#### Examples
 
- * Numeric: `Byte`, `Short`, `Int`, `Long`, `Float` and `Double`.
- * `String`
- * `ByteArray`
+```kotlin
+/** String serialization example */
+val originalString: String = "Hello, Kotlin!"
+val stringZBytes = zSerialize(originalString).getOrThrow()
+val deserializedString = zDeserialize<String>(stringZBytes).getOrThrow()
+check(originalString == deserializedString)
 
- For the primitive types, there are three ways to serialize them into a `ZBytes`, for instance let's suppose
- we want to serialize an `Int`:
+/** Map serialization example */
+val originalMap: Map<String, String> = mapOf("key1" to "value1", "key2" to "value2")
+val mapZBytes = zSerialize(originalMap).getOrThrow()
+val deserializedMap = zDeserialize<Map<String, String>>(mapZBytes).getOrThrow()
+check(originalMap == deserializedMap)
 
- * using the `into()` syntax:
-  ```kotlin
-  val exampleInt: Int = 256
-  val zbytes: ZBytes = exampleInt.into()
-  ```
+/** List serialization example */
+val originalList: List<String> = listOf("apple", "banana", "cherry")
+val listZBytes = zSerialize(originalList).getOrThrow()
+val deserializedList = zDeserialize<List<String>>(listZBytes).getOrThrow()
+check(originalList == deserializedList)
+```
 
- * using the `from()` syntax:
-  ```kotlin
-  val exampleInt: Int = 256
-  val zbytes: ZBytes = ZBytes.from(exampleInt)
-  ```
-
- * using the serialize syntax:
- ```kotlin
- val exampleInt: Int = 256
- val zbytes: ZBytes = ZBytes.serialize<Int>(exampleInt).getOrThrow()
- ```
- This approach works as well for the other aforementioned types.
-
- Using `into()` or `from()` guarantees successful serialization for implemented types.  
- Using `serialize` requires a generic parameter, and returns a Result, i.e. it can fail based in the type passed in and contents of the input parameter.
-
- #### Lists
-
- Lists are supported, but they must be either:
- - List of `Number` : (`Byte`, `Short`, `Int`, `Long`, `Float`, `Double`)
- - List of `String`
- - List of `ByteArray`
- - List of `IntoZBytes`
-
- The serialize syntax must be used:
- ```kotlin
- val myList = listOf(1, 2, 5, 8, 13, 21)
- val zbytes = ZBytes.serialize<List<Int>>(myList).getOrThrow()
- ```
-
- #### Maps
-
- Maps are supported as well, with the restriction that their inner types must supported primitives:
- - `Number`
- - `String`
- - `ByteArray`
- - `IntoZBytes`
-
- ```kotlin
- val myMap: Map<String, Int> = mapOf("foo" to 1, "bar" to 2)
- val zbytes = ZBytes.serialize<Map<String, Int>>(myMap).getOrThrow()
- ```
-
- ### Deserialization
-
- #### Primitive types
-
- * Numeric: `Byte`, `Short`, `Int`, `Long`, `Float` and `Double`
- * `String`
- * `ByteArray`
-
- Example:
-
- For these primitive types, you can use the functions `to<Type>`, that is
- - `toByte`
- - `toShort`
- - `toInt`
- - `toLong`
- - `toDouble`
- - `toString`
- - `toByteArray`
-
- For instance, for an Int:
- ```kotlin
- val example: Int = 256
- val zbytes: ZBytes = exampleInt.into()
- val deserializedInt = zbytes.toInt()
- ```
-
- Alternatively, the deserialize syntax can be used as well:
- ```kotlin
- val exampleInt: Int = 256
- val zbytes: ZBytes = exampleInt.into()
- val deserializedInt = zbytes.deserialize<Int>().getOrThrow()
- ```
-
- #### Lists
-
- Lists are supported, but they must be deserialized into inner primitive types:
- - List of `Number` (`Byte`, `Short`, `Int`, `Long`, `Float` or `Double`)
- - List of `String`
- - List of `ByteArray`
-
- To deserialize into a list, use the deserialize syntax as follows:
- ```kotlin
- val inputList = listOf("sample1", "sample2", "sample3")
- payload = ZBytes.serialize(inputList).getOrThrow()
- val outputList = payload.deserialize<List<String>>().getOrThrow()
- ```
-
- #### Maps
-
- Maps are supported as well, with the restriction that their inner types must be one of the following:
- - `Number`
- - `String`
- - `ByteArray`
-
- ```kotlin
- val inputMap = mapOf("key1" to "value1", "key2" to "value2", "key3" to "value3")
- payload = ZBytes.serialize(inputMap).getOrThrow()
- val outputMap = payload.deserialize<Map<String, String>>().getOrThrow()
- check(inputMap == outputMap)
- ```
-
- ### Custom serialization and deserialization
-
- #### Serialization
-
- For a user defined class, the class must implement the `IntoZBytes` interface.
- For instance:
-
- ```kotlin
- class Foo(val content: String) : IntoZBytes {
-
-   /*Inherits: IntoZBytes*/
-   override fun into(): ZBytes = content.into()
- }
- ```
-
- This way, we can do:
- ```kotlin
- val foo = Foo("bar")
- val serialization = ZBytes.serialize<Foo>(foo).getOrThrow()
- ```
-
- Implementing the `IntoZBytes` interface on a class allows serializing lists and maps of that type, for instance:  
- ```kotlin
- val list = listOf(Foo("bar"), Foo("buz"), Foo("fizz"))
- val zbytes = ZBytes.serialize<List<Foo>>(list)
- ```
-
- #### Deserialization
-
- Regarding deserialization for custom objects, for the time being (this API will be expanded to
- provide further utilities) you need to manually convert the ZBytes into the type you want.
-
- ```kotlin
- val inputFoo = Foo("example")
- payload = ZBytes.serialize(inputFoo).getOrThrow()
- val outputFoo = Foo.from(payload)
- check(inputFoo == outputFoo)
-
- // List of Foo.
- val inputListFoo = inputList.map { value -> Foo(value) }
- payload = ZBytes.serialize<List<Foo>>(inputListFoo).getOrThrow()
- val outputListFoo = payload.deserialize<List<ZBytes>>().getOrThrow().map { zbytes -> Foo.from(zbytes) }
- check(inputListFoo == outputListFoo)
-
- // Map of Foo.
- val inputMapFoo = inputMap.map { (k, v) -> Foo(k) to Foo(v) }.toMap()
- payload = ZBytes.serialize<Map<Foo, Foo>>(inputMapFoo).getOrThrow()
- val outputMapFoo = payload.deserialize<Map<ZBytes, ZBytes>>().getOrThrow()
-     .map { (key, value) -> Foo.from(key) to Foo.from(value) }.toMap()
- check(inputMapFoo == outputMapFoo)
- ```
-
- ##### Deserialization functions:
-
- As an alternative, the `deserialize` function admits an argument which by default is an emptyMap, consisting
- of a `Map<KType, KFunction1<ZBytes, Any>>` map.  
-
- For instance, the previous implementation of our example Foo class.
- We could provide directly the deserialization function as follows:
-
- ```kotlin
- fun deserializeFoo(zbytes: ZBytes): Foo {
-   return Foo(zbytes.toString())
- }
-
- val foo = Foo("bar")
- val zbytes = ZBytes.serialize<Foo>(foo)
- val deserialization = zbytes.deserialize<Foo>(mapOf(typeOf<Foo>() to ::deserializeFoo)).getOrThrow()
- ```
+Checkout the [ZBytes examples](https://github.com/eclipse-zenoh/zenoh-kotlin/blob/main/examples/src/main/kotlin/io.zenoh/ZBytes.kt) for more examples.
 
 ## Reply handling
 
