@@ -46,6 +46,8 @@ For convenience, some arguments of `zenohd` are provided as shorthands for parti
 
 In case of conflicts, `--cfg` options will override any other sources of configuration for their PATH.
 
+You can use `--rest-http-port=8000` to enable the REST plugin in `zenohd`.
+
 ## Reactive configuration
 It is possible to register callbacks that will be called when the configuration structure is modified. This lets `zenohd` (or your own application) react to changes in the configuration during runtime.
 
@@ -69,6 +71,9 @@ The configuration of a Zenoh router can be changed at runtime via its admin spac
 Then you can change elements of it's configuration once it's started, by sending PUT messages to its [admin space](../abstractions#admin-space).
 
 If one of the `zenohd` instances uses the REST plugin to expose Zenoh to HTTP requests, this can be done simply by sending such requests with tools such as `curl`.  
+
+Remember to enable the REST plugin in `zenohd` with the command line option `--rest-http-port=8000`.
+
 To do this, use commands such as 
 ```bash
 curl -X PUT http://localhost:8000/@/router/local/config/plugins/storage_manager/storages/my-storage -d '{key_expr:"demo/mystore/**", volume:{id:"memory"}}'
