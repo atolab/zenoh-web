@@ -33,7 +33,7 @@ This latest release of Zenoh 1.1.0 brings exciting new features, some of them we
 
 ## Querier
 
-The querier has been added to Zenoh to serve a similar purpose of the publisher but for queries. For example, a publisher allows Zenoh to perform some optimization for continuous publications like write-side filtering and matching status. These kinds of optimizations are now also available for queries through the new querier API. A Rust example is provided below and here. The same example is also available in C, C++, and Python.
+The querier has been added to Zenoh to serve a similar purpose of the publisher but for queries. For example, a publisher allows Zenoh to perform some optimization for continuous publications like [write-side filtering](https://www.google.com/url?q=https://zenoh.io/blog/2024-10-21-zenoh-firesong/%23interest-protocol&sa=D&source=docs&ust=1733925165202597&usg=AOvVaw1piF0-TzhbWXLP5chS1fKO) and [matching status](https://docs.rs/zenoh/latest/zenoh/pubsub/struct.Publisher.html#method.matching_status). These kinds of optimizations are now also available for queries through the new querier API. A Rust example is provided below and [here](https://github.com/eclipse-zenoh/zenoh/blob/main/examples/examples/z_querier.rs). The same example is also available in [C](https://github.com/eclipse-zenoh/zenoh-c/blob/main/examples/z_querier.c), [C++](https://github.com/eclipse-zenoh/zenoh-cpp/blob/main/examples/zenohc/z_querier.cxx), and [Python](https://github.com/eclipse-zenoh/zenoh-python/blob/main/examples/z_querier.py).
 
 
 ```rust
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
 ### Rasberry Pi Pico
 
 We’re excited to announce support for the Raspberry Pi Pico series in Zenoh-Pico! This addition makes it possible to leverage Zenoh-Pico’s lightweight and efficient communication capabilities on RP2040/RP2350-based devices.
-To get started, check out the new Raspberry Pi Pico section in the README. This includes detailed instructions for building and running Zenoh-Pico on Pico devices, enabling seamless integration into your IoT projects.
+To get started, check out the new Raspberry Pi Pico section in the [README](https://github.com/eclipse-zenoh/zenoh-pico?tab=readme-ov-file#226-raspberry-pi-pico). This includes detailed instructions for building and running Zenoh-Pico on Pico devices, enabling seamless integration into your IoT projects.
 
 ### Performance
 
@@ -131,7 +131,7 @@ Enabling manual batching can increase throughput of non-fragmented packets, with
 
 ROS 2 Iron and Jazzy introduced some changes that the zenoh-plugin-ros2dds and zenoh-bridge-ros2dds support now.
 
-* The Type Description Distribution, a.k.a. REP-2016 or type hash: the bridge re-transmit the type hashes exposed by the ROS Nodes to the remote bridges, so they re-expose them in the same way to remote ROS Nodes.
+* The Type Description Distribution, a.k.a. [REP-2016](https://github.com/ros-infrastructure/rep/pull/381) or type hash: the bridge re-transmit the type hashes exposed by the ROS Nodes to the remote bridges, so they re-expose them in the same way to remote ROS Nodes.
 
 * ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS: the bridge supports those new environment variables starting from Iron, and still supports the ROS_LOCALHOST_ONLY environment variables with ROS distributions prior to Iron.
 
@@ -196,21 +196,21 @@ loop {
 }
 ```
 
-Connectivity Status and Events have been updated to be retrievable through an AdvancedSubscriber (see Connectivity Status and Events.md).
+Connectivity Status and Events have been updated to be retrievable through an AdvancedSubscriber (see [Connectivity Status and Events](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Connectivity%20Status%20and%20Events.md#using-the-advancedsubscriber)).
 The FetchingSubscriber and PublicationCache have been marked as deprecated.
 
 ## Miscellaneous
 
-* TCP buffers: TCP and TLS links got more tuning options with the introduction of TCP buffers configuration. Users can now configure read/write TCP buffer sizes with custom values, independently for each endpoint via endpoint configuration (ex: tcp/[::]:7447#so_sndbuf=65000;so_rcvbuf=65000) or per protocol basis via the Zenoh config file, respectively in the `transport/link/tcp` and `transport/link/tls` sections.
+* TCP buffers: TCP and TLS links got more tuning options with the introduction of TCP buffers configuration. Users can now configure read/write TCP buffer sizes with custom values, independently for each endpoint via endpoint configuration (ex: `tcp/[::]:7447#so_sndbuf=65000;so_rcvbuf=65000`) or per protocol basis via the Zenoh config file, respectively in the `transport/link/tcp` and `transport/link/tls` sections.
 
-* QUIC/TLS interface binding: Interface binding for Zenoh links has been available on Linux for TCP and UDP for some time now. In this release, we’ve extended the support of interface binding to TLS and QUIC links, via the same endpoint configuration format (ex: tls/[::]:7447#iface=wlan0).
+* QUIC/TLS interface binding: Interface binding for Zenoh links has been available on Linux for TCP and UDP for some time now. In this release, we’ve extended the support of interface binding to TLS and QUIC links, via the same endpoint configuration format (ex: `tls/[::]:7447#iface=wlan0`).
 
 * Publisher QoS overwrites: A new performance-tuning feature introduced in this release is the capability of overwriting QoS configuration of publishers, namely: priority, reliability, congestion control, and express. All the configuration happens via the newly added `qos/publications` section of the Zenoh config file.
-A publisher configuration can be passed per key-expression, which will overwrite any publisher or `put` operation with a key-expression that it includes (see more about key-expression inclusion in the Key Expressions RFC).
+A publisher configuration can be passed per key-expression, which will overwrite any publisher or `put` operation with a key-expression that it includes (see more about key-expression inclusion in the [Key Expressions RFC](https://github.com/eclipse-zenoh/roadmap/blob/73b2d4bad44bf35638f97d449907da6f79ec6f9b/rfcs/ALL/Key%20Expressions.md#the-basics)).
 As the name implies, QoS overwrites take priority over the publishers and `put` builders API, which makes them quite handy when using a library that uses Zenoh but does not expose the publisher QoS API, or when debugging or tuning a black-box Zenoh application.
 
 ## Changelogs
-The effort behind Zenoh 1.1.0 resulted in a large number of bug fixes and improvements. The full changelog for every Zenoh repository is available at the following links: Rust | C  | C++  | Python | Kotlin | Pico | DDS plugin | ROS2 plugin | MQTT plugin | WebServer plugin | Filesystem backend | RocksDB backend | S3 backend | InfluxDB backend
+The effort behind Zenoh 1.1.0 resulted in a large number of bug fixes and improvements. The full changelog for every Zenoh repository is available at the following links: [Rust](https://github.com/eclipse-zenoh/zenoh/releases) | [C(https://github.com/eclipse-zenoh/zenoh-c/releases)]  | [C++](https://github.com/eclipse-zenoh/zenoh-cpp/releases)  | [Python](https://github.com/eclipse-zenoh/zenoh-python/releases) | [Kotlin](https://github.com/eclipse-zenoh/zenoh-kotlin/releases) | [Pico](https://github.com/eclipse-zenoh/zenoh-pico/releases) | [DDS plugin](https://github.com/eclipse-zenoh/zenoh-plugin-dds/releases) | [ROS2 plugin](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/releases) | [MQTT plugin](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases) | [WebServer plugin](https://github.com/eclipse-zenoh/zenoh-plugin-webserver/releases/tag/1.0.4) | [Filesystem backend](https://github.com/eclipse-zenoh/zenoh-backend-filesystem/releases) | [RocksDB backend](https://github.com/eclipse-zenoh/zenoh-backend-rocksdb/releases) | [S3 backend](https://github.com/eclipse-zenoh/zenoh-backend-s3/releases) | [InfluxDB backend](https://github.com/eclipse-zenoh/zenoh-backend-influxdb/releases)
 
 ## What's next?
 
@@ -220,3 +220,8 @@ The effort behind Zenoh 1.1.0 resulted in a large number of bug fixes and improv
 * And many other cool things…
 
 Whether you are working with Rust, C, C++, Python, or other supported languages, this update addresses the feedback we received from the community and empowers Zenoh developers with new tools. Make sure to explore all these updates by trying out Zenoh Firesong 1.1.0. Thanks to all users and contributors!
+
+Happy Hacking,
+– The Zenoh Team
+
+P.S. You can reach us out on [Zenoh’s Discord server](https://discord.com/invite/vSDSpqnbkm)!
