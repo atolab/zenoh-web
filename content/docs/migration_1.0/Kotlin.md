@@ -70,12 +70,6 @@ In 1.0.0. the previous example would instead now become:
 val encoding = Encoding.TEXT_JSON
 ```
 
-Custom encodings can be created by specifying an `id` and `suffix` string:
-
-```kotlin
-val encoding = Encoding(id = 123, suffix = "example suffix")
-```
-
 ## Session-managed declarations
 
 Up until 0.11.0, it was up to the user to keep track of their variable declarations to keep them alive, because once the variable declarations were garbage collected, the declarations were closed. This was because each Kotlin variable declaration is associated with a native Rust instance, and in order to avoid leaking the memory of that Rust instance, it was necessary to free it upon dropping the declaration instance. However, this behavior could be counterintuitive, as users were expecting the declaration to keep running despite losing track of the reference to it.
@@ -85,14 +79,16 @@ In this release we introduce a change in which any session declaration is intern
 For instance:
 
 ```kotlin
-val subscriber = session.declareSubscriber("A/B/C".intoKeyExpr(), 
+val keyExprA = "A/B/C".intoKeyExpr().getOrThrow()
+val subscriber = session.declareSubscriber(keyExprA, 
   callback = { sample -> println("Receiving sample on 'A/B/C': ${sample.payload}") }).getOrThrow()
 
-session.declareSubscriber("A/C/D".intoKeyExpr(), 
-  callback = { sample -> println("Receiving sample on 'A/C/D': ${sample.payload}") }) // No variable is associated to the declared session, on 0.11.0 it would have been instantanely dropped
+val keyExprB = "A/C/D".intoKeyExpr().getOrThrow()
+session.declareSubscriber(keyExprB, 
+  callback = { sample -> println("Receiving sample on 'A/C/D': ${sample.payload}") }) // No variable is associated to the declared session, on 0.11.0 it would have been instantly dropped
 ```
 
-Therfore, when receiving a 'hello' message on `A/**` we would still see:
+Therefore, when receiving a 'hello' message on `A/**` we would still see:
 
 ```
 >> Receiving sample on 'A/B/C': hello
@@ -160,7 +156,7 @@ Changes:
 
 ## Reliability
 
-The `Reliability` config parameter used on when declaring a subscriber, has been moved. It now must be specified when declaring a `Publisher` or when performing a `Put` or a `Delete` operaton.
+The `Reliability` config parameter used on when declaring a subscriber, has been moved. It now must be specified when declaring a `Publisher` or when performing a `Put` or a `Delete` operation.
 
 
 ## Logging
@@ -202,202 +198,101 @@ We have created a new abstraction with the name of `ZBytes`. This class represen
 - `Value` is replaced by the combination of `ZBytes` and `Encoding`.
 - Replacing `ByteArray` to represent payloads
 
-With `ZBytes` we have also introduced a Serialization and Deserialization for conveinent conversion between `ZBytes` and Kotlin types.
+With `ZBytes` we have also introduced a Serialization and Deserialization for convenient conversion between `ZBytes` and Kotlin types.
 
-### Serialization
+### Serialization & Deserialization
 
 We can serialize primitive types into a `ZBytes` instance, that is, converting the data into bytes processed by the zenoh network:
 
 #### Primitive types
 
-The following types support serialization:
+(De)Serialization is supported by the following primitive types:
 
- * Numeric: `Byte`, `Short`, `Int`, `Long`, `Float` and `Double`.
+ * Numeric: `Byte`, `Short`, `Int`, `Long`, `Float`, `Double`, `UByte`, `UShort`, `UInt` and `ULong`.
  * `String`
  * `ByteArray`
 
- For the primitive types, there are three ways to serialize them into a `ZBytes`, for instance let's suppose
- we want to serialize an `Int`:
-
- * using the `into()` syntax:
-  ```kotlin
-  val exampleInt: Int = 256
-  val zbytes: ZBytes = exampleInt.into()
-  ```
-
- * using the `from()` syntax:
-  ```kotlin
-  val exampleInt: Int = 256
-  val zbytes: ZBytes = ZBytes.from(exampleInt)
-  ```
-
- * using the serialize syntax:
+For instance:
  ```kotlin
  val exampleInt: Int = 256
- val zbytes: ZBytes = ZBytes.serialize<Int>(exampleInt).getOrThrow()
+ val zbytes: ZBytes = zSerialize<Int>(exampleInt).getOrThrow()
+ val deserialization = zDeserialize<Int>(zbytes).getOrThrow()
+check(exampleInt == deserialization)
  ```
+
  This approach works as well for the other aforementioned types.
 
- Using `into()` or `from()` guarantees successful serialization for implemented types.  
- Using `serialize` requires a generic parameter, and returns a Result, i.e. it can fail based in the type passed in and contents of the input parameter.
+For serialization, `String` and `ByteArray` the functions `ZBytes::from(string: String)` and `ZBytes::from(bytes: ByteArray)` can be used respectively. Analogously, deserialization, `ZBytes::toString()` and `ZBytes::toByteArray()` can be used.
 
  #### Lists
 
  Lists are supported, but they must be either:
- - List of `Number` : (`Byte`, `Short`, `Int`, `Long`, `Float`, `Double`)
+ - List of numeric types : (`Byte`, `Short`, `Int`, `Long`, `Float`, `Double`, `UByte`, `UShort`, `UInt` and `ULong`)
  - List of `String`
  - List of `ByteArray`
- - List of `IntoZBytes`
+ - List of another supported type
 
  The serialize syntax must be used:
  ```kotlin
  val myList = listOf(1, 2, 5, 8, 13, 21)
- val zbytes = ZBytes.serialize<List<Int>>(myList).getOrThrow()
+ val zbytes = zSerialize<List<Int>>(myList).getOrThrow()
+ val outputList = zDeserialize<List<Int>>(zbytes).getOrThrow()
+ check(myList == outputList)
  ```
 
  #### Maps
 
  Maps are supported as well, with the restriction that their inner types must supported primitives:
- - `Number`
+ - Numeric types
  - `String`
  - `ByteArray`
- - `IntoZBytes`
+ - Map of another supported types
 
  ```kotlin
  val myMap: Map<String, Int> = mapOf("foo" to 1, "bar" to 2)
- val zbytes = ZBytes.serialize<Map<String, Int>>(myMap).getOrThrow()
+ val zbytes = zSerialize<Map<String, Int>>(myMap).getOrThrow()
+ val outputMap = zDeserialize<Map<String, Int>>(zbytes).getOrThrow()
+ output(myMap == outputMap)
  ```
 
- ### Deserialization
+#### Pair & Triple
 
- #### Primitive types
+Similarly,
+- Pair:
+```kotlin
+val input: Pair<String, Int> = Pair("one", 1)
+val zbytes = zSerialize(input).getOrThrow()
+val output: Pair<String, Int> = zDeserialize(zbytes).getOrThrow()
+check(input == output)
+```
 
- * Numeric: `Byte`, `Short`, `Int`, `Long`, `Float` and `Double`
- * `String`
- * `ByteArray`
+- Triple:
+```kotlin
+val input: Triple<String, Int, Boolean> = Triple("one", 1, true)
+val zbytes = zSerialize(input).getOrThrow()
+val output: Triple<String, Int, Boolean> = zDeserialize(zbytes).getOrThrow()
+check(input == output)
+```
 
- Example:
+#### Parameterized types combinations
 
- For these primitive types, you can use the functions `to<Type>`, that is
- - `toByte`
- - `toShort`
- - `toInt`
- - `toLong`
- - `toDouble`
- - `toString`
- - `toByteArray`
+Combinations of all the above types is supported. For instance:
 
- For instance, for an Int:
- ```kotlin
- val example: Int = 256
- val zbytes: ZBytes = exampleInt.into()
- val deserializedInt = zbytes.toInt()
- ```
+- List of lists
+```kotlin
+val input: List<List<Int>> = listOf(listOf(1, 2, 3))
+val zbytes = zSerialize(input).getOrThrow()
+val output = zDeserialize<List<List<Int>>>(zbytes).getOrThrow()
+check(input == output)
+```
 
- Alternatively, the deserialize syntax can be used as well:
- ```kotlin
- val exampleInt: Int = 256
- val zbytes: ZBytes = exampleInt.into()
- val deserializedInt = zbytes.deserialize<Int>().getOrThrow()
- ```
-
- #### Lists
-
- Lists are supported, but they must be deserialized into inner primitive types:
- - List of `Number` (`Byte`, `Short`, `Int`, `Long`, `Float` or `Double`)
- - List of `String`
- - List of `ByteArray`
-
- To deserialize into a list, use the deserialize syntax as follows:
- ```kotlin
- val inputList = listOf("sample1", "sample2", "sample3")
- payload = ZBytes.serialize(inputList).getOrThrow()
- val outputList = payload.deserialize<List<String>>().getOrThrow()
- ```
-
- #### Maps
-
- Maps are supported as well, with the restriction that their inner types must be one of the following:
- - `Number`
- - `String`
- - `ByteArray`
-
- ```kotlin
- val inputMap = mapOf("key1" to "value1", "key2" to "value2", "key3" to "value3")
- payload = ZBytes.serialize(inputMap).getOrThrow()
- val outputMap = payload.deserialize<Map<String, String>>().getOrThrow()
- check(inputMap == outputMap)
- ```
-
- ### Custom serialization and deserialization
-
- #### Serialization
-
- For a user defined class, the class must implement the `IntoZBytes` interface.
- For instance:
-
- ```kotlin
- class Foo(val content: String) : IntoZBytes {
-
-   /*Inherits: IntoZBytes*/
-   override fun into(): ZBytes = content.into()
- }
- ```
-
- This way, we can do:
- ```kotlin
- val foo = Foo("bar")
- val serialization = ZBytes.serialize<Foo>(foo).getOrThrow()
- ```
-
- Implementing the `IntoZBytes` interface on a class allows serializing lists and maps of that type, for instance:  
- ```kotlin
- val list = listOf(Foo("bar"), Foo("buz"), Foo("fizz"))
- val zbytes = ZBytes.serialize<List<Foo>>(list)
- ```
-
- #### Deserialization
-
- Regarding deserialization for custom objects, for the time being (this API will be expanded to
- provide further utilities) you need to manually convert the ZBytes into the type you want.
-
- ```kotlin
- val inputFoo = Foo("example")
- payload = ZBytes.serialize(inputFoo).getOrThrow()
- val outputFoo = Foo.from(payload)
- check(inputFoo == outputFoo)
-
- // List of Foo.
- val inputListFoo = inputList.map { value -> Foo(value) }
- payload = ZBytes.serialize<List<Foo>>(inputListFoo).getOrThrow()
- val outputListFoo = payload.deserialize<List<ZBytes>>().getOrThrow().map { zbytes -> Foo.from(zbytes) }
- check(inputListFoo == outputListFoo)
-
- // Map of Foo.
- val inputMapFoo = inputMap.map { (k, v) -> Foo(k) to Foo(v) }.toMap()
- payload = ZBytes.serialize<Map<Foo, Foo>>(inputMapFoo).getOrThrow()
- val outputMapFoo = payload.deserialize<Map<ZBytes, ZBytes>>().getOrThrow()
-     .map { (key, value) -> Foo.from(key) to Foo.from(value) }.toMap()
- check(inputMapFoo == outputMapFoo)
- ```
-
- ##### Deserialization functions:
-
- As an alternative, the `deserialize` function admits an argument which by default is an emptyMap, consisting
- of a `Map<KType, KFunction1<ZBytes, Any>>` map.  
-
- For instance, the previous implementation of our example Foo class.
- We could provide directly the deserialization function as follows:
-
- ```kotlin
- fun deserializeFoo(zbytes: ZBytes): Foo {
-   return Foo(zbytes.toString())
- }
-
- val foo = Foo("bar")
- val zbytes = ZBytes.serialize<Foo>(foo)
- val deserialization = zbytes.deserialize<Foo>(mapOf(typeOf<Foo>() to ::deserializeFoo)).getOrThrow()
- ```
+- List of maps
+```kotlin
+val input: List<Map<String, Int>> = listOf(mapOf("a" to 1, "b" to 2))
+val zbytes = zSerialize(input).getOrThrow()
+val output = zDeserialize<List<Map<String, Int>>>(zbytes).getOrThrow()
+check(input == output)
+```
 
 ## Reply handling
 
