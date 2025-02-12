@@ -100,7 +100,7 @@ Examples using curl:
   curl -X PUT -H "content-type:application/json" -d '{"value": "Hello World!"}' http://localhost:8000/demo/example/test
 
   # Create a Memory storage on demo/test/** via a Put on admin space (@/...)
-  curl -X PUT -H 'content-type:application/json' http://localhost:8000/@/router/local/config/plugins/storage_manager/storages/demo -d '{key_expr:"demo/test/**", volume:"memory"}' 
+  curl -X PUT -H 'content-type:application/json' http://localhost:8000/@/local/router/config/plugins/storage_manager/storages/demo -d '{key_expr:"demo/test/**", volume:"memory"}' 
   ```
 
 ### DELETE
@@ -118,6 +118,6 @@ Examples using curl:
   curl -X DELETE http://localhost:8000/demo/example/test
 
   # Remove a storage via a Remove on admin space (@/...)
-  curl -X DELETE http://localhost:8000/@/router/local/config/plugins/storage_manager/storages/demo
+  curl -X DELETE http://localhost:8000/@/local/router/config/plugins/storage_manager/storages/demo
   ```
 

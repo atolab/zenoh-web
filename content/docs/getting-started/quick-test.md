@@ -67,15 +67,15 @@ The complete Eclipse zenoh's key/value space is accessible through the REST API,
 
  * Get info of the local Zenoh router:
    ```bash
-   curl http://localhost:8000/@/router/local
+   curl http://localhost:8000/@/local/router
    ```
  * Add a memory storage on `demo/example/**`:
    ```bash
-   curl -X PUT -H 'content-type:application/json' -d '{key_expr:"demo/example/**", volume: "memory"}' http://localhost:8000/@/router/local/config/plugins/storage_manager/storages/demo
+   curl -X PUT -H 'content-type:application/json' -d '{key_expr:"demo/example/**", volume: "memory"}' http://localhost:8000/@/local/router/config/plugins/storage_manager/storages/demo
    ```
  * Get the storages of the local router (should return the "demo" storage that has just been created):
    ```bash
-   curl 'http://localhost:8000/@/router/local/status/plugins/storage_manager/storages/*'
+   curl 'http://localhost:8000/@/local/router/status/plugins/storage_manager/storages/*'
    ```
 
 ### Put/Get into Zenoh
