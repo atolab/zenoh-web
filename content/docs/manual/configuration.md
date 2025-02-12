@@ -76,7 +76,7 @@ Remember to enable the REST plugin in `zenohd` with the command line option `--r
 
 To do this, use commands such as 
 ```bash
-curl -X PUT http://localhost:8000/@/router/local/config/plugins/storage_manager/storages/my-storage -d '{key_expr:"demo/mystore/**", volume:{id:"memory"}}'
+curl -X PUT http://localhost:8000/@/local/router/config/plugins/storage_manager/storages/my-storage -d '{key_expr:"demo/mystore/**", volume:{id:"memory"}}'
 #           ^- REST plugin addr ^ ^--- config space --^ ^---- the path to the configured value ---^    ^-------------- the value to insert ----------------^
 ```
 
