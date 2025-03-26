@@ -188,14 +188,14 @@ meaning the operation addresses the Zenoh router the HTTP client is connected to
 
 For instance, the following keys can be used:
 
-- `@/router/<router-id>` (read-only):  
+- `@/<router-id>/router` (read-only):  
   Returns a JSON with the status information about the router.
-- `@/router/<router-id>/config/**` (write-only):  
+- `@/<router-id>/router/**` (write-only):  
   Allows you to edit the configuration of the router at runtime.
 
 Some plugins may extend the admin space, such as [Storages](../plugin-storage-manager), which will add the following keys:
 
-- `@/router/<router-id>/status/plugins/storage_manager/volumes/<volume-name>` (read-only):  
+- `@/<router-id>/router/status/plugins/storage_manager/volumes/<volume-name>` (read-only):  
   Returning information about the selected backend in JSON format
-- `@/router/<router-id>/status/plugins/storage_manager/storages/<storage-name>` (read-only):  
+- `@/<router-id>/router/status/plugins/storage_manager/storages/<storage-name>` (read-only):  
   Returning information about the selected storage in JSON format
