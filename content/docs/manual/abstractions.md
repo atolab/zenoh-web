@@ -47,7 +47,7 @@ To ensure that, only a *canon* form is allowed for key expressions:
 - `$*` must be replaced by `*` if alone in a chunk.
 
 ### Notes on key-space design
-Here are some rules of thumb to make Zenoh more comfortable to work with, and more ressource-efficient:
+Here are some rules of thumb to make Zenoh more comfortable to work with, and more resource-efficient:
 - `$*` is slower than `*`, design your key-space to avoid needing it. The need for `$*` usually stems from mixing different discriminants within a chunk. Prefer `robot/12` and `pc/18` to `robot12` and `pc18`.
 - A strict hierarchy, where you ensure that `a/keyexpr/that/ends/with/*` always yields data from a single type, will save you the hassle of filtering out data that's not of the right type, while saving the network bandwidth.
 
