@@ -150,7 +150,6 @@ This version introduces:
   * Cache last published samples to be retrieved by AdvancedSubscribers for history or recovery.
   * Sequence samples to allow AdvancedSubscribers to detect missed samples.
   * Automatically create a Liveliness token to assert its presence.
-
 * An **AdvancedSubscriber** that can:
   * Retrieve historical data from AdvancedPublishers.
   * Detect missed samples.
