@@ -1,9 +1,10 @@
 ---
-date: "2025-04-14"
-title: 'Zenoh 1.0.0 "Firesong" is ready to rock!'
-description: "14th April 2025"
+title: "Zenoh Gozuryū -- The Dragon Protocol Grows Stronger"
+date: 2025-04-08
 menu: "blog"
-weight: 20250414
+weight: 20250408
+description: "January 8th, 2025 -- Paris."
+draft: false
 ---
 
 # Zenoh 1.3.3: Gozuryū
