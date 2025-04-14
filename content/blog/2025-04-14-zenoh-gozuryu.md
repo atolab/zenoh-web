@@ -1,5 +1,5 @@
 ---
-title: "Zenoh Gozuryū -- The Dragon Protocol Grows Stronger"
+title: "Zenoh Gozuryū is Here!"
 date: 2025-04-08
 menu: "blog"
 weight: 20250408
@@ -7,7 +7,6 @@ description: "January 8th, 2025 -- Paris."
 draft: false
 ---
 
-# Zenoh 1.3.3: Gozuryū
 
 We are thrilled to announce the release of Zenoh 1.3.3 – **Gozuryū**!
 
