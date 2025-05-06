@@ -9,7 +9,7 @@ draft: false
 
 # Improving Zenoh-Pico performances
 
-Last year, after the long awaited release of Zenoh 1.0 which included a unified C API with Zenoh-C and Zenoh-Pico, we decided to dedicate some time to measure and improve the performances & efficiency of Zenoh-Pico. These modifications were released with Zenoh 1.1 earlier this year and we're presenting you the results with this blog post.
+Last year, after the long awaited release of Zenoh 1.0 which included a unified C API with Zenoh-C and Zenoh-Pico, we decided to dedicate some time to measure and improve the performance & efficiency of Zenoh-Pico. These modifications were released with Zenoh 1.1 earlier this year and we're presenting you the results with this blog post.
 
 ## What is Zenoh-Pico?
 
@@ -105,7 +105,7 @@ We do observe a big impact on latency when trying to send fragmented packets whi
 
 To improve Zenoh-Pico performance, we traced it on PC using [samply](https://github.com/mstange/samply) and the Firefox debugger to visualize the traces. That allowed us to detect choke points and part of the code that could be improved.
 
-As stated earlier, the changes that had the biggest by far is solving the byte by byte copy issue for fragmented packets and the introduction of the manual batching mechanism.
+As stated earlier, the most impactful changes were solving the byte by byte copy issue for fragmented packets and the introduction of the manual batching mechanism.
 
 Beside that, we also streamlined a lot how the stack created, used and destroyed data to avoid redundant operations or needless data copies. We also rationalized heap memory usage and fragmentation although these changes were not quantified.
 
