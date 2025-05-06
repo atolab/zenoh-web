@@ -41,7 +41,7 @@ Other than that there are no significant changes because client performance is l
     class="figure-inline"
     alt="Peer throughput" >}}
 
-Peer to peer being not limited by router performance, we observe a bigger improvements on smaller payloads with batching (>20x), but a smaller one (>10x) for fragmented packets (>2kiB) because of UDP's smaller packet size. 
+Peer to peer being not limited by router performance, we observe a bigger improvement on smaller payloads with batching (>20x), but a smaller one (>10x) for fragmented packets (>2kiB) because of UDP's smaller packet size. 
 
 In addition, we observe a 60% throughput increase for the other payload sizes, that results from the many improvements we implemented and that we detail below.
 
