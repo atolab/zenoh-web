@@ -19,7 +19,7 @@ Zenoh-Pico is the lightweight, native C implementation of the[ Eclipse Zenoh](ht
 
 To measure performance, we have a standardized throughput test and a latency test which we run on a standardized machine (Intel Xeon E3-1275 @3.6GHzn 32GB DDR4, Ubuntu 22.04). For embedded measurements, we ran those tests on an esp32-wroom32 dev board. 
 
-These tests produce a thousand measurements or so per payload size that we use to calculate the median value to then get the following graphs (not that the y axis is log scale):
+These tests produce a thousand measurements or so per payload size that we use to calculate the median value to then get the following graphs (note that the y axis is log scale):
 
 ### PC throughput client, tcp:
 
@@ -28,7 +28,7 @@ These tests produce a thousand measurements or so per payload size that we use t
     class="figure-inline"
     alt="Client throughput" >}}
 
-We see a massive (>50x) improvement in throughput for payloads over 32kiB, this is because packets of these sizes are fragmented on the network and we had an issue where their data was serialized byte per byte.
+We see a massive (up to 100x) improvement in throughput for payloads over 32kiB, this is because packets of these sizes are fragmented on the network and we had an issue where their data was serialized byte per byte.
 
 We also see a >10x improvement in throughput for smaller payloads when using manual batching (more info below) introduced in 1.1 as well. 
 
@@ -41,7 +41,7 @@ Other than that there are no significant changes because client performance is l
     class="figure-inline"
     alt="Peer throughput" >}}
 
-Peer to peer being not limited by router performance, we observe even bigger improvements on smaller payloads with batching (>20x) and on fragmented packets (>100x), which starts at 2kiB on UDP. 
+Peer to peer being not limited by router performance, we observe a bigger improvements on smaller payloads with batching (>20x), but a smaller one (>10x) for fragmented packets (>2kiB) because of UDP's smaller packet size. 
 
 In addition, we observe a 60% throughput increase for the other payload sizes, that results from the many improvements we implemented and that we detail below.
 
@@ -103,7 +103,7 @@ We do observe a big impact on latency when trying to send fragmented packets whi
 
 ## How performance was improved
 
-To improve Zenoh-Pico performance, we traced it on PC using (samply)[https://github.com/mstange/samply] and the Firefox debugger to visualize the traces. That allowed us to detect choke points and part of the code that could be improved.
+To improve Zenoh-Pico performance, we traced it on PC using [samply](https://github.com/mstange/samply) and the Firefox debugger to visualize the traces. That allowed us to detect choke points and part of the code that could be improved.
 
 As stated earlier, the changes that had the biggest by far is solving the byte by byte copy issue for fragmented packets and the introduction of the manual batching mechanism.
 
