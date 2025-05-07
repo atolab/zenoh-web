@@ -52,7 +52,7 @@ In addition, we observe a 60% throughput increase for the other payload sizes, t
     class="figure-inline"
     alt="PC latency" >}}
 
-This plot shows a >50x improvement on fragmented packets latency, again due to data copy improvement, but also a 35% improvement across the board from the general library optimization. 
+This plot shows a >50x enhancement on fragmented packets latency, again due to data copy improvement, but also a 35% boost across the board from the general library optimization. 
 
 Note that a big chunk of the latency value is due to the router (node to router hop + time to route the packet + router to node hop), and this value could be much lower using peer to peer TCP unicast.
 
