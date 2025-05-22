@@ -18,6 +18,12 @@ Below is a list of companies, research institutes and foundations that adopted, 
         </a>
     </div>
     <div class="p-2">
+        <a href="https://www.intrinsic.ai" target=="_blank">
+            <img align="center" src="https://logosandtypes.com/wp-content/uploads/2024/02/intrinsic.svg" 
+            alt="Intrinsic" width="200"/>
+        </a>
+    </div>    
+    <div class="p-2">
         <a href="https://www.ros.org" target=="_blank">
             <img align="center" src="https://raw.githubusercontent.com/ros-infrastructure/artwork/refs/heads/master/ros_logo.svg" 
             alt="ROS 2" width="200"/>
