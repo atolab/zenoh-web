@@ -12,14 +12,14 @@ Below is a list of companies, research institutes and foundations that adopted, 
 {{< rawhtml >}}
 <div class="d-flex flex-wrap align-items-center justify-content-between">
     <div class="p-2">
-        <a href="https://stalw.art/" target=="_blank">
+        <a href="https://nxp.com/" target=="_blank">
             <img align="center" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/NXP-Logo.svg" 
             alt="ROS 2" width="200"/>
         </a>
     </div>
     <div class="p-2">
-        <a href="https://stalw.art/" target=="_blank">
-            <img align="center" src="https://github.com/ros-infrastructure/artwork/blob/master/ros_logo.svg" 
+        <a href="https://www.ros.org" target=="_blank">
+            <img align="center" src="https://raw.githubusercontent.com/ros-infrastructure/artwork/refs/heads/master/ros_logo.svg" 
             alt="ROS 2" width="200"/>
         </a>
     </div>
