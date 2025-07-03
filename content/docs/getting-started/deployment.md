@@ -83,7 +83,7 @@ Communicating peer to peer implies establishing multiple sessions with multiple 
 
 ### Scouting
 
-Zenoh applications in `client` mode run `multicast` scouting to discover Zenoh routers and connect them. In addition, the endpoints of one or several routers can be configured in the `connect` section.
+Zenoh applications in `client` mode run `multicast` scouting to discover Zenoh routers and connect to them. In addition, the endpoints of one or several routers can be configured in the `connect` section.
 
 **Configuration**
 ```
@@ -97,7 +97,7 @@ Zenoh applications in `client` mode run `multicast` scouting to discover Zenoh r
 
 ## Peers mesh
 
-In a mesh network, applications cannot directly connect to each other. Peer to peer and brokered communications may be impossible or undesirable. Zenoh applications in `peer` mode can run a linkstate protocol that allow them to comminucate in a mesh network.
+In a mesh network, applications cannot directly connect to each other. Peer to peer and brokered communications may be impossible or undesirable. Zenoh applications in `peer` mode can run a linkstate protocol that allow them to communicate in a mesh network.
 
 ![peers mesh](/img/peers_mesh.png "peers mesh")
 
