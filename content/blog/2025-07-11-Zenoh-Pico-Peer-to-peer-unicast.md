@@ -1,9 +1,9 @@
 ---
 title: "Zenoh-Pico peer to peer unicast mode"
-date: 2025-06-30
+date: 2025-01-11
 menu: "blog"
 weight: 20250630
-description: "June 30th, 2025 -- Paris."
+description: "July 11th, 2025 -- Paris."
 draft: false
 ---
 
@@ -13,7 +13,7 @@ As hinted at in our blog post about Zenoh-Pico performance improvements, we’ve
 
 ## What is Zenoh-Pico?
 
-Zenoh-Pico is the lightweight, native C implementation of the [Eclipse Zenoh](http://zenoh.io) protocol, designed specifically for constrained devices. It provides a streamlined, low-resource API while maintaining compatibility with the main [Rust Zenoh implementation](https://github.com/eclipse-zenoh/zenoh).  Zenoh-Pico already supports a broad range of platforms and protocols, making it a versatile choice for embedded systems development.
+Zenoh-Pico is the lightweight, native C implementation of the [Eclipse Zenoh](http://zenoh.io) protocol, designed specifically for constrained devices. It provides a streamlined, low-resource API while supporting all abstractions from [Rust Zenoh](https://github.com/eclipse-zenoh/zenoh): pub, sub and query.  Zenoh-Pico already supports a broad range of platforms and protocols, making it a versatile choice for embedded systems development.
 
 # Peer-to-Peer Unicast
 
@@ -78,7 +78,7 @@ Note that the Zenoh-Pico configuration used for testing deviates from the defaul
     class="figure-inline"
     alt="P2p latency" >}}
 
-The round-trip latency for packets below 16 KiB is under 20 µs—meaning a one-way latency of under 10 µs. Peer-to-peer unicast delivers up to **70% lower latency** compared to client mode.
+The round-trip time for packets below 16 KiB is under 20 µs—meaning a one-way latency of under 10 µs. Peer-to-peer unicast delivers up to **70% lower latency** compared to client mode.
 
 {{< figure-inline
     src="../../img/20250630-Zenoh-Pico-peer-to-peer-unicast/perf_thr.png"
