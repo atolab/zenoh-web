@@ -1,9 +1,9 @@
 ---
 title: "Zenoh-Pico peer to peer unicast mode"
-date: 2025-01-11
+date: 2025-07-10
 menu: "blog"
 weight: 20250630
-description: "July 11th, 2025 -- Paris."
+description: "July 10th, 2025 -- Paris."
 draft: false
 ---
 
