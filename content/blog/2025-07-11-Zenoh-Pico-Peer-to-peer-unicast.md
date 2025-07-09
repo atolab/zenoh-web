@@ -2,7 +2,7 @@
 title: "Zenoh-Pico peer to peer unicast mode"
 date: 2025-07-10
 menu: "blog"
-weight: 20250630
+weight: 20250710
 description: "July 10th, 2025 -- Paris."
 draft: false
 ---
@@ -30,7 +30,7 @@ Architecture-wise, we use non-blocking sockets and I/O multiplexing to handle al
 Here is an example showing how to implement a 1:N (or N:1) communication graph:
 
 {{< figure-inline
-    src="../../img/20250630-Zenoh-Pico-peer-to-peer-unicast/1-n.png"
+    src="../../img/20250711-Zenoh-Pico-peer-to-peer-unicast/1-n.png"
     class="figure-inline"
     alt="1:N diagram" >}}
 
@@ -46,7 +46,7 @@ If we assume a single publisher connected to 3 subscribers, here’s how we coul
 To implement an N:N graph:
 
 {{< figure-inline
-    src="../../img/20250630-Zenoh-Pico-peer-to-peer-unicast/n-n.png"
+    src="../../img/20250711-Zenoh-Pico-peer-to-peer-unicast/n-n.png"
     class="figure-inline"
     alt="N:N diagram" >}}
 
@@ -74,14 +74,14 @@ Note that the Zenoh-Pico configuration used for testing deviates from the defaul
 ## Results
 
 {{< figure-inline
-    src="../../img/20250630-Zenoh-Pico-peer-to-peer-unicast/perf_lat.png"
+    src="../../img/20250711-Zenoh-Pico-peer-to-peer-unicast/perf_lat.png"
     class="figure-inline"
     alt="P2p latency" >}}
 
 The round-trip time for packets below 16 KiB is under 20 µs—meaning a one-way latency of under 10 µs. Peer-to-peer unicast delivers up to **70% lower latency** compared to client mode.
 
 {{< figure-inline
-    src="../../img/20250630-Zenoh-Pico-peer-to-peer-unicast/perf_thr.png"
+    src="../../img/20250711-Zenoh-Pico-peer-to-peer-unicast/perf_thr.png"
     class="figure-inline"
     alt="P2p throughput" >}}
 
@@ -101,27 +101,21 @@ This feature is disabled by default and can be enabled by setting `Z_FEATURE_MUL
 Previously, we discussed reducing dynamic memory allocations without providing measurements. We've now addressed this by measuring allocations using [heaptrack](https://github.com/KDE/heaptrack). Below are the results from the client throughput test in 1.0:
 
 {{< figure-inline
-    src="../../img/20250630-Zenoh-Pico-peer-to-peer-unicast/malloc_1_0.png"
+    src="../../img/20250711-Zenoh-Pico-peer-to-peer-unicast/malloc_1_0.png"
     class="figure-inline"
     alt="1.0 heaptrack" >}}
 
 And here are the results for the current version:
 
 {{< figure-inline
-    src="../../img/20250630-Zenoh-Pico-peer-to-peer-unicast/malloc_current.png"
+    src="../../img/20250711-Zenoh-Pico-peer-to-peer-unicast/malloc_current.png"
     class="figure-inline"
     alt="current heaptrack" >}}
 
 ## Memory Breakdown:
 
-Version 1.0:
-* Handled 5.8 million messages in 20 seconds (~290k messages/sec)
-* Peak memory usage: 1.15 MB
-* 64 million allocations, 11 allocations per message
-* 600 kB: Two eagerly allocated 300 kB defragmentation buffers
-* 100 kB: TX and RX buffers (50 kB each)
+The latest version of Zenoh-Pico includes some major performance and memory utilisation improvements, here are the latest numbers:
 
-Current version:
 * Handled 84.4 million messages in 20 seconds (~4.2M messages/sec) — 15x throughput increase
 * Peak memory usage: 101 kB — 91% less memory
 * 118 allocations total, no per-message allocations thanks to ownership transfers and the RX cache — 99.9998% fewer allocations
