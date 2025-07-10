@@ -4,8 +4,9 @@ The website for the Eclipse zenoh project. Lives at [http://zenoh.io](https://ze
 
 ## Getting Started
 
-Building the website depends on [Hugo 0.100.0](http://gohugo.io). So, first make sure
-that you have it installed. If on OS X and using Homebrew, run the following:
+The website should build with the latest version of Hugo, the last tested is [Hugo 0.145.0](http://gohugo.io). 
+On MacOS you can install Hugo as described below, in any case refer to [Hugo Documentation](http://gohugo.io) 
+for installation instructioins
 
 ```sh
 brew update && brew install hugo
