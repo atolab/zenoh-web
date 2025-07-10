@@ -43,25 +43,32 @@ $ brew install zenoh
 ```
 
 Then you can start the Zenoh router with this command:
+
 ```bash
 $ zenohd
 ```
 
 ### Ubuntu or any Debian
 
+Add Eclipse Zenoh public key to apt keyring
+
+```bash
+$ curl -L https://download.eclipse.org/zenoh/debian-repo/zenoh-public-key | sudo tee /etc/apt/keyrings/zenoh-public-key.gpg
+```
+
 Add Eclipse Zenoh private repository to the sources list:
 
 ```bash
-$ echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
+$ echo "deb [signed-by=/etc/apt/keyrings/zenoh-public-key.gpg] https://download.eclipse.org/zenoh/debian-repo/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
 $ sudo apt update
 ```
 
 Install Zenoh:
 
 ```bash
-$ sudo apt install zenoh 
+$ sudo apt install zenoh
 ```
- 
+
 Then you can start the Zenoh router with this command:
 
 ```bash
