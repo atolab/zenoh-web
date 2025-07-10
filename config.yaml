@@ -9,6 +9,7 @@ googleAnalytics: G-PBD6MS51QL
 enableRobotsTXT: true
 enableEmoji: true
 singleViewStyle: "caspertwo"
+ignoreLogs: ['warning-goldmark-raw-html']
 
 sitemap:
     changefreq: "weekly"
