@@ -52,7 +52,7 @@ $ zenohd
 
 Add Eclipse Zenoh public key to apt keyring
 
-````bash
+```bash
 $ curl -L https://download.eclipse.org/zenoh/debian-repo/zenoh-public-key | sudo tee /etc/apt/keyrings/zenoh-public-key.gpg
 ```
 
@@ -61,7 +61,7 @@ Add Eclipse Zenoh private repository to the sources list:
 ```bash
 $ echo "deb [signed-by=/etc/apt/keyrings/zenoh-public-key.gpg] https://download.eclipse.org/zenoh/debian-repo/ /" | sudo tee -a /etc/apt/sources.list > /dev/null
 $ sudo apt update
-````
+```
 
 Install Zenoh:
 
