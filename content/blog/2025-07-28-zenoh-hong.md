@@ -1,6 +1,6 @@
 ---
 title: "Zenoh 1.5.0: Hong, the Red Dragon's Power"
-date: 2025-07-28
+date: 2025-07-27
 menu: "blog"
 weight: 20250728
 description: "28th July, 2025 -- Paris."
