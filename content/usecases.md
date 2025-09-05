@@ -34,7 +34,7 @@ menu:
         <h3>
         Autonomous car in simulator
         </h3>
-        <iframe src="https://drive.google.com/file/d/16q9gNCdTcDL3mmxkuWPlKPFNvbLLSNNm/preview" width="320" height="240" allow="autoplay"></iframe>
+        <iframe src="https://drive.google.com/file/d/18hjgofUAFMnTmZa9MVSwxEGYY7F1lUQG/view?usp=sharing" width="320" height="240" allow="autoplay"></iframe>
     </div>
     <div class="col">
         <h3>
